@@ -425,7 +425,8 @@ $gallery_items = array(
 
 		<section id="red-cultural-viaje-escocia-terms" class="mt-20 border-t pt-20">
             <!-- Header / Hero -->
-            <div class="max-w-4xl mx-auto text-center mb-12">
+            <div class="mx-auto text-center mb-12" style="max-width: var(--wp--style--global--wide-size);">
+
                 <div class="inline-block px-3 py-1 mb-4 text-[10px] font-bold tracking-widest text-white bg-[#AA0B0B] uppercase">
                     Información Oficial
                 </div>
@@ -434,7 +435,8 @@ $gallery_items = array(
 
             </div>
 
-            <div class="max-w-4xl mx-auto space-y-20">
+            <div class="mx-auto space-y-20" style="max-width: var(--wp--style--global--wide-size);">
+
 
                 <!-- Precios -->
                 <section id="precios">
