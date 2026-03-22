@@ -628,26 +628,26 @@ $gallery_items = array(
                     <div class="grid md:grid-cols-2 gap-6">
                         <!-- Tarjeta ahora en Rojo Accent -->
                         <div class="bg-[#AA0B0B] p-8 rounded-xl shadow-lg !text-white">
-                            <p class="text-[12px] uppercase tracking-widest opacity-80 mb-1 !text-white">Empresa</p>
-                            <p class="font-bold text-lg mb-4 !text-white">Sociedad Periodística El Líbero S.A.</p>
-                            <p class="text-[12px] uppercase tracking-widest opacity-80 mb-1 !text-white">RUT</p>
-                            <p class="font-mono mb-4 text-base !text-white">76.389.727-3</p>
-                            <p class="text-[12px] uppercase tracking-widest opacity-80 mb-1 !text-white">Banco</p>
-                            <p class="font-semibold italic text-base !text-white">BCI</p>
+                            <p class="text-[18px] uppercase tracking-widest opacity-80 mb-1 !text-white">Empresa</p>
+                            <p class="font-bold text-[18px] mb-4 !text-white">Sociedad Periodística El Líbero S.A.</p>
+                            <p class="text-[18px] uppercase tracking-widest opacity-80 mb-1 !text-white">RUT</p>
+                            <p class="font-mono mb-4 text-[18px] !text-white">76.389.727-3</p>
+                            <p class="text-[18px] uppercase tracking-widest opacity-80 mb-1 !text-white">Banco</p>
+                            <p class="font-semibold italic text-[18px] !text-white">BCI</p>
                         </div>
                         
                         <div class="space-y-4">
                             <div class="p-4 border border-gray-100 rounded-lg bg-gray-50">
-                                <p class="text-[14px] uppercase font-bold text-gray-400 m-0">Cuenta Pesos (CLP)</p>
-                                <p class="text-lg font-mono font-bold tracking-wider text-black m-0">28975219</p>
+                                <p class="text-[18px] uppercase font-bold text-gray-400 m-0">Cuenta Pesos (CLP)</p>
+                                <p class="text-[18px] font-mono font-bold tracking-wider text-black m-0">28975219</p>
                             </div>
                             <div class="p-4 border border-gray-100 rounded-lg bg-gray-50">
-                                <p class="text-[14px] uppercase font-bold text-gray-400 m-0">Cuenta Dólares (USD)</p>
-                                <p class="text-lg font-mono font-bold tracking-wider text-[#AA0B0B] m-0">19643403</p>
+                                <p class="text-[18px] uppercase font-bold text-gray-400 m-0">Cuenta Dólares (USD)</p>
+                                <p class="text-[18px] font-mono font-bold tracking-wider text-[#AA0B0B] m-0">19643403</p>
                             </div>
                             <div class="pt-2 text-center md:text-left">
-                                <p class="text-[12px] text-gray-500 mb-1 uppercase tracking-tighter">Enviar comprobante a:</p>
-                                <a href="mailto:administracion@ellibero.cl" class="text-[14px] font-bold underline decoration-[#AA0B0B] underline-offset-4 text-black">administracion@ellibero.cl</a>
+                                <p class="text-[18px] text-gray-500 mb-1 uppercase tracking-tighter">Enviar comprobante a:</p>
+                                <a href="mailto:administracion@ellibero.cl" class="text-[18px] font-bold underline decoration-[#AA0B0B] underline-offset-4 text-black">administracion@ellibero.cl</a>
                             </div>
                         </div>
                     </div>
