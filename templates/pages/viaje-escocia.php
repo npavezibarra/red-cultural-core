@@ -429,8 +429,9 @@ $gallery_items = array(
                 <div class="inline-block px-3 py-1 mb-4 text-[10px] font-bold tracking-widest text-white bg-[#AA0B0B] uppercase">
                     Información Oficial
                 </div>
-                <h1 class="text-2xl md:text-3xl font-bold tracking-tight mb-2 uppercase text-black">Términos y Condiciones Generales</h1>
-                <p class="text-gray-400 text-sm">Programa de Viaje: Edimburgo 2026</p>
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 uppercase text-black">Términos y Condiciones Generales</h1>
+                <p class="text-gray-400 text-base">Programa de Viaje: Edimburgo 2026</p>
+
             </div>
 
             <div class="max-w-4xl mx-auto space-y-20">
@@ -439,43 +440,45 @@ $gallery_items = array(
                 <section id="precios">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="h-px flex-1 bg-gray-200"></div>
-                        <h2 class="text-xl font-bold tracking-tight text-black">PRECIOS</h2>
+                        <h2 class="text-2xl font-bold tracking-tight text-black">PRECIOS</h2>
                         <div class="h-px flex-1 bg-gray-200"></div>
                     </div>
                     
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Publico General -->
                         <div class="p-8 border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Público General</h3>
+                            <h3 class="text-base font-bold text-gray-400 uppercase tracking-widest mb-6">Público General</h3>
                             <div class="space-y-4">
                                 <div class="flex justify-between items-end border-b border-gray-50 pb-2">
-                                    <span class="text-gray-600">Habitación Single</span>
-                                    <span class="text-xl font-bold text-black">USD 14.080</span>
+                                    <span class="text-gray-600 text-lg">Habitación Single</span>
+                                    <span class="text-2xl font-bold text-black">USD 14.080</span>
                                 </div>
                                 <div class="flex justify-between items-end border-b border-gray-50 pb-2">
-                                    <span class="text-gray-600">Habitación Doble</span>
-                                    <span class="text-xl font-bold text-black">USD 11.546</span>
+                                    <span class="text-gray-600 text-lg">Habitación Doble</span>
+                                    <span class="text-2xl font-bold text-black">USD 11.546</span>
                                 </div>
                             </div>
                         </div>
 
+
                         <!-- Red Libero -->
                         <div class="p-8 border-2 border-black rounded-lg relative overflow-hidden">
-                            <div class="absolute top-0 right-0 bg-[#AA0B0B] text-white px-3 py-1 text-[10px] font-bold uppercase tracking-tighter">
+                            <div class="absolute top-0 right-0 bg-[#AA0B0B] text-white px-3 py-1 text-[12px] font-bold uppercase tracking-tighter">
                                 Preferencial
                             </div>
-                            <h3 class="text-sm font-bold text-[#AA0B0B] uppercase tracking-widest mb-6">Red Líbero y Cultural</h3>
+                            <h3 class="text-base font-bold text-[#AA0B0B] uppercase tracking-widest mb-6">Red Líbero y Cultural</h3>
                             <div class="space-y-4">
                                 <div class="flex justify-between items-end border-b border-gray-50 pb-2">
-                                    <span class="text-gray-600">Habitación Single</span>
-                                    <span class="text-xl font-bold text-black">USD 12.800</span>
+                                    <span class="text-gray-600 text-lg">Habitación Single</span>
+                                    <span class="text-2xl font-bold text-black">USD 12.800</span>
                                 </div>
                                 <div class="flex justify-between items-end border-b border-gray-50 pb-2">
-                                    <span class="text-gray-600">Habitación Doble</span>
+                                    <span class="text-gray-600 text-lg">Habitación Doble</span>
                                     <span class="text-xl font-bold text-black">USD 10.500</span>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <p class="mt-6 text-sm italic text-gray-500 text-center">
                         * 10% de descuento adicional para hijos de participantes.
@@ -485,11 +488,12 @@ $gallery_items = array(
                 <!-- Inclusiones -->
                 <section id="detalles" class="grid md:grid-cols-2 gap-12 text-left">
                     <div>
-                        <h2 class="text-lg font-bold mb-6 flex items-center gap-2 text-black">
-                            <span class="w-2 h-2 bg-[#AA0B0B] rounded-full"></span>
+                        <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-black">
+                            <span class="w-2.5 h-2.5 bg-[#AA0B0B] rounded-full"></span>
                             INCLUYE
                         </h2>
-                        <ul class="space-y-4 text-sm text-gray-700 p-0 list-none">
+                        <ul class="space-y-4 text-[17px] text-gray-700 p-0 list-none">
+
                             <li class="flex gap-3">
                                 <svg class="w-5 h-5 text-[#AA0B0B] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                                 <span>Vuelo Santiago - Edimburgo - Santiago (Salida 9 de junio, vuelta flexible).</span>
@@ -514,11 +518,12 @@ $gallery_items = array(
                     </div>
 
                     <div>
-                        <h2 class="text-lg font-bold mb-6 flex items-center gap-2 text-black">
-                            <span class="w-2 h-2 bg-black rounded-full"></span>
+                        <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-black">
+                            <span class="w-2.5 h-2.5 bg-black rounded-full"></span>
                             NO INCLUYE
                         </h2>
-                        <ul class="space-y-4 text-sm text-gray-500 p-0 list-none">
+                        <ul class="space-y-4 text-[17px] text-gray-500 p-0 list-none">
+
                             <li class="flex gap-3">
                                 <svg class="w-5 h-5 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                 <span>Traslados aeropuertos (excepto lo mencionado).</span>
@@ -541,32 +546,33 @@ $gallery_items = array(
 
                 <!-- Reservas -->
                 <section id="reservas" class="bg-gray-50 p-10 rounded-2xl text-center">
-                    <h2 class="text-xl font-bold mb-8 text-center uppercase tracking-tight text-black">¿CÓMO RESERVO?</h2>
+                    <h2 class="text-2xl font-bold mb-8 text-center uppercase tracking-tight text-black">¿CÓMO RESERVO?</h2>
                     <div class="grid md:grid-cols-3 gap-8 text-center">
                         <div class="space-y-2">
-                            <div class="text-[#AA0B0B] font-bold text-2xl">01</div>
-                            <p class="text-sm font-semibold text-black">Contactar</p>
-                            <p class="text-xs text-gray-500">veronica.tagle@ellibero.cl<br>+569 7882 0992</p>
+                            <div class="text-[#AA0B0B] font-bold text-3xl">01</div>
+                            <p class="text-lg font-semibold text-black">Contactar</p>
+                            <p class="text-[14px] text-gray-500">veronica.tagle@ellibero.cl<br>+569 7882 0992</p>
                         </div>
                         <div class="space-y-2">
-                            <div class="text-[#AA0B0B] font-bold text-2xl">02</div>
-                            <p class="text-sm font-semibold text-black">Reserva de Cupo</p>
-                            <p class="text-xs text-gray-500">Pago de USD 3.000<br>(No reembolsable)</p>
+                            <div class="text-[#AA0B0B] font-bold text-3xl">02</div>
+                            <p class="text-lg font-semibold text-black">Reserva de Cupo</p>
+                            <p class="text-[14px] text-gray-500">Pago de USD 3.000<br>(No reembolsable)</p>
                         </div>
                         <div class="space-y-2">
-                            <div class="text-[#AA0B0B] font-bold text-2xl">03</div>
-                            <p class="text-sm font-semibold text-black">Formalizar</p>
-                            <p class="text-xs text-gray-500">Firma de convenio de plazos de pago tras confirmar.</p>
+                            <div class="text-[#AA0B0B] font-bold text-3xl">03</div>
+                            <p class="text-lg font-semibold text-black">Formalizar</p>
+                            <p class="text-[14px] text-gray-500">Firma de convenio de plazos de pago tras confirmar.</p>
                         </div>
                     </div>
                 </section>
 
+
                 <!-- Políticas de Cancelación -->
                 <section id="cancelacion" class="text-left">
-                    <h2 class="text-xl font-bold mb-8 border-l-4 border-[#AA0B0B] pl-4 uppercase tracking-tight text-black">Políticas de Devolución</h2>
+                    <h2 class="text-2xl font-bold mb-8 border-l-4 border-[#AA0B0B] pl-4 uppercase tracking-tight text-black">Políticas de Devolución</h2>
                     <div class="bg-white border border-gray-100 rounded-xl overflow-hidden">
-                        <table class="w-full text-left text-sm m-0">
-                            <thead class="bg-black text-white uppercase text-[10px] tracking-widest">
+                        <table class="w-full text-left text-[17px] m-0">
+                            <thead class="bg-black text-white uppercase text-[12px] tracking-widest">
                                 <tr>
                                     <th class="px-6 py-4">Plazo de Cancelación</th>
                                     <th class="px-6 py-4 text-right">Retención (Costo)</th>
@@ -597,42 +603,44 @@ $gallery_items = array(
                         </table>
                     </div>
                     <div class="mt-4 p-4 bg-[#AA0B0B]/5 rounded-lg border-l-4 border-[#AA0B0B]">
-                        <p class="text-sm text-gray-700 m-0">
+                        <p class="text-lg text-gray-700 m-0">
                             <strong>Excepción:</strong> No habrá cobro si el participante encuentra un reemplazante aprobado por la organización.
                         </p>
                     </div>
                 </section>
 
+
                 <!-- Datos de Pago -->
                 <section id="pago" class="border-t pt-12 text-left">
-                    <h2 class="text-lg font-bold mb-8 uppercase tracking-widest text-center text-black">Datos de Pago</h2>
+                    <h2 class="text-xl font-bold mb-8 uppercase tracking-widest text-center text-black">Datos de Pago</h2>
                     <div class="grid md:grid-cols-2 gap-6">
                         <!-- Tarjeta ahora en Rojo Accent -->
                         <div class="bg-[#AA0B0B] p-8 rounded-xl shadow-lg !text-white">
-                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1 !text-white">Empresa</p>
-                            <p class="font-bold text-base mb-4 !text-white">Sociedad Periodística El Líbero S.A.</p>
-                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1 !text-white">RUT</p>
-                            <p class="font-mono mb-4 text-sm !text-white">76.389.727-3</p>
-                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1 !text-white">Banco</p>
-                            <p class="font-semibold italic text-sm !text-white">BCI</p>
+                            <p class="text-[12px] uppercase tracking-widest opacity-80 mb-1 !text-white">Empresa</p>
+                            <p class="font-bold text-lg mb-4 !text-white">Sociedad Periodística El Líbero S.A.</p>
+                            <p class="text-[12px] uppercase tracking-widest opacity-80 mb-1 !text-white">RUT</p>
+                            <p class="font-mono mb-4 text-base !text-white">76.389.727-3</p>
+                            <p class="text-[12px] uppercase tracking-widest opacity-80 mb-1 !text-white">Banco</p>
+                            <p class="font-semibold italic text-base !text-white">BCI</p>
                         </div>
                         
                         <div class="space-y-4">
                             <div class="p-4 border border-gray-100 rounded-lg bg-gray-50">
-                                <p class="text-xs uppercase font-bold text-gray-400 m-0">Cuenta Pesos (CLP)</p>
-                                <p class="text-base font-mono font-bold tracking-wider text-black m-0">28975219</p>
+                                <p class="text-[14px] uppercase font-bold text-gray-400 m-0">Cuenta Pesos (CLP)</p>
+                                <p class="text-lg font-mono font-bold tracking-wider text-black m-0">28975219</p>
                             </div>
                             <div class="p-4 border border-gray-100 rounded-lg bg-gray-50">
-                                <p class="text-xs uppercase font-bold text-gray-400 m-0">Cuenta Dólares (USD)</p>
-                                <p class="text-base font-mono font-bold tracking-wider text-[#AA0B0B] m-0">19643403</p>
+                                <p class="text-[14px] uppercase font-bold text-gray-400 m-0">Cuenta Dólares (USD)</p>
+                                <p class="text-lg font-mono font-bold tracking-wider text-[#AA0B0B] m-0">19643403</p>
                             </div>
                             <div class="pt-2 text-center md:text-left">
-                                <p class="text-[10px] text-gray-500 mb-1 uppercase tracking-tighter">Enviar comprobante a:</p>
-                                <a href="mailto:administracion@ellibero.cl" class="text-xs font-bold underline decoration-[#AA0B0B] underline-offset-4 text-black">administracion@ellibero.cl</a>
+                                <p class="text-[12px] text-gray-500 mb-1 uppercase tracking-tighter">Enviar comprobante a:</p>
+                                <a href="mailto:administracion@ellibero.cl" class="text-[14px] font-bold underline decoration-[#AA0B0B] underline-offset-4 text-black">administracion@ellibero.cl</a>
                             </div>
                         </div>
                     </div>
                 </section>
+
 
             </div>
         </section>
