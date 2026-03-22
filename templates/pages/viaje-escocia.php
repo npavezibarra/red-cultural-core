@@ -571,7 +571,12 @@ $gallery_items = array(
 
                 <!-- Políticas de Cancelación -->
                 <section id="cancelacion" class="text-left">
-                    <h2 class="text-2xl font-bold mb-8 border-l-4 border-[#AA0B0B] pl-4 uppercase tracking-tight text-black">Políticas de Devolución</h2>
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                        <h2 class="text-2xl font-bold tracking-tight text-black uppercase">Políticas de Devolución</h2>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+
                     <div class="bg-white border border-gray-100 rounded-xl overflow-hidden">
                         <table class="w-full text-left text-[17px] m-0">
                             <thead class="bg-black text-white uppercase text-[12px] tracking-widest">
@@ -614,7 +619,12 @@ $gallery_items = array(
 
                 <!-- Datos de Pago -->
                 <section id="pago" class="border-t pt-12 text-left">
-                    <h2 class="text-xl font-bold mb-8 uppercase tracking-widest text-center text-black">Datos de Pago</h2>
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                        <h2 class="text-2xl font-bold tracking-tight text-black uppercase">Datos de Pago</h2>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+
                     <div class="grid md:grid-cols-2 gap-6">
                         <!-- Tarjeta ahora en Rojo Accent -->
                         <div class="bg-[#AA0B0B] p-8 rounded-xl shadow-lg !text-white">
