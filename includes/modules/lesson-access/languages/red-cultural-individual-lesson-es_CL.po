@@ -1,0 +1,241 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Red Cultural Individual Lesson 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-12 12:30-0300\n"
+"PO-Revision-Date: 2026-03-12 12:30-0300\n"
+"Last-Translator: Nico <nico@politeia.cl>\n"
+"Language-Team: Spanish (Chile)\n"
+"Language: es_CL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/class-admin.php:38
+msgid "Individual Lesson Purchase Settings"
+msgstr "Ajustes de Compra de Lecciones Individuales"
+
+#: includes/class-admin.php:57
+msgid "Individual Lesson Price"
+msgstr "Precio de Lección Individual"
+
+#: includes/class-admin.php:61
+msgid "Price applied to each lesson when purchased individually. Leave empty to disable."
+msgstr "Precio aplicado a cada lección cuando se compra individualmente. Dejar vacío para desactivar."
+
+#: includes/class-frontend.php:67 includes/class-ajax.php:111
+msgid "Redirecting..."
+msgstr "Redirigiendo..."
+
+#: includes/class-frontend.php:71 includes/class-ajax.php:113
+msgid "Buy Course"
+msgstr "Comprar Curso"
+
+#: includes/class-frontend.php:72 includes/class-ajax.php:114
+msgid "Buy Lessons"
+msgstr "Comprar Lecciones"
+
+#: includes/class-frontend.php:131
+msgid "Buy Some Lessons"
+msgstr "Comprar Algunas Lecciones"
+
+#: includes/class-frontend.php:193
+msgid "Select one or more lessons to purchase individually:"
+msgstr "Seleccione una o más lecciones para comprar individualmente:"
+
+#: includes/class-frontend.php:207
+msgid "(Owned)"
+msgstr "(Adquirida)"
+
+#: includes/class-frontend.php:216
+msgid "Total:"
+msgstr "Total:"
+
+#: includes/class-ajax.php:49
+msgid "Invalid course or no lessons selected."
+msgstr "Curso no válido o no se han seleccionado lecciones."
+
+#: includes/class-ajax.php:55
+msgid "Individual purchase is disabled for this course."
+msgstr "La compra individual está desactivada para este curso."
+
+#: includes/class-ajax.php:80
+msgid "All selected lessons are already owned or invalid."
+msgstr "Todas las lecciones seleccionadas ya han sido adquiridas o no son válidas."
+
+#: includes/class-ajax.php:123
+msgid "WooCommerce cart is not available."
+msgstr "El carrito de WooCommerce no está disponible."
+
+#: includes/class-woocommerce.php:96
+msgid "Purchased Lessons:"
+msgstr "Lecciones Compradas:"
+
+#: includes/class-woocommerce.php:106
+msgid "Failed to prepare specific purchase item."
+msgstr "Error al preparar el artículo de compra específico."
+
+#: includes/class-woocommerce.php:146
+msgid "Individual Lessons Included:"
+msgstr "Lecciones Individuales Incluidas:"
+
+#: includes/class-access-control.php:128
+msgid "You do not have access to this lesson based on your individual purchase selection. Please buy this lesson or the full course to view."
+msgstr "No tienes acceso a esta lección según tu selección de compra individual. Por favor, compra esta lección o el curso completo para verla."
+
+#: includes/class-access-control.php:129
+msgid "Access Restricted"
+msgstr "Acceso Restringido"
+
+#: includes/class-woocommerce.php:54
+msgid "1 lesson %s"
+msgstr "1 lección %s"
+
+#: includes/class-woocommerce.php:56
+msgid "%d lessons %s"
+msgstr "%d lecciones %s"
+
+#: includes/class-admin.php:91
+msgid "Red Cultural"
+msgstr "Red Cultural"
+
+#: includes/class-admin.php:143
+msgid "Red Cultural Lessons"
+msgstr "Lecciones Red Cultural"
+
+#: includes/class-admin.php:144
+msgid "Welcome to the Red Cultural Individual Lessons administration panel."
+msgstr "Bienvenido al panel de administración de Lecciones Individuales de Red Cultural."
+
+#: includes/class-admin.php:102
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: includes/class-admin.php:122
+msgid "Notification Settings"
+msgstr "Ajustes de Notificación"
+
+#: includes/class-admin.php:129
+msgid "Notification Emails"
+msgstr "Correos de Notificación"
+
+#: includes/class-admin.php:248
+msgid "Enter one or more email addresses separated by commas."
+msgstr "Ingrese una o más direcciones de correo separadas por comas."
+
+#: includes/class-admin.php:166
+msgid "Manual Trigger"
+msgstr "Activador Manual"
+
+#: includes/class-admin.php:167
+msgid "Use this button to check for upcoming lessons (24h) and send the alumni list to the emails above immediately."
+msgstr "Use este botón para buscar lecciones próximamente públicas (24h) y enviar la lista de alumnos a los correos indicados inmediatamente."
+
+#: includes/class-admin.php:170
+msgid "Analyze and Send Notification Now"
+msgstr "Analizar y Enviar Notificación Ahora"
+
+#: includes/class-admin.php:174
+msgid "Upcoming Lessons (Next 10)"
+msgstr "Próximas Lecciones (Siguientes 10)"
+
+#: includes/class-admin.php:178
+msgid "Lesson Title"
+msgstr "Título de la Lección"
+
+#: includes/class-admin.php:179
+msgid "Course"
+msgstr "Curso"
+
+#: includes/class-admin.php:180
+msgid "Release Date"
+msgstr "Fecha de Lanzamiento"
+
+#: includes/class-admin.php:181
+msgid "Individual Buyers"
+msgstr "Compradores Individuales"
+
+#: includes/class-admin.php:182
+msgid "Actions"
+msgstr "Acciones"
+
+#: includes/class-admin.php:200
+msgid "Send email list"
+msgstr "Enviar lista de correos"
+
+#: includes/class-admin.php:209
+msgid "No upcoming lessons found with a scheduled release date."
+msgstr "No se encontraron próximas lecciones con fecha de lanzamiento programada."
+
+#: includes/class-admin.php:56
+msgid "Global notification check triggered successfully. Emails will be sent if upcoming lessons (24h) with buyers are found."
+msgstr "Activación de chequeo global exitosa. Se enviarán correos si se encuentran lecciones próximas (24h) con compradores."
+
+#: includes/class-admin.php:71
+msgid "Email list sent successfully for the selected lesson."
+msgstr "Lista de correos enviada con éxito para la lección seleccionada."
+
+#: includes/class-admin.php:78
+msgid "Failed to send email list. Ensure the lesson has buyers and notification emails are configured."
+msgstr "Error al enviar la lista de correos. Asegúrese de que la lección tenga compradores y los correos de notificación estén configurados."
+
+#: includes/class-notifications.php:96
+msgid "Upcoming Lessons Notification"
+msgstr "Notificación de Próximas Lecciones"
+
+#: includes/class-notifications.php:97
+msgid "The following lessons are scheduled to become public in the next 24 hours:"
+msgstr "Las siguientes lecciones están programadas para ser públicas en las próximas 24 horas:"
+
+#: includes/class-notifications.php:128
+msgid "Alumni list for upcoming lessons"
+msgstr "Lista de alumnos para próximas lecciones"
+
+#: includes/class-notifications.php:170
+msgid "Course Lesson Alumni List"
+msgstr "Lista de Alumnos de la Lección"
+
+#: includes/class-notifications.php:173
+msgid "The following students have purchased this lesson:"
+msgstr "Los siguientes alumnos han comprado esta lección:"
+
+#: includes/class-notifications.php:189
+msgid "Alumni list: %s"
+msgstr "Lista de alumnos: %s"
+
+#: includes/class-frontend.php:367
+msgid "You don't currently have access to this content"
+msgstr "Actualmente no tienes acceso a este contenido"
+
+#: includes/class-frontend.php:201 includes/class-frontend.php:509
+msgid "ALUMNI LIST"
+msgstr "LISTA DE ALUMNOS"
+
+#: includes/class-frontend.php:510
+msgid "Select a lesson to see who has access:"
+msgstr "Seleccione una lección para ver quién tiene acceso:"
+
+#: includes/class-frontend.php:513
+msgid "-- Select a Lesson --"
+msgstr "-- Seleccione una Lección --"
+
+#: includes/class-frontend.php:133
+msgid "Name"
+msgstr "Nombre"
+
+#: includes/class-frontend.php:134
+msgid "Email"
+msgstr "Correo"
+
+#: includes/class-frontend.php:135
+msgid "Total Students: "
+msgstr "Total Alumnos: "
+
+#: includes/class-frontend.php:138
+msgid "Buy Lesson"
+msgstr "Comprar Lección"
+

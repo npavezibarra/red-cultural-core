@@ -1,0 +1,343 @@
+/* Reset & Layout */
+.rcil-buy-button-container {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.btn-buy-some-lessons {
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-buy-some-lessons:hover {
+    background-color: #005177 !important;
+    color: #fff !important;
+}
+
+/* Red Cultural Pages (custom templates) */
+#red-cultural-course-card-body .rcil-rcp-buy-btn{
+    width:100%;
+    padding:10px 28px;
+    font-weight:700;
+    font-size:12px;
+    border-radius:6px;
+    border:1px solid #111827;
+    background:#fff;
+    color:#111827;
+    cursor:pointer;
+    margin:0 0 16px 0;
+}
+#red-cultural-course-card-body .rcil-rcp-buy-btn:hover{
+    background:#111827;
+    color:#fff;
+}
+
+/* Modal Styling */
+.rcil-modal {
+    position: fixed;
+    z-index: 100000;
+    /* Higher than most things */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rcil-modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 550px;
+    width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.rcil-close {
+    color: #333;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rcil-close:hover {
+    color: #000;
+}
+
+.rcil-lessons-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.rcil-lesson-item {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.rcil-lesson-item label {
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.rcil-lesson-item input[type="checkbox"] {
+    margin-right: 12px;
+    margin-top: 0;
+}
+
+.rcil-lesson-item.rcil-purchased {
+    opacity: 0.6;
+}
+
+.rcil-badge {
+    color: #4CAF50;
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.rcil-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.rcil-total-price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#rcil-submit-selection {
+    background-color: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+#rcil-submit-selection:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#rcil-submit-selection:not(:disabled):hover {
+    background-color: #000;
+}
+
+/* Admin inline "Video Progression URL" editor (course page) */
+.rcil-video-editor {
+    display: none;
+    gap: 10px;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    padding: 10px 0 0;
+    flex-direction: column;
+    max-width: 520px;
+}
+
+.rcil-video-editor.is-open {
+    display: flex;
+}
+
+.rcil-video-editor-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    min-width: 70px;
+}
+
+.rcil-video-editor-input {
+    width: 100%;
+    height: 40px;
+    padding: 10px 12px;
+    border-radius: 3px;
+    border: 1px solid #a1a1a1;
+    font-size: 16px;
+    line-height: 1.2;
+    box-sizing: border-box;
+}
+
+.rcil-video-editor-save {
+    padding: 6px 12px !important;
+    line-height: 1 !important;
+    border-radius: 3px !important;
+    background: #111827 !important;
+    border: 1px solid #111827 !important;
+    color: #fff !important;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.rcil-video-editor-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.rcil-video-editor-actions-left {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.rcil-video-editor-cancel {
+    padding: 6px 12px !important;
+    line-height: 1 !important;
+    border-radius: 3px !important;
+    background: #111827 !important;
+    border: 1px solid #111827 !important;
+    color: #fff !important;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.rcil-video-editor-save:hover,
+.rcil-video-editor-cancel:hover {
+    background: #000 !important;
+    border-color: #000 !important;
+    color: #fff !important;
+}
+
+.rcil-video-editor-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 4px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    color: #9ca3af;
+    flex: 0 0 auto;
+}
+
+.rcil-video-editor-delete:hover {
+    background: transparent;
+    color: #6b7280;
+}
+
+.rcil-video-editor-delete .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+}
+
+.rcil-video-editor-status {
+    font-size: 12px;
+    color: #6b7280;
+    min-height: 0;
+}
+
+.rcil-video-editor-status:empty {
+    display: none;
+}
+
+/* When admin editor is open, force the lesson row into a vertical stack (title above editor). */
+.ld-item-list-item-preview.rcil-editing {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.ld-item-list-item-preview.rcil-editing > a {
+    width: 100%;
+    order: 1;
+}
+
+.ld-item-list-item-preview.rcil-editing > .rcil-video-editor {
+    width: 100%;
+    max-width: 520px;
+    order: 2;
+}
+
+.ld-item-list-item-preview.rcil-editing > .ld-item-details {
+    order: 3;
+}
+
+.rcil-video-editor-status.is-success {
+    color: #15803d;
+}
+
+.rcil-video-editor-status.is-error {
+    color: #b91c1c;
+}
+
+/* Inline lesson title editor */
+.rcil-lesson-title-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rcil-lesson-title-text.is-editing {
+    white-space: normal;
+    outline: none;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+}
+
+.rcil-lesson-title-text.is-editing:focus {
+    outline: none;
+}
+
+.rcil-lesson-edit-trigger {
+    margin-left: 10px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2563eb;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.rcil-lesson-edit-trigger:hover {
+    color: #1d4ed8;
+}
+
+/* RCP course template: editable title styles (admin only, while editing). */
+.rcp-lesson-card.rcil-editing .rcil-rcp-lesson-title[contenteditable="true"]{
+    outline: none;
+    border-bottom: 1px dashed #9ca3af;
+}
+
+/* Course list: ensure only one padlock is shown on locked lessons */
+.ld-item-list-item-preview.rcil-locked .ld-status-icon,
+.ld-item-list-item-preview.rcil-locked .lms-is-locked-ico {
+    display: none !important;
+}
