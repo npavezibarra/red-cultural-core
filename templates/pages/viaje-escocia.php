@@ -608,13 +608,13 @@ $gallery_items = array(
                     <h2 class="text-lg font-bold mb-8 uppercase tracking-widest text-center text-black">Datos de Pago</h2>
                     <div class="grid md:grid-cols-2 gap-6">
                         <!-- Tarjeta ahora en Rojo Accent -->
-                        <div class="bg-[#AA0B0B] text-white p-8 rounded-xl shadow-lg">
-                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">Empresa</p>
-                            <p class="font-bold text-base mb-4">Sociedad Periodística El Líbero S.A.</p>
-                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">RUT</p>
-                            <p class="font-mono mb-4 text-sm">76.389.727-3</p>
-                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">Banco</p>
-                            <p class="font-semibold italic text-sm">BCI</p>
+                        <div class="bg-[#AA0B0B] p-8 rounded-xl shadow-lg !text-white">
+                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1 !text-white">Empresa</p>
+                            <p class="font-bold text-base mb-4 !text-white">Sociedad Periodística El Líbero S.A.</p>
+                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1 !text-white">RUT</p>
+                            <p class="font-mono mb-4 text-sm !text-white">76.389.727-3</p>
+                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1 !text-white">Banco</p>
+                            <p class="font-semibold italic text-sm !text-white">BCI</p>
                         </div>
                         
                         <div class="space-y-4">
