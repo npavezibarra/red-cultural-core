@@ -157,7 +157,8 @@ $gallery_items = array(
 			margin-left:calc(50% - 50vw);
 			margin-right:calc(50% - 50vw);
 		}
-		#red-cultural-viaje-escocia-general-inner{max-width:var(--wp--style--global--wide-size);margin:0 auto;padding:58px 26px}
+		#red-cultural-viaje-escocia-general-inner{max-width:var(--wp--style--global--wide-size);margin:0 auto;padding:0px 26px}
+
 		#red-cultural-viaje-escocia-general-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 		#red-cultural-viaje-escocia-general-title{margin:0;font-size:44px;line-height:1.06;font-weight:900;letter-spacing:-.02em;color:#fff;text-transform:uppercase}
 		#red-cultural-viaje-escocia-general-list{margin:18px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -422,67 +423,220 @@ $gallery_items = array(
 			</div>
 		</section>
 
-		<section id="red-cultural-viaje-escocia-terms" aria-label="Términos y condiciones">
-			<h2 id="red-cultural-viaje-escocia-terms-title">TÉRMINOS Y CONDICIONES GENERALES</h2>
+		<section id="red-cultural-viaje-escocia-terms" class="mt-20 border-t pt-20">
+            <!-- Header / Hero -->
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <div class="inline-block px-3 py-1 mb-4 text-[10px] font-bold tracking-widest text-white bg-[#AA0B0B] uppercase">
+                    Información Oficial
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-tight mb-2 uppercase text-black">Términos y Condiciones Generales</h1>
+                <p class="text-gray-400 text-sm">Programa de Viaje: Edimburgo 2026</p>
+            </div>
 
-			<h3 id="red-cultural-viaje-escocia-prices-title">Precios Público General:</h3>
-			<ul id="red-cultural-viaje-escocia-prices-public">
-				<li id="red-cultural-viaje-escocia-prices-public-1">Habitación single: USD 14.080</li>
-				<li id="red-cultural-viaje-escocia-prices-public-2">Habitación doble: USD 11.546</li>
-			</ul>
+            <div class="max-w-4xl mx-auto space-y-20">
 
-			<h3 id="red-cultural-viaje-escocia-prices-member-title">Precios Red Líbero y Red Cultural:</h3>
-			<ul id="red-cultural-viaje-escocia-prices-member">
-				<li id="red-cultural-viaje-escocia-prices-member-1">Habitación single: USD 12.800</li>
-				<li id="red-cultural-viaje-escocia-prices-member-2">Habitación doble: USD 10.500</li>
-				<li id="red-cultural-viaje-escocia-prices-member-3"><em>*10% de descuento para hijos de participantes.</em></li>
-			</ul>
+                <!-- Precios -->
+                <section id="precios">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                        <h2 class="text-xl font-bold tracking-tight text-black">PRECIOS</h2>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Publico General -->
+                        <div class="p-8 border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Público General</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-end border-b border-gray-50 pb-2">
+                                    <span class="text-gray-600">Habitación Single</span>
+                                    <span class="text-xl font-bold text-black">USD 14.080</span>
+                                </div>
+                                <div class="flex justify-between items-end border-b border-gray-50 pb-2">
+                                    <span class="text-gray-600">Habitación Doble</span>
+                                    <span class="text-xl font-bold text-black">USD 11.546</span>
+                                </div>
+                            </div>
+                        </div>
 
-			<h3 id="red-cultural-viaje-escocia-includes-title">INCLUYE:</h3>
-			<ul id="red-cultural-viaje-escocia-includes">
-				<li id="red-cultural-viaje-escocia-includes-1">Vuelo Santiago - Edimburgo - Santiago (salida 9 de junio, vuelta flexible).</li>
-				<li id="red-cultural-viaje-escocia-includes-2">Alojamiento en hoteles 4 estrellas o superior.</li>
-				<li id="red-cultural-viaje-escocia-includes-3">Transportes locales.</li>
-				<li id="red-cultural-viaje-escocia-includes-4">Desayuno y almuerzos livianos.</li>
-				<li id="red-cultural-viaje-escocia-includes-5">Una cena.</li>
-				<li id="red-cultural-viaje-escocia-includes-6">Entradas a eventos y actividades.</li>
-				<li id="red-cultural-viaje-escocia-includes-7">Encuentros previos con historiadores y líderes de opinión.</li>
-			</ul>
+                        <!-- Red Libero -->
+                        <div class="p-8 border-2 border-black rounded-lg relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-[#AA0B0B] text-white px-3 py-1 text-[10px] font-bold uppercase tracking-tighter">
+                                Preferencial
+                            </div>
+                            <h3 class="text-sm font-bold text-[#AA0B0B] uppercase tracking-widest mb-6">Red Líbero y Cultural</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-end border-b border-gray-50 pb-2">
+                                    <span class="text-gray-600">Habitación Single</span>
+                                    <span class="text-xl font-bold text-black">USD 12.800</span>
+                                </div>
+                                <div class="flex justify-between items-end border-b border-gray-50 pb-2">
+                                    <span class="text-gray-600">Habitación Doble</span>
+                                    <span class="text-xl font-bold text-black">USD 10.500</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-sm italic text-gray-500 text-center">
+                        * 10% de descuento adicional para hijos de participantes.
+                    </p>
+                </section>
 
-			<h3 id="red-cultural-viaje-escocia-excludes-title">NO INCLUYE:</h3>
-			<ul id="red-cultural-viaje-escocia-excludes">
-				<li id="red-cultural-viaje-escocia-excludes-1">Transporte desde o hacia aeropuertos (excepto lo mencionado).</li>
-				<li id="red-cultural-viaje-escocia-excludes-2">Noches extras en hoteles.</li>
-				<li id="red-cultural-viaje-escocia-excludes-3">Gastos personales.</li>
-				<li id="red-cultural-viaje-escocia-excludes-4">Seguros de viaje (Obligatorio contratar uno).</li>
-				<li id="red-cultural-viaje-escocia-excludes-5">Upgrades de habitaciones y pasajes.</li>
-				<li id="red-cultural-viaje-escocia-excludes-6">Costos de visado.</li>
-			</ul>
+                <!-- Inclusiones -->
+                <section id="detalles" class="grid md:grid-cols-2 gap-12 text-left">
+                    <div>
+                        <h2 class="text-lg font-bold mb-6 flex items-center gap-2 text-black">
+                            <span class="w-2 h-2 bg-[#AA0B0B] rounded-full"></span>
+                            INCLUYE
+                        </h2>
+                        <ul class="space-y-4 text-sm text-gray-700 p-0 list-none">
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-[#AA0B0B] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Vuelo Santiago - Edimburgo - Santiago (Salida 9 de junio, vuelta flexible).</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-[#AA0B0B] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Alojamiento en hoteles 4 estrellas o superior.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-[#AA0B0B] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Transportes locales.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-[#AA0B0B] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Desayuno y almuerzos livianos + Una cena especial.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-[#AA0B0B] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Entradas a eventos, actividades y encuentros previos con expertos.</span>
+                            </li>
+                        </ul>
+                    </div>
 
-			<h3 id="red-cultural-viaje-escocia-reserve-title">¿CÓMO RESERVO?</h3>
-			<p id="red-cultural-viaje-escocia-reserve-text">Escribe a <strong>veronica.tagle@ellibero.cl</strong> o al <strong>+56978820992</strong> para revisar disponibilidad.</p>
-			<ul id="red-cultural-viaje-escocia-reserve-list">
-				<li id="red-cultural-viaje-escocia-reserve-1">Reserva de cupo: Pago de USD 3000 (no reembolsable, se descuenta del total).</li>
-				<li id="red-cultural-viaje-escocia-reserve-2">Firma de convenio de plazos de pago tras confirmar participación.</li>
-			</ul>
+                    <div>
+                        <h2 class="text-lg font-bold mb-6 flex items-center gap-2 text-black">
+                            <span class="w-2 h-2 bg-black rounded-full"></span>
+                            NO INCLUYE
+                        </h2>
+                        <ul class="space-y-4 text-sm text-gray-500 p-0 list-none">
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                <span>Traslados aeropuertos (excepto lo mencionado).</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                <span>Noches extras o gastos personales.</span>
+                            </li>
+                            <li class="flex gap-3 font-bold text-black">
+                                <svg class="w-5 h-5 text-black shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                <span>Seguros de viaje (Obligatorio contratar uno).</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                <span>Upgrades de habitación/pasajes y costos de visado.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
 
-			<h3 id="red-cultural-viaje-escocia-refunds-title">POLÍTICAS DE DEVOLUCIÓN (CANCELACIÓN)</h3>
-			<ul id="red-cultural-viaje-escocia-refunds">
-				<li id="red-cultural-viaje-escocia-refunds-1">Más de 150 días: 10% del valor total.</li>
-				<li id="red-cultural-viaje-escocia-refunds-2">Entre 90 y 150 días: 20% del valor total.</li>
-				<li id="red-cultural-viaje-escocia-refunds-3">Entre 30 y 90 días: 50% del valor total.</li>
-				<li id="red-cultural-viaje-escocia-refunds-4">Entre 10 y 30 días: 70% del valor total.</li>
-				<li id="red-cultural-viaje-escocia-refunds-5">10 días o menos: 80% del valor total.</li>
-				<li id="red-cultural-viaje-escocia-refunds-6">Excepción: No hay cobro si el participante encuentra un reemplazante aprobado por la organización.</li>
-			</ul>
+                <!-- Reservas -->
+                <section id="reservas" class="bg-gray-50 p-10 rounded-2xl text-center">
+                    <h2 class="text-xl font-bold mb-8 text-center uppercase tracking-tight text-black">¿CÓMO RESERVO?</h2>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="space-y-2">
+                            <div class="text-[#AA0B0B] font-bold text-2xl">01</div>
+                            <p class="text-sm font-semibold text-black">Contactar</p>
+                            <p class="text-xs text-gray-500">veronica.tagle@ellibero.cl<br>+569 7882 0992</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-[#AA0B0B] font-bold text-2xl">02</div>
+                            <p class="text-sm font-semibold text-black">Reserva de Cupo</p>
+                            <p class="text-xs text-gray-500">Pago de USD 3.000<br>(No reembolsable)</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-[#AA0B0B] font-bold text-2xl">03</div>
+                            <p class="text-sm font-semibold text-black">Formalizar</p>
+                            <p class="text-xs text-gray-500">Firma de convenio de plazos de pago tras confirmar.</p>
+                        </div>
+                    </div>
+                </section>
 
-			<h3 id="red-cultural-viaje-escocia-payment-title">DATOS DE PAGO (Sociedad Periodística El Líbero S.A. / RUT 76.389.727-3)</h3>
-			<ul id="red-cultural-viaje-escocia-payment">
-				<li id="red-cultural-viaje-escocia-payment-1">Cuenta Pesos (BCI): 28975219</li>
-				<li id="red-cultural-viaje-escocia-payment-2">Cuenta Dólares (BCI): 19643403</li>
-				<li id="red-cultural-viaje-escocia-payment-3">Correo: administracion@ellibero.cl</li>
-			</ul>
-		</section>
+                <!-- Políticas de Cancelación -->
+                <section id="cancelacion" class="text-left">
+                    <h2 class="text-xl font-bold mb-8 border-l-4 border-[#AA0B0B] pl-4 uppercase tracking-tight text-black">Políticas de Devolución</h2>
+                    <div class="bg-white border border-gray-100 rounded-xl overflow-hidden">
+                        <table class="w-full text-left text-sm m-0">
+                            <thead class="bg-black text-white uppercase text-[10px] tracking-widest">
+                                <tr>
+                                    <th class="px-6 py-4">Plazo de Cancelación</th>
+                                    <th class="px-6 py-4 text-right">Retención (Costo)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-50">
+                                <tr>
+                                    <td class="px-6 py-4 text-gray-600">Más de 150 días antes</td>
+                                    <td class="px-6 py-4 text-right font-bold text-black">10% del total</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-gray-600">Entre 90 y 150 días</td>
+                                    <td class="px-6 py-4 text-right font-bold text-black">20% del total</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-gray-600">Entre 30 y 90 días</td>
+                                    <td class="px-6 py-4 text-right font-bold text-black">50% del total</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-gray-600">Entre 10 y 30 días</td>
+                                    <td class="px-6 py-4 text-right font-bold text-black">70% del total</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-gray-600 font-bold text-[#AA0B0B]">10 días o menos</td>
+                                    <td class="px-6 py-4 text-right font-bold text-[#AA0B0B]">80% del total</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 p-4 bg-[#AA0B0B]/5 rounded-lg border-l-4 border-[#AA0B0B]">
+                        <p class="text-sm text-gray-700 m-0">
+                            <strong>Excepción:</strong> No habrá cobro si el participante encuentra un reemplazante aprobado por la organización.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Datos de Pago -->
+                <section id="pago" class="border-t pt-12 text-left">
+                    <h2 class="text-lg font-bold mb-8 uppercase tracking-widest text-center text-black">Datos de Pago</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Tarjeta ahora en Rojo Accent -->
+                        <div class="bg-[#AA0B0B] text-white p-8 rounded-xl shadow-lg">
+                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">Empresa</p>
+                            <p class="font-bold text-base mb-4">Sociedad Periodística El Líbero S.A.</p>
+                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">RUT</p>
+                            <p class="font-mono mb-4 text-sm">76.389.727-3</p>
+                            <p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">Banco</p>
+                            <p class="font-semibold italic text-sm">BCI</p>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 border border-gray-100 rounded-lg bg-gray-50">
+                                <p class="text-xs uppercase font-bold text-gray-400 m-0">Cuenta Pesos (CLP)</p>
+                                <p class="text-base font-mono font-bold tracking-wider text-black m-0">28975219</p>
+                            </div>
+                            <div class="p-4 border border-gray-100 rounded-lg bg-gray-50">
+                                <p class="text-xs uppercase font-bold text-gray-400 m-0">Cuenta Dólares (USD)</p>
+                                <p class="text-base font-mono font-bold tracking-wider text-[#AA0B0B] m-0">19643403</p>
+                            </div>
+                            <div class="pt-2 text-center md:text-left">
+                                <p class="text-[10px] text-gray-500 mb-1 uppercase tracking-tighter">Enviar comprobante a:</p>
+                                <a href="mailto:administracion@ellibero.cl" class="text-xs font-bold underline decoration-[#AA0B0B] underline-offset-4 text-black">administracion@ellibero.cl</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </section>
+
 	</main>
 
 	<?php
