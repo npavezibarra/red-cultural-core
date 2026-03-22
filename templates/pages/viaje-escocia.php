@@ -89,7 +89,7 @@ $gallery_items = array(
 		#red-cultural-viaje-escocia-subtitle{margin:18px 0 0;max-width:860px;font-size:18px;line-height:1.55;font-weight:400;opacity:.92}
 		#red-cultural-viaje-escocia-subtitle{margin-left:auto;margin-right:auto}
 
-		#red-cultural-viaje-escocia-content{max-width:var(--wp--style--global--wide-size);margin:0 auto;padding:56px 16px 40px;color:#111827}
+		#red-cultural-viaje-escocia-content{max-width:var(--wp--style--global--wide-size);margin:0 auto;padding:0 16px 40px;color:#111827}
 
 		#red-cultural-viaje-escocia-libero{
 			background:var(--rcp-escocia-red);
