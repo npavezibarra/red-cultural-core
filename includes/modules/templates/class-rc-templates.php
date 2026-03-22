@@ -34,6 +34,7 @@ final class Red_Cultural_Templates {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_escocia_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_contacto_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_terminos_template'), 20);
+		add_filter('template_include', array(__CLASS__, 'maybe_render_404_template'), 99);
 
 
 		add_action('init', array(__CLASS__, 'register_shortcodes'));
@@ -473,6 +474,7 @@ final class Red_Cultural_Templates {
 		add_filter('wp_nav_menu_objects', array(__CLASS__, 'rewrite_my_account_submenu'), 10, 2);
 		add_action('wp_footer', array(__CLASS__, 'render_main_nav_script'), 5);
 		add_action('wp_footer', array(__CLASS__, 'render_site_auth_modal'), 20);
+		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_404_assets'), 100);
 	}
 
 	public static function maybe_remove_woocommerce_header_blocks(string $block_content, array $block): string {
@@ -2522,6 +2524,35 @@ final class Red_Cultural_Templates {
 
 		wp_safe_redirect($redirect_to);
 		exit;
+	}
+
+	public static function maybe_render_404_template(string $template): string {
+		if (!is_404() || is_admin() || wp_doing_ajax()) {
+			return $template;
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/pages/404.php';
+		if (file_exists($template_file)) {
+			return $template_file;
+		}
+
+		return $template;
+	}
+
+	public static function enqueue_404_assets(): void {
+		if (!is_404() || is_admin()) {
+			return;
+		}
+
+		$css_url = plugins_url('assets/css/redcultural-404.css', dirname(__DIR__, 2) . '/red-cultural-core.php');
+		$css_path = RC_CORE_PATH . 'assets/css/redcultural-404.css';
+
+		wp_enqueue_style(
+			'redcultural-404',
+			$css_url,
+			array(),
+			file_exists($css_path) ? (string) filemtime($css_path) : '1.0.0'
+		);
 	}
 }
 

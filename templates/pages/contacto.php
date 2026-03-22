@@ -14,13 +14,7 @@ if (function_exists('do_blocks')) {
 	$rcp_theme_footer_html = (string) do_blocks('<!-- wp:template-part {"slug":"footer","area":"footer"} /-->');
 }
 
-$uploads = wp_get_upload_dir();
-$uploads_base = isset($uploads['baseurl']) ? (string) $uploads['baseurl'] : (string) content_url('/uploads');
-$uploads_base = rtrim($uploads_base, '/');
-
-$bg_rel = '/2026/03/la-anunciacion_red-cultural_1280x558.webp';
-$bg_local = $uploads_base . $bg_rel;
-$bg_live = 'https://red-cultural.cl/wp-content/uploads' . $bg_rel;
+$bg_url = plugins_url('assets/images/la-anunciacion_red-cultural_1280x558.webp', dirname(__DIR__, 2) . '/red-cultural-core.php');
 
 ?><!DOCTYPE html>
 <html lang="es">
@@ -41,12 +35,10 @@ $bg_live = 'https://red-cultural.cl/wp-content/uploads' . $bg_rel;
 		}
 
 		#red-cultural-contacto-bg{
-			background-image:
-				url('<?php echo esc_url($bg_local); ?>'),
-				url('<?php echo esc_url($bg_live); ?>');
-			background-size:cover,cover;
-			background-position:center,center;
-			background-attachment:fixed,fixed;
+			background-image: url('<?php echo esc_url($bg_url); ?>');
+			background-size:cover;
+			background-position:center;
+			background-attachment:fixed;
 			min-height:50%;
 			display:flex;
 			align-items:flex-start;
