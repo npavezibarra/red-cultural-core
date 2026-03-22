@@ -208,13 +208,14 @@ $bg_live = 'https://red-cultural.cl/wp-content/uploads' . $bg_rel;
 				</div>
 
 				<div id="red-cultural-contacto-success" class="h-full flex flex-col items-center justify-center text-center py-10">
-					<div id="red-cultural-contacto-success-icon" class="w-12 h-12 border border-black flex items-center justify-center mb-6">
+					<div id="red-cultural-contacto-success-icon" class="w-12 h-12 border border-black rounded-full flex items-center justify-center mb-6">
 						<span id="red-cultural-contacto-success-check" class="text-xl font-light">✓</span>
 					</div>
 					<h2 id="red-cultural-contacto-success-title" class="text-xl font-light uppercase tracking-[0.2em]">Enviado</h2>
-					<p id="red-cultural-contacto-success-text" class="mt-4 text-xs text-gray-500 max-w-xs leading-relaxed">Hemos recibido tu mensaje. Nos pondremos en contacto contigo a la brevedad.</p>
+					<p id="red-cultural-contacto-success-text" class="mt-4 text-[18px] text-gray-500 max-w-xs leading-relaxed">Hemos recibido tu mensaje. Nos pondremos en contacto contigo a la brevedad.</p>
 					<button id="red-cultural-contacto-success-reload" type="button" class="mt-10 text-[9px] font-semibold uppercase tracking-widest border-b border-black pb-1 hover:opacity-50 transition-opacity">Volver al formulario</button>
 				</div>
+
 
 				<script id="red-cultural-contacto-script">
 					(function(){
@@ -225,7 +226,10 @@ $bg_live = 'https://red-cultural.cl/wp-content/uploads' . $bg_rel;
 						if (ok && formContainer && success) {
 							formContainer.style.display = 'none';
 							success.style.display = 'flex';
+							var title = document.getElementById('red-cultural-contacto-title');
+							if (title) title.style.display = 'none';
 						}
+
 
 						var reloadBtn = document.getElementById('red-cultural-contacto-success-reload');
 						if (reloadBtn) {
