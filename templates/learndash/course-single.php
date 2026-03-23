@@ -364,9 +364,13 @@ if (function_exists('do_blocks')) {
 									IR AL CURSO
 								</a>
 							<?php elseif ($rcil_is_active) : ?>
-									<button id="rcil-buy-course" type="button" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline">
-										<?php echo esc_html__('COMPRAR CURSO', 'red-cultural-individual-lesson'); ?>
-									</button>
+								<?php 
+								$rcp_woo_product_id = function_exists('rcil_get_course_woo_product_id') ? rcil_get_course_woo_product_id($course_id) : false;
+								$rcp_buy_url = $rcp_woo_product_id ? esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url())) : '#';
+								?>
+								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline" href="<?php echo $rcp_buy_url; ?>">
+									COMPRAR CURSO
+								</a>
 							<?php elseif ($payment_button_html !== '') : ?>
 								<div id="red-cultural-course-cta" class="w-full mb-6">
 									<?php echo $payment_button_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
