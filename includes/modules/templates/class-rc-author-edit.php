@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Handles author editing for admins directly on the course single page.
- * Persistent inline version.
+ * Handles author editing for admins on course pages.
+ * Toggled box version (matches lesson editor style).
  */
 class RC_Author_Edit {
 
@@ -41,13 +41,16 @@ class RC_Author_Edit {
         }
         $course_id = isset($_POST['course_id']) ? absint($_POST['course_id']) : 0;
         $author_id = isset($_POST['author_id']) ? absint($_POST['author_id']) : 0;
+
         if (!$course_id || !$author_id) {
             wp_send_json_error('Invalid data');
         }
+
         $updated = wp_update_post(['ID' => $course_id, 'post_author' => $author_id]);
         if (is_wp_error($updated)) {
             wp_send_json_error($updated->get_error_message());
         }
+
         $user = get_userdata($author_id);
         wp_send_json_success(['display_name' => $user->display_name]);
     }
@@ -56,20 +59,42 @@ class RC_Author_Edit {
         if (!current_user_can('manage_options')) {
             return;
         }
+
         $nonce = wp_create_nonce('rc_author_edit_nonce');
         ?>
         <style>
+            #rc-author-admin-box.hidden { display: none !important; }
             #rc-author-search-results.hidden { display: none !important; }
-            .author-result-item:hover { background-color: #f8fafc; }
+            .author-result-item:hover { background-color: #f3f4f6; }
         </style>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const trigger = document.getElementById('rc-author-edit-trigger');
+            const adminBox = document.getElementById('rc-author-admin-box');
+            const cancelBtn = document.getElementById('rc-author-edit-cancel');
             const searchInput = document.getElementById('rc-author-search-input');
             const resultsDiv = document.getElementById('rc-author-search-results');
             const statusDiv = document.getElementById('rc-author-edit-status');
             const displayNameSpan = document.getElementById('rc-author-display-name');
 
-            if (!searchInput) return;
+            if (!trigger || !adminBox) return;
+
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                adminBox.classList.toggle('hidden');
+                if (!adminBox.classList.contains('hidden')) {
+                    searchInput.focus();
+                }
+            });
+
+            cancelBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                adminBox.classList.add('hidden');
+                resultsDiv.classList.add('hidden');
+                searchInput.value = '';
+            });
 
             let searchTimeout;
             searchInput.addEventListener('input', (e) => {
@@ -112,33 +137,36 @@ class RC_Author_Edit {
 
             function updateAuthor(authorId, authorName) {
                 statusDiv.textContent = 'Actualizando...';
+                statusDiv.style.color = '#3b82f6';
+                
                 const formData = new FormData();
                 formData.append('action', 'rc_update_course_author');
                 formData.append('nonce', '<?php echo $nonce; ?>');
                 formData.append('course_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
                 formData.append('author_id', authorId);
-                
-                fetch('<?php echo admin_url('admin-ajax.php'); ?>', { method: 'POST', body: formData })
+
+                fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                    method: 'POST',
+                    body: formData
+                })
                 .then(r => r.json())
                 .then(res => {
                     if (res.success) {
                         displayNameSpan.textContent = authorName;
-                        resultsDiv.classList.add('hidden');
-                        searchInput.value = '';
                         statusDiv.textContent = '¡Cambiado!';
-                        setTimeout(() => { statusDiv.textContent = ''; }, 2000);
+                        statusDiv.style.color = '#10b981';
+                        setTimeout(() => {
+                            adminBox.classList.add('hidden');
+                            statusDiv.textContent = '';
+                            resultsDiv.classList.add('hidden');
+                            searchInput.value = '';
+                        }, 1000);
                     } else {
-                        statusDiv.textContent = 'Error: ' + res.data;
+                        statusDiv.textContent = 'Error';
+                        statusDiv.style.color = '#ef4444';
                     }
                 });
             }
-
-            // Close results when clicking outside
-            document.addEventListener('click', (e) => {
-                if (resultsDiv && !resultsDiv.contains(e.target) && e.target !== searchInput) {
-                    resultsDiv.classList.add('hidden');
-                }
-            });
         });
         </script>
         <?php

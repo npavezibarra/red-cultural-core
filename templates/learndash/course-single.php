@@ -180,22 +180,32 @@ if (function_exists('do_blocks')) {
 				</button>
 
 				<?php if ($author_name !== '') : ?>
-					<div id="red-cultural-course-author" class="flex flex-col space-y-2">
+					<div id="red-cultural-course-author" class="flex flex-col space-y-1">
 						<div class="flex items-center space-x-3">
 							<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
 								<i data-lucide="user" class="text-white w-6 h-6"></i>
 							</div>
-							<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
+							<div class="flex items-center">
+								<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
+								<?php if (current_user_can('manage_options')) : ?>
+									<button id="rc-author-edit-trigger" class="ml-3 text-[10px] text-blue-400 border border-blue-400/50 px-1 rounded uppercase hover:bg-blue-400 hover:text-white transition-all font-bold" type="button">EDITAR</button>
+								<?php endif; ?>
+							</div>
 						</div>
 						
 						<?php if (current_user_can('manage_options')) : ?>
-							<div id="rc-author-admin-box" class="pt-2 border-t border-white/10 max-w-[240px]">
-								<p class="text-[9px] uppercase tracking-widest opacity-60 mb-1"><?php esc_html_e('ADMIN: Cambiar autor', 'red-cultural-core'); ?></p>
-								<div class="relative">
-									<input type="text" id="rc-author-search-input" class="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded px-2 py-1 text-xs focus:bg-white/20 outline-none" placeholder="<?php esc_attr_e('Escribe para asignar...', 'red-cultural-core'); ?>" autocomplete="off">
-									<div id="rc-author-search-results" class="hidden absolute left-0 bottom-full mb-1 w-full bg-white text-gray-800 rounded shadow-2xl max-h-40 overflow-y-auto z-[999] border border-gray-200"></div>
+							<div id="rc-author-admin-box" class="hidden mt-3 p-4 bg-white text-gray-800 rounded-lg shadow-xl max-w-sm border border-gray-200">
+								<h5 class="text-xs font-bold uppercase mb-3 text-gray-500 tracking-wider"><?php esc_html_e('Cambiar Autor', 'red-cultural-core'); ?></h5>
+								<div class="relative mb-4">
+									<input type="text" id="rc-author-search-input" class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none shadow-inner" placeholder="<?php esc_attr_e('Escribe un nombre...', 'red-cultural-core'); ?>" autocomplete="off">
+									<div id="rc-author-search-results" class="hidden absolute left-0 bottom-full mb-1 w-full bg-white text-gray-800 rounded shadow-2xl max-h-40 overflow-y-auto z-[9999] border border-gray-200"></div>
 								</div>
-								<div id="rc-author-edit-status" class="text-[10px] text-white/80 italic mt-1"></div>
+								<div class="flex items-center justify-between">
+									<div id="rc-author-edit-status" class="text-[10px] font-bold"></div>
+									<div class="flex space-x-2">
+										<button id="rc-author-edit-cancel" class="bg-gray-100 text-gray-700 px-3 py-1.5 rounded text-xs font-bold hover:bg-gray-200" type="button">Cancelar</button>
+									</div>
+								</div>
 							</div>
 						<?php endif; ?>
 					</div>
@@ -435,7 +445,7 @@ if (function_exists('do_blocks')) {
 				var target = e.target;
 				if (!target) return;
 				// Never navigate when interacting with admin inline editor UI.
-				if (target.closest && (target.closest('.rcil-lesson-edit-trigger') || target.closest('.rcil-video-editor'))) return;
+				if (target.closest && (target.closest('.rcil-lesson-edit-trigger') || target.closest('.rcil-video-editor') || target.closest('#rc-author-admin-box') || target.closest('#rc-author-edit-trigger'))) return;
 				if (target.closest && target.closest('a')) return;
 
 				var card = target.closest ? target.closest('.rcp-lesson-card') : null;
