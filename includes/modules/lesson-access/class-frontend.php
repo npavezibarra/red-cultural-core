@@ -213,7 +213,7 @@ class RCIL_Frontend
 
         ?>
         <div class="rcil-buy-button-container" style="margin-top: 15px; margin-bottom: 15px; clear: both;">
-            <button id="rcil-open-modal" class="button btn-buy-some-lessons"
+            <button id="rcil-open-modal" class="button btn-buy-some-lessons rcil-rcp-buy-btn"
                 style="padding: 10px 20px; font-weight: bold; cursor: pointer; display: inline-block;">
                 <?php _e('COMPRAR ALGUNAS LECCIONES', 'red-cultural-individual-lesson'); ?>
             </button>
@@ -275,12 +275,7 @@ class RCIL_Frontend
         }
 
         if (is_user_logged_in()) {
-            // Admins can always see the button for testing purposes.
-            if (current_user_can('manage_options')) {
-                return true;
-            }
-            
-            // Option: If user already have full course access, hide the button.
+            // If user already has full course access, hide the button.
             if (rcil_user_has_full_course_access(get_current_user_id(), $course_id)) {
                 return false;
             }

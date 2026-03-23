@@ -666,6 +666,7 @@ final class Red_Cultural_Templates {
 			.rcp-nav-link{position:relative;display:inline-flex;align-items:center;transition:color .3s ease}
 			.rcp-nav-link::after{content:'';position:absolute;width:0;height:2px;bottom:-4px;left:0;background-color:#000;transition:width .3s ease}
 			.rcp-nav-link:hover::after{width:100%}
+			li.wp-block-navigation-item.rcp-nav-auth{border:1px solid black;border-radius:6px}
 
 			.rcp-btn-auth{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:110px;padding:6px 18px;background:#ffffff;color:#000000 !important;border-radius:6px;border:2px solid #000;transition:all .2s ease;text-decoration:none}
 			.rcp-btn-auth:hover{background:#f9f9f9}

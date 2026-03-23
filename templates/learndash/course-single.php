@@ -143,7 +143,9 @@ if (function_exists('do_blocks')) {
 		#red-cultural-course-lessons-list h3.font-medium.text-gray-800{font-size:16px;font-weight:700}
 		#red-cultural-course-lessons h2.text-xs.font-bold.text-gray-400.tracking-widest.uppercase.mb-6{color:#000;font-weight:900;font-size:16px}
 		#rcil-buy-course { margin-bottom: 10px !important; }
-		#red-cultural-course-cta { margin-bottom: 10px !important; padding: 12px !important; display: flex; align-items: center; justify-content: center; }
+		#red-cultural-course-cta { margin-bottom: 10px !important; padding: 12px !important; display: flex; align-items: center; justify-content: center; letter-spacing: 2px; font-size: 12px; font-weight: 700; }
+		#red-cultural-course-intro { background: none !important; }
+		@media (max-width: 1240px){ #red-cultural-course-hero-content { padding: 30px !important; } #red-cultural-course-content { padding: 90px 0px 0px !important; } }
 	</style>
 	<?php wp_head(); ?>
 </head>
@@ -238,7 +240,7 @@ if (function_exists('do_blocks')) {
 
 				<section id="red-cultural-course-lessons">
 					<h2 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-6">
-						<?php echo esc_html__('Contenido del curso', 'red-cultural-pages'); ?>
+						<?php echo esc_html__('Lecciones del curso', 'red-cultural-pages'); ?>
 					</h2>
 
 					<div id="red-cultural-course-lessons-list" class="space-y-4">
@@ -377,7 +379,7 @@ if (function_exists('do_blocks')) {
 
 							<div id="red-cultural-course-includes" class="w-full space-y-4 border-t border-gray-100 pt-6 text-left">
 								<h4 class="text-[10px] font-bold text-gray-800 uppercase tracking-widest mb-4">
-									<?php echo esc_html__('Incluye curso', 'red-cultural-pages'); ?>
+									<?php echo esc_html__('Curso incluye', 'red-cultural-pages'); ?>
 								</h4>
 								<div class="flex items-center text-sm text-gray-600">
 									<i data-lucide="book-open" class="w-4 h-4 mr-3 text-gray-400"></i>
