@@ -143,7 +143,7 @@ if (function_exists('do_blocks')) {
 		#red-cultural-course-lessons-list h3.font-medium.text-gray-800{font-size:16px;font-weight:700}
 		#red-cultural-course-lessons h2.text-xs.font-bold.text-gray-400.tracking-widest.uppercase.mb-6{color:#000;font-weight:900;font-size:16px}
 		#rcil-buy-course { margin-bottom: 10px !important; }
-		#red-cultural-course-cta { margin-bottom: 10px !important; }
+		#red-cultural-course-cta { margin-bottom: 24px !important; padding: 12px !important; display: flex; align-items: center; justify-content: center; }
 	</style>
 	<?php wp_head(); ?>
 </head>
@@ -358,8 +358,8 @@ if (function_exists('do_blocks')) {
 							<?php endif; ?>
 
 							<?php if ($rcp_show_go_to_course) : ?>
-								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-4 rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6" href="<?php echo esc_url($rcp_first_accessible_lesson_url); ?>">
-									<?php echo esc_html__('Ir al curso', 'red-cultural-pages'); ?>
+								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 no-underline" href="<?php echo esc_url($rcp_first_accessible_lesson_url); ?>">
+									<?php echo esc_html__('IR AL CURSO', 'red-cultural-pages'); ?>
 								</a>
 							<?php elseif ($rcil_is_active) : ?>
 									<button id="rcil-buy-course" type="button" class="w-full bg-black text-white py-4 rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6">
@@ -370,8 +370,8 @@ if (function_exists('do_blocks')) {
 									<?php echo $payment_button_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
 							<?php else : ?>
-								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-4 rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
-									<?php echo esc_html__('Iniciar sesión para inscribirse', 'red-cultural-pages'); ?>
+								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 no-underline" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
+									<?php echo esc_html__('INICIAR SESIÓN PARA INSCRIBIRSE', 'red-cultural-pages'); ?>
 								</a>
 							<?php endif; ?>
 
