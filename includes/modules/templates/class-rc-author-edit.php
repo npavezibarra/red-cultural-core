@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 
 /**
  * Handles front-end author editing for admins on course pages.
+ * Simplified inline version.
  */
 class RC_Author_Edit {
 
@@ -15,115 +16,75 @@ class RC_Author_Edit {
         add_action('wp_footer', [__CLASS__, 'render_js']);
     }
 
-    /**
-     * AJAX search for authors/admins.
-     */
     public static function ajax_search_authors() {
         check_ajax_referer('rc_author_edit_nonce', 'nonce');
-        
         if (!current_user_can('manage_options')) {
             wp_send_json_error('No tienes permisos suficientes.');
         }
-
         $search = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
         if (strlen($search) < 2) {
             wp_send_json_success([]);
         }
-
         $users = get_users([
             'search' => '*' . $search . '*',
             'role__in' => ['administrator', 'author'],
             'number' => 10,
             'fields' => ['ID', 'display_name', 'user_email']
         ]);
-
         wp_send_json_success($users);
     }
 
-    /**
-     * AJAX update course author.
-     */
     public static function ajax_update_author() {
         check_ajax_referer('rc_author_edit_nonce', 'nonce');
-        
         if (!current_user_can('manage_options')) {
             wp_send_json_error('No tienes permisos suficientes.');
         }
-
         $course_id = isset($_POST['course_id']) ? absint($_POST['course_id']) : 0;
         $author_id = isset($_POST['author_id']) ? absint($_POST['author_id']) : 0;
-
         if (!$course_id || !$author_id) {
             wp_send_json_error('Datos inválidos.');
         }
-
-        $updated = wp_update_post([
-            'ID' => $course_id,
-            'post_author' => $author_id
-        ]);
-
+        $updated = wp_update_post(['ID' => $course_id, 'post_author' => $author_id]);
         if (is_wp_error($updated)) {
             wp_send_json_error($updated->get_error_message());
         }
-
         $user = get_userdata($author_id);
-        wp_send_json_success([
-            'display_name' => $user->display_name
-        ]);
+        wp_send_json_success(['display_name' => $user->display_name]);
     }
 
-    /**
-     * Render JS and local styles in footer.
-     */
     public static function render_js() {
         if (!current_user_can('manage_options')) {
             return;
         }
-
         $nonce = wp_create_nonce('rc_author_edit_nonce');
         ?>
         <style>
-            #rc-author-edit-floating.hidden { display: none !important; }
-            #rc-author-edit-floating:not(.hidden) { display: block !important; }
-            #rc-author-edit-floating {
-                position: absolute;
-                z-index: 10000;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-                padding: 1rem;
-                width: 280px;
-                border: 1px solid #e2e8f0;
-            }
+            #rc-author-inline-edit.hidden, #rc-author-info-wrap.hidden { display: none !important; }
+            #rc-author-search-results.hidden { display: none !important; }
+            .author-result-item:hover { background-color: #f3f4f6; }
         </style>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editBtn = document.getElementById('rc-edit-author-btn');
-            const floating = document.getElementById('rc-author-edit-floating');
-            const closeBtn = document.getElementById('rc-close-author-edit');
+            const cancelBtn = document.getElementById('rc-cancel-author-edit');
+            const infoWrap = document.getElementById('rc-author-info-wrap');
+            const editWrap = document.getElementById('rc-author-inline-edit');
             const searchInput = document.getElementById('rc-author-search-input');
             const resultsDiv = document.getElementById('rc-author-search-results');
             const statusDiv = document.getElementById('rc-author-edit-status');
             const displayNameSpan = document.getElementById('rc-author-display-name');
 
-            if (!editBtn || !floating) return;
-            
-            // Re-init lucide if available (just for our added icons)
-            if (window.lucide && typeof lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
+            if (!editBtn || !editWrap) return;
 
-            editBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                floating.classList.toggle('hidden');
-                if (!floating.classList.contains('hidden')) {
-                    searchInput.focus();
-                }
+            editBtn.addEventListener('click', () => {
+                infoWrap.classList.add('hidden');
+                editWrap.classList.remove('hidden');
+                searchInput.focus();
             });
 
-            closeBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                floating.classList.add('hidden');
+            cancelBtn.addEventListener('click', () => {
+                editWrap.classList.add('hidden');
+                infoWrap.classList.remove('hidden');
                 resultsDiv.classList.add('hidden');
             });
 
@@ -136,88 +97,55 @@ class RC_Author_Edit {
                     resultsDiv.classList.add('hidden');
                     return;
                 }
-
                 searchTimeout = setTimeout(() => {
                     fetch('<?php echo admin_url('admin-ajax.php'); ?>?action=rc_search_authors&nonce=<?php echo $nonce; ?>&search=' + encodeURIComponent(query))
                         .then(r => r.json())
                         .then(res => {
-                            if (res.success) {
-                                renderResults(res.data);
-                            }
+                            if (res.success) renderResults(res.data);
                         });
                 }, 300);
             });
 
             function renderResults(users) {
                 if (users.length === 0) {
-                    resultsDiv.innerHTML = '<div class="px-3 py-2 text-xs text-gray-500">No se encontraron autores</div>';
+                    resultsDiv.innerHTML = '<div class="px-3 py-2 text-xs text-gray-500">No hay resultados</div>';
                 } else {
                     resultsDiv.innerHTML = users.map(u => `
-                        <div class="px-3 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 author-result-item" data-id="${u.ID}" data-name="${u.display_name}">
-                            <div class="font-medium">${u.display_name}</div>
+                        <div class="px-3 py-2 cursor-pointer text-sm text-gray-700 author-result-item border-b border-gray-100 last:border-0" data-id="${u.ID}" data-name="${u.display_name}">
+                            <div class="font-bold">${u.display_name}</div>
                             <div class="text-[10px] text-gray-400">${u.user_email}</div>
                         </div>
                     `).join('');
                 }
                 resultsDiv.classList.remove('hidden');
-
                 document.querySelectorAll('.author-result-item').forEach(item => {
-                    item.addEventListener('click', (e) => {
+                    item.onclick = (e) => {
                         e.stopPropagation();
-                        const authorId = item.dataset.id;
-                        const authorName = item.dataset.name;
-                        updateAuthor(authorId, authorName);
-                    });
+                        updateAuthor(item.dataset.id, item.dataset.name);
+                    };
                 });
             }
 
             function updateAuthor(authorId, authorName) {
-                statusDiv.textContent = 'Actualizando...';
-                statusDiv.classList.remove('hidden', 'text-red-500', 'text-green-500');
-                statusDiv.classList.add('text-blue-500');
-                statusDiv.style.display = 'block';
-
+                statusDiv.textContent = '...';
                 const formData = new FormData();
                 formData.append('action', 'rc_update_course_author');
                 formData.append('nonce', '<?php echo $nonce; ?>');
                 formData.append('course_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
                 formData.append('author_id', authorId);
-
-                fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
-                    method: 'POST',
-                    body: formData
-                })
+                fetch('<?php echo admin_url('admin-ajax.php'); ?>', { method: 'POST', body: formData })
                 .then(r => r.json())
                 .then(res => {
                     if (res.success) {
-                        statusDiv.textContent = '¡Actualizado!';
-                        statusDiv.classList.replace('text-blue-500', 'text-green-500');
                         displayNameSpan.textContent = authorName;
-                        setTimeout(() => {
-                            floating.classList.add('hidden');
-                            statusDiv.classList.add('hidden');
-                            resultsDiv.classList.add('hidden');
-                            searchInput.value = '';
-                        }, 1000);
+                        editWrap.classList.add('hidden');
+                        infoWrap.classList.remove('hidden');
+                        resultsDiv.classList.add('hidden');
+                        searchInput.value = '';
+                        statusDiv.textContent = '';
                     } else {
-                        statusDiv.textContent = 'Error: ' + res.data;
-                        statusDiv.classList.replace('text-blue-500', 'text-red-500');
+                        statusDiv.textContent = 'Error';
                     }
-                });
-            }
-
-            // Close when clicking outside
-            document.addEventListener('click', (e) => {
-                if (floating && !floating.contains(e.target) && !editBtn.contains(e.target)) {
-                    floating.classList.add('hidden');
-                    resultsDiv.classList.add('hidden');
-                }
-            });
-            
-            // Prevent closure when clicking inside the floating div
-            if (floating) {
-                floating.addEventListener('click', (e) => {
-                    e.stopPropagation();
                 });
             }
         });

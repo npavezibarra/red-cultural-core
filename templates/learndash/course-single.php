@@ -180,29 +180,28 @@ if (function_exists('do_blocks')) {
 				</button>
 
 				<?php if ($author_name !== '') : ?>
-					<div id="red-cultural-course-author" class="flex items-center space-x-3 relative">
+					<div id="red-cultural-course-author" class="flex items-center space-x-3">
 						<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
 							<i data-lucide="user" class="text-white w-6 h-6"></i>
 						</div>
-						<div class="flex items-center relative">
-							<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
+						<div class="flex items-center">
+							<div id="rc-author-info-wrap" class="flex items-center">
+								<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
+								<?php if (current_user_can('manage_options')) : ?>
+									<button id="rc-edit-author-btn" class="ml-3 text-[10px] bg-white/20 px-2 py-0.5 rounded hover:bg-white/40 transition-colors uppercase tracking-wider font-bold" type="button">
+										<?php esc_html_e('EDIT', 'red-cultural-core'); ?>
+									</button>
+								<?php endif; ?>
+							</div>
+							
 							<?php if (current_user_can('manage_options')) : ?>
-								<button id="rc-edit-author-btn" class="ml-3 text-[10px] bg-white/20 px-2 py-0.5 rounded hover:bg-white/40 transition-colors uppercase tracking-wider font-bold" type="button">
-									<?php esc_html_e('EDIT', 'red-cultural-core'); ?>
-								</button>
-								<div id="rc-author-edit-floating" class="hidden absolute left-0 top-full mt-2 bg-white rounded-lg shadow-2xl p-4 w-72 z-[100] text-gray-800 border border-gray-100 animate-in fade-in slide-in-from-top-2 duration-200">
-									<div class="flex justify-between items-center mb-3">
-										<span class="text-xs font-bold uppercase tracking-wider text-gray-500"><?php esc_html_e('Autor', 'red-cultural-core'); ?></span>
-										<button id="rc-close-author-edit" class="text-gray-400 hover:text-gray-600" type="button">
-											<i data-lucide="x" class="w-4 h-4"></i>
-										</button>
-									</div>
+								<div id="rc-author-inline-edit" class="hidden flex items-center space-x-2">
 									<div class="relative">
-										<input type="text" id="rc-author-search-input" class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="<?php esc_attr_e('Buscar autor...', 'red-cultural-core'); ?>" autocomplete="off">
-										<div id="rc-author-search-results" class="hidden absolute w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1 max-h-48 overflow-y-auto z-[110]">
-										</div>
+										<input type="text" id="rc-author-search-input" class="bg-white/10 border border-white/20 text-white rounded px-2 py-1 text-xs focus:bg-white/20 outline-none w-48" placeholder="<?php esc_attr_e('Buscar autor...', 'red-cultural-core'); ?>" autocomplete="off">
+										<div id="rc-author-search-results" class="hidden absolute left-0 bottom-full mb-1 w-full bg-white text-gray-800 rounded shadow-lg max-h-40 overflow-y-auto z-[999]"></div>
 									</div>
-									<div id="rc-author-edit-status" class="mt-2 text-[10px] hidden font-semibold"></div>
+									<button id="rc-cancel-author-edit" class="text-[10px] text-white/60 hover:text-white" type="button"><?php esc_html_e('CANCELAR', 'red-cultural-core'); ?></button>
+									<div id="rc-author-edit-status" class="text-[10px] text-white/80 italic"></div>
 								</div>
 							<?php endif; ?>
 						</div>
