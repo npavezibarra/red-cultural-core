@@ -42,8 +42,8 @@ final class Red_Cultural_Email_Tester
 
         add_submenu_page(
             $parent_slug,
-            'Test emails',
-            'Test emails',
+            'Probar correos',
+            'Probar correos',
             'manage_options',
             'red-cultural-email-tester',
             [$this, 'render_admin_page']
@@ -73,7 +73,7 @@ final class Red_Cultural_Email_Tester
         $error = isset($_GET['rc_error']) ? sanitize_text_field($_GET['rc_error']) : '';
         ?>
         <div class="wrap">
-            <h1><?php echo esc_html__('Test emails', 'red-cultural-core'); ?></h1>
+            <h1><?php echo esc_html__('Probar correos', 'red-cultural-core'); ?></h1>
 
             <?php if ($updated) : ?>
                 <div class="notice notice-success is-dismissible"><p><?php echo esc_html__('Email de prueba enviado correctamente.', 'red-cultural-core'); ?></p></div>
@@ -211,14 +211,14 @@ final class Red_Cultural_Email_Tester
 
     private function send_test_lesson_notif_global($to)
     {
-        $email_content = "<h2>TEST: Upcoming Lessons Notification</h2>";
+        $email_content = "<h2>TEST: " . __('Notificación de Próximas Lecciones', 'red-cultural-individual-lesson') . "</h2>";
         $email_content .= "<p>Esta es una lista simulada de las lecciones que se liberarán en las próximas 24 horas.</p>";
         $email_content .= "<h3>Lección de Prueba (Curso: Literatura Universal)</h3>";
         $email_content .= "<p><strong>Fecha de liberación:</strong> " . date_i18n(get_option('date_format') . ' ' . get_option('time_format')) . "</p>";
         $email_content .= "<ul><li>Usuario Tester (tester@ejemplo.cl)</li></ul><hr>";
         
         $headers = array('Content-Type: text/html; charset=UTF-8');
-        return wp_mail($to, 'TEST: Alumni list for upcoming lessons', $email_content, $headers);
+        return wp_mail($to, 'TEST: ' . __('Lista de alumnos para próximas lecciones', 'red-cultural-individual-lesson'), $email_content, $headers);
     }
 
     private function send_test_lesson_notif_specific($to)
@@ -234,14 +234,14 @@ final class Red_Cultural_Email_Tester
             }
         }
         
-        $email_content = "<h2>TEST: Course Lesson Alumni List</h2>";
+        $email_content = "<h2>TEST: " . __('Lista de Alumnos de Lección de Curso', 'red-cultural-individual-lesson') . "</h2>";
         $email_content .= "<h3>{$lesson_title} (Curso: {$course_title})</h3>";
         $email_content .= "<p><strong>Fecha de liberación:</strong> " . date_i18n(get_option('date_format') . ' ' . get_option('time_format')) . "</p>";
         $email_content .= "<p>Los siguientes alumnos han comprado esta lección:</p>";
         $email_content .= "<ul><li>Tester User - tester@ejemplo.cl</li></ul><hr>";
         
         $headers = array('Content-Type: text/html; charset=UTF-8');
-        return wp_mail($to, "TEST: Alumni list: {$lesson_title}", $email_content, $headers);
+        return wp_mail($to, 'TEST: ' . sprintf(__('Lista de alumnos: %s', 'red-cultural-individual-lesson'), $lesson_title), $email_content, $headers);
     }
 
     private function send_test_wc_new_order($to)

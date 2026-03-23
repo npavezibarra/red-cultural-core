@@ -9,7 +9,7 @@ final class RCS_Shipping_Method extends WC_Shipping_Method {
 		$this->id                 = Red_Cultural_Shipping::SHIPPING_METHOD_ID;
 		$this->instance_id        = absint( $instance_id );
 		$this->method_title       = __( 'Red Cultural (Regiones)', 'red-cultural-shipping' );
-		$this->method_description = __( 'Shipping cost is based on the Región mapped from the selected Comuna.', 'red-cultural-shipping' );
+		$this->method_description = __( 'El costo de envío se basa en la Región mapeada a partir de la Comuna seleccionada.', 'red-cultural-shipping' );
 		$this->supports           = array( 'shipping-zones', 'instance-settings' );
 
 		$this->init();
@@ -18,9 +18,9 @@ final class RCS_Shipping_Method extends WC_Shipping_Method {
 	public function init() {
 		$this->instance_form_fields = array(
 			'title' => array(
-				'title'       => __( 'Title', 'red-cultural-shipping' ),
+				'title'       => __( 'Título', 'red-cultural-shipping' ),
 				'type'        => 'text',
-				'description' => __( 'Label shown at checkout.', 'red-cultural-shipping' ),
+				'description' => __( 'Etiqueta mostrada en el checkout.', 'red-cultural-shipping' ),
 				'default'     => __( 'Envío', 'red-cultural-shipping' ),
 			),
 		);

@@ -121,10 +121,10 @@ class RCIL_Access_Control
                 $block_msg = '<div class="rcil-locked-message" style="margin: 30px 0;">' .
                     '<h2 style="margin: 0 0 15px 0;">' . esc_html($lesson_title) . '</h2>' .
                     '<p style="margin: 0 0 15px 0;">' .
-                    esc_html__('You do not have access to this lesson based on your individual purchase selection. Please buy this lesson or the full course to view.', 'red-cultural-individual-lesson') .
+                    esc_html__('No tienes acceso a esta lección según tu selección de compra individual. Por favor, compra esta lección o el curso completo para ver el contenido.', 'red-cultural-individual-lesson') .
                     '</p>' .
                     '<div style="text-align: left; margin-top: 10px;">' .
-                    '<button class="button rcil-buy-lessons-btn" data-course="' . esc_attr($course_id) . '">' . esc_html__('Buy Lesson', 'red-cultural-individual-lesson') . '</button>' .
+                    '<button class="button rcil-buy-lessons-btn" data-course="' . esc_attr($course_id) . '">' . esc_html__('Comprar Lección', 'red-cultural-individual-lesson') . '</button>' .
                     '</div>' .
                     '</div>';
                 

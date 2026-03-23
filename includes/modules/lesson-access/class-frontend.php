@@ -253,7 +253,7 @@ class RCIL_Frontend
         <div class="rcil-alumni-button-container" style="margin-top: 15px; margin-bottom: 15px; clear: both; width: 100%;">
             <button id="rcil-open-alumni-modal" class="button"
                 style="padding: 10px 20px; font-weight: bold; cursor: pointer; display: block; width: 100%; text-align: center; background-color: #f1f1f1; color: #333; border: 1px solid #ddd;">
-                <?php _e('ALUMNI LIST', 'red-cultural-individual-lesson'); ?>
+                <?php _e('LISTA DE ALUMNOS', 'red-cultural-individual-lesson'); ?>
             </button>
         </div>
         <?php
@@ -380,7 +380,7 @@ class RCIL_Frontend
                 if ($.inArray(currentUrl, lockedUrls) !== -1) {
                     var $mcBtn = $('.learndash_mark_complete_button, form#sfwd-mark-complete input[type="submit"], input[name="sfwd_mark_complete"], .lms-mark-complete-button, .ld-mark-complete');
                     $mcBtn.prop('disabled', true).css({ 'opacity': '0.5', 'cursor': 'not-allowed' });
-                    $mcBtn.attr('title', '<?php esc_attr_e('You must purchase this lesson to mark it as complete.', 'red-cultural-individual-lesson'); ?>');
+                    $mcBtn.attr('title', '<?php esc_attr_e('Debes comprar esta lección para marcarla como completada.', 'red-cultural-individual-lesson'); ?>');
                 }
             });
         </script>
@@ -416,7 +416,7 @@ class RCIL_Frontend
                     <?php echo get_the_title($course_id); ?>
                 </h2>
                 <p>
-                    <?php _e('Select one or more lessons to purchase individually:', 'red-cultural-individual-lesson'); ?>
+                    <?php _e('Selecciona una o más lecciones para comprar individualmente:', 'red-cultural-individual-lesson'); ?>
                 </p>
                 <form id="rcil-selection-form">
                     <div class="rcil-lessons-list">
@@ -430,7 +430,7 @@ class RCIL_Frontend
                                         data-title="<?php echo esc_attr($lesson['post']->post_title); ?>" <?php echo $has_access ? 'checked disabled' : ''; ?>>
                                     <?php echo $lesson['post']->post_title; ?>
                                     <?php if ($has_access): ?> <span class="rcil-badge">
-                                            <?php _e('(Owned)', 'red-cultural-individual-lesson'); ?>
+                                            <?php _e('(Comprado)', 'red-cultural-individual-lesson'); ?>
                                         </span>
                                     <?php endif; ?>
                                 </label>
@@ -478,11 +478,11 @@ class RCIL_Frontend
         <div id="rcil-alumni-modal" class="rcil-modal" style="display:none;" data-course-id="<?php echo esc_attr($course_id); ?>">
             <div class="rcil-modal-content" style="max-width: 600px;">
                 <span class="rcil-alumni-close rcil-close">&times;</span>
-                <h2><?php _e('Alumni List', 'red-cultural-individual-lesson'); ?></h2>
-                <p><?php _e('Select a lesson to see who has access:', 'red-cultural-individual-lesson'); ?></p>
+                <h2><?php _e('Lista de Alumnos', 'red-cultural-individual-lesson'); ?></h2>
+                <p><?php _e('Selecciona una lección para ver quién tiene acceso:', 'red-cultural-individual-lesson'); ?></p>
                 
                 <select id="rcil-alumni-lesson-select" style="width: 100%; margin-bottom: 20px; padding: 10px; font-size: 16px;">
-                    <option value=""><?php _e('-- Select a Lesson --', 'red-cultural-individual-lesson'); ?></option>
+                    <option value=""><?php _e('-- Selecciona una Lección --', 'red-cultural-individual-lesson'); ?></option>
                     <?php foreach ($lessons as $lesson): ?>
                         <option value="<?php echo esc_attr($lesson['post']->ID); ?>"><?php echo esc_html($lesson['post']->post_title); ?></option>
                     <?php endforeach; ?>

@@ -286,7 +286,7 @@ if (function_exists('do_blocks')) {
 													class="rcil-lesson-edit-trigger text-[10px] text-blue-500 font-semibold uppercase hover:underline"
 													data-lesson-url="<?php echo esc_url($lesson_url); ?>"
 												>
-													<?php echo esc_html__('EDIT', 'red-cultural-individual-lesson'); ?>
+													<?php echo esc_html__('EDITAR', 'red-cultural-individual-lesson'); ?>
 												</button>
 											<?php endif; ?>
 										</div>
@@ -330,7 +330,7 @@ if (function_exists('do_blocks')) {
 								</a>
 							<?php elseif ($rcil_is_active) : ?>
 									<button id="rcil-buy-course" type="button" class="w-full bg-black text-white py-4 rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6">
-										<?php echo esc_html__('COMPRAR CURSO', 'red-cultural-individual-lesson'); ?>
+										<?php echo esc_html__('COMPRAR LECCIÓN', 'red-cultural-individual-lesson'); ?>
 									</button>
 							<?php elseif ($payment_button_html !== '') : ?>
 								<div id="red-cultural-course-cta" class="w-full mb-6">

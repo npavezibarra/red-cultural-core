@@ -97,8 +97,8 @@ class RCIL_Notifications
             return;
         }
 
-        $email_content = "<h2>" . __('Upcoming Lessons Notification', 'red-cultural-individual-lesson') . "</h2>";
-        $email_content .= "<p>" . __('The following lessons are scheduled to become public in the next 24 hours:', 'red-cultural-individual-lesson') . "</p>";
+        $email_content = "<h2>" . __('Notificación de Próximas Lecciones', 'red-cultural-individual-lesson') . "</h2>";
+        $email_content .= "<p>" . __('Las siguientes lecciones están programadas para ser públicas en las próximas 24 horas:', 'red-cultural-individual-lesson') . "</p>";
 
         $found_buyers = false;
 
@@ -114,8 +114,8 @@ class RCIL_Notifications
 
             if (!empty($buyers)) {
                 $found_buyers = true;
-                $email_content .= "<h3>$lesson_title (" . __('Course', 'red-cultural-individual-lesson') . ": " . get_the_title($course_id) . ")</h3>";
-                $email_content .= "<p><strong>" . __('Release Date', 'red-cultural-individual-lesson') . ":</strong> $release_date</p>";
+                $email_content .= "<h3>$lesson_title (" . __('Curso', 'red-cultural-individual-lesson') . ": " . get_the_title($course_id) . ")</h3>";
+                $email_content .= "<p><strong>" . __('Fecha de liberación', 'red-cultural-individual-lesson') . ":</strong> $release_date</p>";
                 $email_content .= "<ul>";
                 foreach ($buyers as $buyer) {
                     $email_content .= "<li>{$buyer->display_name} ({$buyer->user_email})</li>";
@@ -129,7 +129,7 @@ class RCIL_Notifications
             foreach ($notification_emails as $email) {
                 wp_mail(
                     $email,
-                    __('Alumni list for upcoming lessons', 'red-cultural-individual-lesson'),
+                    __('Lista de alumnos para próximas lecciones', 'red-cultural-individual-lesson'),
                     $email_content,
                     $headers
                 );
@@ -171,10 +171,10 @@ class RCIL_Notifications
             return false;
         }
 
-        $email_content = "<h2>" . __('Course Lesson Alumni List', 'red-cultural-individual-lesson') . "</h2>";
-        $email_content .= "<h3>{$lesson->post_title} (" . __('Course', 'red-cultural-individual-lesson') . ": " . get_the_title($course_id) . ")</h3>";
-        $email_content .= "<p><strong>" . __('Release Date', 'red-cultural-individual-lesson') . ":</strong> $release_date</p>";
-        $email_content .= "<p>" . __('The following students have purchased this lesson:', 'red-cultural-individual-lesson') . "</p>";
+        $email_content = "<h2>" . __('Lista de Alumnos de Lección de Curso', 'red-cultural-individual-lesson') . "</h2>";
+        $email_content .= "<h3>{$lesson->post_title} (" . __('Curso', 'red-cultural-individual-lesson') . ": " . get_the_title($course_id) . ")</h3>";
+        $email_content .= "<p><strong>" . __('Fecha de liberación', 'red-cultural-individual-lesson') . ":</strong> $release_date</p>";
+        $email_content .= "<p>" . __('Los siguientes estudiantes han comprado esta lección:', 'red-cultural-individual-lesson') . "</p>";
         $email_content .= "<ul>";
         foreach ($buyers as $buyer) {
             $name_part = trim($buyer->first_name . ' ' . $buyer->last_name);
@@ -190,7 +190,7 @@ class RCIL_Notifications
         foreach ($notification_emails as $email) {
             if (wp_mail(
                 $email,
-                sprintf(__('Alumni list: %s', 'red-cultural-individual-lesson'), $lesson->post_title),
+                sprintf(__('Lista de alumnos: %s', 'red-cultural-individual-lesson'), $lesson->post_title),
                 $email_content,
                 $headers
             )) {

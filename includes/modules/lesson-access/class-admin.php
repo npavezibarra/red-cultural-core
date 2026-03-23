@@ -53,7 +53,7 @@ class RCIL_Admin
             add_settings_error(
                 'rcil_notifications_group',
                 'rcil_notif_sent',
-                __('Global notification check triggered successfully. Emails will be sent if upcoming lessons (24h) with buyers are found.', 'red-cultural-individual-lesson'),
+                __('Verificación global de notificaciones activada con éxito. Se enviarán correos si se encuentran lecciones próximas (24 h) con compradores.', 'red-cultural-individual-lesson'),
                 'updated'
             );
         }
@@ -68,14 +68,14 @@ class RCIL_Admin
                 add_settings_error(
                     'rcil_notifications_group',
                     'rcil_notif_sent_specific',
-                    __('Email list sent successfully for the selected lesson.', 'red-cultural-individual-lesson'),
+                    __('Lista de correos enviada con éxito para la lección seleccionada.', 'red-cultural-individual-lesson'),
                     'updated'
                 );
             } else {
                 add_settings_error(
                     'rcil_notifications_group',
                     'rcil_notif_failed_specific',
-                    __('Failed to send email list. Ensure the lesson has buyers and notification emails are configured.', 'red-cultural-individual-lesson'),
+                    __('Error al enviar la lista de correos. Asegúrate de que la lección tenga compradores y de que los correos de notificación estén configurados.', 'red-cultural-individual-lesson'),
                     'error'
                 );
             }
@@ -99,8 +99,8 @@ class RCIL_Admin
 
         add_submenu_page(
             'rcil-main',
-            __('Notifications', 'red-cultural-individual-lesson'),
-            __('Notifications', 'red-cultural-individual-lesson'),
+            __('Notificaciones', 'red-cultural-individual-lesson'),
+            __('Notificaciones', 'red-cultural-individual-lesson'),
             'manage_options',
             'rcil-notifications',
             [$this, 'render_notifications_page']
@@ -119,14 +119,14 @@ class RCIL_Admin
 
         add_settings_section(
             'rcil_notifications_section',
-            __('Notification Settings', 'red-cultural-individual-lesson'),
+            __('Configuración de Notificaciones', 'red-cultural-individual-lesson'),
             '',
             'rcil-notifications'
         );
 
         add_settings_field(
             'rcil_notification_emails',
-            __('Notification Emails', 'red-cultural-individual-lesson'),
+            __('Correos de Notificación', 'red-cultural-individual-lesson'),
             [$this, 'render_emails_field'],
             'rcil-notifications',
             'rcil_notifications_section'
@@ -140,8 +140,8 @@ class RCIL_Admin
     {
         ?>
         <div class="wrap">
-            <h1><?php _e('Red Cultural Lessons', 'red-cultural-individual-lesson'); ?></h1>
-            <p><?php _e('Welcome to the Red Cultural Individual Lessons administration panel.', 'red-cultural-individual-lesson'); ?></p>
+            <h1><?php _e('Lecciones de Red Cultural', 'red-cultural-individual-lesson'); ?></h1>
+            <p><?php _e('Bienvenido al panel de administración de Lecciones Individuales de Red Cultural.', 'red-cultural-individual-lesson'); ?></p>
         </div>
         <?php
     }
@@ -153,7 +153,7 @@ class RCIL_Admin
     {
         ?>
         <div class="wrap">
-            <h1><?php _e('Notifications', 'red-cultural-individual-lesson'); ?></h1>
+            <h1><?php _e('Notificaciones', 'red-cultural-individual-lesson'); ?></h1>
             <form method="post" action="options.php">
                 <?php
                 settings_fields('rcil_notifications_group');
@@ -168,11 +168,11 @@ class RCIL_Admin
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php _e('Lesson Title', 'red-cultural-individual-lesson'); ?></th>
-                        <th><?php _e('Course', 'red-cultural-individual-lesson'); ?></th>
-                        <th><?php _e('Release Date', 'red-cultural-individual-lesson'); ?></th>
-                        <th><?php _e('Individual Buyers', 'red-cultural-individual-lesson'); ?></th>
-                        <th><?php _e('Actions', 'red-cultural-individual-lesson'); ?></th>
+                        <th><?php _e('Título de la Lección', 'red-cultural-individual-lesson'); ?></th>
+                        <th><?php _e('Curso', 'red-cultural-individual-lesson'); ?></th>
+                        <th><?php _e('Fecha de liberación', 'red-cultural-individual-lesson'); ?></th>
+                        <th><?php _e('Compradores Individuales', 'red-cultural-individual-lesson'); ?></th>
+                        <th><?php _e('Acciones', 'red-cultural-individual-lesson'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -190,7 +190,7 @@ class RCIL_Admin
                                     <form method="post" action="" style="display:inline;">
                                         <?php wp_nonce_field('rcil_send_lesson_nonce'); ?>
                                         <input type="hidden" name="rcil_send_specific_lesson" value="<?php echo esc_attr($item->ID); ?>">
-                                        <input type="submit" class="button button-small" value="<?php esc_attr_e('Send email list', 'red-cultural-individual-lesson'); ?>" <?php echo ($item->buyer_count == 0) ? 'disabled' : ''; ?>>
+                                        <input type="submit" class="button button-small" value="<?php esc_attr_e('Enviar lista de correos', 'red-cultural-individual-lesson'); ?>" <?php echo ($item->buyer_count == 0) ? 'disabled' : ''; ?>>
                                     </form>
                                 </td>
                             </tr>
@@ -199,7 +199,7 @@ class RCIL_Admin
                     else:
                         ?>
                         <tr>
-                            <td colspan="5"><?php _e('No upcoming lessons found with a scheduled release date.', 'red-cultural-individual-lesson'); ?></td>
+                            <td colspan="5"><?php _e('No se encontraron lecciones próximas con una fecha de liberación programada.', 'red-cultural-individual-lesson'); ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -238,7 +238,7 @@ foreach ($debug_lessons as $dl) {
         <textarea name="rcil_notification_emails" rows="5" cols="50" class="large-text" 
                   placeholder="email1@example.com, email2@example.com"><?php echo esc_textarea($emails); ?></textarea>
         <p class="description">
-            <?php _e('Enter one or more email addresses separated by commas.', 'red-cultural-individual-lesson'); ?>
+            <?php _e('Introduce una o más direcciones de correo electrónico separadas por comas.', 'red-cultural-individual-lesson'); ?>
         </p>
         <?php
     }
@@ -250,7 +250,7 @@ foreach ($debug_lessons as $dl) {
     {
         add_meta_box(
             'rcil_course_individual_price',
-            __('Individual Lesson Purchase Settings', 'red-cultural-individual-lesson'),
+            __('Configuración de Compra de Lecciones Individuales', 'red-cultural-individual-lesson'),
             [$this, 'render_metabox'],
             'sfwd-courses',
             'side',
@@ -268,12 +268,12 @@ foreach ($debug_lessons as $dl) {
         ?>
         <div class="rcil-metabox-field">
             <p><strong><label for="rcil_individual_lesson_price">
-                        <?php _e('Individual Lesson Price', 'red-cultural-individual-lesson'); ?>
+                        <?php _e('Precio de Lección Individual', 'red-cultural-individual-lesson'); ?>
                     </label></strong></p>
             <input type="number" id="rcil_individual_lesson_price" name="rcil_individual_lesson_price"
                 value="<?php echo esc_attr($price); ?>" step="1" min="0" style="width:100%;" />
             <p class="description">
-                <?php _e('Price applied to each lesson when purchased individually. Leave empty to disable. <strong>Note:</strong> Enabling this will automatically set Course Progression to "Free Form".', 'red-cultural-individual-lesson'); ?>
+                <?php _e('Precio aplicado a cada lección cuando se compra individualmente. Dejar vacío para desactivar. <strong>Nota:</strong> Al activar esto, la Progresión del Curso se ajustará automáticamente a "Forma Libre".', 'red-cultural-individual-lesson'); ?>
             </p>
         </div>
         <?php

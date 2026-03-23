@@ -959,7 +959,7 @@ final class Red_Cultural_Templates {
 			);
 			$links[] = array(
 				'type' => 'auth',
-				'label' => 'LOGOUT',
+				'label' => 'CERRAR SESIÓN',
 				'url' => wp_logout_url((string) home_url('/')),
 				'key' => 'auth',
 				'icon' => 'logout',
@@ -967,7 +967,7 @@ final class Red_Cultural_Templates {
 		} else {
 			$links[] = array(
 				'type' => 'auth',
-				'label' => 'LOGIN',
+				'label' => 'INICIAR SESIÓN',
 				'url' => '#rcp-auth',
 				'key' => 'auth',
 			);

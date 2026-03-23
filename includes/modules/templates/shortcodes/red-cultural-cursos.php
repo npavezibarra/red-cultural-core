@@ -115,13 +115,13 @@ if (!function_exists('rcp_red_cultural_cursos_shortcode')) {
 			<div class="p-5 flex-grow flex flex-col">
 				<h3 class="font-bold text-lg text-gray-900 mb-1 line-clamp-2"><?php echo esc_html((string) $title); ?></h3>
 				<?php if ($author_name) : ?>
-					<p class="text-sm text-gray-500 mb-4"><?php echo esc_html(sprintf('by %s', $author_name)); ?></p>
+					<p class="text-xs text-gray-400 mb-2"><?php echo esc_html(sprintf(__('por %s', 'red-cultural-pages'), $author_name)); ?></p>
 				<?php else : ?>
 					<p class="text-sm text-gray-500 mb-4">&nbsp;</p>
 				<?php endif; ?>
 				<div class="mt-auto flex items-center justify-between">
 					<span class="text-xl font-bold text-gray-900"><?php echo wp_kses_post($price !== '' ? $price : '&nbsp;'); ?></span>
-					<span class="text-xs text-gray-500"><?php esc_html_e('View course', 'red-cultural-pages'); ?></span>
+					<span class="text-[10px] font-bold uppercase tracking-widest bg-black text-white px-3 py-2 rounded-sm group-hover:bg-zinc-800 transition-colors"><?php echo esc_html__('Ver curso', 'red-cultural-pages'); ?></span>
 				</div>
 			</div>
 		</a>
