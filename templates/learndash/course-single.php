@@ -180,34 +180,11 @@ if (function_exists('do_blocks')) {
 				</button>
 
 				<?php if ($author_name !== '') : ?>
-					<div id="red-cultural-course-author" class="flex flex-col space-y-1">
-						<div class="flex items-center space-x-3">
-							<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
-								<i data-lucide="user" class="text-white w-6 h-6"></i>
-							</div>
-							<div class="flex items-center">
-								<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
-								<?php if (current_user_can('manage_options')) : ?>
-									<button id="rc-author-edit-trigger" class="ml-3 text-[10px] text-blue-400 border border-blue-400/50 px-1 rounded uppercase hover:bg-blue-400 hover:text-white transition-all font-bold" type="button">EDITAR</button>
-								<?php endif; ?>
-							</div>
+					<div id="red-cultural-course-author" class="flex items-center space-x-3">
+						<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
+							<i data-lucide="user" class="text-white w-6 h-6"></i>
 						</div>
-						
-						<?php if (current_user_can('manage_options')) : ?>
-							<div id="rc-author-admin-box" class="hidden mt-3 p-4 bg-white text-gray-800 rounded-lg shadow-xl max-w-sm border border-gray-200">
-								<h5 class="text-xs font-bold uppercase mb-3 text-gray-500 tracking-wider"><?php esc_html_e('Cambiar Autor', 'red-cultural-core'); ?></h5>
-								<div class="relative mb-4">
-									<input type="text" id="rc-author-search-input" class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none shadow-inner" placeholder="<?php esc_attr_e('Escribe un nombre...', 'red-cultural-core'); ?>" autocomplete="off">
-									<div id="rc-author-search-results" class="hidden absolute left-0 bottom-full mb-1 w-full bg-white text-gray-800 rounded shadow-2xl max-h-40 overflow-y-auto z-[9999] border border-gray-200"></div>
-								</div>
-								<div class="flex items-center justify-between">
-									<div id="rc-author-edit-status" class="text-[10px] font-bold"></div>
-									<div class="flex space-x-2">
-										<button id="rc-author-edit-cancel" class="bg-gray-100 text-gray-700 px-3 py-1.5 rounded text-xs font-bold hover:bg-gray-200" type="button">Cancelar</button>
-									</div>
-								</div>
-							</div>
-						<?php endif; ?>
+						<span id="rc-author-display-name-header" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
 					</div>
 				<?php endif; ?>
 			</div>
@@ -218,6 +195,28 @@ if (function_exists('do_blocks')) {
 		<div id="red-cultural-course-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
 			<div id="red-cultural-course-content" class="lg:col-span-2 pt-16">
+				<?php if (current_user_can('manage_options')) : ?>
+					<div id="rc-author-admin-ui" class="mb-8 p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+						<div class="flex items-center justify-between mb-4">
+							<div class="flex items-center space-x-2 text-gray-700">
+								<i data-lucide="settings" class="w-4 h-4"></i>
+								<span class="text-xs font-bold uppercase tracking-wider"><?php esc_html_e('Admin: Profesor del curso', 'red-cultural-core'); ?></span>
+							</div>
+							<button id="rc-author-edit-trigger" class="text-[10px] bg-blue-600 text-white px-3 py-1 rounded-full font-bold uppercase hover:bg-blue-700 transition-colors shadow-sm" type="button">Cambiar Autor</button>
+						</div>
+						<div id="rc-author-admin-box" class="hidden animate-in fade-in slide-in-from-top-2 duration-200">
+							<div class="relative">
+								<input type="text" id="rc-author-search-input" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none shadow-sm" placeholder="<?php esc_attr_e('Escribe el nombre del profesor...', 'red-cultural-core'); ?>" autocomplete="off">
+								<div id="rc-author-search-results" class="hidden absolute left-0 top-full mt-1 w-full bg-white text-gray-800 rounded-lg shadow-2xl max-h-48 overflow-y-auto z-[9999] border border-gray-100 p-1"></div>
+							</div>
+							<div class="flex items-center justify-between mt-3">
+								<div id="rc-author-edit-status" class="text-[10px] font-bold"></div>
+								<button id="rc-author-edit-cancel" class="text-[10px] text-gray-400 font-bold hover:text-gray-600 uppercase" type="button">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				<?php endif; ?>
+
 				<?php if ($intro !== '') : ?>
 					<div id="red-cultural-course-intro" class="bg-white/50 p-1 rounded-xl mb-12">
 						<p class="text-gray-600 leading-relaxed text-[15px]" id="red-cultural-course-intro-text">

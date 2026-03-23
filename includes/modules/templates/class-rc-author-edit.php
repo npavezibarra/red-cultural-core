@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 /**
  * Handles author editing for admins on course pages.
- * Toggled box version (matches lesson editor style).
+ * Toggled UI version located in the white content area.
  */
 class RC_Author_Edit {
 
@@ -66,6 +66,8 @@ class RC_Author_Edit {
             #rc-author-admin-box.hidden { display: none !important; }
             #rc-author-search-results.hidden { display: none !important; }
             .author-result-item:hover { background-color: #f3f4f6; }
+            @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+            .animate-in { animation: slideDown 0.2s ease-out; }
         </style>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -75,7 +77,7 @@ class RC_Author_Edit {
             const searchInput = document.getElementById('rc-author-search-input');
             const resultsDiv = document.getElementById('rc-author-search-results');
             const statusDiv = document.getElementById('rc-author-edit-status');
-            const displayNameSpan = document.getElementById('rc-author-display-name');
+            const headerNameSpan = document.getElementById('rc-author-display-name-header');
 
             if (!trigger || !adminBox) return;
 
@@ -85,6 +87,9 @@ class RC_Author_Edit {
                 adminBox.classList.toggle('hidden');
                 if (!adminBox.classList.contains('hidden')) {
                     searchInput.focus();
+                    trigger.textContent = 'Cancelar';
+                } else {
+                    trigger.textContent = 'Cambiar Autor';
                 }
             });
 
@@ -94,6 +99,7 @@ class RC_Author_Edit {
                 adminBox.classList.add('hidden');
                 resultsDiv.classList.add('hidden');
                 searchInput.value = '';
+                trigger.textContent = 'Cambiar Autor';
             });
 
             let searchTimeout;
@@ -116,12 +122,12 @@ class RC_Author_Edit {
 
             function renderResults(users) {
                 if (users.length === 0) {
-                    resultsDiv.innerHTML = '<div class="px-3 py-2 text-xs text-gray-500">No hay resultados</div>';
+                    resultsDiv.innerHTML = '<div class="px-4 py-3 text-xs text-gray-500 italic">No se encontraron profesores</div>';
                 } else {
                     resultsDiv.innerHTML = users.map(u => `
-                        <div class="px-3 py-2 cursor-pointer text-sm text-gray-700 author-result-item border-b border-gray-100 last:border-0" data-id="${u.ID}" data-name="${u.display_name}">
-                            <div class="font-bold">${u.display_name}</div>
-                            <div class="text-[10px] text-gray-400">${u.user_email}</div>
+                        <div class="px-4 py-3 cursor-pointer text-sm text-gray-700 author-result-item border-b border-gray-50 last:border-0 rounded-lg" data-id="${u.ID}" data-name="${u.display_name}">
+                            <div class="font-bold text-gray-900">${u.display_name}</div>
+                            <div class="text-[10px] text-gray-400 mt-0.5">${u.user_email}</div>
                         </div>
                     `).join('');
                 }
@@ -136,7 +142,7 @@ class RC_Author_Edit {
             }
 
             function updateAuthor(authorId, authorName) {
-                statusDiv.textContent = 'Actualizando...';
+                statusDiv.textContent = 'Sincronizando...';
                 statusDiv.style.color = '#3b82f6';
                 
                 const formData = new FormData();
@@ -152,17 +158,18 @@ class RC_Author_Edit {
                 .then(r => r.json())
                 .then(res => {
                     if (res.success) {
-                        displayNameSpan.textContent = authorName;
-                        statusDiv.textContent = '¡Cambiado!';
+                        if (headerNameSpan) headerNameSpan.textContent = authorName;
+                        statusDiv.textContent = '¡Profesor actualizado!';
                         statusDiv.style.color = '#10b981';
                         setTimeout(() => {
                             adminBox.classList.add('hidden');
                             statusDiv.textContent = '';
                             resultsDiv.classList.add('hidden');
                             searchInput.value = '';
-                        }, 1000);
+                            trigger.textContent = 'Cambiar Autor';
+                        }, 1500);
                     } else {
-                        statusDiv.textContent = 'Error';
+                        statusDiv.textContent = 'Error al actualizar';
                         statusDiv.style.color = '#ef4444';
                     }
                 });
