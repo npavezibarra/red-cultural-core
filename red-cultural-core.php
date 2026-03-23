@@ -36,6 +36,9 @@ final class Red_Cultural_Core
     {
         $this->load_dependencies();
         $this->init_modules();
+        
+        // Force excerpt support for LearnDash courses/lessons in Gutenberg
+        add_action('init', [$this, 'add_cpt_support'], 20);
     }
 
     private function load_dependencies()
@@ -62,9 +65,17 @@ final class Red_Cultural_Core
             Red_Cultural_Lesson_Manager::init();
         }
 
-        // 4. Email Tester Component
         require_once RC_CORE_PATH . 'includes/modules/email-tester/class-rc-email-tester.php';
         Red_Cultural_Email_Tester::init();
+    }
+
+    /**
+     * Add support for excerpts in LearnDash CPTs to ensure they show up in Gutenberg.
+     */
+    public function add_cpt_support()
+    {
+        add_post_type_support('sfwd-courses', 'excerpt');
+        add_post_type_support('sfwd-lessons', 'excerpt');
     }
 }
 
