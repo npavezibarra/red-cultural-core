@@ -474,7 +474,7 @@ final class Red_Cultural_Templates {
 		add_filter('wp_nav_menu_objects', array(__CLASS__, 'rewrite_my_account_submenu'), 10, 2);
 		add_action('wp_footer', array(__CLASS__, 'render_main_nav_script'), 5);
 		add_action('wp_footer', array(__CLASS__, 'render_site_auth_modal'), 20);
-		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_404_assets'), 100);
+		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_404_assets'), 20);
 	}
 
 	public static function maybe_remove_woocommerce_header_blocks(string $block_content, array $block): string {
@@ -2544,7 +2544,7 @@ final class Red_Cultural_Templates {
 			return;
 		}
 
-		$css_url = plugins_url('assets/css/redcultural-404.css', dirname(__DIR__, 2) . '/red-cultural-core.php');
+		$css_url = RC_CORE_URL . 'assets/css/redcultural-404.css';
 		$css_path = RC_CORE_PATH . 'assets/css/redcultural-404.css';
 
 		wp_enqueue_style(

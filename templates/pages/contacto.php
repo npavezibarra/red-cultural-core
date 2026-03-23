@@ -14,7 +14,7 @@ if (function_exists('do_blocks')) {
 	$rcp_theme_footer_html = (string) do_blocks('<!-- wp:template-part {"slug":"footer","area":"footer"} /-->');
 }
 
-$bg_url = plugins_url('assets/images/la-anunciacion_red-cultural_1280x558.webp', dirname(__DIR__, 2) . '/red-cultural-core.php');
+$bg_url = RC_CORE_URL . 'assets/images/la-anunciacion_red-cultural_1280x558.webp';
 
 ?><!DOCTYPE html>
 <html lang="es">
