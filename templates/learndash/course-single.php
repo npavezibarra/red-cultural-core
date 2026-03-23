@@ -358,8 +358,8 @@ if (function_exists('do_blocks')) {
 							<?php endif; ?>
 
 							<?php if ($rcp_show_go_to_course) : ?>
-								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 no-underline" href="<?php echo esc_url($rcp_first_accessible_lesson_url); ?>">
-									<?php echo esc_html__('IR AL CURSO', 'red-cultural-pages'); ?>
+								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline" href="<?php echo esc_url($rcp_first_accessible_lesson_url); ?>">
+									IR AL CURSO
 								</a>
 							<?php elseif ($rcil_is_active) : ?>
 									<button id="rcil-buy-course" type="button" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline">
@@ -370,8 +370,8 @@ if (function_exists('do_blocks')) {
 									<?php echo $payment_button_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
 							<?php else : ?>
-								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 no-underline" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
-									<?php echo esc_html__('INICIAR SESIÓN PARA INSCRIBIRSE', 'red-cultural-pages'); ?>
+								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
+									INICIAR SESIÓN PARA INSCRIBIRSE
 								</a>
 							<?php endif; ?>
 
