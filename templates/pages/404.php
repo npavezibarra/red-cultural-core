@@ -59,7 +59,7 @@ $bg_url = RC_CORE_URL . 'assets/images/lost-nietzsche.png';
 		#red-cultural-404-overlay {
 			position: absolute;
 			inset: 0;
-			background: rgba(0, 0, 0, 0.4);
+			background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.1) 100%);
 			/* Subtle backdrop blur to match the premium feel */
 			backdrop-filter: blur(1px);
 		}
