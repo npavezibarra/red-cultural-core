@@ -76,13 +76,26 @@ class RC_Author_Edit {
      * Render JS and local styles in footer.
      */
     public static function render_js() {
-        if (!is_singular('sfwd-courses') || !current_user_can('manage_options')) {
+        if (!current_user_can('manage_options')) {
             return;
         }
 
-        $course_id = get_the_ID();
         $nonce = wp_create_nonce('rc_author_edit_nonce');
         ?>
+        <style>
+            #rc-author-edit-floating.hidden { display: none !important; }
+            #rc-author-edit-floating:not(.hidden) { display: block !important; }
+            #rc-author-edit-floating {
+                position: absolute;
+                z-index: 10000;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+                padding: 1rem;
+                width: 280px;
+                border: 1px solid #e2e8f0;
+            }
+        </style>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editBtn = document.getElementById('rc-edit-author-btn');
@@ -93,7 +106,12 @@ class RC_Author_Edit {
             const statusDiv = document.getElementById('rc-author-edit-status');
             const displayNameSpan = document.getElementById('rc-author-display-name');
 
-            if (!editBtn) return;
+            if (!editBtn || !floating) return;
+            
+            // Re-init lucide if available (just for our added icons)
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
 
             editBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -162,7 +180,7 @@ class RC_Author_Edit {
                 const formData = new FormData();
                 formData.append('action', 'rc_update_course_author');
                 formData.append('nonce', '<?php echo $nonce; ?>');
-                formData.append('course_id', '<?php echo $course_id; ?>');
+                formData.append('course_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
                 formData.append('author_id', authorId);
 
                 fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
