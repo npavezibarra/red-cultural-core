@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Handles front-end author editing for admins on course pages.
- * Simplified inline version.
+ * Handles author editing for admins directly on the course single page.
+ * Persistent inline version.
  */
 class RC_Author_Edit {
 
@@ -19,7 +19,7 @@ class RC_Author_Edit {
     public static function ajax_search_authors() {
         check_ajax_referer('rc_author_edit_nonce', 'nonce');
         if (!current_user_can('manage_options')) {
-            wp_send_json_error('No tienes permisos suficientes.');
+            wp_send_json_error('Unauthorized');
         }
         $search = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
         if (strlen($search) < 2) {
@@ -37,12 +37,12 @@ class RC_Author_Edit {
     public static function ajax_update_author() {
         check_ajax_referer('rc_author_edit_nonce', 'nonce');
         if (!current_user_can('manage_options')) {
-            wp_send_json_error('No tienes permisos suficientes.');
+            wp_send_json_error('Unauthorized');
         }
         $course_id = isset($_POST['course_id']) ? absint($_POST['course_id']) : 0;
         $author_id = isset($_POST['author_id']) ? absint($_POST['author_id']) : 0;
         if (!$course_id || !$author_id) {
-            wp_send_json_error('Datos inválidos.');
+            wp_send_json_error('Invalid data');
         }
         $updated = wp_update_post(['ID' => $course_id, 'post_author' => $author_id]);
         if (is_wp_error($updated)) {
@@ -59,34 +59,17 @@ class RC_Author_Edit {
         $nonce = wp_create_nonce('rc_author_edit_nonce');
         ?>
         <style>
-            #rc-author-inline-edit.hidden, #rc-author-info-wrap.hidden { display: none !important; }
             #rc-author-search-results.hidden { display: none !important; }
-            .author-result-item:hover { background-color: #f3f4f6; }
+            .author-result-item:hover { background-color: #f8fafc; }
         </style>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const editBtn = document.getElementById('rc-edit-author-btn');
-            const cancelBtn = document.getElementById('rc-cancel-author-edit');
-            const infoWrap = document.getElementById('rc-author-info-wrap');
-            const editWrap = document.getElementById('rc-author-inline-edit');
             const searchInput = document.getElementById('rc-author-search-input');
             const resultsDiv = document.getElementById('rc-author-search-results');
             const statusDiv = document.getElementById('rc-author-edit-status');
             const displayNameSpan = document.getElementById('rc-author-display-name');
 
-            if (!editBtn || !editWrap) return;
-
-            editBtn.addEventListener('click', () => {
-                infoWrap.classList.add('hidden');
-                editWrap.classList.remove('hidden');
-                searchInput.focus();
-            });
-
-            cancelBtn.addEventListener('click', () => {
-                editWrap.classList.add('hidden');
-                infoWrap.classList.remove('hidden');
-                resultsDiv.classList.add('hidden');
-            });
+            if (!searchInput) return;
 
             let searchTimeout;
             searchInput.addEventListener('input', (e) => {
@@ -118,6 +101,7 @@ class RC_Author_Edit {
                     `).join('');
                 }
                 resultsDiv.classList.remove('hidden');
+
                 document.querySelectorAll('.author-result-item').forEach(item => {
                     item.onclick = (e) => {
                         e.stopPropagation();
@@ -127,27 +111,34 @@ class RC_Author_Edit {
             }
 
             function updateAuthor(authorId, authorName) {
-                statusDiv.textContent = '...';
+                statusDiv.textContent = 'Actualizando...';
                 const formData = new FormData();
                 formData.append('action', 'rc_update_course_author');
                 formData.append('nonce', '<?php echo $nonce; ?>');
                 formData.append('course_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
                 formData.append('author_id', authorId);
+                
                 fetch('<?php echo admin_url('admin-ajax.php'); ?>', { method: 'POST', body: formData })
                 .then(r => r.json())
                 .then(res => {
                     if (res.success) {
                         displayNameSpan.textContent = authorName;
-                        editWrap.classList.add('hidden');
-                        infoWrap.classList.remove('hidden');
                         resultsDiv.classList.add('hidden');
                         searchInput.value = '';
-                        statusDiv.textContent = '';
+                        statusDiv.textContent = '¡Cambiado!';
+                        setTimeout(() => { statusDiv.textContent = ''; }, 2000);
                     } else {
-                        statusDiv.textContent = 'Error';
+                        statusDiv.textContent = 'Error: ' + res.data;
                     }
                 });
             }
+
+            // Close results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (resultsDiv && !resultsDiv.contains(e.target) && e.target !== searchInput) {
+                    resultsDiv.classList.add('hidden');
+                }
+            });
         });
         </script>
         <?php

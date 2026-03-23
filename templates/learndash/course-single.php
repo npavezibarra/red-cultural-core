@@ -180,31 +180,24 @@ if (function_exists('do_blocks')) {
 				</button>
 
 				<?php if ($author_name !== '') : ?>
-					<div id="red-cultural-course-author" class="flex items-center space-x-3">
-						<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
-							<i data-lucide="user" class="text-white w-6 h-6"></i>
-						</div>
-						<div class="flex items-center">
-							<div id="rc-author-info-wrap" class="flex items-center">
-								<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
-								<?php if (current_user_can('manage_options')) : ?>
-									<button id="rc-edit-author-btn" class="ml-3 text-[10px] bg-white/20 px-2 py-0.5 rounded hover:bg-white/40 transition-colors uppercase tracking-wider font-bold" type="button">
-										<?php esc_html_e('EDIT', 'red-cultural-core'); ?>
-									</button>
-								<?php endif; ?>
+					<div id="red-cultural-course-author" class="flex flex-col space-y-2">
+						<div class="flex items-center space-x-3">
+							<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
+								<i data-lucide="user" class="text-white w-6 h-6"></i>
 							</div>
-							
-							<?php if (current_user_can('manage_options')) : ?>
-								<div id="rc-author-inline-edit" class="hidden flex items-center space-x-2">
-									<div class="relative">
-										<input type="text" id="rc-author-search-input" class="bg-white/10 border border-white/20 text-white rounded px-2 py-1 text-xs focus:bg-white/20 outline-none w-48" placeholder="<?php esc_attr_e('Buscar autor...', 'red-cultural-core'); ?>" autocomplete="off">
-										<div id="rc-author-search-results" class="hidden absolute left-0 bottom-full mb-1 w-full bg-white text-gray-800 rounded shadow-lg max-h-40 overflow-y-auto z-[999]"></div>
-									</div>
-									<button id="rc-cancel-author-edit" class="text-[10px] text-white/60 hover:text-white" type="button"><?php esc_html_e('CANCELAR', 'red-cultural-core'); ?></button>
-									<div id="rc-author-edit-status" class="text-[10px] text-white/80 italic"></div>
-								</div>
-							<?php endif; ?>
+							<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
 						</div>
+						
+						<?php if (current_user_can('manage_options')) : ?>
+							<div id="rc-author-admin-box" class="pt-2 border-t border-white/10 max-w-[240px]">
+								<p class="text-[9px] uppercase tracking-widest opacity-60 mb-1"><?php esc_html_e('ADMIN: Cambiar autor', 'red-cultural-core'); ?></p>
+								<div class="relative">
+									<input type="text" id="rc-author-search-input" class="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded px-2 py-1 text-xs focus:bg-white/20 outline-none" placeholder="<?php esc_attr_e('Escribe para asignar...', 'red-cultural-core'); ?>" autocomplete="off">
+									<div id="rc-author-search-results" class="hidden absolute left-0 bottom-full mb-1 w-full bg-white text-gray-800 rounded shadow-2xl max-h-40 overflow-y-auto z-[999] border border-gray-200"></div>
+								</div>
+								<div id="rc-author-edit-status" class="text-[10px] text-white/80 italic mt-1"></div>
+							</div>
+						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 			</div>
