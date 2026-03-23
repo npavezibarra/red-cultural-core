@@ -143,7 +143,7 @@ if (function_exists('do_blocks')) {
 		#red-cultural-course-lessons-list h3.font-medium.text-gray-800{font-size:16px;font-weight:700}
 		#red-cultural-course-lessons h2.text-xs.font-bold.text-gray-400.tracking-widest.uppercase.mb-6{color:#000;font-weight:900;font-size:16px}
 		#rcil-buy-course { margin-bottom: 10px !important; }
-		#red-cultural-course-cta { margin-bottom: 24px !important; padding: 12px !important; display: flex; align-items: center; justify-content: center; }
+		#red-cultural-course-cta { margin-bottom: 10px !important; padding: 12px !important; display: flex; align-items: center; justify-content: center; }
 	</style>
 	<?php wp_head(); ?>
 </head>
