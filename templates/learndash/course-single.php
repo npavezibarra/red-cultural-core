@@ -174,10 +174,7 @@ if (function_exists('do_blocks')) {
 					<?php echo esc_html($desc); ?>
 				</p>
 
-				<button id="red-cultural-course-scroll-details" class="flex items-center text-xs font-medium hover:opacity-70 transition-opacity mb-8" type="button">
-					<?php echo esc_html__('Ver detalles de Curso', 'red-cultural-pages'); ?>
-					<i data-lucide="chevron-down" class="ml-1 w-4 h-4"></i>
-				</button>
+
 
 				<?php if ($author_name !== '') : ?>
 					<a id="red-cultural-course-author" href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="flex items-center space-x-3 no-underline hover:opacity-80 transition-opacity">
