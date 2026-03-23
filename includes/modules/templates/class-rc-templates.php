@@ -34,7 +34,7 @@ final class Red_Cultural_Templates {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_escocia_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_contacto_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_terminos_template'), 20);
-		add_filter('template_include', array(__CLASS__, 'maybe_render_404_template'), 99);
+		add_filter('template_include', array(__CLASS__, 'maybe_render_404_template'), 100);
 
 
 		add_action('init', array(__CLASS__, 'register_shortcodes'));
