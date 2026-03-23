@@ -162,7 +162,7 @@ if (function_exists('do_blocks')) {
 			<div class="absolute inset-0 bg-black/65"></div>
 		</div>
 
-		<div id="red-cultural-course-hero-content" class="relative z-10 rcp-wide mx-auto flex flex-col">
+		<div id="red-cultural-course-hero-content" class="relative z-30 rcp-wide mx-auto flex flex-col justify-center min-h-[500px] text-white py-20 px-6">
 			<div class="max-w-2xl text-white">
 				<span class="uppercase tracking-widest text-xs font-semibold mb-3 block opacity-80">
 					<?php echo esc_html__('Curso', 'red-cultural-pages'); ?>
