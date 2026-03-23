@@ -1576,6 +1576,8 @@ final class Red_Cultural_Templates {
 								<button id="red-cultural-login-forgot" type="button" class="text-[#c5a367] hover:brightness-90 font-medium transition">¿Olvidaste tu contraseña?</button>
 							</div>
 
+							<?php do_action('simple_cloudflare_turnstile_render_widget'); ?>
+
 							<button id="red-cultural-login-submit" type="submit" class="w-full py-3 bg-black text-white rounded-3px font-bold hover:bg-zinc-800 transform active:scale-[0.99] transition-all duration-200 shadow-md tracking-widest uppercase text-[10px]">
 								Iniciar Sesión
 							</button>
@@ -1872,6 +1874,12 @@ final class Red_Cultural_Templates {
 							Object.keys(payload || {}).forEach(function (k) {
 								add(k, payload[k]);
 							});
+
+							// Capturar respuesta de Turnstile
+							var turnstileRes = document.getElementsByName('cf-turnstile-response')[0];
+							if (turnstileRes && turnstileRes.value) {
+								add('cf-turnstile-response', turnstileRes.value);
+							}
 
 							document.body.appendChild(form);
 							form.submit();
@@ -2422,6 +2430,16 @@ final class Red_Cultural_Templates {
 	public static function handle_checkout_auth(): void {
 		if (!isset($_POST['rcp_nonce']) || !wp_verify_nonce((string) $_POST['rcp_nonce'], 'rcp_checkout_auth')) {
 			wp_safe_redirect(home_url('/'));
+			exit;
+		}
+
+		// Turnstile validation
+		$turnstile_response = isset($_POST['cf-turnstile-response']) ? sanitize_text_field((string) wp_unslash($_POST['cf-turnstile-response'])) : '';
+		$turnstile_valid    = (bool) apply_filters('simple_cloudflare_turnstile_verify', true, $turnstile_response);
+
+		if ($turnstile_response === '' || !$turnstile_valid) {
+			$redirect_to = isset($_POST['redirect_to']) ? esc_url_raw((string) wp_unslash($_POST['redirect_to'])) : (string) home_url('/');
+			wp_safe_redirect(add_query_arg('rcp_auth_error', 'captcha', $redirect_to));
 			exit;
 		}
 

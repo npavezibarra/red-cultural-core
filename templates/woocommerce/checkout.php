@@ -322,9 +322,16 @@ if (function_exists('do_blocks')) {
 								data-exists-nonce="<?php echo esc_attr($user_exists_nonce); ?>"
 								data-redirect="<?php echo esc_attr($checkout_url); ?>"
 							>
-								<?php if ($auth_error) : ?>
+								<?php
+								$error_code = isset($_GET['rcp_auth_error']) ? (string) $_GET['rcp_auth_error'] : '';
+								if ($error_code !== '') :
+									$error_msg = esc_html__('No pudimos iniciar sesión. Revisa tus datos e inténtalo de nuevo.', 'red-cultural-pages');
+									if ($error_code === 'captcha') {
+										$error_msg = esc_html__('Captcha inválido. Por favor, inténtalo de nuevo.', 'red-cultural-pages');
+									}
+								?>
 									<div id="red-cultural-checkout-auth-error" class="mb-4 text-sm font-semibold text-red-600">
-										<?php echo esc_html__('No pudimos iniciar sesión. Revisa tus datos e inténtalo de nuevo.', 'red-cultural-pages'); ?>
+										<?php echo $error_msg; ?>
 									</div>
 								<?php elseif ($auth_notice === 'reset_sent') : ?>
 									<div id="red-cultural-checkout-auth-notice" class="mb-4 text-sm font-semibold text-emerald-600">
@@ -348,6 +355,7 @@ if (function_exists('do_blocks')) {
 											<?php echo esc_html__('Olvidé mi clave', 'red-cultural-pages'); ?>
 										</button>
 									</div>
+									<?php do_action('simple_cloudflare_turnstile_render_widget'); ?>
 									<button id="red-cultural-checkout-auth-login-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Iniciar sesión', 'red-cultural-pages'); ?>
 									</button>
@@ -382,6 +390,7 @@ if (function_exists('do_blocks')) {
 										<label class="rcp-auth-label" for="red-cultural-checkout-auth-register-password"><?php echo esc_html__('Contraseña', 'red-cultural-pages'); ?></label>
 										<input id="red-cultural-checkout-auth-register-password" type="password" placeholder="••••••••" class="rcp-auth-input">
 									</div>
+									<?php do_action('simple_cloudflare_turnstile_render_widget'); ?>
 									<button id="red-cultural-checkout-auth-register-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Crear cuenta', 'red-cultural-pages'); ?>
 									</button>
@@ -728,6 +737,12 @@ if (function_exists('do_blocks')) {
 				Object.keys(payload || {}).forEach(function (k) {
 					add(k, payload[k]);
 				});
+
+				// Capturar respuesta de Turnstile
+				var turnstileRes = document.getElementsByName('cf-turnstile-response')[0];
+				if (turnstileRes && turnstileRes.value) {
+					add('cf-turnstile-response', turnstileRes.value);
+				}
 
 				document.body.appendChild(form);
 				form.submit();

@@ -61,6 +61,10 @@ final class Red_Cultural_Core
             require_once RC_CORE_PATH . 'includes/modules/lesson-access/class-rc-lesson-manager.php';
             Red_Cultural_Lesson_Manager::init();
         }
+
+        // 4. Email Tester Component
+        require_once RC_CORE_PATH . 'includes/modules/email-tester/class-rc-email-tester.php';
+        Red_Cultural_Email_Tester::init();
     }
 }
 
