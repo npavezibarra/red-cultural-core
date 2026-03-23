@@ -125,8 +125,8 @@ if (function_exists('do_blocks')) {
 		.btn-join:focus{outline:2px solid transparent;outline-offset:2px}
 		/* Match block theme "wide" width used by the header template-part. */
 		.rcp-wide{max-width:var(--wp--style--global--wide-size, 1200px)}
-		#red-cultural-course-hero-content{padding:30px 0}
-		@media (max-width: 1400px){#red-cultural-course-hero-content{padding:30px}}
+		#red-cultural-course-hero-content{padding:30px 0 0 0}
+		@media (max-width: 1400px){#red-cultural-course-hero-content{padding:30px 0 0 0}}
 		/* Keep sidebar top aligned relative to the main navbar (desktop). */
 		@media (min-width: 1024px){#red-cultural-course-sidebar{margin-top:var(--rcp-sidebar-offset, 0px);padding-top:30px}}
 		#red-cultural-course-content{padding:90px 0px}
@@ -162,7 +162,7 @@ if (function_exists('do_blocks')) {
 			<div class="absolute inset-0 bg-black/65"></div>
 		</div>
 
-		<div id="red-cultural-course-hero-content" class="relative z-30 rcp-wide mx-auto flex flex-col justify-center min-h-[500px] text-white py-20 px-6">
+		<div id="red-cultural-course-hero-content" class="relative z-30 rcp-wide mx-auto flex flex-col justify-start text-white pt-[30px] pb-0 px-0">
 			<div class="max-w-2xl text-white">
 				<span class="uppercase tracking-widest text-xs font-semibold mb-3 block opacity-80">
 					<?php echo esc_html__('Curso', 'red-cultural-pages'); ?>
