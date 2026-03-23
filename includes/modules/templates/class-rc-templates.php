@@ -1367,10 +1367,7 @@ final class Red_Cultural_Templates {
 	}
 
 	private static function get_footer_menu_columns(): array {
-		$shop_url = function_exists('wc_get_page_permalink') ? (string) wc_get_page_permalink('shop') : '';
-		if ($shop_url === '') {
-			$shop_url = (string) home_url('/tienda/');
-		}
+		$shop_url = (string) home_url('/tienda/');
 
 		$columns = array(
 			array(
@@ -2134,7 +2131,21 @@ final class Red_Cultural_Templates {
 			return;
 		}
 
-		if (!function_exists('is_shop') || !is_shop()) {
+		$is_shop = function_exists('is_shop') && is_shop();
+
+		// Handle '/tienda' as an alias for the shop page.
+		if (!$is_shop && function_exists('is_404') && is_404()) {
+			$path = '';
+			if (isset($_SERVER['REQUEST_URI'])) {
+				$path = (string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			}
+			$path = trim($path, '/');
+			if ($path === 'tienda') {
+				$is_shop = true;
+			}
+		}
+
+		if (!$is_shop) {
 			return;
 		}
 
