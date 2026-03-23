@@ -51,7 +51,9 @@ final class Red_Cultural_Core
     {
         // 1. Templates Component (formerly red-cultural-pages)
         require_once RC_CORE_PATH . 'includes/modules/templates/class-rc-templates.php';
+        require_once RC_CORE_PATH . 'includes/modules/templates/class-rc-author-edit.php';
         Red_Cultural_Templates::init();
+        RC_Author_Edit::init();
 
         // 2. Shipping Component (formerly red-cultural-shipping)
         if (class_exists('WooCommerce')) {

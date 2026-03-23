@@ -180,11 +180,32 @@ if (function_exists('do_blocks')) {
 				</button>
 
 				<?php if ($author_name !== '') : ?>
-					<div id="red-cultural-course-author" class="flex items-center space-x-3">
+					<div id="red-cultural-course-author" class="flex items-center space-x-3 relative">
 						<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
 							<i data-lucide="user" class="text-white w-6 h-6"></i>
 						</div>
-						<span class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
+						<div class="flex items-center relative">
+							<span id="rc-author-display-name" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
+							<?php if (current_user_can('manage_options')) : ?>
+								<button id="rc-edit-author-btn" class="ml-3 text-[10px] bg-white/20 px-2 py-0.5 rounded hover:bg-white/40 transition-colors uppercase tracking-wider font-bold" type="button">
+									<?php esc_html_e('EDIT', 'red-cultural-core'); ?>
+								</button>
+								<div id="rc-author-edit-floating" class="hidden absolute left-0 top-full mt-2 bg-white rounded-lg shadow-2xl p-4 w-72 z-[100] text-gray-800 border border-gray-100 animate-in fade-in slide-in-from-top-2 duration-200">
+									<div class="flex justify-between items-center mb-3">
+										<span class="text-xs font-bold uppercase tracking-wider text-gray-500"><?php esc_html_e('Autor', 'red-cultural-core'); ?></span>
+										<button id="rc-close-author-edit" class="text-gray-400 hover:text-gray-600" type="button">
+											<i data-lucide="x" class="w-4 h-4"></i>
+										</button>
+									</div>
+									<div class="relative">
+										<input type="text" id="rc-author-search-input" class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="<?php esc_attr_e('Buscar autor...', 'red-cultural-core'); ?>" autocomplete="off">
+										<div id="rc-author-search-results" class="hidden absolute w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1 max-h-48 overflow-y-auto z-[110]">
+										</div>
+									</div>
+									<div id="rc-author-edit-status" class="mt-2 text-[10px] hidden font-semibold"></div>
+								</div>
+							<?php endif; ?>
+						</div>
 					</div>
 				<?php endif; ?>
 			</div>
