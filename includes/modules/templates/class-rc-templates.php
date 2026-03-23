@@ -2554,6 +2554,12 @@ final class Red_Cultural_Templates {
 			}
 		}
 
+		// Evitamos la doble validación del plugin de Turnstile durante wp_signon,
+		// ya que nosotros ya lo validamos manualmente antes de iniciar este proceso.
+		if (function_exists('cfturnstile_wp_login_check')) {
+			remove_filter('authenticate', 'cfturnstile_wp_login_check', 21);
+		}
+
 		$user = wp_signon(
 			array(
 				'user_login' => $user_login,
