@@ -1576,7 +1576,14 @@ final class Red_Cultural_Templates {
 								<button id="red-cultural-login-forgot" type="button" class="text-[#c5a367] hover:brightness-90 font-medium transition">¿Olvidaste tu contraseña?</button>
 							</div>
 
-							<?php do_action('cfturnstile_display_widget'); ?>
+							<?php 
+							$cft_key = get_option('cfturnstile_key');
+							if ($cft_key) : ?>
+								<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key); ?>" data-size="normal"></div>
+								<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+							<?php else: ?>
+								<?php do_action('cfturnstile_display_widget'); ?>
+							<?php endif; ?>
 
 							<button id="red-cultural-login-submit" type="submit" class="w-full py-3 bg-black text-white rounded-3px font-bold hover:bg-zinc-800 transform active:scale-[0.99] transition-all duration-200 shadow-md tracking-widest uppercase text-[10px]">
 								Iniciar Sesión

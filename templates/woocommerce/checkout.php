@@ -355,7 +355,14 @@ if (function_exists('do_blocks')) {
 											<?php echo esc_html__('Olvidé mi clave', 'red-cultural-pages'); ?>
 										</button>
 									</div>
-									<?php do_action('cfturnstile_display_widget'); ?>
+									<?php 
+									$cft_key_ch = get_option('cfturnstile_key');
+									if ($cft_key_ch) : ?>
+										<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key_ch); ?>" data-size="normal"></div>
+										<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+									<?php else: ?>
+										<?php do_action('cfturnstile_display_widget'); ?>
+									<?php endif; ?>
 									<button id="red-cultural-checkout-auth-login-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Iniciar sesión', 'red-cultural-pages'); ?>
 									</button>
@@ -390,7 +397,14 @@ if (function_exists('do_blocks')) {
 										<label class="rcp-auth-label" for="red-cultural-checkout-auth-register-password"><?php echo esc_html__('Contraseña', 'red-cultural-pages'); ?></label>
 										<input id="red-cultural-checkout-auth-register-password" type="password" placeholder="••••••••" class="rcp-auth-input">
 									</div>
-									<?php do_action('cfturnstile_display_widget'); ?>
+									<?php 
+									$cft_key_ch = get_option('cfturnstile_key');
+									if ($cft_key_ch) : ?>
+										<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key_ch); ?>" data-size="normal"></div>
+										<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+									<?php else: ?>
+										<?php do_action('cfturnstile_display_widget'); ?>
+									<?php endif; ?>
 									<button id="red-cultural-checkout-auth-register-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Crear cuenta', 'red-cultural-pages'); ?>
 									</button>
