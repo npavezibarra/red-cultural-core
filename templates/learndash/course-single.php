@@ -180,12 +180,12 @@ if (function_exists('do_blocks')) {
 				</button>
 
 				<?php if ($author_name !== '') : ?>
-					<div id="red-cultural-course-author" class="flex items-center space-x-3">
+					<a id="red-cultural-course-author" href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="flex items-center space-x-3 no-underline hover:opacity-80 transition-opacity">
 						<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
 							<i data-lucide="user" class="text-white w-6 h-6"></i>
 						</div>
-						<span id="rc-author-display-name-header" class="text-sm font-medium"><?php echo esc_html($author_name); ?></span>
-					</div>
+						<span id="rc-author-display-name-header" class="text-sm font-medium text-white"><?php echo esc_html($author_name); ?></span>
+					</a>
 				<?php endif; ?>
 			</div>
 		</div>
