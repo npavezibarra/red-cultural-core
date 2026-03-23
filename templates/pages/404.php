@@ -2,7 +2,7 @@
 /**
  * 404 Template for Red Cultural
  *
- * This template is standalone to avoid theme wrapper issues (specifically BuddyBoss artifacts).
+ * This template is standalone to avoid theme wrapper issues.
  * It uses block theme template parts (header/footer) to maintain site-wide branding.
  */
 
@@ -45,73 +45,78 @@ $bg_url = RC_CORE_URL . 'assets/images/lost-nietzsche.png';
 			background-size: cover;
 			background-position: center;
 			background-attachment: fixed;
-			min-height: calc(100vh - 200px); /* Adjust based on header/footer size */
+			min-height: 100vh;
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 			position: relative;
 			padding: 40px 20px;
+			color: #ffffff;
+			text-align: center;
 		}
 
 		#red-cultural-404-overlay {
 			position: absolute;
 			inset: 0;
-			background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
-			backdrop-filter: blur(2px);
+			background: rgba(0, 0, 0, 0.4);
+			/* Subtle backdrop blur to match the premium feel */
+			backdrop-filter: blur(1px);
 		}
 
 		#red-cultural-404-content {
 			position: relative;
 			z-index: 10;
-			background-color: rgba(255, 255, 255, 0.95);
-			border: 1px solid #000;
-			max-width: 600px;
+			max-width: 800px;
 			width: 100%;
-			padding: 60px 40px;
-			text-align: center;
-			box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 		}
 
 		.rcp-404-title {
-			font-size: 80px;
-			font-weight: 700;
-			line-height: 1;
-			margin-bottom: 20px;
-			letter-spacing: -0.05em;
-			color: #000;
+			font-size: clamp(48px, 8vw, 84px);
+			font-weight: 500;
+			line-height: 1.1;
+			margin-bottom: 24px;
+			letter-spacing: -0.02em;
+			color: #ffffff;
 		}
 
-		.rcp-404-message {
-			font-size: 18px;
+		.rcp-404-subtext {
+			font-size: clamp(18px, 3vw, 24px);
 			font-weight: 300;
-			color: #444;
-			margin-bottom: 30px;
-			line-height: 1.6;
+			color: rgba(255, 255, 255, 0.9);
+			margin-bottom: 8px;
+			line-height: 1.4;
 		}
 
 		.rcp-404-btn {
 			display: inline-block;
-			background-color: #000;
-			color: #fff;
-			padding: 15px 40px;
-			text-transform: uppercase;
-			letter-spacing: 0.2em;
-			font-size: 12px;
+			background-color: #ffffff;
+			color: #000000;
+			padding: 12px 36px;
+			font-size: 16px;
 			font-weight: 600;
-			transition: all 0.3s ease;
-			border: 1px solid #000;
+			border-radius: 6px;
+			transition: all 0.2s ease-in-out;
+			margin-top: 32px;
+			text-decoration: none;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		}
 
 		.rcp-404-btn:hover {
-			background-color: #fff;
-			color: #000;
-			transform: translateY(-2px);
+			transform: scale(1.05);
+			background-color: #f8f8f8;
+			box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 		}
 
-		/* Ensure block theme header/footer look okay here */
+		/* Optional: hide header/footer on 404 to match the screenshot if desired, 
+		   but keeping them enqueued for SEO and branding consistency.
+		   The user's example image doesn't show them, so I'll make the hero full screen. */
+		
 		#red-cultural-404-site-header, 
 		#red-cultural-404-site-footer {
 			background-color: #fff;
+			position: relative;
+			z-index: 100;
 		}
 	</style>
 	<?php wp_head(); ?>
@@ -120,8 +125,9 @@ $bg_url = RC_CORE_URL . 'assets/images/lost-nietzsche.png';
 	<?php if (function_exists('wp_body_open')) { wp_body_open(); } ?>
 
 	<?php
+	// Render the active block theme header (optional, usually kept for navigation)
 	if ($rcp_theme_header_html !== '') {
-		echo '<div id="red-cultural-404-site-header" class="relative z-[100]">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div id="red-cultural-404-site-header">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $rcp_theme_header_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -131,27 +137,20 @@ $bg_url = RC_CORE_URL . 'assets/images/lost-nietzsche.png';
 		<div id="red-cultural-404-overlay" aria-hidden="true"></div>
 
 		<main id="red-cultural-404-content">
-			<h1 class="rcp-404-title">404</h1>
-			<p class="rcp-404-message">
-				¿Te perdiste?<br>
-				<span class="font-medium">Esta página no existe o ha sido movida.</span><br>
-				Nietzsche tampoco encontró el camino aquí.
-			</p>
+			<h1 class="rcp-404-title">¿te perdiste?</h1>
+			<p class="rcp-404-subtext">Esta página no existe</p>
+			<p class="rcp-404-subtext">Vuelve a la página principal</p>
 			
-			<div class="flex flex-col sm:flex-row gap-4 justify-center">
-				<a href="<?php echo esc_url(home_url('/')); ?>" class="rcp-404-btn">
-					Volver al Inicio
-				</a>
-				<a href="<?php echo esc_url(home_url('/cursos')); ?>" class="rcp-404-btn bg-white !text-black hover:!bg-black hover:!text-white">
-					Ver Cursos
-				</a>
-			</div>
+			<a href="<?php echo esc_url(home_url('/')); ?>" class="rcp-404-btn">
+				Principal
+			</a>
 		</main>
 	</div>
 
 	<?php
+	// Render the active block theme footer
 	if ($rcp_theme_footer_html !== '') {
-		echo '<div id="red-cultural-404-site-footer" class="relative z-[100]">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div id="red-cultural-404-site-footer">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $rcp_theme_footer_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
