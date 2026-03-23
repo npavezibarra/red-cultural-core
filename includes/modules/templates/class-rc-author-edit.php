@@ -5,14 +5,14 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Handles author editing for admins on course pages.
- * Toggled UI version located in the white content area.
+ * Handles author and status editing for admins on course pages.
  */
 class RC_Author_Edit {
 
     public static function init() {
         add_action('wp_ajax_rc_search_authors', [__CLASS__, 'ajax_search_authors']);
         add_action('wp_ajax_rc_update_course_author', [__CLASS__, 'ajax_update_author']);
+        add_action('wp_ajax_rc_update_course_status', [__CLASS__, 'ajax_update_status']);
         add_action('wp_footer', [__CLASS__, 'render_js']);
     }
 
@@ -55,6 +55,26 @@ class RC_Author_Edit {
         wp_send_json_success(['display_name' => $user->display_name]);
     }
 
+    public static function ajax_update_status() {
+        check_ajax_referer('rc_author_edit_nonce', 'nonce');
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Unauthorized');
+        }
+        $course_id = isset($_POST['course_id']) ? absint($_POST['course_id']) : 0;
+        $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : '';
+
+        if (!$course_id || !in_array($status, ['publish', 'draft'])) {
+            wp_send_json_error('Invalid data');
+        }
+
+        $updated = wp_update_post(['ID' => $course_id, 'post_status' => $status]);
+        if (is_wp_error($updated)) {
+            wp_send_json_error($updated->get_error_message());
+        }
+
+        wp_send_json_success(['status' => $status]);
+    }
+
     public static function render_js() {
         if (!current_user_can('manage_options')) {
             return;
@@ -78,6 +98,8 @@ class RC_Author_Edit {
             const resultsDiv = document.getElementById('rc-author-search-results');
             const statusDiv = document.getElementById('rc-author-edit-status');
             const headerNameSpan = document.getElementById('rc-author-display-name-header');
+            const statusToggle = document.getElementById('rc-course-status-toggle');
+            const statusLabel = document.getElementById('rc-status-label');
 
             if (!trigger || !adminBox) return;
 
@@ -101,6 +123,13 @@ class RC_Author_Edit {
                 searchInput.value = '';
                 trigger.textContent = 'Cambiar Autor';
             });
+
+            if (statusToggle) {
+                statusToggle.addEventListener('change', (e) => {
+                    const status = e.target.checked ? 'publish' : 'draft';
+                    updateStatus(status);
+                });
+            }
 
             let searchTimeout;
             searchInput.addEventListener('input', (e) => {
@@ -162,15 +191,42 @@ class RC_Author_Edit {
                         statusDiv.textContent = '¡Profesor actualizado!';
                         statusDiv.style.color = '#10b981';
                         setTimeout(() => {
-                            adminBox.classList.add('hidden');
                             statusDiv.textContent = '';
                             resultsDiv.classList.add('hidden');
                             searchInput.value = '';
-                            trigger.textContent = 'Cambiar Autor';
                         }, 1500);
                     } else {
                         statusDiv.textContent = 'Error al actualizar';
                         statusDiv.style.color = '#ef4444';
+                    }
+                });
+            }
+
+            function updateStatus(status) {
+                statusDiv.textContent = 'Actualizando estado...';
+                statusDiv.style.color = '#3b82f6';
+                
+                const formData = new FormData();
+                formData.append('action', 'rc_update_course_status');
+                formData.append('nonce', '<?php echo $nonce; ?>');
+                formData.append('course_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
+                formData.append('status', status);
+
+                fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(r => r.json())
+                .then(res => {
+                    if (res.success) {
+                        statusLabel.textContent = (status === 'publish') ? 'Publicado' : 'Borrador';
+                        statusDiv.textContent = 'Estado actualizado';
+                        statusDiv.style.color = '#10b981';
+                        setTimeout(() => { statusDiv.textContent = ''; }, 1500);
+                    } else {
+                        statusDiv.textContent = 'Error al cambiar estado';
+                        statusDiv.style.color = '#ef4444';
+                        statusToggle.checked = !statusToggle.checked; // revert
                     }
                 });
             }
