@@ -128,7 +128,7 @@ if (function_exists('do_blocks')) {
 		#red-cultural-course-hero-content{padding:30px 0 30px 0}
 		@media (max-width: 1400px){#red-cultural-course-hero-content{padding:30px 0 30px 0}}
 		/* Keep sidebar top aligned relative to the main navbar (desktop). */
-		@media (min-width: 1024px){#red-cultural-course-sidebar{margin-top:var(--rcp-sidebar-offset, 0px);padding-top:0px}}
+		@media (min-width: 1024px){#red-cultural-course-sidebar{margin-top:var(--rcp-sidebar-offset, 0px);padding-top:30px}}
 		#red-cultural-course-content{padding:90px 0px}
 		#red-cultural-course-summary{font-size:16px}
 		#red-cultural-course-intro-text{font-size:18px}
