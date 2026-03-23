@@ -132,9 +132,9 @@ function rcil_user_has_lesson_access($user_id, $lesson_id)
  */
 function rcil_user_has_full_course_access($user_id, $course_id)
 {
-    // For testing purposes, admins are treated as partial students so they can see locks/messages
+    // Admins have full access by default. Removed "partial student" testing override as it was confusing.
     if (user_can($user_id, 'manage_options')) {
-        return false;
+        return true;
     }
 
     // Check direct meta access (standard enrollment) to avoid filter recursion

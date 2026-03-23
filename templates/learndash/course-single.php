@@ -254,7 +254,6 @@ if (function_exists('do_blocks')) {
 									!empty($rcil_is_active)
 									&& empty($rcil_has_full_access)
 									&& function_exists('rcil_user_has_lesson_access')
-									&& $user_id > 0
 								) {
 									$rcp_is_locked = !rcil_user_has_lesson_access($user_id, $lesson_id);
 								}

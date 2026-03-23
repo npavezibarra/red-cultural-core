@@ -113,11 +113,8 @@ class RCIL_Access_Control
             $course_id = learndash_get_course_id($lesson_id);
             $user_id = get_current_user_id();
 
-            if (!$user_id) {
-                return $content;
-            }
-
-            $can_access = $this->filter_lesson_access(true, $lesson_id, $user_id, $course_id);
+            // Do not bypass for guests. We need to check if the course requires access.
+            $can_access = $this->filter_lesson_access(true, $lesson_id, (int)$user_id, $course_id);
             
             if (!$can_access) {
                 $lesson_title = get_the_title($lesson_id);
