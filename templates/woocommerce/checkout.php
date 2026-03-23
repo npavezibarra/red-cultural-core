@@ -738,13 +738,16 @@ if (function_exists('do_blocks')) {
 					add(k, payload[k]);
 				});
 
-				// Capturar respuesta de Turnstile
+				// Obtener el token directamente de la API de Turnstile
 				var turnstileToken = typeof turnstile !== 'undefined' ? turnstile.getResponse() : '';
-				if (!turnstileToken) {
-					alert('Por favor, completa el captcha antes de continuar.');
-					return;
+
+				// Si el token existe, añadirlo al payload antes del submit
+				if (turnstileToken) {
+					add('cf-turnstile-response', turnstileToken);
+				} else {
+					alert('Por favor, completa la verificación de seguridad (Captcha).');
+					return; // Detener el envío si no hay token
 				}
-				add('cf-turnstile-response', turnstileToken);
 
 				document.body.appendChild(form);
 				form.submit();
