@@ -43,8 +43,7 @@ $rcil_is_active = false;
 $rcil_has_full_access = false;
 $rcp_is_locked = false;
 if (
-	$user_id > 0
-	&& $course_id > 0
+	$course_id > 0
 	&& function_exists('rcil_get_course_lesson_price')
 	&& function_exists('rcil_user_has_full_course_access')
 	&& function_exists('rcil_user_has_lesson_access')
