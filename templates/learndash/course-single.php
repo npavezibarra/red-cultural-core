@@ -197,28 +197,30 @@ if (function_exists('do_blocks')) {
 			<div id="red-cultural-course-content" class="lg:col-span-2 pt-16">
 				<?php if (current_user_can('manage_options')) : ?>
 					<div id="rc-author-admin-ui" class="mb-8 p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-						<div class="flex items-center justify-between mb-4">
-							<div class="flex items-center space-x-2 text-gray-700">
-								<i data-lucide="settings" class="w-4 h-4"></i>
-								<span class="text-xs font-bold uppercase tracking-wider"><?php esc_html_e('Admin: Profesor del curso', 'red-cultural-core'); ?></span>
-							</div>
-							<button id="rc-author-edit-trigger" class="text-[10px] bg-blue-600 text-white px-3 py-1 rounded-full font-bold uppercase hover:bg-blue-700 transition-colors shadow-sm" type="button">Cambiar Autor</button>
-						</div>
-						<div id="rc-author-admin-box" class="hidden animate-in fade-in slide-in-from-top-2 duration-200">
-							<div class="flex flex-col md:flex-row md:items-center gap-4">
-								<div class="relative flex-grow">
-									<input type="text" id="rc-author-search-input" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none shadow-sm" placeholder="<?php esc_attr_e('Cambiar profesor...', 'red-cultural-core'); ?>" autocomplete="off">
-									<div id="rc-author-search-results" class="hidden absolute left-0 top-full mt-1 w-full bg-white text-gray-800 rounded-lg shadow-2xl max-h-48 overflow-y-auto z-[9999] border border-gray-100 p-1"></div>
+						<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+							<div class="flex items-center space-x-4">
+								<div class="flex items-center space-x-2 text-gray-700">
+									<i data-lucide="settings" class="w-4 h-4"></i>
+									<span class="text-xs font-bold uppercase tracking-wider"><?php esc_html_e('Panel Admin', 'red-cultural-core'); ?></span>
 								</div>
 								
-								<div class="flex items-center space-x-3 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shrink-0">
-									<span class="text-[10px] font-bold uppercase text-gray-400">Estado:</span>
+								<div class="flex items-center space-x-3 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shrink-0 scale-90 md:scale-100 origin-left">
+									<span class="text-[9px] font-bold uppercase text-gray-400">Estado:</span>
 									<label class="relative inline-flex items-center cursor-pointer">
 										<input type="checkbox" id="rc-course-status-toggle" class="sr-only peer" <?php echo (get_post_status() === 'publish') ? 'checked' : ''; ?>>
-										<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
-										<span id="rc-status-label" class="ml-2 text-[10px] font-bold uppercase text-gray-600"><?php echo (get_post_status() === 'publish') ? 'Publicado' : 'Borrador'; ?></span>
+										<div class="w-8 h-4 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+										<span id="rc-status-label" class="ml-2 text-[9px] font-bold uppercase text-gray-600"><?php echo (get_post_status() === 'publish') ? 'Publicado' : 'Borrador'; ?></span>
 									</label>
 								</div>
+							</div>
+
+							<button id="rc-author-edit-trigger" class="text-[10px] bg-blue-600 text-white px-3 py-1 rounded-full font-bold uppercase hover:bg-blue-700 transition-colors shadow-sm" type="button">Cambiar Autor</button>
+						</div>
+
+						<div id="rc-author-admin-box" class="hidden mt-4 pt-4 border-t border-gray-200 animate-in fade-in slide-in-from-top-2 duration-200">
+							<div class="relative w-full">
+								<input type="text" id="rc-author-search-input" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none shadow-sm" placeholder="<?php esc_attr_e('Cambiar profesor...', 'red-cultural-core'); ?>" autocomplete="off">
+								<div id="rc-author-search-results" class="hidden absolute left-0 top-full mt-1 w-full bg-white text-gray-800 rounded-lg shadow-2xl max-h-48 overflow-y-auto z-[9999] border border-gray-100 p-1"></div>
 							</div>
 							
 							<div class="flex items-center justify-between mt-3">
