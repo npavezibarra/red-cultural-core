@@ -362,8 +362,8 @@ if (function_exists('do_blocks')) {
 									<?php echo esc_html__('IR AL CURSO', 'red-cultural-pages'); ?>
 								</a>
 							<?php elseif ($rcil_is_active) : ?>
-									<button id="rcil-buy-course" type="button" class="w-full bg-black text-white py-4 rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6">
-										<?php echo esc_html__('COMPRAR LECCIÓN', 'red-cultural-individual-lesson'); ?>
+									<button id="rcil-buy-course" type="button" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline">
+										<?php echo esc_html__('COMPRAR CURSO', 'red-cultural-individual-lesson'); ?>
 									</button>
 							<?php elseif ($payment_button_html !== '') : ?>
 								<div id="red-cultural-course-cta" class="w-full mb-6">
