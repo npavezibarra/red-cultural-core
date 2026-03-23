@@ -33,7 +33,7 @@ if ($raw_desc === '') {
 	$raw_desc = (string) wp_strip_all_tags((string) $post->post_content);
 }
 $desc = (string) wp_trim_words($raw_desc, 70, '…');
-$intro = (string) wp_trim_words($raw_desc, 75, '…');
+$intro = (string) apply_filters('the_content', $post->post_content);
 
 $enrolled = false;
 if (function_exists('sfwd_lms_has_access')) {
@@ -198,7 +198,7 @@ if (function_exists('do_blocks')) {
 				<?php if ($intro !== '') : ?>
 					<div id="red-cultural-course-intro" class="bg-white/50 p-1 rounded-xl mb-12">
 						<p class="text-gray-600 leading-relaxed text-[15px]" id="red-cultural-course-intro-text">
-							<?php echo esc_html($intro); ?>
+							<?php echo $intro; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</p>
 					</div>
 				<?php endif; ?>
