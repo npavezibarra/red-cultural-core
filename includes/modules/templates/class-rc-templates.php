@@ -1876,10 +1876,12 @@ final class Red_Cultural_Templates {
 							});
 
 							// Capturar respuesta de Turnstile
-							var turnstileRes = document.getElementsByName('cf-turnstile-response')[0];
-							if (turnstileRes && turnstileRes.value) {
-								add('cf-turnstile-response', turnstileRes.value);
+							var turnstileToken = typeof turnstile !== 'undefined' ? turnstile.getResponse() : '';
+							if (!turnstileToken) {
+								alert('Por favor, completa el captcha antes de continuar.');
+								return;
 							}
+							add('cf-turnstile-response', turnstileToken);
 
 							document.body.appendChild(form);
 							form.submit();
