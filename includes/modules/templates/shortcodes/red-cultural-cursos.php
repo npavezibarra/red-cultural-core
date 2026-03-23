@@ -121,7 +121,7 @@ if (!function_exists('rcp_red_cultural_cursos_shortcode')) {
 				<?php endif; ?>
 				<div class="mt-auto flex items-center justify-between">
 					<span class="text-xl font-bold text-gray-900"><?php echo wp_kses_post($price !== '' ? $price : '&nbsp;'); ?></span>
-					<span class="text-[10px] font-bold uppercase tracking-widest bg-black text-white px-3 py-2 rounded-sm group-hover:bg-zinc-800 transition-colors"><?php echo esc_html__('Ver curso', 'red-cultural-pages'); ?></span>
+					<span class="text-[10px] font-bold uppercase tracking-widest text-gray-900 transition-opacity hover:opacity-75"><?php echo esc_html__('Ver curso', 'red-cultural-pages'); ?></span>
 				</div>
 			</div>
 		</a>
