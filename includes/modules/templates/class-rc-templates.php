@@ -34,6 +34,7 @@ final class Red_Cultural_Templates {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_escocia_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_contacto_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_terminos_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_author_template'), 20);
 		add_filter('template_include', array(__CLASS__, 'maybe_render_404_template'), 100);
 
 
@@ -458,6 +459,29 @@ final class Red_Cultural_Templates {
 		$updated = preg_replace('/<p>\\s*(?:&nbsp;)?\\s*<\\/p>/i', '', (string) $updated);
 
 		return is_string($updated) ? $updated : $content;
+	}
+
+	public static function maybe_render_author_template(): void {
+		if (is_admin() || is_feed()) {
+			return;
+		}
+
+		if (!is_author()) {
+			return;
+		}
+
+		$enabled = (bool) apply_filters('rcp_enable_author_template', true);
+		if (!$enabled) {
+			return;
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/pages/author-page.php';
+		if (!file_exists($template_file)) {
+			return;
+		}
+
+		require $template_file;
+		exit;
 	}
 
 	public static function register_main_menu_items(): void {
