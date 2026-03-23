@@ -45,7 +45,7 @@ $bg_url = RC_CORE_URL . 'assets/images/lost-nietzsche.png';
 			background-size: cover;
 			background-position: center;
 			background-attachment: fixed;
-			min-height: 100vh;
+			min-height: 60vh;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
