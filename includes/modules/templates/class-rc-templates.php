@@ -1576,7 +1576,7 @@ final class Red_Cultural_Templates {
 								<button id="red-cultural-login-forgot" type="button" class="text-[#c5a367] hover:brightness-90 font-medium transition">¿Olvidaste tu contraseña?</button>
 							</div>
 
-							<?php do_action('simple_cloudflare_turnstile_render_widget'); ?>
+							<?php do_action('cfturnstile_display_widget'); ?>
 
 							<button id="red-cultural-login-submit" type="submit" class="w-full py-3 bg-black text-white rounded-3px font-bold hover:bg-zinc-800 transform active:scale-[0.99] transition-all duration-200 shadow-md tracking-widest uppercase text-[10px]">
 								Iniciar Sesión
@@ -2440,7 +2440,12 @@ final class Red_Cultural_Templates {
 
 		// Turnstile validation
 		$turnstile_response = isset($_POST['cf-turnstile-response']) ? sanitize_text_field((string) wp_unslash($_POST['cf-turnstile-response'])) : '';
-		$turnstile_valid    = (bool) apply_filters('simple_cloudflare_turnstile_verify', true, $turnstile_response);
+		$turnstile_valid    = true;
+
+		if (function_exists('cfturnstile_check')) {
+			$check = cfturnstile_check($turnstile_response);
+			$turnstile_valid = ($check && is_array($check) && isset($check['success']) && $check['success']);
+		}
 
 		if ($turnstile_response === '' || !$turnstile_valid) {
 			$redirect_to = isset($_POST['redirect_to']) ? esc_url_raw((string) wp_unslash($_POST['redirect_to'])) : (string) home_url('/');

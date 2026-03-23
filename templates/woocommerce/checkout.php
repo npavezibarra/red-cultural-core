@@ -355,7 +355,7 @@ if (function_exists('do_blocks')) {
 											<?php echo esc_html__('Olvidé mi clave', 'red-cultural-pages'); ?>
 										</button>
 									</div>
-									<?php do_action('simple_cloudflare_turnstile_render_widget'); ?>
+									<?php do_action('cfturnstile_display_widget'); ?>
 									<button id="red-cultural-checkout-auth-login-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Iniciar sesión', 'red-cultural-pages'); ?>
 									</button>
@@ -390,7 +390,7 @@ if (function_exists('do_blocks')) {
 										<label class="rcp-auth-label" for="red-cultural-checkout-auth-register-password"><?php echo esc_html__('Contraseña', 'red-cultural-pages'); ?></label>
 										<input id="red-cultural-checkout-auth-register-password" type="password" placeholder="••••••••" class="rcp-auth-input">
 									</div>
-									<?php do_action('simple_cloudflare_turnstile_render_widget'); ?>
+									<?php do_action('cfturnstile_display_widget'); ?>
 									<button id="red-cultural-checkout-auth-register-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Crear cuenta', 'red-cultural-pages'); ?>
 									</button>
