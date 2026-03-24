@@ -121,7 +121,7 @@ if (function_exists('wc_get_products')) {
 		a#red-cultural-shp-btn-cursos{
 			font-size:12px;
 			font-weight:700;
-			padding:10px 28px;
+			padding:8px 34px;
 			border-radius:6px;
 		}
 		@media (max-width: 640px){
@@ -170,7 +170,7 @@ if (function_exists('wc_get_products')) {
 					<a
 						id="red-cultural-shp-btn-cursos"
 						href="<?php echo esc_url((string) home_url('/cursos/')); ?>"
-						class="inline-flex items-center justify-center bg-black text-white px-8 py-4 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-gray-800 transition-all no-underline"
+						class="inline-flex items-center justify-center bg-black text-white uppercase tracking-[0.3em] hover:bg-gray-800 transition-all no-underline"
 					>
 						<?php echo esc_html__('Ver Cursos', 'red-cultural-pages'); ?>
 					</a>

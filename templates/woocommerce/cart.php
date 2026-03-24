@@ -256,7 +256,7 @@ if (function_exists('do_blocks')) {
 							</div>
 						</div>
 
-						<a id="red-cultural-cart-checkout-now" href="<?php echo esc_url($checkout_url); ?>" class="block w-full text-center bg-black text-white py-5 mt-8 text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-gray-800 transition-all transform active:scale-[0.98]">
+						<a id="red-cultural-cart-checkout-now" href="<?php echo esc_url($checkout_url); ?>" class="block w-full text-center bg-black text-white mt-8 uppercase tracking-[0.3em] hover:bg-gray-800 transition-all transform active:scale-[0.98]" style="font-weight:700; font-size:12px; padding:14px; border-radius:6px;">
 							<?php echo esc_html__('Pagar ahora', 'red-cultural-pages'); ?>
 						</a>
 
