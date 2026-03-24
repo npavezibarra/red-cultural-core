@@ -70,6 +70,11 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 		<style id="red-cultural-viajes-style">
 			#red-cultural-viajes{font-family:'Inter',sans-serif}
 			#red-cultural-viajes-hero-inner{padding:0 !important}
+			@media screen and (max-width: 1240px) {
+				#red-cultural-viajes-hero-inner {
+					padding: 0px 30px !important;
+				}
+			}
 			#red-cultural-viajes .rcp-viajes-banner{position:relative;overflow:hidden}
 			#red-cultural-viajes .rcp-viajes-banner::before{
 				content:'';

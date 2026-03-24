@@ -51,6 +51,7 @@ final class Red_Cultural_Templates {
 
 		add_action('admin_menu', array(__CLASS__, 'register_admin_pages'));
 		add_action('admin_post_rcp_save_shop_settings', array(__CLASS__, 'handle_save_shop_settings'));
+		add_action('admin_post_rcp_save_contact_forms_settings', array(__CLASS__, 'handle_save_contact_forms_settings'));
 	}
 
 		public static function register_admin_pages(): void {
@@ -71,6 +72,15 @@ final class Red_Cultural_Templates {
 				'manage_options',
 				'red-cultural-pages-shop',
 				array(__CLASS__, 'render_admin_shop_page')
+			);
+
+			add_submenu_page(
+				'red-cultural-pages',
+				'Contact Forms',
+				'Contact Forms',
+				'manage_options',
+				'red-cultural-pages-contact-forms',
+				array(__CLASS__, 'render_admin_contact_forms_page')
 			);
 		}
 
@@ -184,6 +194,110 @@ final class Red_Cultural_Templates {
 		update_option('rcp_shop_category_ids', $ids, false);
 
 		wp_safe_redirect((string) admin_url('admin.php?page=red-cultural-pages-shop&rcp_updated=1'));
+		exit;
+	}
+
+	public static function render_admin_contact_forms_page(): void {
+		if (!current_user_can('manage_options')) {
+			wp_die(esc_html__('No tienes permisos para ver esta página.', 'red-cultural-pages'));
+		}
+
+		$settings = get_option('rcp_form_recipients', array());
+		$forms = array(
+			'contacto'         => array('label' => 'Contacto Principal', 'default' => get_option('admin_email')),
+			'viaje_italia'     => array('label' => 'Viaje Italia', 'default' => get_option('admin_email')),
+			'viaje_escandinavia' => array('label' => 'Viaje Escandinavia', 'default' => 'magdalena@redcultural.cl'),
+			'viaje_japon'      => array('label' => 'Viaje Japón', 'default' => 'magdalena@redcultural.cl'),
+			'viaje_escocia'    => array('label' => 'Viaje Escocia', 'default' => get_option('admin_email')),
+		);
+
+		$updated = isset($_GET['rcp_updated']) && (string) $_GET['rcp_updated'] === '1';
+		?>
+		<div class="wrap">
+			<h1><?php echo esc_html__('Configuración de Formularios de Contacto', 'red-cultural-pages'); ?></h1>
+
+			<?php if ($updated) : ?>
+				<div class="notice notice-success is-dismissible"><p><?php echo esc_html__('Configuración guardada.', 'red-cultural-pages'); ?></p></div>
+			<?php endif; ?>
+
+			<p><?php echo esc_html__('Define los correos adicionales que recibirán notificaciones de cada formulario. El correo del administrador siempre se incluye.', 'red-cultural-pages'); ?></p>
+
+			<form method="post" action="<?php echo esc_url((string) admin_url('admin-post.php')); ?>">
+				<input type="hidden" name="action" value="rcp_save_contact_forms_settings" />
+				<?php wp_nonce_field('rcp_save_contact_forms_settings', 'rcp_cf_nonce'); ?>
+
+				<table class="widefat striped" style="max-width:1000px; margin-top:20px;">
+					<thead>
+						<tr>
+							<th style="padding:12px;"><?php echo esc_html__('Formulario', 'red-cultural-pages'); ?></th>
+							<th style="padding:12px;"><?php echo esc_html__('Correos Adicionales (separados por coma)', 'red-cultural-pages'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($forms as $id => $data) : ?>
+							<tr>
+								<td style="padding:12px; vertical-align:middle;">
+									<strong><?php echo esc_html($data['label']); ?></strong>
+									<br><small style="color:#666">ID: <?php echo esc_html($id); ?></small>
+								</td>
+								<td style="padding:12px;">
+									<input 
+										type="text" 
+										name="rcp_form_recipients[<?php echo esc_attr($id); ?>]" 
+										value="<?php echo esc_attr($settings[$id] ?? ''); ?>" 
+										class="large-text"
+										placeholder="ejemplo1@redcultural.cl, ejemplo2@redcultural.cl"
+										style="padding:8px;"
+									/>
+									<p class="description">
+										<?php echo esc_html__('Se enviará a: ', 'red-cultural-pages'); ?> 
+										<code><?php echo esc_html((string) $data['default']); ?></code>
+										<?php if (!empty($settings[$id])) echo ' + ' . esc_html($settings[$id]); ?>
+									</p>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+
+				<p style="margin-top:24px">
+					<button type="submit" class="button button-primary button-large"><?php echo esc_html__('Guardar Cambios', 'red-cultural-pages'); ?></button>
+				</p>
+			</form>
+		</div>
+		<?php
+	}
+
+	public static function handle_save_contact_forms_settings(): void {
+		if (!current_user_can('manage_options')) {
+			wp_die(esc_html__('No tienes permisos para realizar esta acción.', 'red-cultural-pages'));
+		}
+
+		if (!isset($_POST['rcp_cf_nonce']) || !wp_verify_nonce((string) $_POST['rcp_cf_nonce'], 'rcp_save_contact_forms_settings')) {
+			wp_die(esc_html__('Nonce inválido.', 'red-cultural-pages'));
+		}
+
+		$raw = isset($_POST['rcp_form_recipients']) ? (array) $_POST['rcp_form_recipients'] : array();
+		$settings = array();
+		foreach ($raw as $id => $emails) {
+			$id = sanitize_key((string) $id);
+			$emails = sanitize_text_field((string) $emails);
+			
+			// Basic cleanup of the comma separated string
+			$parts = explode(',', $emails);
+			$clean = array();
+			foreach ($parts as $p) {
+				$p = sanitize_email(trim($p));
+				if ($p !== '' && is_email($p)) {
+					$clean[] = $p;
+				}
+			}
+			$settings[$id] = implode(', ', $clean);
+		}
+
+		update_option('rcp_form_recipients', $settings, false);
+
+		wp_safe_redirect((string) admin_url('admin.php?page=red-cultural-pages-contact-forms&rcp_updated=1'));
 		exit;
 	}
 
@@ -2263,6 +2377,27 @@ final class Red_Cultural_Templates {
 		add_action('admin_post_rcp_contact_form', array(__CLASS__, 'handle_contacto_form'));
 	}
 
+	private static function get_form_recipients(string $form_id, string $default_email = ''): array {
+		if ($default_email === '') {
+			$default_email = (string) get_option('admin_email');
+		}
+
+		$recipients = array($default_email);
+		$settings = get_option('rcp_form_recipients', array());
+
+		if (isset($settings[$form_id]) && is_string($settings[$form_id]) && $settings[$form_id] !== '') {
+			$additional = explode(',', $settings[$form_id]);
+			foreach ($additional as $email) {
+				$email = sanitize_email(trim($email));
+				if ($email !== '' && is_email($email)) {
+					$recipients[] = $email;
+				}
+			}
+		}
+
+		return array_unique($recipients);
+	}
+
 	public static function handle_contacto_form(): void {
 		if (!isset($_POST['rcp_contact_nonce']) || !wp_verify_nonce((string) $_POST['rcp_contact_nonce'], 'rcp_contact_form')) {
 			wp_safe_redirect((string) home_url('/contacto/'));
@@ -2275,7 +2410,7 @@ final class Red_Cultural_Templates {
 		$subject = isset($_POST['subject']) ? sanitize_text_field((string) wp_unslash($_POST['subject'])) : '';
 		$message = isset($_POST['message']) ? sanitize_textarea_field((string) wp_unslash($_POST['message'])) : '';
 
-		$to = (string) get_option('admin_email');
+		$to = self::get_form_recipients('contacto');
 		$mail_subject = 'Contacto — ' . ($subject !== '' ? $subject : 'Nuevo mensaje');
 		$body = "Nombre: {$name}\nEmail: {$email}\nCelular: {$phone}\nAsunto: {$subject}\n\nMensaje:\n{$message}\n";
 
@@ -2305,7 +2440,7 @@ final class Red_Cultural_Templates {
 		$phone = isset($_POST['rcp_vi_phone']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_vi_phone'])) : '';
 		$message = isset($_POST['rcp_vi_message']) ? sanitize_textarea_field((string) wp_unslash($_POST['rcp_vi_message'])) : '';
 
-		$to = (string) get_option('admin_email');
+		$to = self::get_form_recipients('viaje_italia');
 		$subject = 'Viaje Italia — Nuevo interés';
 		$body = "Viaje: Italia\n\nNombre: {$name}\nEmail: {$email}\nTeléfono: {$phone}\n\nMensaje:\n{$message}\n";
 
@@ -2335,7 +2470,7 @@ final class Red_Cultural_Templates {
 		$phone = isset($_POST['rcp_ve_phone']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_ve_phone'])) : '';
 		$message = isset($_POST['rcp_ve_message']) ? sanitize_textarea_field((string) wp_unslash($_POST['rcp_ve_message'])) : '';
 
-		$to = 'magdalena@redcultural.cl';
+		$to = self::get_form_recipients('viaje_escandinavia', 'magdalena@redcultural.cl');
 		$subject = 'Viaje Escandinavia — Nuevo interés';
 		$body = "Viaje: Escandinavia 2026\nFechas: 25 de agosto al 09 de septiembre de 2026\n\nNombre: {$name}\nEmail: {$email}\nTeléfono: {$phone}\n\nMensaje:\n{$message}\n";
 
@@ -2365,7 +2500,7 @@ final class Red_Cultural_Templates {
 		$phone = isset($_POST['rcp_vj_phone']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_vj_phone'])) : '';
 		$message = isset($_POST['rcp_vj_message']) ? sanitize_textarea_field((string) wp_unslash($_POST['rcp_vj_message'])) : '';
 
-		$to = 'magdalena@redcultural.cl';
+		$to = self::get_form_recipients('viaje_japon', 'magdalena@redcultural.cl');
 		$subject = 'Viaje Japón — Nuevo interés';
 		$body = "Viaje: Japón\nFechas: 26-octubre al 08 de noviembre de 2026\n\nNombre: {$name}\nEmail: {$email}\nTeléfono: {$phone}\n\nMensaje:\n{$message}\n";
 
