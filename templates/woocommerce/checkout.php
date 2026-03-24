@@ -321,7 +321,10 @@ if (function_exists('do_blocks')) {
 								data-ajax-url="<?php echo esc_attr($ajax_url); ?>"
 								data-exists-nonce="<?php echo esc_attr($user_exists_nonce); ?>"
 								data-redirect="<?php echo esc_attr($checkout_url); ?>"
+								data-captcha-provider="<?php echo esc_attr(RC_Anti_Spam::get_settings()['provider']); ?>"
+								data-captcha-sitekey="<?php echo esc_attr(RC_Anti_Spam::get_settings()['site_key']); ?>"
 							>
+								<?php RC_Anti_Spam::render_form_fields(); ?>
 								<?php
 								$error_code = isset($_GET['rcp_auth_error']) ? (string) $_GET['rcp_auth_error'] : '';
 								if ($error_code !== '') :
@@ -713,31 +716,57 @@ if (function_exists('do_blocks')) {
 				var actionUrl = inline.getAttribute('data-admin-post');
 				var nonce = inline.getAttribute('data-nonce');
 				var redirectTo = inline.getAttribute('data-redirect');
+				var provider = inline.getAttribute('data-captcha-provider');
+				var siteKey = inline.getAttribute('data-captcha-sitekey');
+				
 				if (!actionUrl || !nonce || !redirectTo) return;
 
-				var form = document.createElement('form');
-				form.method = 'POST';
-				form.action = actionUrl;
+				function doSubmit(token) {
+					var form = document.createElement('form');
+					form.method = 'POST';
+					form.action = actionUrl;
 
-				function add(name, value) {
-					var input = document.createElement('input');
-					input.type = 'hidden';
-					input.name = name;
-					input.value = value;
-					form.appendChild(input);
+					function add(name, value) {
+						var input = document.createElement('input');
+						input.type = 'hidden';
+						input.name = name;
+						input.value = value;
+						form.appendChild(input);
+					}
+
+					add('action', 'rcp_checkout_auth');
+					add('rcp_nonce', nonce);
+					add('redirect_to', redirectTo);
+					add('mode', mode);
+					if (token) {
+						add('captcha_token', token);
+					}
+
+					Object.keys(payload || {}).forEach(function (k) {
+						add(k, payload[k]);
+					});
+
+					document.body.appendChild(form);
+					form.submit();
 				}
 
-				add('action', 'rcp_checkout_auth');
-				add('rcp_nonce', nonce);
-				add('redirect_to', redirectTo);
-				add('mode', mode);
-
-				Object.keys(payload || {}).forEach(function (k) {
-					add(k, payload[k]);
-				});
-
-				document.body.appendChild(form);
-				form.submit();
+				if (provider === 'recaptcha' && window.grecaptcha) {
+					grecaptcha.ready(function() {
+						grecaptcha.execute(siteKey, {action: 'submit'}).then(function(token) {
+							doSubmit(token);
+						});
+					});
+				} else if (provider === 'turnstile' && window.turnstile) {
+					var token = turnstile.getResponse();
+					if (!token) {
+						alert('Por favor completa el captcha.');
+						return;
+					}
+					doSubmit(token);
+				} else {
+					// Fallback for no captcha
+					doSubmit('');
+				}
 			}
 
 			function setStatus(el, message) {
