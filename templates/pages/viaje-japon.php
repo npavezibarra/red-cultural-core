@@ -262,7 +262,7 @@ $gallery_items = array(
 							Japón
 						</h1>
 						<p id="red-cultural-viaje-japon-dates" class="text-xl md:text-2xl text-white font-medium drop-shadow-lg">
-							26-octubre al 08 de noviembre de 2026
+							24-octubre al 09 de noviembre de 2026
 						</p>
 					</div>
 				</div>
@@ -571,7 +571,7 @@ $gallery_items = array(
 					<p id="red-cultural-viaje-japon-interest-question">¿Estás interesado?</p>
 					<p id="red-cultural-viaje-japon-interest-desc">Llena el formulario para más información sobre el</p>
 					<p id="red-cultural-viaje-japon-interest-trip-title">Viaje Japón</p>
-					<p id="red-cultural-viaje-japon-interest-trip-dates">26-octubre al 08 de noviembre de 2026</p>
+					<p id="red-cultural-viaje-japon-interest-trip-dates">24-octubre al 09 de noviembre de 2026</p>
 				</div>
 
 				<form

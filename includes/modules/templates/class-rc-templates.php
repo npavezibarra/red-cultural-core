@@ -2502,7 +2502,7 @@ final class Red_Cultural_Templates {
 
 		$to = self::get_form_recipients('viaje_japon', 'magdalena@redcultural.cl');
 		$subject = 'Viaje Japón — Nuevo interés';
-		$body = "Viaje: Japón\nFechas: 26-octubre al 08 de noviembre de 2026\n\nNombre: {$name}\nEmail: {$email}\nTeléfono: {$phone}\n\nMensaje:\n{$message}\n";
+		$body = "Viaje: Japón\nFechas: 24-octubre al 09 de noviembre de 2026\n\nNombre: {$name}\nEmail: {$email}\nTeléfono: {$phone}\n\nMensaje:\n{$message}\n";
 
 		$headers = array();
 		if ($email !== '') {

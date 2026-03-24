@@ -170,7 +170,7 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 					<div id="red-cultural-viajes-trip-3" class="flex flex-col items-center text-center">
 						<span id="red-cultural-viajes-trip-3-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
 						<h2 id="red-cultural-viajes-trip-3-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Escandinavia</h2>
-						<p id="red-cultural-viajes-trip-3-dates" class="text-lg text-gray-600 mb-4">16-marzo al 01 al abril de 2026</p>
+						<p id="red-cultural-viajes-trip-3-dates" class="text-lg text-gray-600 mb-4">25-agosto al 09-septiembre de 2026</p>
 
 						<div id="red-cultural-viajes-trip-3-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
 							<div id="red-cultural-viajes-trip-3-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('<?php echo esc_url($uploads_base . '/2025/12/Sweden1.jpg'); ?>'),url('https://red-cultural.cl/wp-content/uploads/2025/12/Sweden1.jpg');"></div>
@@ -186,7 +186,7 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 					<div id="red-cultural-viajes-trip-4" class="flex flex-col items-center text-center">
 						<span id="red-cultural-viajes-trip-4-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
 						<h2 id="red-cultural-viajes-trip-4-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Japón</h2>
-						<p id="red-cultural-viajes-trip-4-dates" class="text-lg text-gray-600 mb-4">26-octubre al 08 noviembre de 2026</p>
+						<p id="red-cultural-viajes-trip-4-dates" class="text-lg text-gray-600 mb-4">24-octubre al 09 de noviembre de 2026</p>
 
 						<div id="red-cultural-viajes-trip-4-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
 							<div id="red-cultural-viajes-trip-4-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('<?php echo esc_url($uploads_base . '/2025/12/JapanMain.jpg'); ?>'),url('https://red-cultural.cl/wp-content/uploads/2025/12/JapanMain.jpg');"></div>

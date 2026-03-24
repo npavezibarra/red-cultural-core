@@ -63,13 +63,13 @@ $gallery_items = array(
 ?><!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta id="red-cultural-viaje-italia-meta-charset" charset="UTF-8">
-	<meta id="red-cultural-viaje-italia-meta-viewport" name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta id="red-cultural-viaje-escandinavia-meta-charset" charset="UTF-8">
+	<meta id="red-cultural-viaje-escandinavia-meta-viewport" name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?php echo esc_html((string) wp_get_document_title()); ?></title>
-	<script id="red-cultural-viaje-italia-tailwind" src="https://cdn.tailwindcss.com"></script>
-	<link id="red-cultural-viaje-italia-font-montserrat" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-	<link id="red-cultural-viaje-italia-material-symbols" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-	<style id="red-cultural-viaje-italia-style">
+	<script id="red-cultural-viaje-escandinavia-tailwind" src="https://cdn.tailwindcss.com"></script>
+	<link id="red-cultural-viaje-escandinavia-font-montserrat" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<link id="red-cultural-viaje-escandinavia-material-symbols" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+	<style id="red-cultural-viaje-escandinavia-style">
 		body{font-family:'Montserrat',sans-serif;margin:0;padding:0}
 		.material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal;font-style:normal;font-size:28px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased;font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24}
 		.banner-bg{
@@ -82,83 +82,83 @@ $gallery_items = array(
 			height:550px;
 		}
 		.overlap-container{margin-top:-180px;position:relative;z-index:20}
-		#red-cultural-viaje-italia-hero-content{max-width:1180px;margin:0 auto}
-		#red-cultural-viaje-italia-hero-logo-wrap{top:-80px}
-		#red-cultural-viaje-italia-hero{height:420px}
-		#red-cultural-viaje-italia-gallery{max-width:var(--wp--style--global--wide-size);margin:0 auto;padding:10px 16px 84px}
-		#red-cultural-viaje-italia-gallery-title{font-size:40px;line-height:1.05;font-weight:900;letter-spacing:-.02em;margin:0 0 18px;color:#111827;text-align:center}
-		#red-cultural-viaje-italia-gallery-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;list-style:none;margin:0;padding:0}
-		#red-cultural-viaje-italia-gallery-grid a{display:block;border-radius:18px;overflow:hidden;background:#f3f4f6;box-shadow:0 10px 24px rgba(0,0,0,.08);transform:translateZ(0);transition:transform .22s ease, box-shadow .22s ease;text-decoration:none}
-		#red-cultural-viaje-italia-gallery-grid a:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.12)}
-		#red-cultural-viaje-italia-gallery-grid img{display:block;width:100%;height:240px;object-fit:cover}
+		#red-cultural-viaje-escandinavia-hero-content{max-width:1180px;margin:0 auto}
+		#red-cultural-viaje-escandinavia-hero-logo-wrap{top:-80px}
+		#red-cultural-viaje-escandinavia-hero{height:420px}
+		#red-cultural-viaje-escandinavia-gallery{max-width:var(--wp--style--global--wide-size);margin:0 auto;padding:10px 16px 84px}
+		#red-cultural-viaje-escandinavia-gallery-title{font-size:40px;line-height:1.05;font-weight:900;letter-spacing:-.02em;margin:0 0 18px;color:#111827;text-align:center}
+		#red-cultural-viaje-escandinavia-gallery-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;list-style:none;margin:0;padding:0}
+		#red-cultural-viaje-escandinavia-gallery-grid a{display:block;border-radius:18px;overflow:hidden;background:#f3f4f6;box-shadow:0 10px 24px rgba(0,0,0,.08);transform:translateZ(0);transition:transform .22s ease, box-shadow .22s ease;text-decoration:none}
+		#red-cultural-viaje-escandinavia-gallery-grid a:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.12)}
+		#red-cultural-viaje-escandinavia-gallery-grid img{display:block;width:100%;height:240px;object-fit:cover}
 		@media (max-width: 1100px){
-			#red-cultural-viaje-italia-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+			#red-cultural-viaje-escandinavia-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 		}
 		@media (max-width: 640px){
-			#red-cultural-viaje-italia-gallery{padding-top:0}
-			#red-cultural-viaje-italia-gallery-title{font-size:32px}
-			#red-cultural-viaje-italia-gallery-grid{grid-template-columns:1fr}
-			#red-cultural-viaje-italia-gallery-grid img{height:220px}
+			#red-cultural-viaje-escandinavia-gallery{padding-top:0}
+			#red-cultural-viaje-escandinavia-gallery-title{font-size:32px}
+			#red-cultural-viaje-escandinavia-gallery-grid{grid-template-columns:1fr}
+			#red-cultural-viaje-escandinavia-gallery-grid img{height:220px}
 		}
 
-		#red-cultural-viaje-italia-itinerary{background:black;color:#fff}
-		#red-cultural-viaje-italia-itinerary-inner{max-width:900px;margin:0 auto;padding:56px 16px 64px}
-		#red-cultural-viaje-italia-itinerary-title{font-size:40px;line-height:1.05;font-weight:900;letter-spacing:-.02em;margin:0 0 18px;text-align:center}
-		#red-cultural-viaje-italia-itinerary-table{width:100%;border-collapse:collapse;background:transparent;border-top:1px solid #fff;border-bottom:1px solid #fff}
-		#red-cultural-viaje-italia-itinerary-table thead th{background:transparent;color:#fff;font-weight:700;padding:15px 10px;text-align:left;border-bottom:2px solid #fff;text-transform:uppercase}
-		#red-cultural-viaje-italia-itinerary-table tbody td{padding:12px 10px;vertical-align:top;font-size:14px;line-height:1.4;color:#fff;border-bottom:1px solid #fff;border-right:1px solid rgba(255,255,255,0.25)}
-		#red-cultural-viaje-italia-itinerary-table tbody td:last-child{border-right:none}
-		#red-cultural-viaje-italia-itinerary-table tbody tr:last-child td{border-bottom:none}
-		#red-cultural-viaje-italia-itinerary-table tbody td:nth-child(1){min-width:120px}
-		#red-cultural-viaje-italia-itinerary-table tbody td:nth-child(4){min-width:160px;font-weight:700}
-		#red-cultural-viaje-italia-itinerary-table .rcp-itin-day{font-weight:900;font-size:18px;line-height:1.1;color:#FF0000}
-		#red-cultural-viaje-italia-itinerary-table .rcp-itin-subdate{display:block;margin-top:4px;font-size:12px;font-weight:400;color:#fff;opacity:0.85}
+		#red-cultural-viaje-escandinavia-itinerary{background:black;color:#fff}
+		#red-cultural-viaje-escandinavia-itinerary-inner{max-width:900px;margin:0 auto;padding:56px 16px 64px}
+		#red-cultural-viaje-escandinavia-itinerary-title{font-size:40px;line-height:1.05;font-weight:900;letter-spacing:-.02em;margin:0 0 18px;text-align:center}
+		#red-cultural-viaje-escandinavia-itinerary-table{width:100%;border-collapse:collapse;background:transparent;border-top:1px solid #fff;border-bottom:1px solid #fff}
+		#red-cultural-viaje-escandinavia-itinerary-table thead th{background:transparent;color:#fff;font-weight:700;padding:15px 10px;text-align:left;border-bottom:2px solid #fff;text-transform:uppercase}
+		#red-cultural-viaje-escandinavia-itinerary-table tbody td{padding:12px 10px;vertical-align:top;font-size:14px;line-height:1.4;color:#fff;border-bottom:1px solid #fff;border-right:1px solid rgba(255,255,255,0.25)}
+		#red-cultural-viaje-escandinavia-itinerary-table tbody td:last-child{border-right:none}
+		#red-cultural-viaje-escandinavia-itinerary-table tbody tr:last-child td{border-bottom:none}
+		#red-cultural-viaje-escandinavia-itinerary-table tbody td:nth-child(1){min-width:120px}
+		#red-cultural-viaje-escandinavia-itinerary-table tbody td:nth-child(4){min-width:160px;font-weight:700}
+		#red-cultural-viaje-escandinavia-itinerary-table .rcp-itin-day{font-weight:900;font-size:18px;line-height:1.1;color:#FF0000}
+		#red-cultural-viaje-escandinavia-itinerary-table .rcp-itin-subdate{display:block;margin-top:4px;font-size:12px;font-weight:400;color:#fff;opacity:0.85}
 		@media (max-width: 768px){
-			#red-cultural-viaje-italia-itinerary-table thead{display:none}
-			#red-cultural-viaje-italia-itinerary-table,
-			#red-cultural-viaje-italia-itinerary-table tbody,
-			#red-cultural-viaje-italia-itinerary-table tr,
-			#red-cultural-viaje-italia-itinerary-table td{display:block;width:100%}
-			#red-cultural-viaje-italia-itinerary-table tr{margin-bottom:12px;border:1px solid #fff;border-radius:4px;padding:10px}
-			#red-cultural-viaje-italia-itinerary-table tbody td{text-align:right;padding:8px 10px;position:relative;border-bottom:1px dotted #fff;border-right:none}
-			#red-cultural-viaje-italia-itinerary-table tbody td:before{content:attr(data-label);position:absolute;left:10px;width:45%;font-weight:700;text-align:left;color:#fff;opacity:0.9}
-			#red-cultural-viaje-italia-itinerary-table tbody td:last-child{border-bottom:none}
+			#red-cultural-viaje-escandinavia-itinerary-table thead{display:none}
+			#red-cultural-viaje-escandinavia-itinerary-table,
+			#red-cultural-viaje-escandinavia-itinerary-table tbody,
+			#red-cultural-viaje-escandinavia-itinerary-table tr,
+			#red-cultural-viaje-escandinavia-itinerary-table td{display:block;width:100%}
+			#red-cultural-viaje-escandinavia-itinerary-table tr{margin-bottom:12px;border:1px solid #fff;border-radius:4px;padding:10px}
+			#red-cultural-viaje-escandinavia-itinerary-table tbody td{text-align:right;padding:8px 10px;position:relative;border-bottom:1px dotted #fff;border-right:none}
+			#red-cultural-viaje-escandinavia-itinerary-table tbody td:before{content:attr(data-label);position:absolute;left:10px;width:45%;font-weight:700;text-align:left;color:#fff;opacity:0.9}
+			#red-cultural-viaje-escandinavia-itinerary-table tbody td:last-child{border-bottom:none}
 		}
 
-		#red-cultural-viaje-italia-rates{max-width:900px;margin:0 auto;padding:62px 16px 88px}
-		#red-cultural-viaje-italia-rates-title{margin:0 0 38px;font-size:44px;line-height:1.05;font-weight:900;letter-spacing:-.02em;text-align:center;color:#111827}
-		#red-cultural-viaje-italia-rates-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-		#red-cultural-viaje-italia-rates-price-left,#red-cultural-viaje-italia-rates-price-right{margin:0;text-align:center;font-size:56px;line-height:1;font-weight:900;color:#6b7280}
-		#red-cultural-viaje-italia-rates-sub-left,#red-cultural-viaje-italia-rates-sub-right{margin:14px 0 0;text-align:center;font-size:18px;color:#6b7280}
-		#red-cultural-viaje-italia-rates .rcp-rate-note{display:block;margin-top:10px;font-size:16px;line-height:1.35;font-weight:800;color:#111827}
-		#red-cultural-viaje-italia-rates-include-title,#red-cultural-viaje-italia-rates-exclude-title{margin:26px 0 18px;text-align:center;font-size:40px;line-height:1;font-weight:900;color:#ff0000}
-		#red-cultural-viaje-italia-rates-include-list,#red-cultural-viaje-italia-rates-exclude-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:22px}
-		#red-cultural-viaje-italia-rates-include-list li,#red-cultural-viaje-italia-rates-exclude-list li{display:grid;grid-template-columns:44px 1fr;align-items:start;gap:18px}
-		#red-cultural-viaje-italia-rates-include-list .material-symbols-outlined,#red-cultural-viaje-italia-rates-exclude-list .material-symbols-outlined{color:#ff0000;margin-top:2px}
-		#red-cultural-viaje-italia-rates-include-list p,#red-cultural-viaje-italia-rates-exclude-list p{margin:0;font-size:20px;line-height:1.55;color:#6b7280}
+		#red-cultural-viaje-escandinavia-rates{max-width:900px;margin:0 auto;padding:62px 16px 88px}
+		#red-cultural-viaje-escandinavia-rates-title{margin:0 0 38px;font-size:44px;line-height:1.05;font-weight:900;letter-spacing:-.02em;text-align:center;color:#111827}
+		#red-cultural-viaje-escandinavia-rates-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+		#red-cultural-viaje-escandinavia-rates-price-left,#red-cultural-viaje-escandinavia-rates-price-right{margin:0;text-align:center;font-size:56px;line-height:1;font-weight:900;color:#6b7280}
+		#red-cultural-viaje-escandinavia-rates-sub-left,#red-cultural-viaje-escandinavia-rates-sub-right{margin:14px 0 0;text-align:center;font-size:18px;color:#6b7280}
+		#red-cultural-viaje-escandinavia-rates .rcp-rate-note{display:block;margin-top:10px;font-size:16px;line-height:1.35;font-weight:800;color:#111827}
+		#red-cultural-viaje-escandinavia-rates-include-title,#red-cultural-viaje-escandinavia-rates-exclude-title{margin:26px 0 18px;text-align:center;font-size:40px;line-height:1;font-weight:900;color:#ff0000}
+		#red-cultural-viaje-escandinavia-rates-include-list,#red-cultural-viaje-escandinavia-rates-exclude-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:22px}
+		#red-cultural-viaje-escandinavia-rates-include-list li,#red-cultural-viaje-escandinavia-rates-exclude-list li{display:grid;grid-template-columns:44px 1fr;align-items:start;gap:18px}
+		#red-cultural-viaje-escandinavia-rates-include-list .material-symbols-outlined,#red-cultural-viaje-escandinavia-rates-exclude-list .material-symbols-outlined{color:#ff0000;margin-top:2px}
+		#red-cultural-viaje-escandinavia-rates-include-list p,#red-cultural-viaje-escandinavia-rates-exclude-list p{margin:0;font-size:20px;line-height:1.55;color:#6b7280}
 		@media (max-width: 900px){
-			#red-cultural-viaje-italia-rates-grid{display:flex;flex-direction:column;gap:44px}
-			#red-cultural-viaje-italia-rates-col-left,#red-cultural-viaje-italia-rates-col-right{display:contents}
-			#red-cultural-viaje-italia-rates-price-block-left{order:1}
-			#red-cultural-viaje-italia-rates-price-block-right{order:2}
-			#red-cultural-viaje-italia-rates-include-block{order:3}
-			#red-cultural-viaje-italia-rates-exclude-block{order:4}
-			#red-cultural-viaje-italia-rates-price-left,#red-cultural-viaje-italia-rates-price-right{font-size:48px}
-			#red-cultural-viaje-italia-rates-include-title,#red-cultural-viaje-italia-rates-exclude-title{font-size:36px}
+			#red-cultural-viaje-escandinavia-rates-grid{display:flex;flex-direction:column;gap:44px}
+			#red-cultural-viaje-escandinavia-rates-col-left,#red-cultural-viaje-escandinavia-rates-col-right{display:contents}
+			#red-cultural-viaje-escandinavia-rates-price-block-left{order:1}
+			#red-cultural-viaje-escandinavia-rates-price-block-right{order:2}
+			#red-cultural-viaje-escandinavia-rates-include-block{order:3}
+			#red-cultural-viaje-escandinavia-rates-exclude-block{order:4}
+			#red-cultural-viaje-escandinavia-rates-price-left,#red-cultural-viaje-escandinavia-rates-price-right{font-size:48px}
+			#red-cultural-viaje-escandinavia-rates-include-title,#red-cultural-viaje-escandinavia-rates-exclude-title{font-size:36px}
 		}
 		@media (max-width: 640px){
-			#red-cultural-viaje-italia-rates{padding-left:30px;padding-right:30px}
-			#red-cultural-viaje-italia-rates-include-list li,
-			#red-cultural-viaje-italia-rates-exclude-list li{
+			#red-cultural-viaje-escandinavia-rates{padding-left:30px;padding-right:30px}
+			#red-cultural-viaje-escandinavia-rates-include-list li,
+			#red-cultural-viaje-escandinavia-rates-exclude-list li{
 				grid-template-columns:1fr;
 				justify-items:center;
 				text-align:center;
 			}
-			#red-cultural-viaje-italia-rates-include-list .material-symbols-outlined,
-			#red-cultural-viaje-italia-rates-exclude-list .material-symbols-outlined{margin-top:0}
+			#red-cultural-viaje-escandinavia-rates-include-list .material-symbols-outlined,
+			#red-cultural-viaje-escandinavia-rates-exclude-list .material-symbols-outlined{margin-top:0}
 		}
 
-		#red-cultural-viaje-italia-interest{
+		#red-cultural-viaje-escandinavia-interest{
 			background-image: 
 				linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
 				url('<?php echo esc_url($banner_local); ?>'), 
@@ -167,17 +167,17 @@ $gallery_items = array(
 			background-position:center;
 			color:#fff
 		}
-		#red-cultural-viaje-italia-interest-inner{max-width:900px;margin:0 auto;padding:84px 16px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
-		#red-cultural-viaje-italia-interest-copy{text-align:center}
-		#red-cultural-viaje-italia-interest-question{margin:0;font-size:18px;line-height:1.2;font-weight:600;letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.55)}
-		#red-cultural-viaje-italia-interest-desc{margin:24px 0 0;font-size:28px;line-height:1.25;color:rgba(255,255,255,.78);font-weight:500}
-		#red-cultural-viaje-italia-interest-trip-title{margin:30px 0 0;font-size:48px;line-height:1.05;color:#fff;font-weight:900;letter-spacing:-.02em}
-		#red-cultural-viaje-italia-interest-trip-dates{margin:14px 0 0;font-size:28px;line-height:1.2;color:rgba(255,255,255,.78);font-weight:500}
-		#red-cultural-viaje-italia-interest-form{display:flex;flex-direction:column;gap:14px}
-		#red-cultural-viaje-italia-interest-success{margin:0 0 10px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);font-size:14px;color:#fff}
-		#red-cultural-viaje-italia-interest-form label{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:800;margin:0 0 6px}
-		#red-cultural-viaje-italia-interest-form input,
-		#red-cultural-viaje-italia-interest-form textarea{
+		#red-cultural-viaje-escandinavia-interest-inner{max-width:900px;margin:0 auto;padding:84px 16px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+		#red-cultural-viaje-escandinavia-interest-copy{text-align:center}
+		#red-cultural-viaje-escandinavia-interest-question{margin:0;font-size:18px;line-height:1.2;font-weight:600;letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+		#red-cultural-viaje-escandinavia-interest-desc{margin:24px 0 0;font-size:28px;line-height:1.25;color:rgba(255,255,255,.78);font-weight:500}
+		#red-cultural-viaje-escandinavia-interest-trip-title{margin:30px 0 0;font-size:48px;line-height:1.05;color:#fff;font-weight:900;letter-spacing:-.02em}
+		#red-cultural-viaje-escandinavia-interest-trip-dates{margin:14px 0 0;font-size:28px;line-height:1.2;color:rgba(255,255,255,.78);font-weight:500}
+		#red-cultural-viaje-escandinavia-interest-form{display:flex;flex-direction:column;gap:14px}
+		#red-cultural-viaje-escandinavia-interest-success{margin:0 0 10px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);font-size:14px;color:#fff}
+		#red-cultural-viaje-escandinavia-interest-form label{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:800;margin:0 0 6px}
+		#red-cultural-viaje-escandinavia-interest-form input,
+		#red-cultural-viaje-escandinavia-interest-form textarea{
 			width:100%;
 			padding:12px 12px;
 			border-radius:8px;
@@ -188,77 +188,77 @@ $gallery_items = array(
 			outline:none;
 			transition:border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
 		}
-		#red-cultural-viaje-italia-interest-form textarea{min-height:120px;resize:vertical}
-		#red-cultural-viaje-italia-interest-form input::placeholder,
-		#red-cultural-viaje-italia-interest-form textarea::placeholder{color:rgba(255,255,255,.45)}
-		#red-cultural-viaje-italia-interest-form input:focus,
-		#red-cultural-viaje-italia-interest-form textarea:focus{border-color:rgba(255,255,255,.8);box-shadow:0 0 0 3px rgba(255,255,255,.14);background-color:rgba(255,255,255,.04)}
-			#red-cultural-viaje-italia-interest-submit{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:6px;border:0;background:#fff;color:#000;font-weight:900;letter-spacing:.22em;text-transform:uppercase;font-size:11px;cursor:pointer;transition:transform .12s ease, opacity .12s ease}
-			#red-cultural-viaje-italia-interest-submit:hover{opacity:.92}
-			#red-cultural-viaje-italia-interest-submit:active{transform:translateY(1px)}
+		#red-cultural-viaje-escandinavia-interest-form textarea{min-height:120px;resize:vertical}
+		#red-cultural-viaje-escandinavia-interest-form input::placeholder,
+		#red-cultural-viaje-escandinavia-interest-form textarea::placeholder{color:rgba(255,255,255,.45)}
+		#red-cultural-viaje-escandinavia-interest-form input:focus,
+		#red-cultural-viaje-escandinavia-interest-form textarea:focus{border-color:rgba(255,255,255,.8);box-shadow:0 0 0 3px rgba(255,255,255,.14);background-color:rgba(255,255,255,.04)}
+			#red-cultural-viaje-escandinavia-interest-submit{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:6px;border:0;background:#fff;color:#000;font-weight:900;letter-spacing:.22em;text-transform:uppercase;font-size:11px;cursor:pointer;transition:transform .12s ease, opacity .12s ease}
+			#red-cultural-viaje-escandinavia-interest-submit:hover{opacity:.92}
+			#red-cultural-viaje-escandinavia-interest-submit:active{transform:translateY(1px)}
 			@media (max-width: 900px) and (min-width: 501px){
-				#red-cultural-viaje-italia-interest-form{
+				#red-cultural-viaje-escandinavia-interest-form{
 					width:min(460px,100%);
 					max-width:none;
 					margin-left:auto;
 					margin-right:auto;
 					justify-self:center;
 				}
-				#red-cultural-viaje-italia-interest-form > div{width:100%}
+				#red-cultural-viaje-escandinavia-interest-form > div{width:100%}
 			}
 			@media (max-width: 900px){
-				#red-cultural-viaje-italia-interest-inner{grid-template-columns:1fr;gap:34px}
-				#red-cultural-viaje-italia-interest-trip-title{font-size:42px}
-				#red-cultural-viaje-italia-interest-trip-dates{font-size:22px}
-				#red-cultural-viaje-italia-interest-desc{font-size:22px}
+				#red-cultural-viaje-escandinavia-interest-inner{grid-template-columns:1fr;gap:34px}
+				#red-cultural-viaje-escandinavia-interest-trip-title{font-size:42px}
+				#red-cultural-viaje-escandinavia-interest-trip-dates{font-size:22px}
+				#red-cultural-viaje-escandinavia-interest-desc{font-size:22px}
 			}
 
-			#red-cultural-viaje-italia-conditions{background:#fff;color:#111827}
-			#red-cultural-viaje-italia-conditions-inner{max-width:900px;margin:0 auto;padding:78px 16px 92px}
-			#red-cultural-viaje-italia-conditions-title{margin:0 0 18px;font-size:44px;line-height:1.05;font-weight:900;letter-spacing:-.02em;text-align:center}
-			#red-cultural-viaje-italia-conditions-subtitle{margin:0 0 18px;font-size:20px;line-height:1.4;font-weight:700;color:#111827}
-			#red-cultural-viaje-italia-conditions h3{margin:34px 0 12px;font-size:24px;line-height:1.2;font-weight:900;color:#111827}
-			#red-cultural-viaje-italia-conditions p{margin:0 0 10px;color:#374151;line-height:1.6}
+			#red-cultural-viaje-escandinavia-conditions{background:#fff;color:#111827}
+			#red-cultural-viaje-escandinavia-conditions-inner{max-width:900px;margin:0 auto;padding:78px 16px 92px}
+			#red-cultural-viaje-escandinavia-conditions-title{margin:0 0 18px;font-size:44px;line-height:1.05;font-weight:900;letter-spacing:-.02em;text-align:center}
+			#red-cultural-viaje-escandinavia-conditions-subtitle{margin:0 0 18px;font-size:20px;line-height:1.4;font-weight:700;color:#111827}
+			#red-cultural-viaje-escandinavia-conditions h3{margin:34px 0 12px;font-size:24px;line-height:1.2;font-weight:900;color:#111827}
+			#red-cultural-viaje-escandinavia-conditions p{margin:0 0 10px;color:#374151;line-height:1.6}
 
-			#red-cultural-viaje-italia-conditions .rcp-conditions-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-			#red-cultural-viaje-italia-conditions .rcp-conditions-table{width:100%;min-width:820px;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;font-size:.75em}
-			#red-cultural-viaje-italia-conditions .rcp-conditions-table th{background:#f9fafb;color:#111827;font-weight:800;padding:14px 16px;border-bottom:1px solid #e5e7eb;text-align:left;vertical-align:bottom}
-			#red-cultural-viaje-italia-conditions .rcp-conditions-table td{padding:14px 16px;border-top:1px solid #e5e7eb;color:#6b7280;vertical-align:top}
-			#red-cultural-viaje-italia-conditions .rcp-conditions-table th + th,
-			#red-cultural-viaje-italia-conditions .rcp-conditions-table td + td{border-left:1px solid #e5e7eb}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-table{width:100%;min-width:820px;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;font-size:.75em}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-table th{background:#f9fafb;color:#111827;font-weight:800;padding:14px 16px;border-bottom:1px solid #e5e7eb;text-align:left;vertical-align:bottom}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-table td{padding:14px 16px;border-top:1px solid #e5e7eb;color:#6b7280;vertical-align:top}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-table th + th,
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-table td + td{border-left:1px solid #e5e7eb}
 
-			#red-cultural-viaje-italia-conditions .rcp-conditions-bullets{margin:18px 0 0;padding:0;list-style:none;display:block}
-			#red-cultural-viaje-italia-conditions .rcp-conditions-bullets li{margin:6px 0;font-size:16px;line-height:1.6;color:#6b7280}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-bullets{margin:18px 0 0;padding:0;list-style:none;display:block}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-bullets li{margin:6px 0;font-size:16px;line-height:1.6;color:#6b7280}
 
-			#red-cultural-viaje-italia-conditions .rcp-conditions-lines{margin:8px 0 18px;padding:0;list-style:none;display:block}
-			#red-cultural-viaje-italia-conditions .rcp-conditions-lines li{margin:6px 0;font-size:16px;line-height:1.6;color:#6b7280}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-lines{margin:8px 0 18px;padding:0;list-style:none;display:block}
+			#red-cultural-viaje-escandinavia-conditions .rcp-conditions-lines li{margin:6px 0;font-size:16px;line-height:1.6;color:#6b7280}
 
 			@media (max-width: 640px){
-				#red-cultural-viaje-italia-conditions-title{font-size:36px}
-				#red-cultural-viaje-italia-conditions-subtitle{font-size:18px}
-				#red-cultural-viaje-italia-conditions h3{font-size:22px}
+				#red-cultural-viaje-escandinavia-conditions-title{font-size:36px}
+				#red-cultural-viaje-escandinavia-conditions-subtitle{font-size:18px}
+				#red-cultural-viaje-escandinavia-conditions h3{font-size:22px}
 			}
 	</style>
 	<?php wp_head(); ?>
 </head>
-<body id="red-cultural-viaje-italia-page" <?php body_class('bg-white text-gray-800'); ?>>
+<body id="red-cultural-viaje-escandinavia-page" <?php body_class('bg-white text-gray-800'); ?>>
 	<?php if (function_exists('wp_body_open')) { wp_body_open(); } ?>
 
 	<?php
 	if ($rcp_theme_header_html !== '') {
-		echo '<div id="red-cultural-viaje-italia-site-header">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div id="red-cultural-viaje-escandinavia-site-header">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $rcp_theme_header_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	?>
 
-	<main id="red-cultural-viaje-italia-main">
-		<header id="red-cultural-viaje-italia-hero" class="relative banner-bg flex flex-col items-center justify-start pt-20 px-4 text-center z-10">
-			<div id="red-cultural-viaje-italia-hero-content" class="relative w-full flex flex-col items-center">
-				<div id="red-cultural-viaje-italia-hero-inner" class="relative w-full flex flex-col items-center">
-					<div id="red-cultural-viaje-italia-hero-logo-wrap" class="absolute top-6 right-0 md:right-6">
+	<main id="red-cultural-viaje-escandinavia-main">
+		<header id="red-cultural-viaje-escandinavia-hero" class="relative banner-bg flex flex-col items-center justify-start pt-20 px-4 text-center z-10">
+			<div id="red-cultural-viaje-escandinavia-hero-content" class="relative w-full flex flex-col items-center">
+				<div id="red-cultural-viaje-escandinavia-hero-inner" class="relative w-full flex flex-col items-center">
+					<div id="red-cultural-viaje-escandinavia-hero-logo-wrap" class="absolute top-6 right-0 md:right-6">
 						<img
-							id="red-cultural-viaje-italia-hero-logo"
+							id="red-cultural-viaje-escandinavia-hero-logo"
 							src="<?php echo esc_url($cocha_logo_local); ?>"
 							data-fallback="<?php echo esc_url($cocha_logo_live); ?>"
 							alt="Cocha Logo"
@@ -269,11 +269,11 @@ $gallery_items = array(
 						>
 					</div>
 
-					<div id="red-cultural-viaje-italia-hero-text">
-						<h1 id="red-cultural-viaje-italia-title" class="text-4xl md:text-6xl font-bold text-white mb-2 drop-shadow-2xl">
+					<div id="red-cultural-viaje-escandinavia-hero-text">
+						<h1 id="red-cultural-viaje-escandinavia-title" class="text-4xl md:text-6xl font-bold text-white mb-2 drop-shadow-2xl">
 							Escandinavia
 						</h1>
-						<p id="red-cultural-viaje-italia-dates" class="text-xl md:text-2xl text-white font-medium drop-shadow-lg">
+						<p id="red-cultural-viaje-escandinavia-dates" class="text-xl md:text-2xl text-white font-medium drop-shadow-lg">
 							25-agosto al 09-septiembre de 2026
 						</p>
 					</div>
@@ -281,11 +281,11 @@ $gallery_items = array(
 			</div>
 		</header>
 
-		<div id="red-cultural-viaje-italia-content" class="max-w-5xl mx-auto px-4 pb-20">
-			<section id="red-cultural-viaje-italia-overlap-card" class="overlap-container flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] bg-[#444444] text-white">
-				<div id="red-cultural-viaje-italia-overlap-photo-wrap" class="w-full md:w-1/2 h-72 md:h-auto">
+		<div id="red-cultural-viaje-escandinavia-content" class="max-w-5xl mx-auto px-4 pb-20">
+			<section id="red-cultural-viaje-escandinavia-overlap-card" class="overlap-container flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] bg-[#444444] text-white">
+				<div id="red-cultural-viaje-escandinavia-overlap-photo-wrap" class="w-full md:w-1/2 h-72 md:h-auto">
 					<img
-						id="red-cultural-viaje-italia-overlap-photo"
+						id="red-cultural-viaje-escandinavia-overlap-photo"
 						src="<?php echo esc_url($hosts_local); ?>"
 						data-fallback="<?php echo esc_url($hosts_live); ?>"
 						alt="Magdalena y Bárbara"
@@ -296,8 +296,8 @@ $gallery_items = array(
 					>
 				</div>
 
-				<div id="red-cultural-viaje-italia-overlap-info" class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center space-y-6">
-					<div id="red-cultural-viaje-italia-overlap-heading">
+				<div id="red-cultural-viaje-escandinavia-overlap-info" class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center space-y-6">
+					<div id="red-cultural-viaje-escandinavia-overlap-heading">
 						<h2 id="red-cultural-viaje-italia-overlap-title" class="text-lg md:text-2xl font-semibold leading-tight">
 							<span id="red-cultural-viaje-italia-overlap-title-line-1">Viaja junto a Magdalena Merbilháa</span>
 							<span id="red-cultural-viaje-italia-overlap-title-line-2" class="block">y Bárbara Bustamante</span>
@@ -597,7 +597,7 @@ $gallery_items = array(
 					<p id="red-cultural-viaje-italia-interest-question">¿Estás interesado?</p>
 					<p id="red-cultural-viaje-italia-interest-desc">Llena el formulario para más información sobre el</p>
 					<p id="red-cultural-viaje-italia-interest-trip-title">Escandinavia 2026</p>
-					<p id="red-cultural-viaje-italia-interest-trip-dates">25 de agosto al 09 de septiembre de 2026</p>
+					<p id="red-cultural-viaje-escandinavia-interest-trip-dates">25-agosto al 09-septiembre de 2026</p>
 				</div>
 
 				<form
@@ -663,13 +663,13 @@ $gallery_items = array(
 							<tr id="red-cultural-viaje-italia-conditions-table-row-2">
 								<td id="red-cultural-viaje-italia-conditions-table-td-2-stage">Segundo abono</td>
 								<td id="red-cultural-viaje-italia-conditions-table-td-2-amount">USD 3.155 por persona</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-2-deadline">Hasta 31-marzo-2026</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-2-deadline">Hasta 31-mayo-2026</td>
 								<td id="red-cultural-viaje-italia-conditions-table-td-2-notes">No reembolsable</td>
 							</tr>
 							<tr id="red-cultural-viaje-italia-conditions-table-row-3">
 								<td id="red-cultural-viaje-italia-conditions-table-td-3-stage">Saldo final</td>
 								<td id="red-cultural-viaje-italia-conditions-table-td-3-amount">Según tipo de tarifa preventa o normal y tipo de habitación</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-3-deadline">Hasta 25-mayo-2026</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-3-deadline">Hasta 30-junio-2026</td>
 								<td id="red-cultural-viaje-italia-conditions-table-td-3-notes">No reembolsable</td>
 							</tr>
 						</tbody>
