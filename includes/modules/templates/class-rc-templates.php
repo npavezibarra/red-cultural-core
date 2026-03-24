@@ -2808,8 +2808,11 @@ final class Red_Cultural_Templates {
 					exit;
 				}
 
-				// Send confirmation email to the new user.
-				wp_new_user_notification($user_id, null, 'user');
+				// Send custom welcome email to the new user.
+				self::send_welcome_email((int) $user_id, $first_name, $email);
+
+				// Notify admin about the new user (optional, using standard WP notification).
+				wp_new_user_notification($user_id, null, 'admin');
 
 				if ($first_name !== '') {
 					update_user_meta((int) $user_id, 'first_name', $first_name);
@@ -2875,6 +2878,137 @@ final class Red_Cultural_Templates {
 			array(),
 			file_exists($css_path) ? (string) filemtime($css_path) : '1.0.0'
 		);
+	}
+
+	public static function send_welcome_email(int $user_id, string $first_name, string $email): void {
+		$to = $email;
+		$subject = 'Bienvenido a Red Cultural';
+		$user_name = ($first_name !== '') ? $first_name : 'Amigo(a)';
+		$home_url = home_url('/');
+
+		$body = <<<HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Red Cultural</title>
+    <style>
+        body {
+            font-family: 'Inter', Helvetica, Arial, sans-serif;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
+            color: #1f2937;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .header {
+            padding: 48px 48px 24px 48px;
+            text-align: center;
+        }
+        .logo {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 2px solid #111827;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: #111827;
+            text-decoration: none;
+        }
+        .content {
+            padding: 48px 32px;
+            text-align: center;
+        }
+        .title {
+            font-size: 30px;
+            font-weight: 300;
+            color: #111827;
+            margin-bottom: 24px;
+            line-height: 1.25;
+        }
+        .title span {
+            font-weight: 600;
+        }
+        .description {
+            color: #6b7280;
+            font-size: 18px;
+            line-height: 1.625;
+            margin-bottom: 40px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #111827;
+            color: #ffffff !important;
+            padding: 16px 40px;
+            border-radius: 6px;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .footer {
+            background-color: #f9fafb;
+            padding: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+            line-height: 2;
+        }
+        .footer-brand {
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body style="background-color: #f9fafb; margin: 0; padding: 0; font-family: 'Inter', sans-serif;">
+    <div class="email-container" style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+        <!-- Header / Logo -->
+        <div class="header" style="padding: 48px 48px 24px 48px; text-align: center;">
+            <div class="logo" style="display: inline-block; padding: 8px 16px; border: 2px solid #111827; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 14px; color: #111827;">
+                Red Cultural
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="content" style="padding: 48px 32px; text-align: center;">
+            <h1 class="title" style="font-size: 30px; font-weight: 300; color: #111827; margin-bottom: 24px; line-height: 1.25;">
+                Tu viaje cultural <br> <span style="font-weight: 600;">comienza aquí.</span>
+            </h1>
+            <p class="description" style="color: #6b7280; font-size: 18px; line-height: 1.625; margin-bottom: 40px;">
+                Hola {$user_name},<br>
+                Gracias por unirte a nuestra comunidad. Estamos emocionados de acompañarte en este recorrido por el arte, la historia y el pensamiento contemporáneo.
+            </p>
+            
+            <!-- CTA Button -->
+            <a href="{$home_url}" class="cta-button" style="display: inline-block; background-color: #111827; color: #ffffff; padding: 16px 40px; border-radius: 6px; font-weight: 500; letter-spacing: 0.025em; text-decoration: none;">
+                Confirmar mi registro
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer" style="background-color: #f9fafb; padding: 40px; text-align: center; font-size: 12px; color: #9ca3af; line-height: 2;">
+            <p style="margin-bottom: 16px;">Recibiste este correo porque te registraste en red-cultural.cl</p>
+            <p class="footer-brand" style="font-weight: 500; letter-spacing: 0.1em; color: #6b7280; text-transform: uppercase;">RED CULTURAL &copy; 2026</p>
+        </div>
+    </div>
+</body>
+</html>
+HTML;
+
+		$headers = array('Content-Type: text/html; charset=UTF-8');
+
+		wp_mail($to, $subject, $body, $headers);
 	}
 }
 
