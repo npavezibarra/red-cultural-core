@@ -2808,6 +2808,9 @@ final class Red_Cultural_Templates {
 					exit;
 				}
 
+				// Send confirmation email to the new user.
+				wp_new_user_notification($user_id, null, 'user');
+
 				if ($first_name !== '') {
 					update_user_meta((int) $user_id, 'first_name', $first_name);
 				}
