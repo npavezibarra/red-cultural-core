@@ -362,28 +362,37 @@ if (function_exists('do_blocks')) {
 								</div>
 							<?php endif; ?>
 
-							<?php if ($rcp_show_go_to_course) : ?>
+							<?php 
+							$rcp_woo_product_id = function_exists('rcil_get_course_woo_product_id') ? rcil_get_course_woo_product_id($course_id) : false;
+
+							// 1. Enrolled/Access -> Go to Course
+							if ($rcp_show_go_to_course) : 
+							?>
 								<a id="rc-cta-main-go" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all" href="<?php echo esc_url($rcp_first_accessible_lesson_url); ?>">
 									IR AL CURSO
 								</a>
-							<?php elseif ($rcil_is_active) : ?>
-								<?php 
-								$rcp_woo_product_id = function_exists('rcil_get_course_woo_product_id') ? rcil_get_course_woo_product_id($course_id) : false;
-								if ($rcp_woo_product_id && class_exists('WooCommerce')) {
-									$rcp_buy_url = esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url()));
-								} else {
-									// Fallback: If no direct Woo link, redirect to login which handles the flow for protected courses.
-									$rcp_buy_url = esc_url(wp_login_url($course_url));
-								}
-								?>
-								<a id="rc-cta-main-buy" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all" href="<?php echo $rcp_buy_url; ?>">
+
+							<?php 
+							// 2. Buy via WooCommerce (if product exists)
+							elseif ($rcp_woo_product_id && class_exists('WooCommerce')) : 
+								$rcp_buy_url = esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url()));
+							?>
+								<a id="rc-cta-main-buy" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all font-bold" href="<?php echo $rcp_buy_url; ?>">
 									COMPRAR CURSO
 								</a>
-							<?php elseif ($payment_button_html !== '') : ?>
+
+							<?php 
+							// 3. Fallback: Learndash Payment Button
+							elseif ($payment_button_html !== '') : 
+							?>
 								<div id="rc-cta-main-payment" class="rcp-btn-cta w-full mb-6 relative z-10">
 									<?php echo $payment_button_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
-							<?php else : ?>
+
+							<?php 
+							// 4. Final Fallback: Login
+							else : 
+							?>
 								<a id="rc-cta-main-login" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
 									INICIAR SESIÓN PARA INSCRIBIRSE
 								</a>
