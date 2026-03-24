@@ -393,8 +393,8 @@ if (function_exists('do_blocks')) {
 							// 4. Final Fallback: Login
 							else : 
 							?>
-								<a id="rc-cta-main-login" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
-									INICIAR SESIÓN PARA INSCRIBIRSE
+								<a id="rc-cta-main-login" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all font-bold" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
+									COMPRAR CURSO
 								</a>
 							<?php endif; ?>
 
