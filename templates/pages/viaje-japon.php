@@ -587,8 +587,8 @@ $gallery_items = array(
 							<p id="red-cultural-viaje-japon-rates-include-5-text">Asistencia en viaje Universal Assistance plan Value.</p>
 						</li>
 						<li id="red-cultural-viaje-japon-rates-include-6">
-							<span id="red-cultural-viaje-japon-rates-include-6-icon" class="material-symbols-outlined" aria-hidden="true">shuttle</span>
-							<p id="red-cultural-viaje-japon-rates-include-6-text">Traslado grupal aeropuerto/hotel/aeropuerto en Tokio (ver nota en siguiente página*).</p>
+							<span id="red-cultural-viaje-japon-rates-include-6-icon" class="material-symbols-outlined" aria-hidden="true">airport_shuttle</span>
+							<p id="red-cultural-viaje-japon-rates-include-6-text">Traslado grupal aeropuerto/hotel/aeropuerto en Tokio (ver nota en sección Condiciones*).</p>
 						</li>
 					</ul>
 				</div>
