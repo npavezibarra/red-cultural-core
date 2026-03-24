@@ -1601,15 +1601,7 @@ final class Red_Cultural_Templates {
 								<button id="red-cultural-login-forgot" type="button" class="text-[#c5a367] hover:brightness-90 font-medium transition">¿Olvidaste tu contraseña?</button>
 							</div>
 
-							<?php 
-							$show_login_turnstile = !(function_exists('rcp_is_local_environment') && rcp_is_local_environment());
-							$cft_key = get_option('cfturnstile_key');
-							if ($show_login_turnstile && $cft_key) : ?>
-								<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key); ?>" data-size="normal"></div>
-								<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-							<?php elseif ($show_login_turnstile) : ?>
-								<?php do_action('cfturnstile_display_widget'); ?>
-							<?php endif; ?>
+							<?php /* Turnstile removed from login overlay */ ?>
 
 							<button id="red-cultural-login-submit" type="submit" class="w-full py-3 bg-black text-white rounded-3px font-bold hover:bg-zinc-800 transform active:scale-[0.99] transition-all duration-200 shadow-md tracking-widest uppercase text-[10px]">
 								Iniciar Sesión
@@ -1637,7 +1629,6 @@ final class Red_Cultural_Templates {
 					(function () {
 						var overlay = document.getElementById('red-cultural-login-overlay');
 						if (!overlay) return;
-						var turnstileRequired = <?php echo $show_login_turnstile ? 'true' : 'false'; ?>;
 
 						var card = overlay.querySelector('.auth-card');
 						var closeBtn = document.getElementById('red-cultural-login-close');
@@ -1909,17 +1900,7 @@ final class Red_Cultural_Templates {
 								add(k, payload[k]);
 							});
 
-							var turnstileToken = typeof turnstile !== 'undefined' ? turnstile.getResponse() : '';
-
-							if (turnstileRequired) {
-								if (!turnstileToken) {
-									alert('Por favor, completa la verificación de seguridad (Captcha).');
-									return;
-								}
-								add('cf-turnstile-response', turnstileToken);
-							} else if (turnstileToken) {
-								add('cf-turnstile-response', turnstileToken);
-							}
+							// Turnstile token is no longer required.
 
 							document.body.appendChild(form);
 							form.submit();
@@ -2473,21 +2454,7 @@ final class Red_Cultural_Templates {
 			exit;
 		}
 
-		// Turnstile validation (skipped on local environments).
-		$turnstile_response = isset($_POST['cf-turnstile-response']) ? sanitize_text_field((string) wp_unslash($_POST['cf-turnstile-response'])) : '';
-		$turnstile_valid    = true;
-		$skip_turnstile     = function_exists('rcp_is_local_environment') && rcp_is_local_environment();
-
-		if (!$skip_turnstile && function_exists('cfturnstile_check')) {
-			$check = cfturnstile_check($turnstile_response);
-			$turnstile_valid = ($check && is_array($check) && isset($check['success']) && $check['success']);
-		}
-
-		if (!$skip_turnstile && ($turnstile_response === '' || !$turnstile_valid)) {
-			$redirect_to = isset($_POST['redirect_to']) ? esc_url_raw((string) wp_unslash($_POST['redirect_to'])) : (string) home_url('/');
-			wp_safe_redirect(add_query_arg('rcp_auth_error', 'captcha', $redirect_to));
-			exit;
-		}
+		// Previously Turnstile-driven validation is removed; rely on the main login flow.
 
 		$redirect_to = isset($_POST['redirect_to']) ? esc_url_raw((string) wp_unslash($_POST['redirect_to'])) : (string) home_url('/');
 		if ($redirect_to === '') {
@@ -2581,12 +2548,6 @@ final class Red_Cultural_Templates {
 			if ($by_email && isset($by_email->user_login)) {
 				$user_login = (string) $by_email->user_login;
 			}
-		}
-
-		// Evitamos la doble validación del plugin de Turnstile durante wp_signon,
-		// ya que nosotros ya lo validamos manualmente antes de iniciar este proceso.
-		if (function_exists('cfturnstile_wp_login_check')) {
-			remove_filter('authenticate', 'cfturnstile_wp_login_check', 21);
 		}
 
 		$user = wp_signon(

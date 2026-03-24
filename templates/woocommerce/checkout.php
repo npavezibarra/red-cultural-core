@@ -92,8 +92,6 @@ if (function_exists('do_blocks')) {
 	$rcp_theme_footer_html = (string) do_blocks('<!-- wp:template-part {"slug":"footer","area":"footer"} /-->');
 }
 
-$show_checkout_turnstile = !(function_exists('rcp_is_local_environment') && rcp_is_local_environment());
-
 ?><!DOCTYPE html>
 <html lang="es">
 <head>
@@ -357,14 +355,7 @@ $show_checkout_turnstile = !(function_exists('rcp_is_local_environment') && rcp_
 											<?php echo esc_html__('Olvidé mi clave', 'red-cultural-pages'); ?>
 										</button>
 									</div>
-									<?php 
-									$cft_key_ch = get_option('cfturnstile_key');
-									if ($show_checkout_turnstile && $cft_key_ch) : ?>
-										<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key_ch); ?>" data-size="normal"></div>
-										<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-									<?php elseif ($show_checkout_turnstile) : ?>
-										<?php do_action('cfturnstile_display_widget'); ?>
-									<?php endif; ?>
+									<?php /* Turnstile removed from checkout auth login */ ?>
 									<button id="red-cultural-checkout-auth-login-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Iniciar sesión', 'red-cultural-pages'); ?>
 									</button>
@@ -399,13 +390,7 @@ $show_checkout_turnstile = !(function_exists('rcp_is_local_environment') && rcp_
 										<label class="rcp-auth-label" for="red-cultural-checkout-auth-register-password"><?php echo esc_html__('Contraseña', 'red-cultural-pages'); ?></label>
 										<input id="red-cultural-checkout-auth-register-password" type="password" placeholder="••••••••" class="rcp-auth-input">
 									</div>
-									<?php 
-									if ($show_checkout_turnstile && $cft_key_ch) : ?>
-										<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key_ch); ?>" data-size="normal"></div>
-										<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-									<?php elseif ($show_checkout_turnstile) : ?>
-										<?php do_action('cfturnstile_display_widget'); ?>
-									<?php endif; ?>
+									<?php /* Turnstile removed from checkout auth register */ ?>
 									<button id="red-cultural-checkout-auth-register-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Crear cuenta', 'red-cultural-pages'); ?>
 									</button>
@@ -713,9 +698,8 @@ $show_checkout_turnstile = !(function_exists('rcp_is_local_environment') && rcp_
 
 			var showRegister = document.getElementById('red-cultural-checkout-auth-show-register');
 			var showLogin = document.getElementById('red-cultural-checkout-auth-show-login');
-			var showLogin2 = document.getElementById('red-cultural-checkout-auth-show-login-2');
-			var forgotLink = document.getElementById('red-cultural-checkout-auth-forgot-link');
-			var turnstileRequired = <?php echo $show_checkout_turnstile ? 'true' : 'false'; ?>;
+				var showLogin2 = document.getElementById('red-cultural-checkout-auth-show-login-2');
+				var forgotLink = document.getElementById('red-cultural-checkout-auth-forgot-link');
 
 			var loginSubmit = document.getElementById('red-cultural-checkout-auth-login-submit');
 			var registerSubmit = document.getElementById('red-cultural-checkout-auth-register-submit');
@@ -753,18 +737,6 @@ $show_checkout_turnstile = !(function_exists('rcp_is_local_environment') && rcp_
 				Object.keys(payload || {}).forEach(function (k) {
 					add(k, payload[k]);
 				});
-
-				var turnstileToken = typeof turnstile !== 'undefined' ? turnstile.getResponse() : '';
-
-				if (turnstileRequired) {
-					if (!turnstileToken) {
-						alert('Por favor, completa la verificación de seguridad (Captcha).');
-						return;
-					}
-					add('cf-turnstile-response', turnstileToken);
-				} else if (turnstileToken) {
-					add('cf-turnstile-response', turnstileToken);
-				}
 
 				document.body.appendChild(form);
 				form.submit();
