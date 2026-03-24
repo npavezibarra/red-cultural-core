@@ -397,101 +397,122 @@ $gallery_items = array(
 
 					<tbody id="red-cultural-viaje-japon-itinerary-tbody">
 						<tr id="red-cultural-viaje-japon-itinerary-day-1">
-							<td id="red-cultural-viaje-japon-itinerary-day-1-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-1-day">Día 1<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-1-subdate">Lunes 26 de Octubre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-1-localities" data-label="Localidades">Tokio</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-1-itinerary" data-label="Itinerario">Traslado grupal al Hotel</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-1-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-1-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-1-day">Día 1<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-1-subdate">Sábado 24 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-1-localities" data-label="Localidades">Santiago - Madrid</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-1-itinerary" data-label="Itinerario">12:40 hs. Salida en vuelo IB 118 desde Santiago a Madrid</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-1-hotels" data-label="Hoteles">-</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-2">
-							<td id="red-cultural-viaje-japon-itinerary-day-2-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-2-day">Día 2<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-2-subdate">Martes 27 de Octubre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-2-localities" data-label="Localidades">Tokio</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-2-itinerary" data-label="Itinerario">Visitaremos la Torre de Tokio, el Templo Meiji, Omotesando y Shinjuku</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-2-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-2-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-2-day">Día 2<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-2-subdate">Domingo 25 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-2-localities" data-label="Localidades">Madrid - Tokio</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-2-itinerary" data-label="Itinerario">05:20 hs Llegada a Madrid. 11:55 hs. Salida en vuelo IB 281 hacia Tokio</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-2-hotels" data-label="Hoteles">-</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-3">
-							<td id="red-cultural-viaje-japon-itinerary-day-3-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-3-day">Día 3<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-3-subdate">Miércoles 28 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-3-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-3-day">Día 3<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-3-subdate">Lunes 26 de Octubre</span></span></td>
 							<td id="red-cultural-viaje-japon-itinerary-day-3-localities" data-label="Localidades">Tokio</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-3-itinerary" data-label="Itinerario">Continuaremos visitando Tokio: Palacio Imperial, Museo Nacional de Tokio, Templo Asakusa Sensō-ji y la calle Nakamise</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-3-itinerary" data-label="Itinerario">Llegada al aeropuerto de Narita a las 10:05 hs. Traslado grupal al Hotel</td>
 							<td id="red-cultural-viaje-japon-itinerary-day-3-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-4">
-							<td id="red-cultural-viaje-japon-itinerary-day-4-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-4-day">Día 4<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-4-subdate">Jueves 29 de Octubre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-4-localities" data-label="Localidades">Tokio - Hakone</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-4-itinerary" data-label="Itinerario">Por la mañana tomaremos un crucero por el lago Ashi. Visitaremos el Teleférico de Owakudani y luego nos trasladaremos a nuestro hotel en Hakone</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-4-hotels" data-label="Hoteles">Fujiya Hotel</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-4-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-4-day">Día 4<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-4-subdate">Martes 27 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-4-localities" data-label="Localidades">Tokio</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-4-itinerary" data-label="Itinerario">Visitaremos la Torre de Tokio, el Templo Meiji, Omotesando y Shinjuku</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-4-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-5">
-							<td id="red-cultural-viaje-japon-itinerary-day-5-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-5-day">Día 5<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-5-subdate">Viernes 30 de Octubre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-5-localities" data-label="Localidades">Hakone - Takayama</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-5-itinerary" data-label="Itinerario">En la mañana nos trasladaremos a la estación de Odawara para tomar el tren de alta velocidad con destino a Nagoya. Continuaremos a Takayama en bus donde visitaremos el casco antiguo</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-5-hotels" data-label="Hoteles">Takayama Green Hotel</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-5-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-5-day">Día 5<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-5-subdate">Miércoles 28 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-5-localities" data-label="Localidades">Tokio</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-5-itinerary" data-label="Itinerario">Continuaremos visitando Tokio: Palacio Imperial, Museo Nacional de Tokio, Templo Asakusa Sensō-ji y la calle Nakamise</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-5-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-6">
-							<td id="red-cultural-viaje-japon-itinerary-day-6-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-6-day">Día 6<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-6-subdate">Sábado 31 de Octubre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-6-localities" data-label="Localidades">Takayama - Shirakawa - Kanazawa</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-6-itinerary" data-label="Itinerario">Por la mañana visitaremos el Mercado Matutino de Miyagawa y el Parque Shiroyama. Continuaremos hacia Shirakawa donde visitaremos la Casa Wada y el Museo Gassho-Zukuri Minka. Traslado a Kanazawa donde alojaremos</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-6-hotels" data-label="Hoteles">Hyatt Centric Kanazawa</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-6-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-6-day">Día 6<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-6-subdate">Jueves 29 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-6-localities" data-label="Localidades">Tokio - Hakone</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-6-itinerary" data-label="Itinerario">Por la mañana tomaremos un crucero por el lago Ashi. Visitaremos el Teleférico de Owakudani y luego nos trasladaremos a nuestro hotel en Hakone</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-6-hotels" data-label="Hoteles">Fujiya Hotel</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-7">
-							<td id="red-cultural-viaje-japon-itinerary-day-7-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-7-day">Día 7<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-7-subdate">Domingo 01 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-7-localities" data-label="Localidades">Kanazawa - Kioto</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-7-itinerary" data-label="Itinerario">Visitaremos Kenrokuen, la Calle Antigua del Té Higashi y el Museo Kanazawa XXI. Tomaremos tren con destino a Kioto</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-7-hotels" data-label="Hoteles">DoubleTree by Hilton Kyoto Station</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-7-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-7-day">Día 7<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-7-subdate">Viernes 30 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-7-localities" data-label="Localidades">Hakone - Shirakawa - Kanazawa</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-7-itinerary" data-label="Itinerario">Viajamos en tren de alta velocidad con destino a Nagoya. Continuaremos hacia Shirakawa donde visitaremos la Casa Wada y el Museo Gassho-Zukuri Minka. Traslado a Kanazawa donde alojaremos.</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-7-hotels" data-label="Hoteles">Hyatt Centric Kanazawa</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-8">
-							<td id="red-cultural-viaje-japon-itinerary-day-8-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-8-day">Día 8<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-8-subdate">Lunes 02 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-8-localities" data-label="Localidades">Kioto</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-8-itinerary" data-label="Itinerario">Recorreremos Kioto visitando el Bosque de Bambú de Arashiyama, el Templo Kinkaku y el distrito de Gion</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-8-hotels" data-label="Hoteles">DoubleTree by Hilton Kyoto Station</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-8-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-8-day">Día 8<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-8-subdate">Sábado 31 de Octubre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-8-localities" data-label="Localidades">Kanazawa - Takayama - Kanazawa</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-8-itinerary" data-label="Itinerario">Por la mañana visitaremos el Mercado Matutino de Miyagawa y el Parque Shiroyama. Continuaremos a Takayama en bus donde visitaremos el casco antiguo</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-8-hotels" data-label="Hoteles">Hyatt Centric Kanazawa</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-9">
-							<td id="red-cultural-viaje-japon-itinerary-day-9-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-9-day">Día 9<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-9-subdate">Martes 03 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-9-localities" data-label="Localidades">Kioto - Uji - Nara</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-9-itinerary" data-label="Itinerario">Por la mañana visitaremos el Templo de Byodoin. Luego seguiremos a Uji para visitar el Santuario Ujigami. En la tarde tendremos una experiencia de preparación de matcha. Visitaremos el Templo Todaiji y el parque Nara. Regreso a Kioto para alojar</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-9-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-9-day">Día 9<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-9-subdate">Domingo 01 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-9-localities" data-label="Localidades">Kanazawa - Kioto</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-9-itinerary" data-label="Itinerario">Visitaremos Kenrokuen, la Calle Antigua del Té Higashi y el Museo Kanazawa XXI. Tomaremos tren con destino a Kioto</td>
 							<td id="red-cultural-viaje-japon-itinerary-day-9-hotels" data-label="Hoteles">DoubleTree by Hilton Kyoto Station</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-10">
-							<td id="red-cultural-viaje-japon-itinerary-day-10-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-10-day">Día 10<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-10-subdate">Miércoles 04 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-10-localities" data-label="Localidades">Kioto - Osaka</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-10-itinerary" data-label="Itinerario">En la mañana iremos a Osaka para visitar: el Castillo, el Edificio Umeda Sky, el distrito de Dotonbori y Shinsekai</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-10-hotels" data-label="Hoteles">The Royal Park Hotel Iconic Osaka-Midosuji</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-10-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-10-day">Día 10<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-10-subdate">Lunes 02 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-10-localities" data-label="Localidades">Kioto</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-10-itinerary" data-label="Itinerario">Recorreremos Kioto visitando el Bosque de Bambú de Arashiyama, el Templo Kinkaku y el distrito de Gion</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-10-hotels" data-label="Hoteles">DoubleTree by Hilton Kyoto Station</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-11">
-							<td id="red-cultural-viaje-japon-itinerary-day-11-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-11-day">Día 11<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-11-subdate">Jueves 05 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-11-localities" data-label="Localidades">Osaka - Hiroshima</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-11-itinerary" data-label="Itinerario">Tomaremos tren con destino a Hiroshima donde visitaremos: el Castillo y el Museo Conmemorativo de la Paz de Hiroshima. Traslado al hotel</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-11-hotels" data-label="Hoteles">Hilton Hiroshima</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-11-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-11-day">Día 11<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-11-subdate">Martes 03 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-11-localities" data-label="Localidades">Kioto - Uji - Nara</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-11-itinerary" data-label="Itinerario">Por la mañana visitaremos el Templo de Byodoin. Luego seguiremos a Uji para visitar el Santuario Ujigami. En la tarde tendremos una experiencia de preparación de matcha. Visitaremos el Templo Todaiji y el parque Nara. Regreso a Kioto para alojar</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-11-hotels" data-label="Hoteles">DoubleTree by Hilton Kyoto Station</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-12">
-							<td id="red-cultural-viaje-japon-itinerary-day-12-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-12-day">Día 12<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-12-subdate">Viernes 06 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-12-localities" data-label="Localidades">Hiroshima - Miyajima - Tokio</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-12-itinerary" data-label="Itinerario">Visitaremos la Isla de Miyajima, el Santuario Itsukushima, el Pabellón Senjokaku y Pagoda de Cinco Pisos. Tomaremos tren con destino a Tokio donde alojaremos</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-12-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-12-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-12-day">Día 12<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-12-subdate">Miércoles 04 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-12-localities" data-label="Localidades">Kioto - Osaka</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-12-itinerary" data-label="Itinerario">En la mañana iremos a Osaka para visitar: el Castillo, el Edificio Umeda Sky, el distrito de Dotonbori y Shinsekai</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-12-hotels" data-label="Hoteles">RIHGA Royal Hotel Osaka, Vignette Collection by IHG</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-13">
-							<td id="red-cultural-viaje-japon-itinerary-day-13-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-13-day">Día 13<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-13-subdate">Sábado 07 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-13-localities" data-label="Localidades">Tokio</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-13-itinerary" data-label="Itinerario">Día Libre</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-13-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-13-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-13-day">Día 13<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-13-subdate">Jueves 05 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-13-localities" data-label="Localidades">Osaka - Hiroshima</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-13-itinerary" data-label="Itinerario">Tomaremos tren con destino a Hiroshima donde visitaremos: el Castillo y el Museo Conmemorativo de la Paz de Hiroshima. Traslado al hotel</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-13-hotels" data-label="Hoteles">Hilton Hiroshima</td>
 						</tr>
 
 						<tr id="red-cultural-viaje-japon-itinerary-day-14">
-							<td id="red-cultural-viaje-japon-itinerary-day-14-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-14-day">Día 14<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-14-subdate">Domingo 08 de Noviembre</span></span></td>
-							<td id="red-cultural-viaje-japon-itinerary-day-14-localities" data-label="Localidades">Tokio</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-14-itinerary" data-label="Itinerario">Traslado Grupal al aeropuerto de Haneda</td>
-							<td id="red-cultural-viaje-japon-itinerary-day-14-hotels" data-label="Hoteles"></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-14-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-14-day">Día 14<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-14-subdate">Viernes 06 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-14-localities" data-label="Localidades">Hiroshima - Miyajima - Tokio</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-14-itinerary" data-label="Itinerario">Visitaremos la Isla de Miyajima, el Santuario Itsukushima, el Pabellón Senjokaku y Pagoda de Cinco Pisos. Tomaremos tren con destino a Tokio donde alojaremos</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-14-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
+						</tr>
+
+						<tr id="red-cultural-viaje-japon-itinerary-day-15">
+							<td id="red-cultural-viaje-japon-itinerary-day-15-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-15-day">Día 15<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-15-subdate">Sábado 07 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-15-localities" data-label="Localidades">Tokio</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-15-itinerary" data-label="Itinerario">Día Libre</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-15-hotels" data-label="Hoteles">Hotel New Otani Tokyo Garden Tower</td>
+						</tr>
+
+						<tr id="red-cultural-viaje-japon-itinerary-day-16">
+							<td id="red-cultural-viaje-japon-itinerary-day-16-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-16-day">Día 16<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-16-subdate">Domingo 08 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-16-localities" data-label="Localidades">Tokio - Madrid</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-16-itinerary" data-label="Itinerario">Traslado Grupal al aeropuerto de Narita para tomar vuelo IB 282 que sale a las 11:45 hs. con destino a Madrid. Llegada a las 19:20 hs. 23:59 hs Salida en vuelo IB 117 con destino a Santiago</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-16-hotels" data-label="Hoteles">-</td>
+						</tr>
+
+						<tr id="red-cultural-viaje-japon-itinerary-day-17">
+							<td id="red-cultural-viaje-japon-itinerary-day-17-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-japon-itinerary-day-17-day">Día 17<span class="rcp-itin-subdate" id="red-cultural-viaje-japon-itinerary-day-17-subdate">Lunes 09 de Noviembre</span></span></td>
+							<td id="red-cultural-viaje-japon-itinerary-day-17-localities" data-label="Localidades">Santiago</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-17-itinerary" data-label="Itinerario">Llegada a Santiago a las 09:20 hrs.</td>
+							<td id="red-cultural-viaje-japon-itinerary-day-17-hotels" data-label="Hoteles">-</td>
 						</tr>
 					</tbody>
 				</table>
@@ -499,31 +520,46 @@ $gallery_items = array(
 		</section>
 
 		<section id="red-cultural-viaje-japon-rates" aria-label="Tarifas">
-			<h2 id="red-cultural-viaje-japon-rates-title">Tarifas Preventa</h2>
-			<p id="red-cultural-viaje-japon-rates-preventa-sub" class="text-center text-gray-600 text-lg font-semibold -mt-6 mb-10">Hasta 15 de Mayo 2026</p>
-
-			<div id="red-cultural-viaje-japon-rates-preventa-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
-				<div id="red-cultural-viaje-japon-rates-preventa-double" class="text-center">
-					<p id="red-cultural-viaje-japon-rates-preventa-double-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 9.125</p>
-					<p id="red-cultural-viaje-japon-rates-preventa-double-sub" class="mt-3 text-lg text-gray-500">Por persona en base doble</p>
-				</div>
-				<div id="red-cultural-viaje-japon-rates-preventa-single" class="text-center">
-					<p id="red-cultural-viaje-japon-rates-preventa-single-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 11.955</p>
-					<p id="red-cultural-viaje-japon-rates-preventa-single-sub" class="mt-3 text-lg text-gray-500">Por persona en base single</p>
-				</div>
+			<h2 id="red-cultural-viaje-japon-rates-main-title" class="text-center text-[44px] leading-[1.05] font-black tracking-[-.02em] text-gray-800 mb-2">Tarifas</h2>
+			
+			<div id="red-cultural-viaje-japon-rates-table-wrap" class="overflow-x-auto mb-10">
+				<table id="red-cultural-viaje-japon-rates-table" class="w-full max-w-5xl mx-auto border-collapse bg-white shadow-sm rounded-xl overflow-hidden">
+					<thead>
+						<tr class="bg-gray-100 text-gray-700">
+							<th class="p-6 border border-gray-200"></th>
+							<th colspan="2" class="p-6 border border-gray-200 text-xl font-bold uppercase tracking-wider">Con pasajes aéreos</th>
+							<th colspan="2" class="p-6 border border-gray-200 text-xl font-bold uppercase tracking-wider">Sin pasajes aéreos</th>
+						</tr>
+						<tr class="bg-gray-50 text-gray-600 text-sm">
+							<th class="p-4 border border-gray-200 uppercase font-black">Habitación</th>
+							<th class="p-4 border border-gray-200 font-bold uppercase tracking-widest">Preventa*</th>
+							<th class="p-4 border border-gray-200 font-bold uppercase tracking-widest">Normal</th>
+							<th class="p-4 border border-gray-200 font-bold uppercase tracking-widest">Preventa*</th>
+							<th class="p-4 border border-gray-200 font-bold uppercase tracking-widest">Normal</th>
+						</tr>
+					</thead>
+					<tbody class="text-center">
+						<tr class="hover:bg-gray-50 transition-colors">
+							<td class="p-6 border border-gray-200 font-black text-gray-800 text-xl">Single</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 14.655</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 15.405</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 11.955</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 12.705</td>
+						</tr>
+						<tr class="hover:bg-gray-50 transition-colors">
+							<td class="p-6 border border-gray-200 font-black text-gray-800 text-xl">Doble</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 11.825</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 12.395</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 9.125</td>
+							<td class="p-6 border border-gray-200 text-2xl font-black text-gray-500 italic">USD 9.695</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 
-			<h2 id="red-cultural-viaje-japon-rates-normal-title" class="text-center text-[44px] leading-[1.05] font-black tracking-[-.02em] text-gray-800 mb-10">Tarifas Normales</h2>
-
-			<div id="red-cultural-viaje-japon-rates-normal-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
-				<div id="red-cultural-viaje-japon-rates-normal-double" class="text-center">
-					<p id="red-cultural-viaje-japon-rates-normal-double-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 9.695</p>
-					<p id="red-cultural-viaje-japon-rates-normal-double-sub" class="mt-3 text-lg text-gray-500">Por persona en base doble</p>
-				</div>
-				<div id="red-cultural-viaje-japon-rates-normal-single" class="text-center">
-					<p id="red-cultural-viaje-japon-rates-normal-single-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 12.705</p>
-					<p id="red-cultural-viaje-japon-rates-normal-single-sub" class="mt-3 text-lg text-gray-500">Por persona en base single</p>
-				</div>
+			<div id="red-cultural-viaje-japon-rates-notes" class="text-center mb-16 text-gray-500 font-medium">
+				<p class="text-lg">* Tarifas Preventa válidas hasta 15-Mayo-2026</p>
+				<p class="text-sm opacity-75">Tarifas por persona expresadas en dólares americanos</p>
 			</div>
 
 			<div id="red-cultural-viaje-japon-rates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-14 max-w-5xl mx-auto">
@@ -531,20 +567,28 @@ $gallery_items = array(
 					<p id="red-cultural-viaje-japon-rates-include-title">Incluye</p>
 					<ul id="red-cultural-viaje-japon-rates-include-list">
 						<li id="red-cultural-viaje-japon-rates-include-1">
-							<span id="red-cultural-viaje-japon-rates-include-1-icon" class="material-symbols-outlined" aria-hidden="true">hotel</span>
-							<p id="red-cultural-viaje-japon-rates-include-1-text">Alojamiento en hoteles mencionados o similares con desayuno.</p>
+							<span id="red-cultural-viaje-japon-rates-include-1-icon" class="material-symbols-outlined" aria-hidden="true">flight</span>
+							<p id="red-cultural-viaje-japon-rates-include-1-text">Pasajes aéreos en clase turista (excepto si elige tarifa sin pasajes aéreos).</p>
 						</li>
 						<li id="red-cultural-viaje-japon-rates-include-2">
-							<span id="red-cultural-viaje-japon-rates-include-2-icon" class="material-symbols-outlined" aria-hidden="true">task_alt</span>
-							<p id="red-cultural-viaje-japon-rates-include-2-text">Entradas a sitios a visitar según itinerario.</p>
+							<span id="red-cultural-viaje-japon-rates-include-2-icon" class="material-symbols-outlined" aria-hidden="true">hotel</span>
+							<p id="red-cultural-viaje-japon-rates-include-2-text">Alojamiento en hoteles mencionados o similares con desayuno.</p>
 						</li>
 						<li id="red-cultural-viaje-japon-rates-include-3">
-							<span id="red-cultural-viaje-japon-rates-include-3-icon" class="material-symbols-outlined" aria-hidden="true">directions_bus</span>
-							<p id="red-cultural-viaje-japon-rates-include-3-text">Traslados terrestres en bus exclusivo para el grupo.</p>
+							<span id="red-cultural-viaje-japon-rates-include-3-icon" class="material-symbols-outlined" aria-hidden="true">task_alt</span>
+							<p id="red-cultural-viaje-japon-rates-include-3-text">Entradas a sitios a visitar según itinerario.</p>
 						</li>
 						<li id="red-cultural-viaje-japon-rates-include-4">
-							<span id="red-cultural-viaje-japon-rates-include-4-icon" class="material-symbols-outlined" aria-hidden="true">favorite</span>
-							<p id="red-cultural-viaje-japon-rates-include-4-text">Asistencia en viaje Universal Assistance plan Value.</p>
+							<span id="red-cultural-viaje-japon-rates-include-4-icon" class="material-symbols-outlined" aria-hidden="true">location_city</span>
+							<p id="red-cultural-viaje-japon-rates-include-4-text">Traslados entre ciudades vía terrestre según itinerario.</p>
+						</li>
+						<li id="red-cultural-viaje-japon-rates-include-5">
+							<span id="red-cultural-viaje-japon-rates-include-5-icon" class="material-symbols-outlined" aria-hidden="true">favorite</span>
+							<p id="red-cultural-viaje-japon-rates-include-5-text">Asistencia en viaje Universal Assistance plan Value.</p>
+						</li>
+						<li id="red-cultural-viaje-japon-rates-include-6">
+							<span id="red-cultural-viaje-japon-rates-include-6-icon" class="material-symbols-outlined" aria-hidden="true">shuttle</span>
+							<p id="red-cultural-viaje-japon-rates-include-6-text">Traslado grupal aeropuerto/hotel/aeropuerto en Tokio (ver nota en siguiente página*).</p>
 						</li>
 					</ul>
 				</div>
@@ -553,12 +597,8 @@ $gallery_items = array(
 					<p id="red-cultural-viaje-japon-rates-exclude-title">No incluye</p>
 					<ul id="red-cultural-viaje-japon-rates-exclude-list">
 						<li id="red-cultural-viaje-japon-rates-exclude-1">
-							<span id="red-cultural-viaje-japon-rates-exclude-1-icon" class="material-symbols-outlined" aria-hidden="true">payments</span>
-							<p id="red-cultural-viaje-japon-rates-exclude-1-text">Propinas, gastos personales o ningún otro servicio no especificado.</p>
-						</li>
-						<li id="red-cultural-viaje-japon-rates-exclude-2">
-							<span id="red-cultural-viaje-japon-rates-exclude-2-icon" class="material-symbols-outlined" aria-hidden="true">flight</span>
-							<p id="red-cultural-viaje-japon-rates-exclude-2-text">Pasajes aéreos</p>
+							<span id="red-cultural-viaje-japon-rates-exclude-1-icon" class="material-symbols-outlined" aria-hidden="true">warning</span>
+							<p id="red-cultural-viaje-japon-rates-exclude-1-text">Servicios adicionales, tales como alimentación no descrita, propinas, gastos de carácter personal y en general todo ítem no detallado en el listado de servicios incluidos.</p>
 						</li>
 					</ul>
 				</div>
