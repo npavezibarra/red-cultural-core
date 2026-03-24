@@ -39,6 +39,26 @@ function rcil_get_course_woo_product_id($course_id)
         return is_array($p_ids) ? reset($p_ids) : $p_ids;
     }
 
+    // Robust Fallback: Check LearnDash custom button URL if no meta link exists.
+    $ld_settings = get_post_meta($course_id, '_sfwd-courses', true);
+    if (is_array($ld_settings) && !empty($ld_settings['sfwd-courses_custom_button_url'])) {
+        $url = (string) $ld_settings['sfwd-courses_custom_button_url'];
+
+        // 1. Extract ID from ?add-to-cart=ID
+        if (preg_match('/add-to-cart=([0-9]+)/', $url, $matches)) {
+            return (int) $matches[1];
+        }
+
+        // 2. Extract slug from /product/some-slug/
+        if (preg_match('/\/product\/([^\/?#]+)/', $url, $matches)) {
+            $slug = trim($matches[1], '/');
+            $product = get_page_by_path($slug, OBJECT, 'product');
+            if ($product instanceof \WP_Post) {
+                return $product->ID;
+            }
+        }
+    }
+
     return false;
 }
 
