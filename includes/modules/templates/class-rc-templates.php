@@ -2975,13 +2975,11 @@ final class Red_Cultural_Templates {
     <div class="email-container" style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
         <!-- Header / Logo -->
         <div class="header" style="padding: 48px 48px 24px 48px; text-align: center;">
-            <div class="logo" style="display: inline-block; padding: 8px 16px; border: 2px solid #111827; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 14px; color: #111827;">
-                Red Cultural
-            </div>
+            <img src="https://red-cultural.cl/wp-content/uploads/2021/01/logoRedCulturalNegro.svg" alt="Red Cultural" style="height: 60px; width: auto; max-width: 220px; display: inline-block;">
         </div>
 
         <!-- Hero Content -->
-        <div class="content" style="padding: 48px 32px; text-align: center;">
+        <div class="content" style="padding: 0 32px 48px 32px; text-align: center;">
             <h1 class="title" style="font-size: 30px; font-weight: 300; color: #111827; margin-bottom: 24px; line-height: 1.25;">
                 Tu viaje cultural <br> <span style="font-weight: 600;">comienza aquí.</span>
             </h1>
