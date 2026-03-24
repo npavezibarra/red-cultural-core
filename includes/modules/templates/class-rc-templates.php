@@ -2057,7 +2057,9 @@ final class Red_Cultural_Templates {
 									link.classList.contains('sign-in') ||
 									link.classList.contains('sign-up');
 
-								if (hasWpAuthHref || isThemeAuthButton) {
+								var isModalDisabled = link.getAttribute('data-no-modal') === '1';
+
+								if (!isCheckoutLink && !isModalDisabled && (hasWpAuthHref || isThemeAuthButton)) {
 									e.preventDefault();
 									openOverlay(inferAuthViewFromHref(href) || (link.classList.contains('signup') ? 'register' : 'login'));
 									return;

@@ -377,7 +377,7 @@ if (function_exists('do_blocks')) {
 							elseif ($rcp_woo_product_id && class_exists('WooCommerce')) : 
 								$rcp_buy_url = esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url()));
 							?>
-								<a id="rc-cta-main-buy" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all font-bold" href="<?php echo $rcp_buy_url; ?>">
+								<a id="rc-cta-main-buy" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all font-bold" href="<?php echo $rcp_buy_url; ?>" data-no-modal="1">
 									COMPRAR CURSO
 								</a>
 
