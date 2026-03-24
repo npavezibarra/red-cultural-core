@@ -87,18 +87,21 @@ class RCIL_Frontend
             return;
         }
 
+        $asset_version = defined('RCIL_VERSION') ? RCIL_VERSION : (defined('RC_CORE_VERSION') ? RC_CORE_VERSION : '1.0.0');
+        $asset_url = defined('RCIL_PLUGIN_URL') ? RCIL_PLUGIN_URL : RC_CORE_URL . 'includes/modules/lesson-access/';
+
         wp_enqueue_style(
             'rcil-frontend',
-            RCIL_PLUGIN_URL . 'assets/css/frontend.css',
+            $asset_url . 'assets/css/frontend.css',
             [],
-            RCIL_VERSION
+            $asset_version
         );
 
         wp_enqueue_script(
             'rcil-frontend',
-            RCIL_PLUGIN_URL . 'assets/js/frontend.js',
+            $asset_url . 'assets/js/frontend.js',
             ['jquery'],
-            RCIL_VERSION,
+            $asset_version,
             true
         );
 

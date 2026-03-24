@@ -125,8 +125,8 @@ if (function_exists('do_blocks')) {
 		.btn-join:focus{outline:2px solid transparent;outline-offset:2px}
 		/* Match block theme "wide" width used by the header template-part. */
 		.rcp-wide{max-width:var(--wp--style--global--wide-size, 1200px)}
-		#red-cultural-course-hero-content{padding:30px 0 30px 0}
-		@media (max-width: 1400px){#red-cultural-course-hero-content{padding:30px 0 30px 0}}
+		#red-cultural-course-hero-content{padding:30px 0 30px 0; z-index: 0 !important;}
+		@media (max-width: 1400px){#red-cultural-course-hero-content{padding:30px 0 30px 0; z-index: 0 !important;}}
 		/* Keep sidebar top aligned relative to the main navbar (desktop). */
 		@media (min-width: 1024px){#red-cultural-course-sidebar{margin-top:var(--rcp-sidebar-offset, 0px);padding-top:30px}}
 		#red-cultural-course-content{padding:90px 0px}
@@ -142,10 +142,13 @@ if (function_exists('do_blocks')) {
 		#btn-join{padding:10px 28px;font-weight:700}
 		#red-cultural-course-lessons-list h3.font-medium.text-gray-800{font-size:16px;font-weight:700}
 		#red-cultural-course-lessons h2.text-xs.font-bold.text-gray-400.tracking-widest.uppercase.mb-6{color:#000;font-weight:900;font-size:16px}
-		#rcil-buy-course { margin-bottom: 10px !important; }
-		#red-cultural-course-cta { margin-bottom: 10px !important; padding: 12px !important; display: flex; align-items: center; justify-content: center; letter-spacing: 2px; font-size: 12px; font-weight: 700; }
+		#rcp-btn-join { display: block; width: 100%; margin-bottom: 12px; }
+		.rcp-btn-cta, button#rcil-buy-course { margin-bottom: 10px !important; padding: 12px !important; display: flex; align-items: center; justify-content: center; letter-spacing: 2px; font-size: 13px; font-weight: 700; transition: all 0.2s ease; border-radius: 6px; }
 		#red-cultural-course-intro { background: none !important; }
-		@media (max-width: 1240px){ #red-cultural-course-hero-content { padding: 30px !important; } #red-cultural-course-content { padding: 90px 0px 0px !important; } }
+		@media (max-width: 1240px){ #red-cultural-course-hero-content { padding: 30px !important; z-index: 0 !important; } #red-cultural-course-content { padding: 90px 0px 0px !important; } }
+		#red-cultural-course-sidebar { position: relative; z-index: 100 !important; }
+		#red-cultural-course-hero-content { z-index: 0 !important; }
+
 	</style>
 	<?php wp_head(); ?>
 </head>
@@ -164,7 +167,7 @@ if (function_exists('do_blocks')) {
 			<div class="absolute inset-0 bg-black/65"></div>
 		</div>
 
-		<div id="red-cultural-course-hero-content" class="relative z-30 rcp-wide mx-auto flex flex-col justify-start text-white pt-[30px] pb-[30px] px-0">
+		<div id="red-cultural-course-hero-content" class="relative z-10 rcp-wide mx-auto flex flex-col justify-start text-white pt-[30px] pb-[30px] px-0">
 			<div class="max-w-2xl text-white">
 				<span class="uppercase tracking-widest text-xs font-semibold mb-3 block opacity-80">
 					<?php echo esc_html__('Curso', 'red-cultural-pages'); ?>
@@ -190,7 +193,7 @@ if (function_exists('do_blocks')) {
 		</div>
 	</header>
 
-	<main id="red-cultural-course-main" class="rcp-wide mx-auto px-6 pb-20 -mt-16 relative z-20">
+	<main id="red-cultural-course-main" class="rcp-wide mx-auto px-6 pb-20 -mt-16 relative z-40">
 		<div id="red-cultural-course-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
 			<div id="red-cultural-course-content" class="lg:col-span-2 pt-16">
@@ -360,23 +363,28 @@ if (function_exists('do_blocks')) {
 							<?php endif; ?>
 
 							<?php if ($rcp_show_go_to_course) : ?>
-								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline" href="<?php echo esc_url($rcp_first_accessible_lesson_url); ?>">
+								<a id="rc-cta-main-go" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all" href="<?php echo esc_url($rcp_first_accessible_lesson_url); ?>">
 									IR AL CURSO
 								</a>
 							<?php elseif ($rcil_is_active) : ?>
 								<?php 
 								$rcp_woo_product_id = function_exists('rcil_get_course_woo_product_id') ? rcil_get_course_woo_product_id($course_id) : false;
-								$rcp_buy_url = $rcp_woo_product_id ? esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url())) : '#';
+								if ($rcp_woo_product_id && class_exists('WooCommerce')) {
+									$rcp_buy_url = esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url()));
+								} else {
+									// Fallback: If no direct Woo link, redirect to login which handles the flow for protected courses.
+									$rcp_buy_url = esc_url(wp_login_url($course_url));
+								}
 								?>
-								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline" href="<?php echo $rcp_buy_url; ?>">
+								<a id="rc-cta-main-buy" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all" href="<?php echo $rcp_buy_url; ?>">
 									COMPRAR CURSO
 								</a>
 							<?php elseif ($payment_button_html !== '') : ?>
-								<div id="red-cultural-course-cta" class="w-full mb-6">
+								<div id="rc-cta-main-payment" class="rcp-btn-cta w-full mb-6 relative z-10">
 									<?php echo $payment_button_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
 							<?php else : ?>
-								<a id="red-cultural-course-cta" class="w-full bg-black text-white py-3 flex items-center justify-center rounded-md font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors mb-6 uppercase no-underline" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
+								<a id="rc-cta-main-login" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
 									INICIAR SESIÓN PARA INSCRIBIRSE
 								</a>
 							<?php endif; ?>

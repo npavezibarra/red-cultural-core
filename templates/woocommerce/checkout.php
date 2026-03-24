@@ -92,6 +92,8 @@ if (function_exists('do_blocks')) {
 	$rcp_theme_footer_html = (string) do_blocks('<!-- wp:template-part {"slug":"footer","area":"footer"} /-->');
 }
 
+$show_checkout_turnstile = !(function_exists('rcp_is_local_environment') && rcp_is_local_environment());
+
 ?><!DOCTYPE html>
 <html lang="es">
 <head>
@@ -357,10 +359,10 @@ if (function_exists('do_blocks')) {
 									</div>
 									<?php 
 									$cft_key_ch = get_option('cfturnstile_key');
-									if ($cft_key_ch) : ?>
+									if ($show_checkout_turnstile && $cft_key_ch) : ?>
 										<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key_ch); ?>" data-size="normal"></div>
 										<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-									<?php else: ?>
+									<?php elseif ($show_checkout_turnstile) : ?>
 										<?php do_action('cfturnstile_display_widget'); ?>
 									<?php endif; ?>
 									<button id="red-cultural-checkout-auth-login-submit" type="button" class="rcp-auth-primary">
@@ -398,11 +400,10 @@ if (function_exists('do_blocks')) {
 										<input id="red-cultural-checkout-auth-register-password" type="password" placeholder="••••••••" class="rcp-auth-input">
 									</div>
 									<?php 
-									$cft_key_ch = get_option('cfturnstile_key');
-									if ($cft_key_ch) : ?>
+									if ($show_checkout_turnstile && $cft_key_ch) : ?>
 										<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key_ch); ?>" data-size="normal"></div>
 										<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-									<?php else: ?>
+									<?php elseif ($show_checkout_turnstile) : ?>
 										<?php do_action('cfturnstile_display_widget'); ?>
 									<?php endif; ?>
 									<button id="red-cultural-checkout-auth-register-submit" type="button" class="rcp-auth-primary">
@@ -714,6 +715,7 @@ if (function_exists('do_blocks')) {
 			var showLogin = document.getElementById('red-cultural-checkout-auth-show-login');
 			var showLogin2 = document.getElementById('red-cultural-checkout-auth-show-login-2');
 			var forgotLink = document.getElementById('red-cultural-checkout-auth-forgot-link');
+			var turnstileRequired = <?php echo $show_checkout_turnstile ? 'true' : 'false'; ?>;
 
 			var loginSubmit = document.getElementById('red-cultural-checkout-auth-login-submit');
 			var registerSubmit = document.getElementById('red-cultural-checkout-auth-register-submit');
@@ -752,15 +754,16 @@ if (function_exists('do_blocks')) {
 					add(k, payload[k]);
 				});
 
-				// Obtener el token directamente de la API de Turnstile
 				var turnstileToken = typeof turnstile !== 'undefined' ? turnstile.getResponse() : '';
 
-				// Si el token existe, añadirlo al payload antes del submit
-				if (turnstileToken) {
+				if (turnstileRequired) {
+					if (!turnstileToken) {
+						alert('Por favor, completa la verificación de seguridad (Captcha).');
+						return;
+					}
 					add('cf-turnstile-response', turnstileToken);
-				} else {
-					alert('Por favor, completa la verificación de seguridad (Captcha).');
-					return; // Detener el envío si no hay token
+				} else if (turnstileToken) {
+					add('cf-turnstile-response', turnstileToken);
 				}
 
 				document.body.appendChild(form);

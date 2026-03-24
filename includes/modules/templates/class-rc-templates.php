@@ -1602,11 +1602,12 @@ final class Red_Cultural_Templates {
 							</div>
 
 							<?php 
+							$show_login_turnstile = !(function_exists('rcp_is_local_environment') && rcp_is_local_environment());
 							$cft_key = get_option('cfturnstile_key');
-							if ($cft_key) : ?>
+							if ($show_login_turnstile && $cft_key) : ?>
 								<div class="cf-turnstile mb-4" data-sitekey="<?php echo esc_attr($cft_key); ?>" data-size="normal"></div>
 								<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-							<?php else: ?>
+							<?php elseif ($show_login_turnstile) : ?>
 								<?php do_action('cfturnstile_display_widget'); ?>
 							<?php endif; ?>
 
@@ -1636,6 +1637,7 @@ final class Red_Cultural_Templates {
 					(function () {
 						var overlay = document.getElementById('red-cultural-login-overlay');
 						if (!overlay) return;
+						var turnstileRequired = <?php echo $show_login_turnstile ? 'true' : 'false'; ?>;
 
 						var card = overlay.querySelector('.auth-card');
 						var closeBtn = document.getElementById('red-cultural-login-close');
@@ -1907,15 +1909,16 @@ final class Red_Cultural_Templates {
 								add(k, payload[k]);
 							});
 
-							// Obtener el token directamente de la API de Turnstile
 							var turnstileToken = typeof turnstile !== 'undefined' ? turnstile.getResponse() : '';
 
-							// Si el token existe, añadirlo al payload antes del submit
-							if (turnstileToken) {
+							if (turnstileRequired) {
+								if (!turnstileToken) {
+									alert('Por favor, completa la verificación de seguridad (Captcha).');
+									return;
+								}
 								add('cf-turnstile-response', turnstileToken);
-							} else {
-								alert('Por favor, completa la verificación de seguridad (Captcha).');
-								return; // Detener el envío si no hay token
+							} else if (turnstileToken) {
+								add('cf-turnstile-response', turnstileToken);
 							}
 
 							document.body.appendChild(form);
@@ -2470,16 +2473,17 @@ final class Red_Cultural_Templates {
 			exit;
 		}
 
-		// Turnstile validation
+		// Turnstile validation (skipped on local environments).
 		$turnstile_response = isset($_POST['cf-turnstile-response']) ? sanitize_text_field((string) wp_unslash($_POST['cf-turnstile-response'])) : '';
 		$turnstile_valid    = true;
+		$skip_turnstile     = function_exists('rcp_is_local_environment') && rcp_is_local_environment();
 
-		if (function_exists('cfturnstile_check')) {
+		if (!$skip_turnstile && function_exists('cfturnstile_check')) {
 			$check = cfturnstile_check($turnstile_response);
 			$turnstile_valid = ($check && is_array($check) && isset($check['success']) && $check['success']);
 		}
 
-		if ($turnstile_response === '' || !$turnstile_valid) {
+		if (!$skip_turnstile && ($turnstile_response === '' || !$turnstile_valid)) {
 			$redirect_to = isset($_POST['redirect_to']) ? esc_url_raw((string) wp_unslash($_POST['redirect_to'])) : (string) home_url('/');
 			wp_safe_redirect(add_query_arg('rcp_auth_error', 'captcha', $redirect_to));
 			exit;
