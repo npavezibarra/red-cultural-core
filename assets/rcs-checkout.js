@@ -80,24 +80,37 @@ jQuery(function ($) {
         const map = {};
         if (states && typeof states === 'object') {
             Object.keys(states).forEach(code => {
-                map[normalizeString(states[code])] = code;
+                const label = String(states[code] || '');
+                map[normalizeString(label)] = code;
+                map[normalizeString(code)] = code; // Support code-to-code
             });
         }
 
-        const aliases = {
+        const regionAliases = {
             "ohiggins": "Libertador General Bernardo O'Higgins",
             "libertador general bernardo ohiggins": "Libertador General Bernardo O'Higgins",
             "metropolitana": "Región Metropolitana de Santiago",
             "metropolitana de santiago": "Región Metropolitana de Santiago",
             "region metropolitana": "Región Metropolitana de Santiago",
             "región metropolitana": "Región Metropolitana de Santiago",
+            "bio bio": "Biobío",
+            "araucania": "La Araucanía",
+            "nuble": "Ñuble",
+            "aysen": "Aysén del General Carlos Ibáñez del Campo",
+            "magallanes": "Magallanes y la Antártica Chilena"
         };
 
-        Object.keys(aliases).forEach(alias => {
-            const canonical = aliases[alias];
+        Object.keys(regionAliases).forEach(alias => {
+            const canonical = regionAliases[alias];
+            const normAlias = normalizeString(alias);
             const normCanonical = normalizeString(canonical);
-            if (map[normCanonical]) {
-                map[normalizeString(alias)] = map[normCanonical];
+
+            // If we have the alias in the map (e.g. WC calls it "Metropolitana"), 
+            // ensure the canonical (from JSON) also points to that code.
+            if (map[normAlias] && !map[normCanonical]) {
+                map[normCanonical] = map[normAlias];
+            } else if (map[normCanonical] && !map[normAlias]) {
+                map[normAlias] = map[normCanonical];
             }
         });
 
@@ -326,13 +339,33 @@ jQuery(function ($) {
         return bestScore >= 0.6 ? closest : null;
     }
 
+    function findStateCode(regionName, regionCodeMap) {
+        if (!regionName) return '';
+        const normalized = normalizeString(regionName);
+        
+        // 1. Direct match (including aliases)
+        if (regionCodeMap[normalized]) {
+            return regionCodeMap[normalized];
+        }
+
+        // 2. Fuzzy match (partial strings)
+        let bestCode = '';
+        Object.keys(regionCodeMap).forEach(label => {
+            if (label.indexOf(normalized) !== -1 || normalized.indexOf(label) !== -1) {
+                bestCode = regionCodeMap[label];
+            }
+        });
+
+        return bestCode;
+    }
+
     function setStateFromRegion($cityField, comunaToRegion, regionCodeMap) {
         const value = String($cityField.val() || '');
         const normalized = normalizeString(value);
         const regionName = comunaToRegion[normalized];
         if (!regionName) return false;
 
-        const stateCode = regionCodeMap[normalizeString(regionName)];
+        const stateCode = findStateCode(regionName, regionCodeMap);
         if (!stateCode) return false;
 
         const isBilling = $cityField.attr('id') === 'billing_city';
@@ -603,13 +636,13 @@ jQuery(function ($) {
             }
 
             instance._renderItem = function (ul, item) {
-                const $row = $('<div class="rcs-comuna-option"></div>');
+                const $row = $('<div class="rcs-comuna-option rcp-comuna-item"></div>');
 
-                $('<span class="rcs-comuna-option-name"></span>')
+                $('<span class="rcs-comuna-option-name rcp-comuna-name"></span>')
                     .text(item.label || item.value || '')
                     .appendTo($row);
 
-                $('<span class="rcs-comuna-option-region"></span>')
+                $('<span class="rcs-comuna-option-region rcp-comuna-region"></span>')
                     .text(item.region || '')
                     .appendTo($row);
 

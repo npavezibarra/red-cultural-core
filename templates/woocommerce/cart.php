@@ -269,40 +269,7 @@ if (function_exists('do_blocks')) {
 				</div>
 			</div>
 
-			<!-- Recommended / Upsell (static) -->
-			<section class="mt-24">
-				<h2 class="text-xl font-bold uppercase tracking-widest mb-10"><?php echo esc_html__('Productos similares', 'red-cultural-pages'); ?></h2>
-				<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-					<div class="group cursor-pointer">
-						<div class="aspect-square bg-gray-100 mb-4 overflow-hidden rounded-sm">
-							<img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=400&auto=format&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
-						</div>
-						<h4 class="text-xs font-bold uppercase tracking-widest">Cárdigan de punto fino</h4>
-						<p class="text-xs text-gray-500 mt-1">$120.00</p>
-					</div>
-					<div class="group cursor-pointer">
-						<div class="aspect-square bg-gray-100 mb-4 overflow-hidden rounded-sm">
-							<img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=400&auto=format&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
-						</div>
-						<h4 class="text-xs font-bold uppercase tracking-widest">Banano de cuero</h4>
-						<p class="text-xs text-gray-500 mt-1">$155.00</p>
-					</div>
-					<div class="group cursor-pointer">
-						<div class="aspect-square bg-gray-100 mb-4 overflow-hidden rounded-sm">
-							<img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=400&auto=format&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
-						</div>
-						<h4 class="text-xs font-bold uppercase tracking-widest">Pañuelo de seda</h4>
-						<p class="text-xs text-gray-500 mt-1">$65.00</p>
-					</div>
-					<div class="group cursor-pointer">
-						<div class="aspect-square bg-gray-100 mb-4 overflow-hidden rounded-sm">
-							<img src="https://images.unsplash.com/photo-1539106604051-4043f4575971?q=80&w=400&auto=format&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
-						</div>
-						<h4 class="text-xs font-bold uppercase tracking-widest">Short con cordón</h4>
-						<p class="text-xs text-gray-500 mt-1">$75.00</p>
-					</div>
-				</div>
-			</section>
+
 		<?php endif; ?>
 	</main>
 

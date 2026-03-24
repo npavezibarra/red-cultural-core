@@ -690,7 +690,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 							<form id="red-cultural-ma-direcciones-billing-form" class="hidden space-y-3" method="post" action="<?php echo esc_url(wc_get_endpoint_url('edit-address', 'billing', $myaccount_url)); ?>">
 								<?php wp_nonce_field('woocommerce-edit_address', 'woocommerce-edit-address-nonce'); ?>
 								<input type="hidden" name="action" value="edit_address" />
-								<input type="hidden" name="billing_country" value="CL" />
+								<input type="hidden" id="billing_country" name="billing_country" value="CL" />
 								<input type="hidden" name="billing_first_name" value="<?php echo esc_attr($billing_first_name); ?>" />
 								<input type="hidden" name="billing_last_name" value="<?php echo esc_attr($billing_last_name); ?>" />
 								<input type="hidden" name="billing_email" value="<?php echo esc_attr($billing_email); ?>" />
@@ -737,7 +737,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 							<form id="red-cultural-ma-direcciones-shipping-form" class="hidden space-y-3" method="post" action="<?php echo esc_url(wc_get_endpoint_url('edit-address', 'shipping', $myaccount_url)); ?>">
 								<?php wp_nonce_field('woocommerce-edit_address', 'woocommerce-edit-address-nonce'); ?>
 								<input type="hidden" name="action" value="edit_address" />
-								<input type="hidden" name="shipping_country" value="CL" />
+								<input type="hidden" id="shipping_country" name="shipping_country" value="CL" />
 								<input type="hidden" name="shipping_first_name" value="<?php echo esc_attr($shipping_first_name); ?>" />
 								<input type="hidden" name="shipping_last_name" value="<?php echo esc_attr($shipping_last_name); ?>" />
 								<input type="hidden" name="address_type" value="shipping" />
