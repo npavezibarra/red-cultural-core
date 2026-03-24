@@ -102,7 +102,7 @@ if (function_exists('do_blocks')) {
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=private_connectivity" />
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-		body{font-family:'Inter',sans-serif}
+		body{font-family:'Inter',sans-serif;padding:0 !important}
 		#red-cultural-header{border-bottom:1px solid #e5e7eb}
 		#red-cultural-checkout-container{max-width:var(--wp--style--global--wide-size, 1200px)}
 		#red-cultural-checkout-title{font-size:28px;letter-spacing:1px}
