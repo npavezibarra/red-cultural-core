@@ -162,6 +162,7 @@ $bg_url = RC_CORE_URL . 'assets/images/la-anunciacion_red-cultural_1280x558.webp
 					>
 						<input type="hidden" id="red-cultural-contacto-action" name="action" value="rcp_contact_form">
 						<?php wp_nonce_field('rcp_contact_form', 'rcp_contact_nonce'); ?>
+						<?php RC_Anti_Spam::render_form_fields(); ?>
 
 						<div id="red-cultural-contacto-field-name" class="md:col-span-2">
 							<label id="red-cultural-contacto-label-name" class="block text-[10px] font-semibold uppercase tracking-wider text-gray-500 mb-2" for="red-cultural-contacto-input-name">Nombre Completo</label>
@@ -232,6 +233,7 @@ $bg_url = RC_CORE_URL . 'assets/images/la-anunciacion_red-cultural_1280x558.webp
 						}
 					})();
 				</script>
+				<?php RC_Anti_Spam::render_form_js('red-cultural-contacto-form'); ?>
 			</section>
 		</main>
 	</div>

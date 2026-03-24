@@ -69,6 +69,9 @@ final class Red_Cultural_Core
 
         require_once RC_CORE_PATH . 'includes/modules/email-tester/class-rc-email-tester.php';
         Red_Cultural_Email_Tester::init();
+
+        require_once RC_CORE_PATH . 'includes/modules/antispam/class-rc-antispam.php';
+        RC_Anti_Spam::init();
     }
 
     /**

@@ -625,6 +625,7 @@ $gallery_items = array(
 
 					<input type="hidden" id="red-cultural-viaje-japon-interest-action" name="action" value="rcp_viaje_japon_interest">
 					<?php wp_nonce_field('rcp_viaje_japon_interest', 'rcp_vj_nonce'); ?>
+					<?php RC_Anti_Spam::render_form_fields(); ?>
 
 					<div id="red-cultural-viaje-japon-interest-field-name">
 						<label id="red-cultural-viaje-japon-interest-label-name" for="red-cultural-viaje-japon-interest-input-name">Nombre</label>
@@ -648,6 +649,7 @@ $gallery_items = array(
 
 					<button id="red-cultural-viaje-japon-interest-submit" type="submit">Enviar</button>
 				</form>
+				<?php RC_Anti_Spam::render_form_js('red-cultural-viaje-japon-interest-form'); ?>
 			</div>
 		</section>
 

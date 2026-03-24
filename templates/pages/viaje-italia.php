@@ -599,6 +599,7 @@ $gallery_items = array(
 
 					<input type="hidden" id="red-cultural-viaje-italia-interest-action" name="action" value="rcp_viaje_italia_interest">
 					<?php wp_nonce_field('rcp_viaje_italia_interest', 'rcp_vi_nonce'); ?>
+					<?php RC_Anti_Spam::render_form_fields(); ?>
 
 					<div id="red-cultural-viaje-italia-interest-field-name">
 						<label id="red-cultural-viaje-italia-interest-label-name" for="red-cultural-viaje-italia-interest-input-name">Nombre</label>
@@ -622,6 +623,7 @@ $gallery_items = array(
 
 					<button id="red-cultural-viaje-italia-interest-submit" type="submit">Enviar</button>
 				</form>
+				<?php RC_Anti_Spam::render_form_js('red-cultural-viaje-italia-interest-form'); ?>
 			</div>
 		</section>
 

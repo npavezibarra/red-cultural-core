@@ -52,6 +52,7 @@ final class Red_Cultural_Templates {
 		add_action('admin_menu', array(__CLASS__, 'register_admin_pages'));
 		add_action('admin_post_rcp_save_shop_settings', array(__CLASS__, 'handle_save_shop_settings'));
 		add_action('admin_post_rcp_save_contact_forms_settings', array(__CLASS__, 'handle_save_contact_forms_settings'));
+		add_action('admin_post_rcp_save_antispam_settings', array(__CLASS__, 'handle_save_antispam_settings'));
 	}
 
 		public static function register_admin_pages(): void {
@@ -261,7 +262,56 @@ final class Red_Cultural_Templates {
 				</table>
 
 				<p style="margin-top:24px">
-					<button type="submit" class="button button-primary button-large"><?php echo esc_html__('Guardar Cambios', 'red-cultural-pages'); ?></button>
+					<button type="submit" class="button button-primary button-large"><?php echo esc_html__('Guardar Cambios de Destinatarios', 'red-cultural-pages'); ?></button>
+				</p>
+			</form>
+
+			<hr style="margin:40px 0;">
+
+			<h2><?php echo esc_html__('Configuración Anti-Spam (reCAPTCHA / Turnstile)', 'red-cultural-pages'); ?></h2>
+			<p><?php echo esc_html__('Protege tus formularios usando Google reCAPTCHA v3 o Cloudflare Turnstile.', 'red-cultural-pages'); ?></p>
+			
+			<div class="notice notice-warning inline" style="margin-bottom:20px;">
+				<p><strong><?php echo esc_html__('Prevención de Bloqueos:', 'red-cultural-pages'); ?></strong> <?php echo esc_html__('Si te quedas fuera de tu sitio por un error del Captcha, puedes desactivarlo desde SSH ejecutando:', 'red-cultural-pages'); ?><br>
+				<code>wp option update rc_antispam_settings '{"provider":"none"}' --format=json</code></p>
+			</div>
+
+			<form method="post" action="<?php echo esc_url((string) admin_url('admin-post.php')); ?>">
+				<input type="hidden" name="action" value="rcp_save_antispam_settings" />
+				<?php wp_nonce_field('rcp_save_antispam_settings', 'rcp_as_nonce'); ?>
+
+				<?php 
+				$as_settings = RC_Anti_Spam::get_settings();
+				?>
+
+				<table class="form-table" style="max-width:1000px;">
+					<tr>
+						<th scope="row"><label><?php echo esc_html__('Proveedor', 'red-cultural-pages'); ?></label></th>
+						<td>
+							<select name="rc_as[provider]" id="rc_as_provider" style="min-width:200px;">
+								<option value="none" <?php selected($as_settings['provider'], 'none'); ?>><?php echo esc_html__('Ninguno (Desactivado)', 'red-cultural-pages'); ?></option>
+								<option value="recaptcha" <?php selected($as_settings['provider'], 'recaptcha'); ?>><?php echo esc_html__('Google reCAPTCHA v3', 'red-cultural-pages'); ?></option>
+								<option value="turnstile" <?php selected($as_settings['provider'], 'turnstile'); ?>><?php echo esc_html__('Cloudflare Turnstile', 'red-cultural-pages'); ?></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label><?php echo esc_html__('Site Key', 'red-cultural-pages'); ?></label></th>
+						<td>
+							<input type="text" name="rc_as[site_key]" value="<?php echo esc_attr($as_settings['site_key']); ?>" class="large-text" placeholder="Pega aquí tu Site Key">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label><?php echo esc_html__('Secret Key', 'red-cultural-pages'); ?></label></th>
+						<td>
+							<input type="password" name="rc_as[secret_key]" value="<?php echo esc_attr($as_settings['secret_key']); ?>" class="large-text" placeholder="Pega aquí tu Secret Key">
+							<p class="description"><?php echo esc_html__('Tu llave secreta se guarda de forma segura.', 'red-cultural-pages'); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<p style="margin-top:24px">
+					<button type="submit" class="button button-primary button-large"><?php echo esc_html__('Guardar Configuración Anti-Spam', 'red-cultural-pages'); ?></button>
 				</p>
 			</form>
 		</div>
@@ -296,6 +346,28 @@ final class Red_Cultural_Templates {
 		}
 
 		update_option('rcp_form_recipients', $settings, false);
+
+		wp_safe_redirect((string) admin_url('admin.php?page=red-cultural-pages-contact-forms&rcp_updated=1'));
+		exit;
+	}
+
+	public static function handle_save_antispam_settings(): void {
+		if (!current_user_can('manage_options')) {
+			wp_die(esc_html__('No tienes permisos para realizar esta acción.', 'red-cultural-pages'));
+		}
+
+		if (!isset($_POST['rcp_as_nonce']) || !wp_verify_nonce((string) $_POST['rcp_as_nonce'], 'rcp_save_antispam_settings')) {
+			wp_die(esc_html__('Nonce inválido.', 'red-cultural-pages'));
+		}
+
+		$raw = isset($_POST['rc_as']) ? (array) $_POST['rc_as'] : array();
+		$settings = array(
+			'provider'   => sanitize_key($raw['provider'] ?? 'none'),
+			'site_key'   => sanitize_text_field($raw['site_key'] ?? ''),
+			'secret_key' => sanitize_text_field($raw['secret_key'] ?? ''),
+		);
+
+		update_option('rc_antispam_settings', $settings, false);
 
 		wp_safe_redirect((string) admin_url('admin.php?page=red-cultural-pages-contact-forms&rcp_updated=1'));
 		exit;
@@ -1654,6 +1726,11 @@ final class Red_Cultural_Templates {
 				#red-cultural-login-overlay p#red-cultural-login-subtitle{font-size:14px}
 				#red-cultural-login-overlay p#red-cultural-login-toggle-text{font-size:14px}
 			</style>
+			<?php 
+			$as_settings = RC_Anti_Spam::get_settings();
+			$as_provider = $as_settings['provider'];
+			$as_site_key = $as_settings['site_key'];
+			?>
 			<div id="red-cultural-login-overlay"
 				class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300 p-4"
 				data-admin-post="<?php echo esc_attr((string) $admin_post); ?>"
@@ -1661,6 +1738,8 @@ final class Red_Cultural_Templates {
 				data-nonce="<?php echo esc_attr((string) $auth_nonce); ?>"
 				data-exists-nonce="<?php echo esc_attr((string) $exists_nonce); ?>"
 				data-redirect="<?php echo esc_attr((string) $redirect_to); ?>"
+				data-as-provider="<?php echo esc_attr($as_provider); ?>"
+				data-as-sitekey="<?php echo esc_attr($as_site_key); ?>"
 				role="dialog"
 				aria-modal="true"
 				aria-label="Red Cultural - Acceso"
@@ -1715,7 +1794,11 @@ final class Red_Cultural_Templates {
 								<button id="red-cultural-login-forgot" type="button" class="text-[#c5a367] hover:brightness-90 font-medium transition">¿Olvidaste tu contraseña?</button>
 							</div>
 
-
+							<?php if ($as_provider === 'turnstile') : ?>
+							<div class="rcp-captcha-container py-2 flex justify-center">
+								<?php RC_Anti_Spam::render_widget(); ?>
+							</div>
+							<?php endif; ?>
 
 							<button id="red-cultural-login-submit" type="submit" class="w-full py-3 bg-black text-white rounded-3px font-bold hover:bg-zinc-800 transform active:scale-[0.99] transition-all duration-200 shadow-md tracking-widest uppercase text-[10px]">
 								Iniciar Sesión
@@ -2088,7 +2171,7 @@ final class Red_Cultural_Templates {
 								}
 
 								if (currentView === 'login') {
-									submitAuth('login', {
+									submitWithCaptcha('login', {
 										user_login: email ? email.value : '',
 										password: pass ? pass.value : '',
 										remember: remember && remember.checked ? '1' : ''
@@ -2102,7 +2185,7 @@ final class Red_Cultural_Templates {
 										if (submitBtn) submitBtn.disabled = false;
 										return;
 									}
-									submitAuth('register', {
+									submitWithCaptcha('register', {
 										first_name: firstName ? firstName.value : '',
 										last_name: lastName ? lastName.value : '',
 										email: email ? email.value : '',
@@ -2112,6 +2195,36 @@ final class Red_Cultural_Templates {
 								}
 
 							});
+						}
+
+						function submitWithCaptcha(mode, payload) {
+							var provider = overlay.getAttribute('data-as-provider');
+							var siteKey = overlay.getAttribute('data-as-sitekey');
+
+							if (submitBtn) submitBtn.disabled = true;
+
+							if (provider === 'recaptcha' && window.grecaptcha) {
+								grecaptcha.ready(function() {
+									grecaptcha.execute(siteKey, {action: 'submit'}).then(function(token) {
+										payload['captcha_token'] = token;
+										submitAuth(mode, payload);
+									}).catch(function(err) {
+										console.error('reCAPTCHA Error:', err);
+										submitAuth(mode, payload); // Fallback to avoid lockout
+									});
+								});
+							} else if (provider === 'turnstile' && window.turnstile) {
+								var token = turnstile.getResponse();
+								if (!token) {
+									setStatusError('Por favor completa el captcha.');
+									if (submitBtn) submitBtn.disabled = false;
+									return;
+								}
+								payload['captcha_token'] = token;
+								submitAuth(mode, payload);
+							} else {
+								submitAuth(mode, payload);
+							}
 						}
 
 						if (forgotBtn) {
@@ -2397,10 +2510,15 @@ final class Red_Cultural_Templates {
 
 		return array_unique($recipients);
 	}
-
 	public static function handle_contacto_form(): void {
 		if (!isset($_POST['rcp_contact_nonce']) || !wp_verify_nonce((string) $_POST['rcp_contact_nonce'], 'rcp_contact_form')) {
 			wp_safe_redirect((string) home_url('/contacto/'));
+			exit;
+		}
+
+		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
+		if (!RC_Anti_Spam::verify($token)) {
+			wp_safe_redirect(add_query_arg('rcp_contact', 'error', (string) home_url('/contacto/')));
 			exit;
 		}
 
@@ -2435,6 +2553,12 @@ final class Red_Cultural_Templates {
 			exit;
 		}
 
+		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
+		if (!RC_Anti_Spam::verify($token)) {
+			wp_safe_redirect(add_query_arg('rcp_vi_interest', 'error', (string) home_url('/viaje-italia/')));
+			exit;
+		}
+
 		$name = isset($_POST['rcp_vi_name']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_vi_name'])) : '';
 		$email = isset($_POST['rcp_vi_email']) ? sanitize_email((string) wp_unslash($_POST['rcp_vi_email'])) : '';
 		$phone = isset($_POST['rcp_vi_phone']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_vi_phone'])) : '';
@@ -2465,6 +2589,12 @@ final class Red_Cultural_Templates {
 			exit;
 		}
 
+		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
+		if (!RC_Anti_Spam::verify($token)) {
+			wp_safe_redirect(add_query_arg('rcp_ve_interest', 'error', (string) home_url('/viaje-escandinavia/')));
+			exit;
+		}
+
 		$name = isset($_POST['rcp_ve_name']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_ve_name'])) : '';
 		$email = isset($_POST['rcp_ve_email']) ? sanitize_email((string) wp_unslash($_POST['rcp_ve_email'])) : '';
 		$phone = isset($_POST['rcp_ve_phone']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_ve_phone'])) : '';
@@ -2492,6 +2622,12 @@ final class Red_Cultural_Templates {
 	public static function handle_viaje_japon_interest_form(): void {
 		if (!isset($_POST['rcp_vj_nonce']) || !wp_verify_nonce((string) $_POST['rcp_vj_nonce'], 'rcp_viaje_japon_interest')) {
 			wp_safe_redirect((string) home_url('/viaje-japon/'));
+			exit;
+		}
+
+		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
+		if (!RC_Anti_Spam::verify($token)) {
+			wp_safe_redirect(add_query_arg('rcp_vj_interest', 'error', (string) home_url('/viaje-japon/')));
 			exit;
 		}
 
@@ -2589,11 +2725,15 @@ final class Red_Cultural_Templates {
 			exit;
 		}
 
-
-
 		$redirect_to = isset($_POST['redirect_to']) ? esc_url_raw((string) wp_unslash($_POST['redirect_to'])) : (string) home_url('/');
 		if ($redirect_to === '') {
 			$redirect_to = (string) home_url('/');
+		}
+
+		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
+		if (!RC_Anti_Spam::verify($token)) {
+			wp_safe_redirect(add_query_arg('rcp_auth_error', '1', $redirect_to));
+			exit;
 		}
 
 		$mode = isset($_POST['mode']) ? (string) wp_unslash($_POST['mode']) : 'login';

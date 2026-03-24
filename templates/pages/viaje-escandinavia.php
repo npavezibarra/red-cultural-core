@@ -611,6 +611,7 @@ $gallery_items = array(
 
 					<input type="hidden" id="red-cultural-viaje-escandinavia-interest-action" name="action" value="rcp_viaje_escandinavia_interest">
 					<?php wp_nonce_field('rcp_viaje_escandinavia_interest', 'rcp_ve_nonce'); ?>
+					<?php RC_Anti_Spam::render_form_fields(); ?>
 
 					<div id="red-cultural-viaje-escandinavia-interest-field-name">
 						<label id="red-cultural-viaje-escandinavia-interest-label-name" for="red-cultural-viaje-escandinavia-interest-input-name">Nombre</label>
@@ -634,6 +635,7 @@ $gallery_items = array(
 
 					<button id="red-cultural-viaje-escandinavia-interest-submit" type="submit">Enviar</button>
 				</form>
+				<?php RC_Anti_Spam::render_form_js('red-cultural-viaje-escandinavia-interest-form'); ?>
 			</div>
 		</section>
 
