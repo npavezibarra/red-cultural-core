@@ -1601,7 +1601,7 @@ final class Red_Cultural_Templates {
 								<button id="red-cultural-login-forgot" type="button" class="text-[#c5a367] hover:brightness-90 font-medium transition">¿Olvidaste tu contraseña?</button>
 							</div>
 
-							<?php /* Turnstile removed from login overlay */ ?>
+
 
 							<button id="red-cultural-login-submit" type="submit" class="w-full py-3 bg-black text-white rounded-3px font-bold hover:bg-zinc-800 transform active:scale-[0.99] transition-all duration-200 shadow-md tracking-widest uppercase text-[10px]">
 								Iniciar Sesión
@@ -1900,7 +1900,7 @@ final class Red_Cultural_Templates {
 								add(k, payload[k]);
 							});
 
-							// Turnstile token is no longer required.
+
 
 							document.body.appendChild(form);
 							form.submit();
@@ -2454,7 +2454,7 @@ final class Red_Cultural_Templates {
 			exit;
 		}
 
-		// Previously Turnstile-driven validation is removed; rely on the main login flow.
+
 
 		$redirect_to = isset($_POST['redirect_to']) ? esc_url_raw((string) wp_unslash($_POST['redirect_to'])) : (string) home_url('/');
 		if ($redirect_to === '') {

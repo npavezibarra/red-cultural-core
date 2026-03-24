@@ -326,9 +326,7 @@ if (function_exists('do_blocks')) {
 								$error_code = isset($_GET['rcp_auth_error']) ? (string) $_GET['rcp_auth_error'] : '';
 								if ($error_code !== '') :
 									$error_msg = esc_html__('No pudimos iniciar sesión. Revisa tus datos e inténtalo de nuevo.', 'red-cultural-pages');
-									if ($error_code === 'captcha') {
-										$error_msg = esc_html__('Captcha inválido. Por favor, inténtalo de nuevo.', 'red-cultural-pages');
-									}
+
 								?>
 									<div id="red-cultural-checkout-auth-error" class="mb-4 text-sm font-semibold text-red-600">
 										<?php echo $error_msg; ?>
@@ -355,7 +353,7 @@ if (function_exists('do_blocks')) {
 											<?php echo esc_html__('Olvidé mi clave', 'red-cultural-pages'); ?>
 										</button>
 									</div>
-									<?php /* Turnstile removed from checkout auth login */ ?>
+
 									<button id="red-cultural-checkout-auth-login-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Iniciar sesión', 'red-cultural-pages'); ?>
 									</button>
@@ -390,7 +388,7 @@ if (function_exists('do_blocks')) {
 										<label class="rcp-auth-label" for="red-cultural-checkout-auth-register-password"><?php echo esc_html__('Contraseña', 'red-cultural-pages'); ?></label>
 										<input id="red-cultural-checkout-auth-register-password" type="password" placeholder="••••••••" class="rcp-auth-input">
 									</div>
-									<?php /* Turnstile removed from checkout auth register */ ?>
+
 									<button id="red-cultural-checkout-auth-register-submit" type="button" class="rcp-auth-primary">
 										<?php echo esc_html__('Crear cuenta', 'red-cultural-pages'); ?>
 									</button>
