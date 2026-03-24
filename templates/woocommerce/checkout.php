@@ -104,7 +104,7 @@ if (function_exists('do_blocks')) {
 		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 		body{font-family:'Inter',sans-serif;padding:0 !important}
 		#red-cultural-header{border-bottom:1px solid #e5e7eb}
-		#red-cultural-checkout-container{max-width:var(--wp--style--global--wide-size, 1200px)}
+		#red-cultural-checkout-container{max-width:var(--wp--style--global--wide-size, 1200px);padding-bottom:40px}
 		#red-cultural-checkout-title{font-size:28px;letter-spacing:1px}
 		#red-cultural-checkout-place-order{padding:10px;border-radius:6px}
 		@media (min-width: 992px){
