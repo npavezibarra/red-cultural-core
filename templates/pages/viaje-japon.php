@@ -653,7 +653,7 @@ $gallery_items = array(
 
 		<section id="red-cultural-viaje-japon-conditions" aria-label="Condiciones">
 			<div id="red-cultural-viaje-japon-conditions-inner" class="max-w-5xl mx-auto px-4 py-16">
-				<h2 id="red-cultural-viaje-japon-conditions-title" class="text-4xl font-black text-black text-center mb-12 uppercase tracking-tighter italic">Condiciones</h2>
+				<h2 id="red-cultural-viaje-japon-conditions-title" class="text-4xl font-black text-black text-center mb-12 tracking-tighter">Condiciones</h2>
 
 				<div id="red-cultural-viaje-japon-conditions-content" class="space-y-12 text-black">
 					

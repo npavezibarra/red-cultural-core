@@ -298,61 +298,61 @@ $gallery_items = array(
 
 				<div id="red-cultural-viaje-escandinavia-overlap-info" class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center space-y-6">
 					<div id="red-cultural-viaje-escandinavia-overlap-heading">
-						<h2 id="red-cultural-viaje-italia-overlap-title" class="text-lg md:text-2xl font-semibold leading-tight">
-							<span id="red-cultural-viaje-italia-overlap-title-line-1">Viaja junto a Magdalena Merbilháa</span>
-							<span id="red-cultural-viaje-italia-overlap-title-line-2" class="block">y Bárbara Bustamante</span>
+						<h2 id="red-cultural-viaje-escandinavia-overlap-title" class="text-lg md:text-2xl font-semibold leading-tight">
+							<span id="red-cultural-viaje-escandinavia-overlap-title-line-1">Viaja junto a Magdalena Merbilháa</span>
+							<span id="red-cultural-viaje-escandinavia-overlap-title-line-2" class="block">y Bárbara Bustamante</span>
 						</h2>
 					</div>
 
-					<hr id="red-cultural-viaje-italia-overlap-divider" class="border-t border-gray-500 w-full">
+					<hr id="red-cultural-viaje-escandinavia-overlap-divider" class="border-t border-gray-500 w-full">
 
-					<div id="red-cultural-viaje-italia-overlap-contact" class="space-y-4">
-						<div id="red-cultural-viaje-italia-overlap-email">
-							<p id="red-cultural-viaje-italia-overlap-email-label" class="text-xs uppercase tracking-widest text-gray-400 mb-1">Inscripciones en:</p>
-							<p id="red-cultural-viaje-italia-overlap-email-value" class="text-lg md:text-xl font-bold">magdalena@redcultural.cl</p>
+					<div id="red-cultural-viaje-escandinavia-overlap-contact" class="space-y-4">
+						<div id="red-cultural-viaje-escandinavia-overlap-email">
+							<p id="red-cultural-viaje-escandinavia-overlap-email-label" class="text-xs uppercase tracking-widest text-gray-400 mb-1">Inscripciones en:</p>
+							<p id="red-cultural-viaje-escandinavia-overlap-email-value" class="text-lg md:text-xl font-bold">magdalena@redcultural.cl</p>
 						</div>
-						<div id="red-cultural-viaje-italia-overlap-phone">
-							<p id="red-cultural-viaje-italia-overlap-phone-value" class="text-2xl font-bold">+56 9 9322 3163</p>
+						<div id="red-cultural-viaje-escandinavia-overlap-phone">
+							<p id="red-cultural-viaje-escandinavia-overlap-phone-value" class="text-2xl font-bold">+56 9 9322 3163</p>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<section id="red-cultural-viaje-italia-features" class="mt-24 text-center">
-				<h2 id="red-cultural-viaje-italia-features-title" class="text-3xl md:text-4xl font-bold text-gray-800 mb-14">
+			<section id="red-cultural-viaje-escandinavia-features" class="mt-24 text-center">
+				<h2 id="red-cultural-viaje-escandinavia-features-title" class="text-3xl md:text-4xl font-bold text-gray-800 mb-14">
 					Disfruta una experiencia única
 				</h2>
 
-				<div id="red-cultural-viaje-italia-features-list" class="max-w-3xl mx-auto text-left space-y-8 px-4">
-					<div id="red-cultural-viaje-italia-feature-1" class="flex items-center space-x-5">
-						<div id="red-cultural-viaje-italia-feature-1-icon" class="flex-shrink-0">
-							<svg id="red-cultural-viaje-italia-feature-1-svg" class="w-7 h-7 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-								<path id="red-cultural-viaje-italia-feature-1-path" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+				<div id="red-cultural-viaje-escandinavia-features-list" class="max-w-3xl mx-auto text-left space-y-8 px-4">
+					<div id="red-cultural-viaje-escandinavia-feature-1" class="flex items-center space-x-5">
+						<div id="red-cultural-viaje-escandinavia-feature-1-icon" class="flex-shrink-0">
+							<svg id="red-cultural-viaje-escandinavia-feature-1-svg" class="w-7 h-7 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+								<path id="red-cultural-viaje-escandinavia-feature-1-path" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
 							</svg>
 						</div>
-						<p id="red-cultural-viaje-italia-feature-1-text" class="text-lg md:text-xl text-gray-600">
+						<p id="red-cultural-viaje-escandinavia-feature-1-text" class="text-lg md:text-xl text-gray-600">
 							Sé parte de lugares llenos de historia y belleza única.
 						</p>
 					</div>
 
-					<div id="red-cultural-viaje-italia-feature-2" class="flex items-center space-x-5">
-						<div id="red-cultural-viaje-italia-feature-2-icon" class="flex-shrink-0">
-							<svg id="red-cultural-viaje-italia-feature-2-svg" class="w-7 h-7 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-								<path id="red-cultural-viaje-italia-feature-2-path" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+					<div id="red-cultural-viaje-escandinavia-feature-2" class="flex items-center space-x-5">
+						<div id="red-cultural-viaje-escandinavia-feature-2-icon" class="flex-shrink-0">
+							<svg id="red-cultural-viaje-escandinavia-feature-2-svg" class="w-7 h-7 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+								<path id="red-cultural-viaje-escandinavia-feature-2-path" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
 							</svg>
 						</div>
-						<p id="red-cultural-viaje-italia-feature-2-text" class="text-lg md:text-xl text-gray-600">
+						<p id="red-cultural-viaje-escandinavia-feature-2-text" class="text-lg md:text-xl text-gray-600">
 							Aprende de la mano de una experta en historia y viajes culturales.
 						</p>
 					</div>
 
-					<div id="red-cultural-viaje-italia-feature-3" class="flex items-center space-x-5">
-							<div id="red-cultural-viaje-italia-feature-3-icon" class="flex-shrink-0">
-								<svg id="red-cultural-viaje-italia-feature-3-svg" class="w-7 h-7 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-									<path id="red-cultural-viaje-italia-feature-3-path" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+					<div id="red-cultural-viaje-escandinavia-feature-3" class="flex items-center space-x-5">
+							<div id="red-cultural-viaje-escandinavia-feature-3-icon" class="flex-shrink-0">
+								<svg id="red-cultural-viaje-escandinavia-feature-3-svg" class="w-7 h-7 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+									<path id="red-cultural-viaje-escandinavia-feature-3-path" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
 								</svg>
 							</div>
-						<p id="red-cultural-viaje-italia-feature-3-text" class="text-lg md:text-xl text-gray-600">
+						<p id="red-cultural-viaje-escandinavia-feature-3-text" class="text-lg md:text-xl text-gray-600">
 							Conoce y comparte con gente nueva igual de apasionada que tú por la historia y viajes.
 						</p>
 					</div>
@@ -360,9 +360,9 @@ $gallery_items = array(
 			</section>
 		</div>
 
-		<section id="red-cultural-viaje-italia-gallery" aria-label="Galería">
-			<h2 id="red-cultural-viaje-italia-gallery-title">Galería</h2>
-			<ul id="red-cultural-viaje-italia-gallery-grid">
+		<section id="red-cultural-viaje-escandinavia-gallery" aria-label="Galería">
+			<h2 id="red-cultural-viaje-escandinavia-gallery-title">Galería</h2>
+			<ul id="red-cultural-viaje-escandinavia-gallery-grid">
 				<?php foreach ($gallery_items as $index => $item) : ?>
 					<?php
 					$rel = (string) $item['rel'];
@@ -371,15 +371,15 @@ $gallery_items = array(
 					$slug = isset($item['slug']) ? (string) $item['slug'] : (string) $index;
 					$alt = isset($item['alt']) ? (string) $item['alt'] : '';
 					?>
-					<li id="<?php echo esc_attr('red-cultural-viaje-italia-gallery-item-' . $slug); ?>">
+					<li id="<?php echo esc_attr('red-cultural-viaje-escandinavia-gallery-item-' . $slug); ?>">
 						<a
-							id="<?php echo esc_attr('red-cultural-viaje-italia-gallery-link-' . $slug); ?>"
+							id="<?php echo esc_attr('red-cultural-viaje-escandinavia-gallery-link-' . $slug); ?>"
 							href="<?php echo esc_url($local); ?>"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<img
-								id="<?php echo esc_attr('red-cultural-viaje-italia-gallery-img-' . $slug); ?>"
+								id="<?php echo esc_attr('red-cultural-viaje-escandinavia-gallery-img-' . $slug); ?>"
 								src="<?php echo esc_url($local); ?>"
 								data-fallback="<?php echo esc_url($live); ?>"
 								alt="<?php echo esc_attr($alt); ?>"
@@ -393,332 +393,332 @@ $gallery_items = array(
 			</ul>
 		</section>
 
-		<section id="red-cultural-viaje-italia-itinerary" aria-label="Itinerario">
-			<div id="red-cultural-viaje-italia-itinerary-inner">
-				<h2 id="red-cultural-viaje-italia-itinerary-title">Itinerario</h2>
+		<section id="red-cultural-viaje-escandinavia-itinerary" aria-label="Itinerario">
+			<div id="red-cultural-viaje-escandinavia-itinerary-inner">
+				<h2 id="red-cultural-viaje-escandinavia-itinerary-title">Itinerario</h2>
 
-				<table id="red-cultural-viaje-italia-itinerary-table">
-					<thead id="red-cultural-viaje-italia-itinerary-thead">
-						<tr id="red-cultural-viaje-italia-itinerary-head-row">
-							<th id="red-cultural-viaje-italia-itinerary-th-date">Fecha</th>
-							<th id="red-cultural-viaje-italia-itinerary-th-localities">Localidades</th>
-							<th id="red-cultural-viaje-italia-itinerary-th-itinerary">Itinerario</th>
-							<th id="red-cultural-viaje-italia-itinerary-th-hotels">Hoteles</th>
+				<table id="red-cultural-viaje-escandinavia-itinerary-table">
+					<thead id="red-cultural-viaje-escandinavia-itinerary-thead">
+						<tr id="red-cultural-viaje-escandinavia-itinerary-head-row">
+							<th id="red-cultural-viaje-escandinavia-itinerary-th-date">Fecha</th>
+							<th id="red-cultural-viaje-escandinavia-itinerary-th-localities">Localidades</th>
+							<th id="red-cultural-viaje-escandinavia-itinerary-th-itinerary">Itinerario</th>
+							<th id="red-cultural-viaje-escandinavia-itinerary-th-hotels">Hoteles</th>
 						</tr>
 					</thead>
 
-					<tbody id="red-cultural-viaje-italia-itinerary-tbody">
-						<tr id="red-cultural-viaje-italia-itinerary-day-1">
-							<td id="red-cultural-viaje-italia-itinerary-day-1-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-1-day">Día 1<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-1-subdate">Martes 25 de Agosto</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-1-localities" data-label="Localidades">Santiago - Madrid</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-1-itinerary" data-label="Itinerario">Salida en vuelo IB 118 a las 11:55 hrs. desde Santiago a Madrid.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-1-hotels" data-label="Hoteles">-</td>
+					<tbody id="red-cultural-viaje-escandinavia-itinerary-tbody">
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-1">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-1-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-1-day">Día 1<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-1-subdate">Martes 25 de Agosto</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-1-localities" data-label="Localidades">Santiago - Madrid</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-1-itinerary" data-label="Itinerario">Salida en vuelo IB 118 a las 11:55 hrs. desde Santiago a Madrid.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-1-hotels" data-label="Hoteles">-</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-2">
-							<td id="red-cultural-viaje-italia-itinerary-day-2-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-2-day">Día 2<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-2-subdate">Miércoles 26 de Agosto</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-2-localities" data-label="Localidades">Madrid - Estocolmo</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-2-itinerary" data-label="Itinerario">10:15 hrs. salida en vuelo IB 823 desde Madrid a Estocolmo. 14:10 hrs. llegada al Aeropuerto de Estocolmo y traslado al hotel.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-2-hotels" data-label="Hoteles">Reisen Hotel</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-2">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-2-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-2-day">Día 2<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-2-subdate">Miércoles 26 de Agosto</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-2-localities" data-label="Localidades">Madrid - Estocolmo</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-2-itinerary" data-label="Itinerario">10:15 hrs. salida en vuelo IB 823 desde Madrid a Estocolmo. 14:10 hrs. llegada al Aeropuerto de Estocolmo y traslado al hotel.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-2-hotels" data-label="Hoteles">Reisen Hotel</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-3">
-							<td id="red-cultural-viaje-italia-itinerary-day-3-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-3-day">Día 3<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-3-subdate">Jueves 27 de Agosto</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-3-localities" data-label="Localidades">Estocolmo</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-3-itinerary" data-label="Itinerario">Visita guiada por Estocolmo.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-3-hotels" data-label="Hoteles">Reisen Hotel</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-3">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-3-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-3-day">Día 3<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-3-subdate">Jueves 27 de Agosto</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-3-localities" data-label="Localidades">Estocolmo</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-3-itinerary" data-label="Itinerario">Visita guiada por Estocolmo.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-3-hotels" data-label="Hoteles">Reisen Hotel</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-4">
-							<td id="red-cultural-viaje-italia-itinerary-day-4-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-4-day">Día 4<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-4-subdate">Viernes 28 de Agosto</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-4-localities" data-label="Localidades">Estocolmo</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-4-itinerary" data-label="Itinerario">Visita al Vasa Museum y el Stockholm City Hall.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-4-hotels" data-label="Hoteles">Reisen Hotel</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-4">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-4-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-4-day">Día 4<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-4-subdate">Viernes 28 de Agosto</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-4-localities" data-label="Localidades">Estocolmo</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-4-itinerary" data-label="Itinerario">Visita al Vasa Museum y el Stockholm City Hall.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-4-hotels" data-label="Hoteles">Reisen Hotel</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-5">
-							<td id="red-cultural-viaje-italia-itinerary-day-5-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-5-day">Día 5<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-5-subdate">Sábado 29 de Agosto</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-5-localities" data-label="Localidades">Estocolmo - Copenhague</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-5-itinerary" data-label="Itinerario">Tren de Estocolmo a Copenhague donde alojaremos.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-5-hotels" data-label="Hoteles">NH Collection Copenhagen</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-5">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-5-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-5-day">Día 5<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-5-subdate">Sábado 29 de Agosto</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-5-localities" data-label="Localidades">Estocolmo - Copenhague</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-5-itinerary" data-label="Itinerario">Tren de Estocolmo a Copenhague donde alojaremos.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-5-hotels" data-label="Hoteles">NH Collection Copenhagen</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-6">
-							<td id="red-cultural-viaje-italia-itinerary-day-6-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-6-day">Día 6<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-6-subdate">Domingo 30 de Agosto</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-6-localities" data-label="Localidades">Copenhague</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-6-itinerary" data-label="Itinerario">Visita por las cercanías de Copenhague: el Palacio de Frederiksborg en Hillerød y Castillo de Kronborg.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-6-hotels" data-label="Hoteles">NH Collection Copenhagen</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-6">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-6-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-6-day">Día 6<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-6-subdate">Domingo 30 de Agosto</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-6-localities" data-label="Localidades">Copenhague</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-6-itinerary" data-label="Itinerario">Visita por las cercanías de Copenhague: el Palacio de Frederiksborg en Hillerød y Castillo de Kronborg.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-6-hotels" data-label="Hoteles">NH Collection Copenhagen</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-7">
-							<td id="red-cultural-viaje-italia-itinerary-day-7-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-7-day">Día 7<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-7-subdate">Lunes 31 de Agosto</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-7-localities" data-label="Localidades">Copenhague - Fyn - Odense</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-7-itinerary" data-label="Itinerario">Visitaremos la casa de Hans Christian Andersen y el Castillo de Egeskov.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-7-hotels" data-label="Hoteles">NH Collection Copenhagen</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-7">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-7-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-7-day">Día 7<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-7-subdate">Lunes 31 de Agosto</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-7-localities" data-label="Localidades">Copenhague - Fyn - Odense</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-7-itinerary" data-label="Itinerario">Visitaremos la casa de Hans Christian Andersen y el Castillo de Egeskov.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-7-hotels" data-label="Hoteles">NH Collection Copenhagen</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-8">
-							<td id="red-cultural-viaje-italia-itinerary-day-8-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-8-day">Día 8<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-8-subdate">Martes 01 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-8-localities" data-label="Localidades">Copenhague - Oslo</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-8-itinerary" data-label="Itinerario">Recorrido panorámico por Copenhague. Crucero nocturno de Copenhague a Oslo. Cena y alojamiento a bordo.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-8-hotels" data-label="Hoteles">Alojamiento a bordo del Crucero</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-8">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-8-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-8-day">Día 8<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-8-subdate">Martes 01 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-8-localities" data-label="Localidades">Copenhague - Oslo</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-8-itinerary" data-label="Itinerario">Recorrido panorámico por Copenhague. Crucero nocturno de Copenhague a Oslo. Cena y alojamiento a bordo.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-8-hotels" data-label="Hoteles">Alojamiento a bordo del Crucero</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-9">
-							<td id="red-cultural-viaje-italia-itinerary-day-9-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-9-day">Día 9<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-9-subdate">Miércoles 02 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-9-localities" data-label="Localidades">Oslo</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-9-itinerary" data-label="Itinerario">Recorrido por Oslo finalizando en el Parque de Esculturas de Vigeland.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-9-hotels" data-label="Hoteles">Radisson Blu Plaza Oslo</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-9">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-9-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-9-day">Día 9<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-9-subdate">Miércoles 02 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-9-localities" data-label="Localidades">Oslo</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-9-itinerary" data-label="Itinerario">Recorrido por Oslo finalizando en el Parque de Esculturas de Vigeland.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-9-hotels" data-label="Hoteles">Radisson Blu Plaza Oslo</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-10">
-							<td id="red-cultural-viaje-italia-itinerary-day-10-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-10-day">Día 10<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-10-subdate">Jueves 03 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-10-localities" data-label="Localidades">Oslo</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-10-itinerary" data-label="Itinerario">Visita al National Museum (Nasjonalmuseet) y al Munch Museum.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-10-hotels" data-label="Hoteles">Radisson Blu Plaza Oslo</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-10">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-10-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-10-day">Día 10<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-10-subdate">Jueves 03 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-10-localities" data-label="Localidades">Oslo</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-10-itinerary" data-label="Itinerario">Visita al National Museum (Nasjonalmuseet) y al Munch Museum.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-10-hotels" data-label="Hoteles">Radisson Blu Plaza Oslo</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-11">
-							<td id="red-cultural-viaje-italia-itinerary-day-11-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-11-day">Día 11<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-11-subdate">Viernes 04 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-11-localities" data-label="Localidades">Oslo - Flam</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-11-itinerary" data-label="Itinerario">Tren de Oslo a Myrdal y luego tren a Flam para alojar. Cena en Ægir Pub Viking Plank.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-11-hotels" data-label="Hoteles">Flåmsbrygga Hotel</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-11">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-11-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-11-day">Día 11<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-11-subdate">Viernes 04 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-11-localities" data-label="Localidades">Oslo - Flam</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-11-itinerary" data-label="Itinerario">Tren de Oslo a Myrdal y luego tren a Flam para alojar. Cena en Ægir Pub Viking Plank.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-11-hotels" data-label="Hoteles">Flåmsbrygga Hotel</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-12">
-							<td id="red-cultural-viaje-italia-itinerary-day-12-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-12-day">Día 12<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-12-subdate">Sábado 05 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-12-localities" data-label="Localidades">Flam</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-12-itinerary" data-label="Itinerario">FjordSafari en RIB-boat. Cena.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-12-hotels" data-label="Hoteles">Flåmsbrygga Hotel</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-12">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-12-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-12-day">Día 12<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-12-subdate">Sábado 05 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-12-localities" data-label="Localidades">Flam</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-12-itinerary" data-label="Itinerario">FjordSafari en RIB-boat. Cena.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-12-hotels" data-label="Hoteles">Flåmsbrygga Hotel</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-13">
-							<td id="red-cultural-viaje-italia-itinerary-day-13-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-13-day">Día 13<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-13-subdate">Domingo 06 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-13-localities" data-label="Localidades">Flam - Bergen</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-13-itinerary" data-label="Itinerario">Traslado a Bergen con visita a Viking Valley, Gudvangen. Cena.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-13-hotels" data-label="Hoteles">Bergen Børs</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-13">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-13-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-13-day">Día 13<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-13-subdate">Domingo 06 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-13-localities" data-label="Localidades">Flam - Bergen</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-13-itinerary" data-label="Itinerario">Traslado a Bergen con visita a Viking Valley, Gudvangen. Cena.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-13-hotels" data-label="Hoteles">Bergen Børs</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-14">
-							<td id="red-cultural-viaje-italia-itinerary-day-14-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-14-day">Día 14<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-14-subdate">Lunes 07 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-14-localities" data-label="Localidades">Bergen</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-14-itinerary" data-label="Itinerario">Visita en Bergen. Cena.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-14-hotels" data-label="Hoteles">Bergen Børs</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-14">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-14-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-14-day">Día 14<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-14-subdate">Lunes 07 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-14-localities" data-label="Localidades">Bergen</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-14-itinerary" data-label="Itinerario">Visita en Bergen. Cena.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-14-hotels" data-label="Hoteles">Bergen Børs</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-15">
-							<td id="red-cultural-viaje-italia-itinerary-day-15-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-15-day">Día 15<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-15-subdate">Martes 08 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-15-localities" data-label="Localidades">Bergen - Oslo - Madrid</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-15-itinerary" data-label="Itinerario">10:10 hrs. salida en vuelo SK 260 de Bergen a Oslo. 15:00 hrs. salida en vuelo IB 954 de Oslo a Madrid. 23:55 hrs. salida en vuelo IB 117 de Madrid a Santiago.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-15-hotels" data-label="Hoteles">-</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-15">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-15-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-15-day">Día 15<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-15-subdate">Martes 08 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-15-localities" data-label="Localidades">Bergen - Oslo - Madrid</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-15-itinerary" data-label="Itinerario">10:10 hrs. salida en vuelo SK 260 de Bergen a Oslo. 15:00 hrs. salida en vuelo IB 954 de Oslo a Madrid. 23:55 hrs. salida en vuelo IB 117 de Madrid a Santiago.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-15-hotels" data-label="Hoteles">-</td>
 						</tr>
 
-						<tr id="red-cultural-viaje-italia-itinerary-day-16">
-							<td id="red-cultural-viaje-italia-itinerary-day-16-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-italia-itinerary-day-16-day">Día 16<span class="rcp-itin-subdate" id="red-cultural-viaje-italia-itinerary-day-16-subdate">Miércoles 09 de Septiembre</span></span></td>
-							<td id="red-cultural-viaje-italia-itinerary-day-16-localities" data-label="Localidades">Santiago</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-16-itinerary" data-label="Itinerario">Llegada a Santiago a las 07:20 hrs.</td>
-							<td id="red-cultural-viaje-italia-itinerary-day-16-hotels" data-label="Hoteles">-</td>
+						<tr id="red-cultural-viaje-escandinavia-itinerary-day-16">
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-16-date" data-label="Fecha"><span class="rcp-itin-day" id="red-cultural-viaje-escandinavia-itinerary-day-16-day">Día 16<span class="rcp-itin-subdate" id="red-cultural-viaje-escandinavia-itinerary-day-16-subdate">Miércoles 09 de Septiembre</span></span></td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-16-localities" data-label="Localidades">Santiago</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-16-itinerary" data-label="Itinerario">Llegada a Santiago a las 07:20 hrs.</td>
+							<td id="red-cultural-viaje-escandinavia-itinerary-day-16-hotels" data-label="Hoteles">-</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</section>
 
-		<section id="red-cultural-viaje-italia-rates" aria-label="Tarifas">
-			<h2 id="red-cultural-viaje-italia-rates-title">Tarifas Preventa</h2>
-			<p id="red-cultural-viaje-italia-rates-preventa-sub" class="text-center text-gray-600 text-lg font-semibold -mt-6 mb-10">Hasta 30 Abril de 2026</p>
+		<section id="red-cultural-viaje-escandinavia-rates" aria-label="Tarifas">
+			<h2 id="red-cultural-viaje-escandinavia-rates-title">Tarifas Preventa</h2>
+			<p id="red-cultural-viaje-escandinavia-rates-preventa-sub" class="text-center text-gray-600 text-lg font-semibold -mt-6 mb-10">Hasta 30 Abril de 2026</p>
 
-			<div id="red-cultural-viaje-italia-rates-preventa-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
-				<div id="red-cultural-viaje-italia-rates-preventa-double" class="text-center">
-					<p id="red-cultural-viaje-italia-rates-preventa-double-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 11.139</p>
-					<p id="red-cultural-viaje-italia-rates-preventa-double-sub" class="mt-3 text-lg text-gray-500">Por persona en base doble</p>
+			<div id="red-cultural-viaje-escandinavia-rates-preventa-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
+				<div id="red-cultural-viaje-escandinavia-rates-preventa-double" class="text-center">
+					<p id="red-cultural-viaje-escandinavia-rates-preventa-double-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 11.139</p>
+					<p id="red-cultural-viaje-escandinavia-rates-preventa-double-sub" class="mt-3 text-lg text-gray-500">Por persona en base doble</p>
 				</div>
-				<div id="red-cultural-viaje-italia-rates-preventa-single" class="text-center">
-					<p id="red-cultural-viaje-italia-rates-preventa-single-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 14.269</p>
-					<p id="red-cultural-viaje-italia-rates-preventa-single-sub" class="mt-3 text-lg text-gray-500">Por persona en base single</p>
-				</div>
-			</div>
-
-			<h2 id="red-cultural-viaje-italia-rates-normal-title" class="text-center text-[44px] leading-[1.05] font-black tracking-[-.02em] text-gray-800 mb-10">Tarifas Normales</h2>
-
-			<div id="red-cultural-viaje-italia-rates-normal-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
-				<div id="red-cultural-viaje-italia-rates-normal-double" class="text-center">
-					<p id="red-cultural-viaje-italia-rates-normal-double-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 11.869</p>
-					<p id="red-cultural-viaje-italia-rates-normal-double-sub" class="mt-3 text-lg text-gray-500">Por persona en base doble</p>
-				</div>
-				<div id="red-cultural-viaje-italia-rates-normal-single" class="text-center">
-					<p id="red-cultural-viaje-italia-rates-normal-single-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 15.249</p>
-					<p id="red-cultural-viaje-italia-rates-normal-single-sub" class="mt-3 text-lg text-gray-500">Por persona en base single</p>
+				<div id="red-cultural-viaje-escandinavia-rates-preventa-single" class="text-center">
+					<p id="red-cultural-viaje-escandinavia-rates-preventa-single-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 14.269</p>
+					<p id="red-cultural-viaje-escandinavia-rates-preventa-single-sub" class="mt-3 text-lg text-gray-500">Por persona en base single</p>
 				</div>
 			</div>
 
-			<div id="red-cultural-viaje-italia-rates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-14 max-w-5xl mx-auto">
-				<div id="red-cultural-viaje-italia-rates-include-block">
-					<p id="red-cultural-viaje-italia-rates-include-title">Incluye</p>
-					<ul id="red-cultural-viaje-italia-rates-include-list">
-						<li id="red-cultural-viaje-italia-rates-include-1">
-							<span id="red-cultural-viaje-italia-rates-include-1-icon" class="material-symbols-outlined" aria-hidden="true">flight</span>
-							<p id="red-cultural-viaje-italia-rates-include-1-text">Pasajes aéreos en clase turista.</p>
+			<h2 id="red-cultural-viaje-escandinavia-rates-normal-title" class="text-center text-[44px] leading-[1.05] font-black tracking-[-.02em] text-gray-800 mb-10">Tarifas Normales</h2>
+
+			<div id="red-cultural-viaje-escandinavia-rates-normal-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
+				<div id="red-cultural-viaje-escandinavia-rates-normal-double" class="text-center">
+					<p id="red-cultural-viaje-escandinavia-rates-normal-double-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 11.869</p>
+					<p id="red-cultural-viaje-escandinavia-rates-normal-double-sub" class="mt-3 text-lg text-gray-500">Por persona en base doble</p>
+				</div>
+				<div id="red-cultural-viaje-escandinavia-rates-normal-single" class="text-center">
+					<p id="red-cultural-viaje-escandinavia-rates-normal-single-price" class="text-5xl md:text-6xl font-black text-gray-500">USD 15.249</p>
+					<p id="red-cultural-viaje-escandinavia-rates-normal-single-sub" class="mt-3 text-lg text-gray-500">Por persona en base single</p>
+				</div>
+			</div>
+
+			<div id="red-cultural-viaje-escandinavia-rates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-14 max-w-5xl mx-auto">
+				<div id="red-cultural-viaje-escandinavia-rates-include-block">
+					<p id="red-cultural-viaje-escandinavia-rates-include-title">Incluye</p>
+					<ul id="red-cultural-viaje-escandinavia-rates-include-list">
+						<li id="red-cultural-viaje-escandinavia-rates-include-1">
+							<span id="red-cultural-viaje-escandinavia-rates-include-1-icon" class="material-symbols-outlined" aria-hidden="true">flight</span>
+							<p id="red-cultural-viaje-escandinavia-rates-include-1-text">Pasajes aéreos en clase turista.</p>
 						</li>
-						<li id="red-cultural-viaje-italia-rates-include-2">
-							<span id="red-cultural-viaje-italia-rates-include-2-icon" class="material-symbols-outlined" aria-hidden="true">hotel</span>
-							<p id="red-cultural-viaje-italia-rates-include-2-text">Alojamiento en hoteles mencionados o similares con desayuno.</p>
+						<li id="red-cultural-viaje-escandinavia-rates-include-2">
+							<span id="red-cultural-viaje-escandinavia-rates-include-2-icon" class="material-symbols-outlined" aria-hidden="true">hotel</span>
+							<p id="red-cultural-viaje-escandinavia-rates-include-2-text">Alojamiento en hoteles mencionados o similares con desayuno.</p>
 						</li>
-						<li id="red-cultural-viaje-italia-rates-include-3">
-							<span id="red-cultural-viaje-italia-rates-include-3-icon" class="material-symbols-outlined" aria-hidden="true">task_alt</span>
-							<p id="red-cultural-viaje-italia-rates-include-3-text">Entradas a sitios a visitar según itinerario.</p>
+						<li id="red-cultural-viaje-escandinavia-rates-include-3">
+							<span id="red-cultural-viaje-escandinavia-rates-include-3-icon" class="material-symbols-outlined" aria-hidden="true">task_alt</span>
+							<p id="red-cultural-viaje-escandinavia-rates-include-3-text">Entradas a sitios a visitar según itinerario.</p>
 						</li>
-						<li id="red-cultural-viaje-italia-rates-include-4">
-							<span id="red-cultural-viaje-italia-rates-include-4-icon" class="material-symbols-outlined" aria-hidden="true">directions_bus</span>
-							<p id="red-cultural-viaje-italia-rates-include-4-text">Traslados terrestres en bus exclusivo para el grupo.</p>
+						<li id="red-cultural-viaje-escandinavia-rates-include-4">
+							<span id="red-cultural-viaje-escandinavia-rates-include-4-icon" class="material-symbols-outlined" aria-hidden="true">directions_bus</span>
+							<p id="red-cultural-viaje-escandinavia-rates-include-4-text">Traslados terrestres en bus exclusivo para el grupo.</p>
 						</li>
-						<li id="red-cultural-viaje-italia-rates-include-5">
-							<span id="red-cultural-viaje-italia-rates-include-5-icon" class="material-symbols-outlined" aria-hidden="true">favorite</span>
-							<p id="red-cultural-viaje-italia-rates-include-5-text">Asistencia en viaje Universal Assistance plan Value.</p>
+						<li id="red-cultural-viaje-escandinavia-rates-include-5">
+							<span id="red-cultural-viaje-escandinavia-rates-include-5-icon" class="material-symbols-outlined" aria-hidden="true">favorite</span>
+							<p id="red-cultural-viaje-escandinavia-rates-include-5-text">Asistencia en viaje Universal Assistance plan Value.</p>
 						</li>
 					</ul>
 				</div>
 
-				<div id="red-cultural-viaje-italia-rates-exclude-block">
-					<p id="red-cultural-viaje-italia-rates-exclude-title">No incluye</p>
-					<ul id="red-cultural-viaje-italia-rates-exclude-list">
-						<li id="red-cultural-viaje-italia-rates-exclude-1">
-							<span id="red-cultural-viaje-italia-rates-exclude-1-icon" class="material-symbols-outlined" aria-hidden="true">payments</span>
-							<p id="red-cultural-viaje-italia-rates-exclude-1-text">Propinas, gastos personales o ningún otro servicio no especificado.</p>
+				<div id="red-cultural-viaje-escandinavia-rates-exclude-block">
+					<p id="red-cultural-viaje-escandinavia-rates-exclude-title">No incluye</p>
+					<ul id="red-cultural-viaje-escandinavia-rates-exclude-list">
+						<li id="red-cultural-viaje-escandinavia-rates-exclude-1">
+							<span id="red-cultural-viaje-escandinavia-rates-exclude-1-icon" class="material-symbols-outlined" aria-hidden="true">payments</span>
+							<p id="red-cultural-viaje-escandinavia-rates-exclude-1-text">Propinas, gastos personales o ningún otro servicio no especificado.</p>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</section>
 
-		<section id="red-cultural-viaje-italia-interest" aria-label="Interés">
-			<div id="red-cultural-viaje-italia-interest-inner">
-				<div id="red-cultural-viaje-italia-interest-copy">
-					<p id="red-cultural-viaje-italia-interest-question">¿Estás interesado?</p>
-					<p id="red-cultural-viaje-italia-interest-desc">Llena el formulario para más información sobre el</p>
-					<p id="red-cultural-viaje-italia-interest-trip-title">Escandinavia 2026</p>
+		<section id="red-cultural-viaje-escandinavia-interest" aria-label="Interés">
+			<div id="red-cultural-viaje-escandinavia-interest-inner">
+				<div id="red-cultural-viaje-escandinavia-interest-copy">
+					<p id="red-cultural-viaje-escandinavia-interest-question">¿Estás interesado?</p>
+					<p id="red-cultural-viaje-escandinavia-interest-desc">Llena el formulario para más información sobre el</p>
+					<p id="red-cultural-viaje-escandinavia-interest-trip-title">Escandinavia 2026</p>
 					<p id="red-cultural-viaje-escandinavia-interest-trip-dates">25-agosto al 09-septiembre de 2026</p>
 				</div>
 
 				<form
-					id="red-cultural-viaje-italia-interest-form"
+					id="red-cultural-viaje-escandinavia-interest-form"
 					method="post"
 					action="<?php echo esc_url((string) admin_url('admin-post.php')); ?>"
 				>
 					<?php if (isset($_GET['rcp_ve_interest']) && (string) $_GET['rcp_ve_interest'] === 'success') : ?>
-						<p id="red-cultural-viaje-italia-interest-success">¡Gracias! Te contactaremos pronto.</p>
+						<p id="red-cultural-viaje-escandinavia-interest-success">¡Gracias! Te contactaremos pronto.</p>
 					<?php endif; ?>
 
-					<input type="hidden" id="red-cultural-viaje-italia-interest-action" name="action" value="rcp_viaje_escandinavia_interest">
+					<input type="hidden" id="red-cultural-viaje-escandinavia-interest-action" name="action" value="rcp_viaje_escandinavia_interest">
 					<?php wp_nonce_field('rcp_viaje_escandinavia_interest', 'rcp_ve_nonce'); ?>
 
-					<div id="red-cultural-viaje-italia-interest-field-name">
-						<label id="red-cultural-viaje-italia-interest-label-name" for="red-cultural-viaje-italia-interest-input-name">Nombre</label>
-						<input id="red-cultural-viaje-italia-interest-input-name" name="rcp_ve_name" type="text" autocomplete="name" placeholder="Tu nombre" required>
+					<div id="red-cultural-viaje-escandinavia-interest-field-name">
+						<label id="red-cultural-viaje-escandinavia-interest-label-name" for="red-cultural-viaje-escandinavia-interest-input-name">Nombre</label>
+						<input id="red-cultural-viaje-escandinavia-interest-input-name" name="rcp_ve_name" type="text" autocomplete="name" placeholder="Tu nombre" required>
 					</div>
 
-					<div id="red-cultural-viaje-italia-interest-field-email">
-						<label id="red-cultural-viaje-italia-interest-label-email" for="red-cultural-viaje-italia-interest-input-email">Email</label>
-						<input id="red-cultural-viaje-italia-interest-input-email" name="rcp_ve_email" type="email" autocomplete="email" placeholder="correo@ejemplo.com" required>
+					<div id="red-cultural-viaje-escandinavia-interest-field-email">
+						<label id="red-cultural-viaje-escandinavia-interest-label-email" for="red-cultural-viaje-escandinavia-interest-input-email">Email</label>
+						<input id="red-cultural-viaje-escandinavia-interest-input-email" name="rcp_ve_email" type="email" autocomplete="email" placeholder="correo@ejemplo.com" required>
 					</div>
 
-					<div id="red-cultural-viaje-italia-interest-field-phone">
-						<label id="red-cultural-viaje-italia-interest-label-phone" for="red-cultural-viaje-italia-interest-input-phone">Teléfono</label>
-						<input id="red-cultural-viaje-italia-interest-input-phone" name="rcp_ve_phone" type="tel" autocomplete="tel" placeholder="+56 9 1234 5678">
+					<div id="red-cultural-viaje-escandinavia-interest-field-phone">
+						<label id="red-cultural-viaje-escandinavia-interest-label-phone" for="red-cultural-viaje-escandinavia-interest-input-phone">Teléfono</label>
+						<input id="red-cultural-viaje-escandinavia-interest-input-phone" name="rcp_ve_phone" type="tel" autocomplete="tel" placeholder="+56 9 1234 5678">
 					</div>
 
-					<div id="red-cultural-viaje-italia-interest-field-message">
-						<label id="red-cultural-viaje-italia-interest-label-message" for="red-cultural-viaje-italia-interest-input-message">Mensaje</label>
-						<textarea id="red-cultural-viaje-italia-interest-input-message" name="rcp_ve_message" placeholder="Cuéntanos qué necesitas..."></textarea>
+					<div id="red-cultural-viaje-escandinavia-interest-field-message">
+						<label id="red-cultural-viaje-escandinavia-interest-label-message" for="red-cultural-viaje-escandinavia-interest-input-message">Mensaje</label>
+						<textarea id="red-cultural-viaje-escandinavia-interest-input-message" name="rcp_ve_message" placeholder="Cuéntanos qué necesitas..."></textarea>
 					</div>
 
-					<button id="red-cultural-viaje-italia-interest-submit" type="submit">Enviar</button>
+					<button id="red-cultural-viaje-escandinavia-interest-submit" type="submit">Enviar</button>
 				</form>
 			</div>
 		</section>
 
-		<section id="red-cultural-viaje-italia-conditions" aria-label="Condiciones">
-			<div id="red-cultural-viaje-italia-conditions-inner">
-				<h2 id="red-cultural-viaje-italia-conditions-title">Condiciones</h2>
+		<section id="red-cultural-viaje-escandinavia-conditions" aria-label="Condiciones">
+			<div id="red-cultural-viaje-escandinavia-conditions-inner">
+				<h2 id="red-cultural-viaje-escandinavia-conditions-title">Condiciones</h2>
 
-				<p id="red-cultural-viaje-italia-conditions-subtitle">Políticas de reserva y cancelación:</p>
+				<p id="red-cultural-viaje-escandinavia-conditions-subtitle">Políticas de reserva y cancelación:</p>
 
-				<div id="red-cultural-viaje-italia-conditions-table-wrap" class="rcp-conditions-table-wrap" aria-label="Políticas de reserva y cancelación">
-					<table id="red-cultural-viaje-italia-conditions-table" class="rcp-conditions-table">
-						<thead id="red-cultural-viaje-italia-conditions-table-head">
-							<tr id="red-cultural-viaje-italia-conditions-table-head-row">
-								<th id="red-cultural-viaje-italia-conditions-table-th-stage">Etapa de pago</th>
-								<th id="red-cultural-viaje-italia-conditions-table-th-amount">Monto</th>
-								<th id="red-cultural-viaje-italia-conditions-table-th-deadline">Fecha límite</th>
-								<th id="red-cultural-viaje-italia-conditions-table-th-notes">Observación</th>
+				<div id="red-cultural-viaje-escandinavia-conditions-table-wrap" class="rcp-conditions-table-wrap" aria-label="Políticas de reserva y cancelación">
+					<table id="red-cultural-viaje-escandinavia-conditions-table" class="rcp-conditions-table">
+						<thead id="red-cultural-viaje-escandinavia-conditions-table-head">
+							<tr id="red-cultural-viaje-escandinavia-conditions-table-head-row">
+								<th id="red-cultural-viaje-escandinavia-conditions-table-th-stage">Etapa de pago</th>
+								<th id="red-cultural-viaje-escandinavia-conditions-table-th-amount">Monto</th>
+								<th id="red-cultural-viaje-escandinavia-conditions-table-th-deadline">Fecha límite</th>
+								<th id="red-cultural-viaje-escandinavia-conditions-table-th-notes">Observación</th>
 							</tr>
 						</thead>
-						<tbody id="red-cultural-viaje-italia-conditions-table-body">
-							<tr id="red-cultural-viaje-italia-conditions-table-row-1">
-								<td id="red-cultural-viaje-italia-conditions-table-td-1-stage">Primer abono</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-1-amount">USD 3.500 por persona</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-1-deadline">Al momento de solicitar la reserva</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-1-notes">No reembolsable</td>
+						<tbody id="red-cultural-viaje-escandinavia-conditions-table-body">
+							<tr id="red-cultural-viaje-escandinavia-conditions-table-row-1">
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-1-stage">Primer abono</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-1-amount">USD 3.500 por persona</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-1-deadline">Al momento de solicitar la reserva</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-1-notes">No reembolsable</td>
 							</tr>
-							<tr id="red-cultural-viaje-italia-conditions-table-row-2">
-								<td id="red-cultural-viaje-italia-conditions-table-td-2-stage">Segundo abono</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-2-amount">USD 3.155 por persona</td>
+							<tr id="red-cultural-viaje-escandinavia-conditions-table-row-2">
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-2-stage">Segundo abono</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-2-amount">USD 3.155 por persona</td>
 								<td id="red-cultural-viaje-escandinavia-conditions-table-td-2-deadline">Hasta 31-mayo-2026</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-2-notes">No reembolsable</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-2-notes">No reembolsable</td>
 							</tr>
-							<tr id="red-cultural-viaje-italia-conditions-table-row-3">
-								<td id="red-cultural-viaje-italia-conditions-table-td-3-stage">Saldo final</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-3-amount">Según tipo de tarifa preventa o normal y tipo de habitación</td>
+							<tr id="red-cultural-viaje-escandinavia-conditions-table-row-3">
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-3-stage">Saldo final</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-3-amount">Según tipo de tarifa preventa o normal y tipo de habitación</td>
 								<td id="red-cultural-viaje-escandinavia-conditions-table-td-3-deadline">Hasta 30-junio-2026</td>
-								<td id="red-cultural-viaje-italia-conditions-table-td-3-notes">No reembolsable</td>
+								<td id="red-cultural-viaje-escandinavia-conditions-table-td-3-notes">No reembolsable</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 
-				<ul id="red-cultural-viaje-italia-conditions-bullets" class="rcp-conditions-bullets">
-					<li id="red-cultural-viaje-italia-conditions-bullets-1">· Se requiere un mínimo de 25 pasajeros confirmados de lo contrario el viaje se cancela.</li>
-					<li id="red-cultural-viaje-italia-conditions-bullets-2">· Pasajes aéreos: se puede cotizar upgrade de cabina sujeto a disponibilidad.</li>
-					<li id="red-cultural-viaje-italia-conditions-bullets-3">· Asistencia en viaje aplica tarifa extra para mayores de 70 años.</li>
+				<ul id="red-cultural-viaje-escandinavia-conditions-bullets" class="rcp-conditions-bullets">
+					<li id="red-cultural-viaje-escandinavia-conditions-bullets-1">· Se requiere un mínimo de 25 pasajeros confirmados de lo contrario el viaje se cancela.</li>
+					<li id="red-cultural-viaje-escandinavia-conditions-bullets-2">· Pasajes aéreos: se puede cotizar upgrade de cabina sujeto a disponibilidad.</li>
+					<li id="red-cultural-viaje-escandinavia-conditions-bullets-3">· Asistencia en viaje aplica tarifa extra para mayores de 70 años.</li>
 				</ul>
 
-				<h3 id="red-cultural-viaje-italia-conditions-baggage-title">Políticas de Equipaje</h3>
-				<div id="red-cultural-viaje-italia-conditions-baggage">
-					<p id="red-cultural-viaje-italia-conditions-baggage-ib-title"><strong>Vuelos operados por IBERIA (IB)</strong> el equipaje permitido por persona es:</p>
-					<ul id="red-cultural-viaje-italia-conditions-baggage-ib-list" class="rcp-conditions-lines">
-						<li id="red-cultural-viaje-italia-conditions-baggage-ib-1">01 maleta de bodega de hasta 23 kilos, de hasta 158 cms. (alto + ancho + largo)</li>
-						<li id="red-cultural-viaje-italia-conditions-baggage-ib-2">01 maleta de cabina de hasta 10 kilos, medidas 56 cms. x 40 cms. x 20cms.</li>
-						<li id="red-cultural-viaje-italia-conditions-baggage-ib-3">01 articulo personal, medidas 40 cms. x 30 cms. x 15cms.</li>
+				<h3 id="red-cultural-viaje-escandinavia-conditions-baggage-title">Políticas de Equipaje</h3>
+				<div id="red-cultural-viaje-escandinavia-conditions-baggage">
+					<p id="red-cultural-viaje-escandinavia-conditions-baggage-ib-title"><strong>Vuelos operados por IBERIA (IB)</strong> el equipaje permitido por persona es:</p>
+					<ul id="red-cultural-viaje-escandinavia-conditions-baggage-ib-list" class="rcp-conditions-lines">
+						<li id="red-cultural-viaje-escandinavia-conditions-baggage-ib-1">01 maleta de bodega de hasta 23 kilos, de hasta 158 cms. (alto + ancho + largo)</li>
+						<li id="red-cultural-viaje-escandinavia-conditions-baggage-ib-2">01 maleta de cabina de hasta 10 kilos, medidas 56 cms. x 40 cms. x 20cms.</li>
+						<li id="red-cultural-viaje-escandinavia-conditions-baggage-ib-3">01 articulo personal, medidas 40 cms. x 30 cms. x 15cms.</li>
 					</ul>
 
-					<p id="red-cultural-viaje-italia-conditions-baggage-sk-title"><strong>Vuelo operado por SAS (SK)</strong> el equipaje permitido por persona es:</p>
-					<ul id="red-cultural-viaje-italia-conditions-baggage-sk-list" class="rcp-conditions-lines">
-						<li id="red-cultural-viaje-italia-conditions-baggage-sk-1">01 maleta de bodega de hasta 23 kilos de hasta 158 cms. (alto + ancho + largo)</li>
-						<li id="red-cultural-viaje-italia-conditions-baggage-sk-2">01 maleta de cabina de hasta 8 kilos, medidas 55 cms. x 40 cms. x 23cms.</li>
-						<li id="red-cultural-viaje-italia-conditions-baggage-sk-3">01 articulo personal de hasta 18 litros, medidas 40 cms. x 30 cms. x 15cms.</li>
+					<p id="red-cultural-viaje-escandinavia-conditions-baggage-sk-title"><strong>Vuelo operado por SAS (SK)</strong> el equipaje permitido por persona es:</p>
+					<ul id="red-cultural-viaje-escandinavia-conditions-baggage-sk-list" class="rcp-conditions-lines">
+						<li id="red-cultural-viaje-escandinavia-conditions-baggage-sk-1">01 maleta de bodega de hasta 23 kilos de hasta 158 cms. (alto + ancho + largo)</li>
+						<li id="red-cultural-viaje-escandinavia-conditions-baggage-sk-2">01 maleta de cabina de hasta 8 kilos, medidas 55 cms. x 40 cms. x 23cms.</li>
+						<li id="red-cultural-viaje-escandinavia-conditions-baggage-sk-3">01 articulo personal de hasta 18 litros, medidas 40 cms. x 30 cms. x 15cms.</li>
 					</ul>
 				</div>
 
-				<h3 id="red-cultural-viaje-italia-conditions-docs-title">Documentación:</h3>
-				<ul id="red-cultural-viaje-italia-conditions-docs-list" class="rcp-conditions-bullets">
-					<li id="red-cultural-viaje-italia-conditions-docs-1">· Es responsabilidad de cada pasajero ir provisto de un pasaporte vigente y dotado de todos los visados y requisitos necesarios.</li>
+				<h3 id="red-cultural-viaje-escandinavia-conditions-docs-title">Documentación:</h3>
+				<ul id="red-cultural-viaje-escandinavia-conditions-docs-list" class="rcp-conditions-bullets">
+					<li id="red-cultural-viaje-escandinavia-conditions-docs-1">· Es responsabilidad de cada pasajero ir provisto de un pasaporte vigente y dotado de todos los visados y requisitos necesarios.</li>
 				</ul>
 
-				<h3 id="red-cultural-viaje-italia-conditions-variations-title">Variaciones:</h3>
-				<ul id="red-cultural-viaje-italia-conditions-variations-list" class="rcp-conditions-bullets">
-					<li id="red-cultural-viaje-italia-conditions-variations-1">· La información de hoteles mencionados, tarifas, itinerario, horarios de llegada y salida, fechas de operación, etc., está sujeta a posibles modificaciones.</li>
+				<h3 id="red-cultural-viaje-escandinavia-conditions-variations-title">Variaciones:</h3>
+				<ul id="red-cultural-viaje-escandinavia-conditions-variations-list" class="rcp-conditions-bullets">
+					<li id="red-cultural-viaje-escandinavia-conditions-variations-1">· La información de hoteles mencionados, tarifas, itinerario, horarios de llegada y salida, fechas de operación, etc., está sujeta a posibles modificaciones.</li>
 				</ul>
 			</div>
 		</section>
 
-		<footer id="red-cultural-viaje-italia-footer" class="bg-gray-50 py-12 text-center text-gray-400 text-sm border-t border-gray-100">
-			<span id="red-cultural-viaje-italia-footer-text">&copy; 2026 Red Cultural &amp; COCHA. Todos los derechos reservados.</span>
+		<footer id="red-cultural-viaje-escandinavia-footer" class="bg-gray-50 py-12 text-center text-gray-400 text-sm border-t border-gray-100">
+			<span id="red-cultural-viaje-escandinavia-footer-text">&copy; 2026 Red Cultural &amp; COCHA. Todos los derechos reservados.</span>
 		</footer>
 	</main>
 
 	<?php
 	if ($rcp_theme_footer_html !== '') {
-		echo '<div id="red-cultural-viaje-italia-site-footer">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div id="red-cultural-viaje-escandinavia-site-footer">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $rcp_theme_footer_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
