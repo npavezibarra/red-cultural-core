@@ -112,7 +112,7 @@ $gallery_items = array(
 		#red-cultural-viaje-japon-itinerary-table tbody tr:last-child td{border-bottom:none}
 		#red-cultural-viaje-japon-itinerary-table tbody td:nth-child(1){min-width:120px}
 		#red-cultural-viaje-japon-itinerary-table tbody td:nth-child(4){min-width:160px;font-weight:700}
-		#red-cultural-viaje-japon-itinerary-table .rcp-itin-day{font-weight:900;font-size:18px;line-height:1.1;color:#FF0000}
+		#red-cultural-viaje-japon-itinerary-table .rcp-itin-day{font-weight:900;font-size:18px;line-height:1.1;color:#000000}
 		#red-cultural-viaje-japon-itinerary-table .rcp-itin-subdate{display:block;margin-top:4px;font-size:12px;font-weight:400;color:#fff;opacity:0.85}
 		@media (max-width: 768px){
 			#red-cultural-viaje-japon-itinerary-table thead{display:none}
@@ -131,10 +131,10 @@ $gallery_items = array(
 		#red-cultural-viaje-japon-rates-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
 		#red-cultural-viaje-japon-rates-price-left,#red-cultural-viaje-japon-rates-price-right{margin:0;text-align:center;font-size:56px;line-height:1;font-weight:900;color:#6b7280}
 		#red-cultural-viaje-japon-rates-sub-left,#red-cultural-viaje-japon-rates-sub-right{margin:14px 0 0;text-align:center;font-size:18px;color:#6b7280}
-		#red-cultural-viaje-japon-rates-include-title,#red-cultural-viaje-japon-rates-exclude-title{margin:26px 0 18px;text-align:center;font-size:40px;line-height:1;font-weight:900;color:#ff0000}
+		#red-cultural-viaje-japon-rates-include-title,#red-cultural-viaje-japon-rates-exclude-title{margin:26px 0 18px;text-align:center;font-size:40px;line-height:1;font-weight:900;color:#000000}
 		#red-cultural-viaje-japon-rates-include-list,#red-cultural-viaje-japon-rates-exclude-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:22px}
 		#red-cultural-viaje-japon-rates-include-list li,#red-cultural-viaje-japon-rates-exclude-list li{display:grid;grid-template-columns:44px 1fr;align-items:start;gap:18px}
-		#red-cultural-viaje-japon-rates-include-list .material-symbols-outlined,#red-cultural-viaje-japon-rates-exclude-list .material-symbols-outlined{color:#ff0000;margin-top:2px}
+		#red-cultural-viaje-japon-rates-include-list .material-symbols-outlined,#red-cultural-viaje-japon-rates-exclude-list .material-symbols-outlined{color:#000000;margin-top:2px}
 		#red-cultural-viaje-japon-rates-include-list p,#red-cultural-viaje-japon-rates-exclude-list p{margin:0;font-size:20px;line-height:1.55;color:#6b7280}
 		@media (max-width: 900px){
 			#red-cultural-viaje-japon-rates-grid{display:flex;flex-direction:column;gap:44px}
@@ -652,46 +652,73 @@ $gallery_items = array(
 		</section>
 
 		<section id="red-cultural-viaje-japon-conditions" aria-label="Condiciones">
-			<div id="red-cultural-viaje-japon-conditions-inner">
-				<h2 id="red-cultural-viaje-japon-conditions-title">Condiciones</h2>
+			<div id="red-cultural-viaje-japon-conditions-inner" class="max-w-5xl mx-auto px-4 py-16">
+				<h2 id="red-cultural-viaje-japon-conditions-title" class="text-4xl font-black text-black text-center mb-12 uppercase tracking-tighter italic">Condiciones</h2>
 
-				<div id="red-cultural-viaje-japon-conditions-grid">
-					<div id="red-cultural-viaje-japon-conditions-col-left" class="rcp-cond-block">
-						<div id="red-cultural-viaje-japon-conditions-transfers">
-							<h3 id="red-cultural-viaje-japon-conditions-transfers-title">*Nota Traslados llegada y salida:</h3>
-							<ul id="red-cultural-viaje-japon-conditions-transfers-list">
-								<li id="red-cultural-viaje-japon-conditions-transfers-1">· Los traslados de llegada y salida en Tokio Aeropuerto/Hotel/Aeropuerto se incluyen para todo el grupo en horarios programados los que serán informados oportunamente.</li>
-								<li id="red-cultural-viaje-japon-conditions-transfers-2">· Pasajeros llegando o saliendo en un horario diferente al del grupo, serán responsables de organizar y cubrir el costo de sus traslados terrestres para la llegada y salida o pueden solicitar cotización para estos servicios.</li>
-							</ul>
-						</div>
+				<div id="red-cultural-viaje-japon-conditions-content" class="space-y-12 text-black">
+					
+					<div id="red-cultural-viaje-japon-conditions-transfers">
+						<h3 id="red-cultural-viaje-japon-conditions-transfers-title" class="text-lg font-black underline mb-4 uppercase">*Nota Traslados llegada y salida:</h3>
+						<p id="red-cultural-viaje-japon-conditions-transfers-text" class="text-sm leading-relaxed">
+							· Los traslados incluidos en Tokio operan únicamente desde/hacia el Aeropuerto de Narita en los horarios indicados. Pasajeros con vuelos en horarios o aeropuertos diferentes deberán coordinar su propio transporte o solicitar una cotización adicional a través de COCHA.
+						</p>
 					</div>
 
-					<div id="red-cultural-viaje-japon-conditions-col-right" class="rcp-cond-block">
-						<div id="red-cultural-viaje-japon-conditions-cancel">
-							<h3 id="red-cultural-viaje-japon-conditions-cancel-title">Políticas de Cancelación:</h3>
-							<ul id="red-cultural-viaje-japon-conditions-cancel-list">
-								<li id="red-cultural-viaje-japon-conditions-cancel-1">· Se requiere un mínimo de 25 pasajeros confirmados al 15-MAYO-2026, de lo contrario el viaje se cancela.</li>
-								<li id="red-cultural-viaje-japon-conditions-cancel-2">· Para reservar se solicita un abono de USD 3.500 por persona no reembolsable.</li>
-								<li id="red-cultural-viaje-japon-conditions-cancel-3">· La totalidad del viaje debe estar pagada hasta el 10-JULIO-2026.</li>
-								<li id="red-cultural-viaje-japon-conditions-cancel-4">· Cancelaciones luego del 10-JULIO-2026 se retendrá el 100 % de lo pagado.</li>
-								<li id="red-cultural-viaje-japon-conditions-cancel-5">· Pasajes aéreos: se puede cotizar upgrade de cabina sujeto a disponibilidad.</li>
-								<li id="red-cultural-viaje-japon-conditions-cancel-6">· Asistencia en viaje aplica tarifa extra para mayores de 70 años.</li>
-							</ul>
+					<div id="red-cultural-viaje-japon-conditions-cancel">
+						<h3 id="red-cultural-viaje-japon-conditions-cancel-title" class="text-lg font-black underline mb-6 uppercase">Políticas de reserva y cancelación:</h3>
+						
+						<div class="overflow-x-auto mb-6">
+							<table id="red-cultural-viaje-japon-conditions-payment-table" class="w-full border-collapse border border-black text-sm text-center">
+								<thead>
+									<tr>
+										<th class="border border-black p-4 font-black uppercase">Etapa de pago</th>
+										<th class="border border-black p-4 font-black uppercase">Monto</th>
+										<th class="border border-black p-4 font-black uppercase">Fecha límite</th>
+										<th class="border border-black p-4 font-black uppercase">Observación</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="border border-black p-4">Primer abono</td>
+										<td class="border border-black p-4">USD 3.500<br>por persona</td>
+										<td class="border border-black p-4">Al momento de solicitar la reserva</td>
+										<td class="border border-black p-4">No reembolsable</td>
+									</tr>
+									<tr>
+										<td class="border border-black p-4">Segundo abono</td>
+										<td class="border border-black p-4">USD 3.100<br>por persona</td>
+										<td class="border border-black p-4">Hasta 10-mayo-2026</td>
+										<td class="border border-black p-4">No reembolsable</td>
+									</tr>
+									<tr>
+										<td class="border border-black p-4">Saldo final</td>
+										<td class="border border-black p-4">Según tipo de tarifa preventa o normal y tipo de habitación</td>
+										<td class="border border-black p-4">Hasta 10-julio-2026</td>
+										<td class="border border-black p-4">No reembolsable</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 
-						<div id="red-cultural-viaje-japon-conditions-docs">
-							<h3 id="red-cultural-viaje-japon-conditions-docs-title">Documentación:</h3>
-							<ul id="red-cultural-viaje-japon-conditions-docs-list">
-								<li id="red-cultural-viaje-japon-conditions-docs-1">· Es responsabilidad de cada pasajero ir provisto de un pasaporte vigente y dotado de todos los visados y requisitos necesarios.</li>
-							</ul>
-						</div>
+						<ul id="red-cultural-viaje-japon-conditions-cancel-bullets" class="space-y-2 text-sm">
+							<li>· Se requiere un mínimo de 25 pasajeros confirmados de lo contrario el viaje se cancela.</li>
+							<li>· Pasajes aéreos: se puede cotizar upgrade de cabina sujeto a disponibilidad.</li>
+							<li>· Asistencia en viaje aplica tarifa extra para mayores de 70 años.</li>
+						</ul>
+					</div>
 
-						<div id="red-cultural-viaje-japon-conditions-variations">
-							<h3 id="red-cultural-viaje-japon-conditions-variations-title">Variaciones:</h3>
-							<ul id="red-cultural-viaje-japon-conditions-variations-list">
-								<li id="red-cultural-viaje-japon-conditions-variations-1">· La información de hoteles mencionados, tarifas, itinerario, horarios de llegada y salida, fechas de operación, etc., está sujeta a posibles modificaciones.</li>
-							</ul>
-						</div>
+					<div id="red-cultural-viaje-japon-conditions-docs">
+						<h3 id="red-cultural-viaje-japon-conditions-docs-title" class="text-lg font-black underline mb-4 uppercase">Documentación:</h3>
+						<p id="red-cultural-viaje-japon-conditions-docs-text" class="text-sm">
+							· Es responsabilidad de cada pasajero ir provisto de un pasaporte vigente y dotado de todos los visados y requisitos necesarios.
+						</p>
+					</div>
+
+					<div id="red-cultural-viaje-japon-conditions-variations">
+						<h3 id="red-cultural-viaje-japon-conditions-variations-title" class="text-lg font-black underline mb-4 uppercase">Variaciones:</h3>
+						<p id="red-cultural-viaje-japon-conditions-variations-text" class="text-sm">
+							· La información de tarifas, itinerario, fechas y horarios de operación, vuelos, hoteles, transportes, visitas, asistencia en viaje, etc., está sujeta a posibles modificaciones.
+						</p>
 					</div>
 				</div>
 			</div>
