@@ -212,12 +212,34 @@ class RCIL_Ajax
         update_post_meta($lesson_id, '_rc_zoom_url', $zoom_url);
 
         // Save Availability
-        if (function_exists('learndash_update_setting')) {
-            learndash_update_setting($lesson_id, 'lesson_access_from', $timestamp);
-            update_post_meta($lesson_id, 'lesson_access_from', $timestamp);
+        if ($timestamp > 0) {
+            if (function_exists('learndash_update_setting')) {
+                learndash_update_setting($lesson_id, 'lesson_schedule', 'visible_after_specific_date');
+                learndash_update_setting($lesson_id, 'visible_after_specific_date', $timestamp);
+            } else {
+                $settings = get_post_meta($lesson_id, '_sfwd-lessons', true);
+                if (!is_array($settings)) {
+                    $settings = [];
+                }
+                $settings['sfwd-lessons_lesson_schedule'] = 'visible_after_specific_date';
+                $settings['sfwd-lessons_visible_after_specific_date'] = $timestamp;
+                update_post_meta($lesson_id, '_sfwd-lessons', $settings);
+            }
         } else {
-             update_post_meta($lesson_id, 'lesson_access_from', $timestamp);
+            if (function_exists('learndash_update_setting')) {
+                learndash_update_setting($lesson_id, 'lesson_schedule', '');
+                learndash_update_setting($lesson_id, 'visible_after_specific_date', 0);
+            } else {
+                $settings = get_post_meta($lesson_id, '_sfwd-lessons', true);
+                if (!is_array($settings)) {
+                    $settings = [];
+                }
+                $settings['sfwd-lessons_lesson_schedule'] = '';
+                $settings['sfwd-lessons_visible_after_specific_date'] = 0;
+                update_post_meta($lesson_id, '_sfwd-lessons', $settings);
+            }
         }
+        update_post_meta($lesson_id, 'lesson_access_from', $timestamp);
 
         // Reuse the same logic as handle_update_lesson_video_url().
         $enabled = ($video_url !== '') ? 'on' : '';
@@ -245,7 +267,7 @@ class RCIL_Ajax
             update_post_meta($lesson_id, '_sfwd-lessons', $settings);
         }
 
-        $access_from = (int) get_post_meta($lesson_id, 'lesson_access_from', true);
+        $access_from = $timestamp;
         $available_from_iso = $access_from ? date('Y-m-d\TH:i', $access_from) : '';
         $available_from_display = $access_from ? date_i18n(get_option('date_format') . ' H:i', $access_from) : '';
 

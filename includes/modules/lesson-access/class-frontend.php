@@ -174,7 +174,23 @@ class RCIL_Frontend
                     }
                 }
 
-                $access_from = (int) get_post_meta($lesson_id, 'lesson_access_from', true);
+                $access_from = 0;
+                if (function_exists('learndash_get_setting')) {
+                    $schedule = learndash_get_setting($lesson_id, 'lesson_schedule');
+                    if ($schedule === 'visible_after_specific_date') {
+                        $access_from = (int) learndash_get_setting($lesson_id, 'visible_after_specific_date');
+                    }
+                } else {
+                    $settings = get_post_meta($lesson_id, '_sfwd-lessons', true);
+                    if (is_array($settings) && isset($settings['sfwd-lessons_lesson_schedule']) && $settings['sfwd-lessons_lesson_schedule'] === 'visible_after_specific_date') {
+                        $access_from = (int) ($settings['sfwd-lessons_visible_after_specific_date'] ?? 0);
+                    }
+                }
+                
+                if (!$access_from) {
+                    $access_from = (int) get_post_meta($lesson_id, 'lesson_access_from', true);
+                }
+                
                 $available_from_iso = $access_from ? date('Y-m-d\TH:i', $access_from) : '';
                 $available_from_display = $access_from ? date_i18n(get_option('date_format') . ' H:i', $access_from) : '';
 

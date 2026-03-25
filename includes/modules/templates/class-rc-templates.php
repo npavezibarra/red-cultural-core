@@ -35,6 +35,7 @@ final class Red_Cultural_Templates {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_contacto_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_terminos_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_author_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_cuentas_template'), 20);
 		add_filter('template_include', array(__CLASS__, 'maybe_render_404_template'), 100);
 
 
@@ -645,6 +646,37 @@ final class Red_Cultural_Templates {
 		$updated = preg_replace('/<p>\\s*(?:&nbsp;)?\\s*<\\/p>/i', '', (string) $updated);
 
 		return is_string($updated) ? $updated : $content;
+	}
+
+	public static function maybe_render_cuentas_template(): void {
+		if (is_admin() || is_feed()) {
+			return;
+		}
+
+		$is_cuentas_page = function_exists('is_page') && is_page('cuentas');
+
+		if (!$is_cuentas_page && function_exists('is_404') && is_404()) {
+			$path = '';
+			if (isset($_SERVER['REQUEST_URI'])) {
+				$path = (string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			}
+			$path = trim($path, '/');
+			if ($path === 'cuentas') {
+				$is_cuentas_page = true;
+			}
+		}
+
+		if (!$is_cuentas_page) {
+			return;
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/pages/cuentas.php';
+		if (!file_exists($template_file)) {
+			return;
+		}
+
+		require $template_file;
+		exit;
 	}
 
 	public static function maybe_render_author_template(): void {
@@ -2658,6 +2690,7 @@ final class Red_Cultural_Templates {
 	}
 
 		public static function register_ajax_handlers(): void {
+			add_action('wp_ajax_rc_search_sales', array(__CLASS__, 'ajax_search_sales'));
 			add_action('wp_ajax_nopriv_rcp_user_exists', array(__CLASS__, 'handle_user_exists_ajax'));
 			add_action('wp_ajax_rcp_user_exists', array(__CLASS__, 'handle_user_exists_ajax'));
 			add_action('wp_ajax_nopriv_rcp_forgot_password', array(__CLASS__, 'handle_forgot_password_ajax'));
@@ -3007,6 +3040,127 @@ HTML;
 		$headers = array('Content-Type: text/html; charset=UTF-8');
 
 		wp_mail($to, $subject, $body, $headers);
+	}
+
+	public static function ajax_search_sales(): void {
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error('Unauthorized');
+		}
+
+		$s = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
+		$paged = isset($_POST['paged']) ? max(1, intval($_POST['paged'])) : 1;
+
+		ob_start();
+		self::render_sales_table_rows($s, $paged);
+		$html = ob_get_clean();
+
+		wp_send_json_success(array('html' => $html));
+	}
+
+	public static function render_sales_table_rows(string $s = '', int $paged = 1): void {
+		if (!class_exists('WooCommerce')) {
+			echo '<tr><td colspan="7" class="text-center py-10 text-red-400">WooCommerce no está activo.</td></tr>';
+			return;
+		}
+
+		$args = array(
+			'limit' => 25,
+			'status' => array('processing', 'completed', 'failed', 'on-hold', 'cancelled', 'refunded'),
+			'orderby' => 'date',
+			'order' => 'DESC',
+			'page' => $paged,
+			'paginate' => true,
+		);
+
+		if ($s) {
+			global $wpdb;
+			
+			// 1. Search by Product Name (order items)
+			$order_ids_by_product = $wpdb->get_col($wpdb->prepare(
+				"SELECT DISTINCT order_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_name LIKE %s",
+				'%' . $wpdb->esc_like($s) . '%'
+			));
+
+			// 2. Search by User Meta (billing name, email)
+			$order_ids_by_meta = $wpdb->get_col($wpdb->prepare(
+				"SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_billing_first_name', '_billing_last_name', '_billing_email') AND meta_value LIKE %s",
+				'%' . $wpdb->esc_like($s) . '%'
+			));
+
+			$all_found_ids = array_unique(array_merge(
+				(array)$order_ids_by_product, 
+				(array)$order_ids_by_meta
+			));
+
+			if (!empty($all_found_ids)) {
+				$args['include'] = $all_found_ids;
+			} else {
+				// Fallback to standard WC search if no explicit meta/item match
+				$args['search'] = $s; 
+			}
+		}
+
+		$results = wc_get_orders($args);
+		$orders = $results->orders;
+		$total_pages = $results->max_num_pages;
+
+		echo '<tbody id="rc-sales-tbody">';
+		if (!empty($orders)) {
+			foreach ($orders as $order) {
+				$status = $order->get_status();
+				$status_label = wc_get_order_status_name($status);
+				$items = $order->get_items();
+				$order_date = $order->get_date_created();
+				$billing_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+				$billing_email = $order->get_billing_email();
+
+				foreach ($items as $item) {
+					$quantity = $item->get_quantity();
+					$subtotal = $item->get_total();
+					echo '<tr>';
+					echo '<td><span class="opacity-50">#</span>' . $order->get_id() . '</td>';
+					echo '<td>';
+					echo '<div class="font-bold">' . esc_html($billing_name) . '</div>';
+					echo '<div class="text-[10px] opacity-40 uppercase tracking-wider">' . esc_html($billing_email) . '</div>';
+					echo '</td>';
+					echo '<td class="max-w-[300px]">';
+					echo '<div class="truncate font-medium text-white" title="' . esc_attr($item->get_name()) . '">';
+					echo esc_html($item->get_name());
+					echo '</div>';
+					echo '</td>';
+					echo '<td class="text-center">' . $quantity . '</td>';
+					echo '<td class="text-right font-mono font-bold text-[#c5a367]">' . number_format((float)$subtotal, 0, ',', '.') . ' ' . $order->get_currency() . '</td>';
+					echo '<td class="text-center">';
+					echo '<span class="status-badge status-' . esc_attr($status) . '">' . esc_html($status_label) . '</span>';
+					echo '</td>';
+					echo '<td class="whitespace-nowrap">';
+					echo '<div class="text-[13px]">' . $order_date->date('d/m/Y') . '</div>';
+					echo '<div class="text-[11px] opacity-40">' . $order_date->date('H:i') . '</div>';
+					echo '</td>';
+					echo '</tr>';
+				}
+			}
+		} else {
+			echo '<tr><td colspan="7" class="text-center py-10 opacity-50 italic">No se encontraron ventas.</td></tr>';
+		}
+		echo '</tbody>';
+
+		// We return the pagination in a separate wrap that handles its own visibility
+		echo '<div id="rc-sales-pagination-new">';
+		if ($total_pages > 1) {
+			echo '<div class="rcp-pagination" data-paged="' . $paged . '" data-total="' . $total_pages . '">';
+			echo paginate_links(array(
+				'base'    => '#%#%',
+				'format'  => '',
+				'current' => $paged,
+				'total'   => $total_pages,
+				'prev_text' => '&larr;',
+				'next_text' => '&rarr;',
+				'type'      => 'plain',
+			));
+			echo '</div>';
+		}
+		echo '</div>';
 	}
 }
 
