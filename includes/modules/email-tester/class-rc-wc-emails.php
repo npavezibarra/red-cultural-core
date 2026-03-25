@@ -28,6 +28,33 @@ final class Red_Cultural_WC_Emails
     {
         // Hook into order status changes for Bank Transfer (bacs)
         add_action('woocommerce_order_status_on-hold', [$this, 'maybe_trigger_bank_transfer_notif'], 10, 2);
+
+        // Hook into successful payments/completions to send access links
+        add_action('woocommerce_order_status_processing', [$this, 'maybe_trigger_access_email'], 10, 2);
+        add_action('woocommerce_order_status_completed', [$this, 'maybe_trigger_access_email'], 10, 2);
+    }
+
+    /**
+     * Trigger access email (New Order Custom) if it hasn't been sent yet.
+     */
+    public function maybe_trigger_access_email($order_id, $order)
+    {
+        // Prevent sending for pure physical products (unless required)
+        $type = self::identify_order_type($order);
+        if ($type === 'physical' || $type === 'book') {
+            return;
+        }
+
+        // Prevent double sending if status changes from processing to completed quickly
+        if ($order->get_meta('_rc_access_email_sent') === '1') {
+            return;
+        }
+
+        $sent = $this->send_custom_new_order($order_id);
+        if ($sent) {
+            $order->update_meta_data('_rc_access_email_sent', '1');
+            $order->save();
+        }
     }
 
     /**
