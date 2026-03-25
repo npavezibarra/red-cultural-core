@@ -426,15 +426,12 @@ $date = wc_format_datetime($order->get_date_created());
         <div class="summary-footer">
             <div class="summary-grid">
                 <div class="summary-col">
-                    <h4 class="section-title" style="margin-bottom: 4px;">Pedido</h4>
                     <p style="margin: 0; font-size: 12px; font-weight: 500;">#<?php echo esc_html($order_number); ?></p>
                 </div>
                 <div class="summary-col" align="center" style="text-align: center;">
-                    <h4 class="section-title" style="margin-bottom: 4px;">Fecha</h4>
                     <p style="margin: 0; font-size: 12px; font-weight: 500;"><?php echo esc_html($date); ?></p>
                 </div>
                 <div class="summary-col" align="right" style="text-align: right;">
-                    <h4 class="section-title" style="margin-bottom: 4px;">Pago</h4>
                     <p style="margin: 0; font-size: 12px; font-weight: 500;"><?php echo esc_html($order->get_payment_method_title()); ?></p>
                 </div>
             </div>
