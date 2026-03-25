@@ -2938,8 +2938,7 @@ final class Red_Cultural_Templates {
             max-width: 600px;
             margin: 40px auto;
             background-color: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
+            /* border-radius: 0; */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         .header {
@@ -3005,26 +3004,33 @@ final class Red_Cultural_Templates {
     </style>
 </head>
 <body style="background-color: #f9fafb; margin: 0; padding: 0; font-family: 'Inter', sans-serif;">
-    <div class="email-container" style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+    <div class="email-container" style="max-width: 600px; margin: 40px auto; background-color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
         <!-- Header / Logo -->
         <div class="header" style="padding: 48px 48px 24px 48px; text-align: center;">
-            <img src="https://red-cultural.cl/wp-content/uploads/2021/01/logoRedCulturalNegro.svg" alt="Red Cultural" style="height: 60px; width: auto; max-width: 220px; display: inline-block;">
+            <img src="https://red-cultural.cl/wp-content/uploads/2021/01/logoRedCulturalNegro.svg" alt="Red Cultural" style="width: 130px; height: auto; display: inline-block;">
         </div>
+
+        <div style="border-top: 1px solid #f3f4f6; margin: 0 48px;"></div>
 
         <!-- Hero Content -->
         <div class="content" style="padding: 0 32px 48px 32px; text-align: center;">
             <h1 class="title" style="font-size: 30px; font-weight: 300; color: #111827; margin-bottom: 24px; line-height: 1.25;">
-                Tu viaje cultural <br> <span style="font-weight: 600;">comienza aquí.</span>
+                Confirma tu cuenta <br> <span style="font-weight: 600;">para comenzar</span>
             </h1>
             <p class="description" style="color: #6b7280; font-size: 18px; line-height: 1.625; margin-bottom: 40px;">
                 Hola {$user_name},<br>
-                Gracias por unirte a nuestra comunidad. Estamos emocionados de acompañarte en este recorrido por el arte, la historia y el pensamiento contemporáneo.
+                Solo falta un paso para activar tu cuenta.<br><br>
+                Haz clic en el botón para empezar a explorar contenido cultural seleccionado para ti.
             </p>
             
             <!-- CTA Button -->
-            <a href="{$home_url}" class="cta-button" style="display: inline-block; background-color: #111827; color: #ffffff; padding: 16px 40px; border-radius: 6px; font-weight: 500; letter-spacing: 0.025em; text-decoration: none;">
-                Confirmar mi registro
+            <a href="{$home_url}" class="cta-button" style="display: inline-block; background-color: #000000; color: #ffffff !important; font-size: 13px !important; padding: 10px 32px; border-radius: 6px; font-weight: 500; letter-spacing: 2px; text-decoration: none; text-transform: uppercase;">
+                Confirmar mi cuenta
             </a>
+            
+            <p style="margin-top: 32px; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                Si no has sido tú quien se ha registrado en nuestra plataforma, puedes ignorar este correo con total tranquilidad. No se realizará ninguna acción adicional en tu cuenta.
+            </p>
         </div>
 
         <!-- Footer -->
