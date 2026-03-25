@@ -167,34 +167,49 @@ $date = wc_format_datetime($order->get_date_created());
             border-radius: 6px;
             margin-top: 16px;
         }
-        .summary-footer {
-            padding: 24px 32px;
-            background-color: #f9fafb;
-            border-top: 1px solid #f3f4f6;
+        .receipt-card {
+            max-width: 500px;
+            margin: 24px auto;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
-        .summary-grid {
-            display: table;
+        .receipt-table {
             width: 100%;
-            margin-bottom: 16px;
+            border-collapse: collapse;
         }
-        .summary-col {
-            display: table-cell;
-            width: 33.333%;
+        .receipt-table td {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f3f4f6;
         }
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
+        .receipt-table tr:last-child td {
+            border-bottom: none;
+        }
+        .receipt-label {
             color: #6b7280;
-            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            width: 40%;
+            text-align: left;
         }
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-            font-size: 14px;
+        .receipt-value {
             color: #111827;
-            padding-top: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: right;
+        }
+        .receipt-total-row {
+            background-color: #f9fafb;
+        }
+        .receipt-total-value {
+            color: #111827;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .summary-footer {
+            padding: 0 32px 32px 32px;
         }
         .support-footer {
             padding: 24px 32px;
@@ -424,39 +439,50 @@ $date = wc_format_datetime($order->get_date_created());
 
         <!-- Order Summary Footer -->
         <div class="summary-footer">
-            <div class="summary-grid">
-                <div class="summary-col">
-                    <p style="margin: 0; font-size: 12px; font-weight: 500;">#<?php echo esc_html($order_number); ?></p>
-                </div>
-                <div class="summary-col" align="center" style="text-align: center;">
-                    <p style="margin: 0; font-size: 12px; font-weight: 500;"><?php echo esc_html($date); ?></p>
-                </div>
-                <div class="summary-col" align="right" style="text-align: right;">
-                    <p style="margin: 0; font-size: 12px; font-weight: 500;"><?php echo esc_html($order->get_payment_method_title()); ?></p>
-                </div>
-            </div>
-
-            <div style="border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 8px;">
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span><?php echo wp_kses_post($subtotal); ?></span>
-                </div>
-                <?php if ($view === 'physical') : ?>
-                <div class="summary-row">
-                    <span>Envío</span>
-                    <span><?php echo wp_kses_post($shipping); ?></span>
-                </div>
-                <?php endif; ?>
-                <?php foreach ($order->get_tax_totals() as $code => $tax) : ?>
-                <div class="summary-row">
-                    <span><?php echo esc_html($tax->label); ?></span>
-                    <span><?php echo wp_kses_post($tax->formatted_amount); ?></span>
-                </div>
-                <?php endforeach; ?>
-                <div class="total-row">
-                    <span>Total</span>
-                    <span><?php echo wp_kses_post($total); ?></span>
-                </div>
+            <div class="receipt-card">
+                <table class="receipt-table" width="100%" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <!-- Orden -->
+                        <tr>
+                            <td class="receipt-label">ID Pedido</td>
+                            <td class="receipt-value">#<?php echo esc_html($order_number); ?></td>
+                        </tr>
+                        <!-- Fecha -->
+                        <tr>
+                            <td class="receipt-label">Fecha</td>
+                            <td class="receipt-value"><?php echo esc_html($date); ?></td>
+                        </tr>
+                        <!-- Método -->
+                        <tr>
+                            <td class="receipt-label">Método de Pago</td>
+                            <td class="receipt-value"><?php echo esc_html($order->get_payment_method_title()); ?></td>
+                        </tr>
+                        <!-- Subtotal -->
+                        <tr>
+                            <td class="receipt-label">Subtotal</td>
+                            <td class="receipt-value"><?php echo wp_kses_post($subtotal); ?></td>
+                        </tr>
+                        <!-- Envío (si aplica) -->
+                        <?php if ($view === 'physical' && $shipping) : ?>
+                        <tr>
+                            <td class="receipt-label">Envío</td>
+                            <td class="receipt-value"><?php echo wp_kses_post($shipping); ?></td>
+                        </tr>
+                        <?php endif; ?>
+                        <!-- Impuestos -->
+                        <?php foreach ($order->get_tax_totals() as $code => $tax) : ?>
+                        <tr>
+                            <td class="receipt-label"><?php echo esc_html($tax->label); ?></td>
+                            <td class="receipt-value"><?php echo wp_kses_post($tax->formatted_amount); ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                        <!-- Total -->
+                        <tr class="receipt-total-row">
+                            <td class="receipt-label" style="font-weight: 700; color: #111827;">Total</td>
+                            <td class="receipt-value receipt-total-value"><?php echo wp_kses_post($total); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
