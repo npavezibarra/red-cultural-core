@@ -231,7 +231,8 @@ $date = wc_format_datetime($order->get_date_created());
                 <img src="https://red-cultural.cl/wp-content/uploads/2021/01/logoRedCulturalNegro.svg" alt="Red Cultural" style="width: 140px; height: auto; display: inline-block;">
             </div>
             <div class="subheader">Gracias por tu compra</div>
-            <h1 class="order-title">Estamos procesando tu pedido <strong>#<?php echo esc_html($order_number); ?></strong></h1>
+            <h1 class="order-title" style="margin-bottom: 4px;">Tu pedido <strong>#<?php echo esc_html($order_number); ?></strong> está listo!</h1>
+            <p style="font-size: 13px; color: #6b7280; margin: 0 0 24px 0;">Accede al curso aquí abajo.</p>
         </div>
 
         <div class="content">
@@ -273,10 +274,6 @@ $date = wc_format_datetime($order->get_date_created());
 
             <?php if ($view === 'course') : ?>
                 <!-- COURSE VIEW -->
-                <div style="text-align: center; margin-bottom: 24px; padding-top: 8px;">
-                    <h2 style="font-size: 20px; font-weight: 300; margin: 0 0 4px 0; color: #111827;">Acceso Confirmado</h2>
-                    <p style="font-size: 12px; color: #6b7280; margin: 0; max-width: 280px; margin-left: auto; margin-right: auto;">Ya tienes acceso total al curso. Tu aprendizaje comienza ahora mismo.</p>
-                </div>
 
                 <div style="background-color: #ffffff; border: 1px solid #e5e7eb; padding: 24px; border-radius: 6px; margin-bottom: 16px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
                     <?php 
