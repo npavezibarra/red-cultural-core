@@ -314,15 +314,15 @@ $date = wc_format_datetime($order->get_date_created());
                     if (!empty($resource_id)) :
                         $target_url = get_permalink($resource_id);
                         ?>
-                        <a href="<?php echo esc_url(wp_login_url($target_url)); ?>" class="btn-main" style="display: block; width: 100%; background-color: #000000; color: #ffffff !important; padding: 12px 0; text-align: center; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 6px; letter-spacing: 0.05em;">IR AL CURSO</a>
+                        <a href="<?php echo esc_url($target_url); ?>" class="btn-main" style="display: block; width: 100%; background-color: #000000; color: #ffffff !important; padding: 12px 0; text-align: center; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 6px; letter-spacing: 0.05em;">IR AL CURSO</a>
                         <?php
                     // Otherwise use the links from the order
                     elseif (!empty($links)) :
                         foreach ($links as $link) : ?>
-                            <a href="<?php echo esc_url(wp_login_url($link['url'])); ?>" class="btn-main" style="display: block; width: 100%; background-color: #000000; color: #ffffff !important; padding: 12px 0; text-align: center; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 6px; letter-spacing: 0.05em;">IR AL CURSO</a>
+                            <a href="<?php echo esc_url($link['url']); ?>" class="btn-main" style="display: block; width: 100%; background-color: #000000; color: #ffffff !important; padding: 12px 0; text-align: center; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 6px; letter-spacing: 0.05em;">IR AL CURSO</a>
                         <?php endforeach; 
                     else: ?>
-                        <a href="<?php echo esc_url(wp_login_url(home_url('/mis-cursos'))); ?>" class="btn-main" style="display: block; width: 100%; background-color: #000000; color: #ffffff !important; padding: 12px 0; text-align: center; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 6px; letter-spacing: 0.05em;">IR AL CURSO</a>
+                        <a href="<?php echo esc_url(home_url('/mis-cursos')); ?>" class="btn-main" style="display: block; width: 100%; background-color: #000000; color: #ffffff !important; padding: 12px 0; text-align: center; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 6px; letter-spacing: 0.05em;">IR AL CURSO</a>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -369,7 +369,7 @@ $date = wc_format_datetime($order->get_date_created());
                                         <p style="margin: 0; font-size: 12px; font-weight: 500; color: #1f2937; line-height: 1.4;"><?php echo esc_html(get_the_title($resource_id)); ?></p>
                                     </td>
                                     <td width="100" align="right" valign="middle">
-                                        <a href="<?php echo esc_url(wp_login_url(get_permalink($resource_id))); ?>" class="btn-lesson" style="display: inline-block; background-color: #ffffff; border: 1px solid #e5e7eb; padding: 8px 10px; border-radius: 6px; text-decoration: none; color: #000000 !important; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;">
+                                        <a href="<?php echo esc_url(get_permalink($resource_id)); ?>" class="btn-lesson" style="display: inline-block; background-color: #ffffff; border: 1px solid #e5e7eb; padding: 8px 10px; border-radius: 6px; text-decoration: none; color: #000000 !important; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;">
                                             IR A LA LECCIÓN <img width="8" src="https://api.iconify.design/lucide:chevron-right.svg?color=black" style="vertical-align: middle; margin-left: 2px;">
                                         </a>
                                     </td>
@@ -403,7 +403,7 @@ $date = wc_format_datetime($order->get_date_created());
                                         <p style="margin: 0; font-size: 12px; font-weight: 500; color: #1f2937; line-height: 1.4;"><?php echo esc_html($title); ?></p>
                                     </td>
                                     <td width="100" align="right" valign="middle">
-                                        <a href="<?php echo esc_url(wp_login_url(get_permalink($ids[$index]))); ?>" class="btn-lesson" style="display: inline-block; background-color: #ffffff; border: 1px solid #e5e7eb; padding: 8px 10px; border-radius: 6px; text-decoration: none; color: #000000 !important; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;">
+                                        <a href="<?php echo esc_url(get_permalink($ids[$index])); ?>" class="btn-lesson" style="display: inline-block; background-color: #ffffff; border: 1px solid #e5e7eb; padding: 8px 10px; border-radius: 6px; text-decoration: none; color: #000000 !important; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;">
                                             IR A LA LECCIÓN <img width="8" src="https://api.iconify.design/lucide:chevron-right.svg?color=black" style="vertical-align: middle; margin-left: 2px;">
                                         </a>
                                     </td>
