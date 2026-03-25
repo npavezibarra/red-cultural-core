@@ -311,12 +311,11 @@ $date = wc_format_datetime($order->get_date_created());
                     $links = Red_Cultural_WC_Emails::get_access_links($order);
                     
                     // If we have a resource_id override (from Email Tester), use it directly
-                    if (!empty($resource_id)) {
+                    if (!empty($resource_id)) :
                         $target_url = get_permalink($resource_id);
                         ?>
                         <a href="<?php echo esc_url(wp_login_url($target_url)); ?>" class="btn-main" style="display: block; width: 100%; background-color: #000000; color: #ffffff !important; padding: 12px 0; text-align: center; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 6px; letter-spacing: 0.05em;">IR AL CURSO</a>
                         <?php
-                    } 
                     // Otherwise use the links from the order
                     elseif (!empty($links)) :
                         foreach ($links as $link) : ?>
