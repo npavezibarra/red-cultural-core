@@ -426,7 +426,7 @@ final class RC_Templates_Admin {
 							<div class="text-[10px] opacity-40 uppercase tracking-wider"><?php echo esc_html($billing_email); ?></div>
 						</td>
 						<td class="max-w-[300px]">
-							<div class="truncate font-medium text-white" title="<?php echo esc_attr((string) $item->get_name()); ?>">
+							<div class="truncate font-medium text-gray-900" title="<?php echo esc_attr((string) $item->get_name()); ?>">
 								<?php echo esc_html((string) $item->get_name()); ?>
 							</div>
 						</td>

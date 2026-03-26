@@ -40,33 +40,28 @@ $nonce = wp_create_nonce('rcp_search_sales');
 
 		body {
 			font-family: 'Inter', sans-serif;
-			background-color: #000;
+			background-color: #ffffff;
 			margin: 0;
 			padding: 0;
 			overflow-x: hidden;
+			color: #000000;
 		}
 
 		#red-cultural-cuentas-hero {
-			background-image: url('<?php echo esc_url($bg_url); ?>');
-			background-size: cover;
-			background-position: center;
-			background-attachment: fixed;
+			background-color: #ffffff;
 			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			justify-content: flex-start; /* Changed from center to align to top */
+			justify-content: flex-start;
 			position: relative;
-			padding: 30px 20px; /* 30px from top as requested */
-			color: #ffffff;
+			padding: 30px 20px;
+			color: #000000;
 			text-align: center;
 		}
 
 		#red-cultural-cuentas-overlay {
-			position: absolute;
-			inset: 0;
-			background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.1) 100%);
-			backdrop-filter: blur(1px);
+			display: none;
 		}
 
 		#red-cultural-cuentas-content {
@@ -82,21 +77,21 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			line-height: 1;
 			margin-bottom: 0;
 			letter-spacing: -0.02em;
-			color: #ffffff;
+			color: #000000;
 		}
 
 		.rcp-cuentas-subtext {
 			font-size: clamp(18px, 3vw, 24px);
 			font-weight: 300;
-			color: rgba(255, 255, 255, 0.9);
+			color: #4b5563;
 			margin-bottom: 8px;
 			line-height: 1.4;
 		}
 
 		.rcp-cuentas-btn {
 			display: inline-block;
-			background-color: #ffffff;
-			color: #000000;
+			background-color: #000000;
+			color: #ffffff;
 			padding: 12px 36px;
 			font-size: 16px;
 			font-weight: 600;
@@ -116,14 +111,13 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		}
 
 		.sales-table-container {
-			background: rgba(0, 0, 0, 0.65);
-			backdrop-filter: blur(20px);
-			border: 1px solid rgba(255, 255, 255, 0.15);
-			border-radius: 16px;
+			background: #ffffff;
+			border: 1px solid #e5e7eb;
+			border-radius: 12px;
 			padding: 32px;
 			margin-top: 48px;
 			overflow-x: auto;
-			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 			min-height: 400px;
 		}
 
@@ -137,19 +131,19 @@ $nonce = wp_create_nonce('rcp_search_sales');
 
 		th {
 			padding: 16px;
-			border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+			border-bottom: 2px solid #f3f4f6;
 			font-weight: 700;
 			text-transform: uppercase;
 			font-size: 11px;
 			letter-spacing: 0.1em;
-			color: #c5a367;
+			color: #1a1a1a;
 		}
 
 		td {
 			padding: 16px;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			border-bottom: 1px solid #f3f4f6;
 			font-size: 14px;
-			color: rgba(255, 255, 255, 0.9);
+			color: #4b5563;
 			font-weight: 400;
 		}
 
@@ -158,7 +152,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		}
 
 		tr:hover td {
-			background: rgba(255, 255, 255, 0.03);
+			background: #f9fafb;
 		}
 
 		.status-badge {
@@ -187,9 +181,9 @@ $nonce = wp_create_nonce('rcp_search_sales');
 
 		.rcp-pagination a, .rcp-pagination span {
 			padding: 8px 14px;
-			background: rgba(255, 255, 255, 0.05);
-			border: 1px solid rgba(255, 255, 255, 0.1);
-			color: rgba(255, 255, 255, 0.8);
+			background: #ffffff;
+			border: 1px solid #e5e7eb;
+			color: #4b5563;
 			text-decoration: none;
 			border-radius: 6px;
 			font-size: 13px;
@@ -198,14 +192,14 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		}
 
 		.rcp-pagination .current {
-			background: #ffffff;
-			color: #000000;
-			border-color: #ffffff;
+			background: #000000;
+			color: #ffffff;
+			border-color: #000000;
 		}
 
 		.rcp-pagination a:hover {
-			background: rgba(255, 255, 255, 0.1);
-			color: #fff;
+			background: #f3f4f6;
+			color: #000000;
 			transform: translateY(-1px);
 		}
 
@@ -224,26 +218,26 @@ $nonce = wp_create_nonce('rcp_search_sales');
 
 		.search-input {
 			width: 100%;
-			background: rgba(0, 0, 0, 0.6);
-			border: 1px solid rgba(255, 255, 255, 0.2);
+			background: #ffffff;
+			border: 1px solid #e5e7eb;
 			border-radius: 12px;
 			padding: 14px 20px;
 			padding-right: 100px;
-			color: #fff;
+			color: #111827;
 			font-size: 14px;
 			outline: none;
 			transition: all 0.3s ease;
-			backdrop-filter: blur(20px);
+			box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 		}
 
 		.search-input::placeholder {
-			color: rgba(255, 255, 255, 0.4);
+			color: #9ca3af;
 		}
 
 		.search-input:focus {
 			border-color: #c5a367;
-			background: rgba(0, 0, 0, 0.8);
-			box-shadow: 0 0 0 4px rgba(197, 163, 103, 0.15);
+			background: #ffffff;
+			box-shadow: 0 0 0 4px rgba(197, 163, 103, 0.1);
 		}
 
 		.search-btn {
@@ -285,7 +279,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			width: 100%;
 			margin-bottom: 40px;
 			padding-bottom: 0;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			border-bottom: 1px solid #e5e7eb;
 		}
 
 		.rcp-submenu {
@@ -296,7 +290,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		.rcp-tab {
 			font-size: 16px;
 			font-weight: 500;
-			color: rgba(255, 255, 255, 0.5);
+			color: #9ca3af;
 			padding: 12px 4px;
 			cursor: pointer;
 			position: relative;
@@ -304,7 +298,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		}
 
 		.rcp-tab:hover {
-			color: #ffffff;
+			color: #000000;
 		}
 
 		.rcp-tab.active {
@@ -323,13 +317,12 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		}
 
 		.chart-view-container {
-			background: rgba(0, 0, 0, 0.65);
-			backdrop-filter: blur(20px);
-			border: 1px solid rgba(255, 255, 255, 0.15);
-			border-radius: 16px;
+			background: #ffffff;
+			border: 1px solid #e5e7eb;
+			border-radius: 12px;
 			padding: 32px;
 			margin-top: 48px;
-			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 			max-height: 400px;
 			display: none;
 			flex-direction: column;
