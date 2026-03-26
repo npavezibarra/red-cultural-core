@@ -316,12 +316,10 @@ $nonce = wp_create_nonce('rcp_search_sales');
 
 		.chart-view-container {
 			background: #ffffff;
-			border: 1px solid #e5e7eb;
 			border-radius: 12px;
-			padding: 32px;
-			margin-top: 48px;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			max-height: 400px;
+			padding: 40px 32px;
+			margin-top: 0px;
+			max-height: 450px;
 			display: none;
 			flex-direction: column;
 			align-items: center;
@@ -500,18 +498,26 @@ $nonce = wp_create_nonce('rcp_search_sales');
 								maintainAspectRatio: false,
 								plugins: {
 									legend: {
-										labels: { color: '#fff', font: { size: 10, weight: 'bold' } }
+										position: 'top',
+										labels: { color: '#111827', font: { size: 11, weight: '600' }, boxWidth: 12, usePointStyle: true, padding: 20 }
+									},
+									tooltip: {
+										backgroundColor: '#111827',
+										titleColor: '#fff',
+										bodyColor: '#fff',
+										cornerRadius: 8,
+										padding: 12
 									}
 								},
 								scales: {
 									y: {
 										beginAtZero: true,
-										grid: { color: 'rgba(255, 255, 255, 0.05)' },
-										ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 9 } }
+										grid: { color: '#f3f4f6' },
+										ticks: { color: '#6b7280', font: { size: 10 } }
 									},
 									x: {
 										grid: { display: false },
-										ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 9 } }
+										ticks: { color: '#6b7280', font: { size: 10 } }
 									}
 								}
 							}
