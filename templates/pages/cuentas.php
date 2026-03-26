@@ -324,7 +324,7 @@ $paged = max(1, isset($_GET['paged']) ? intval($_GET['paged']) : 1);
 								<th>Fecha</th>
 							</tr>
 						</thead>
-						<?php Red_Cultural_Templates::render_sales_table_rows($s, $paged); ?>
+						<?php RC_Templates_Admin::render_sales_table_rows($s, $paged); ?>
 					</table>
 
                     <div id="rc-pagination-wrapper">
@@ -344,7 +344,7 @@ $paged = max(1, isset($_GET['paged']) ? intval($_GET['paged']) : 1);
                         paginationWrap.classList.add('rc-loading');
 						
 						const formData = new URLSearchParams();
-						formData.append('action', 'rc_search_sales');
+						formData.append('action', 'rcp_search_sales');
 						formData.append('search', searchValue);
 						formData.append('paged', pageNum);
 
