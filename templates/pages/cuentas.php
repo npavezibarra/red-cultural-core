@@ -331,6 +331,14 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			justify-content: center;
 		}
 
+		.view-content {
+			display: none;
+		}
+
+		.view-content.active {
+			display: block;
+		}
+
 		.chart-view-container.active {
 			display: flex;
 		}
