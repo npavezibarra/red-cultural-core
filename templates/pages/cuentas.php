@@ -34,6 +34,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 	<meta id="red-cultural-cuentas-meta-viewport" name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Cuentas | Red Cultural</title>
 	<script id="red-cultural-cuentas-tailwind" src="https://cdn.tailwindcss.com"></script>
+	<script id="red-cultural-cuentas-chartjs" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<style id="red-cultural-cuentas-style">
 		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -277,6 +278,70 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			position: relative;
 			z-index: 100;
 		}
+		.rcp-submenu {
+			display: flex;
+			justify-content: center;
+			gap: 32px;
+			margin-bottom: 40px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			padding-bottom: 0;
+		}
+
+		.rcp-tab {
+			font-size: 16px;
+			font-weight: 500;
+			color: rgba(255, 255, 255, 0.5);
+			padding: 12px 4px;
+			cursor: pointer;
+			position: relative;
+			transition: all 0.3s ease;
+		}
+
+		.rcp-tab:hover {
+			color: #ffffff;
+		}
+
+		.rcp-tab.active {
+			color: #c5a367;
+		}
+
+		.rcp-tab.active::after {
+			content: '';
+			position: absolute;
+			bottom: -1px;
+			left: 0;
+			right: 0;
+			height: 2px;
+			background: #c5a367;
+			box-shadow: 0 -2px 10px rgba(197, 163, 103, 0.5);
+		}
+
+		.chart-view-container {
+			background: rgba(0, 0, 0, 0.65);
+			backdrop-filter: blur(20px);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			border-radius: 16px;
+			padding: 32px;
+			margin-top: 48px;
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+			max-height: 400px;
+			display: none;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.chart-view-container.active {
+			display: flex;
+		}
+
+		#rc-sales-chart-wrapper {
+			width: 100%;
+			max-height: 250px;
+			position: relative;
+		}
+
+		.hidden { display: none !important; }
 	</style>
 	<?php wp_head(); ?>
 </head>
@@ -305,44 +370,146 @@ $nonce = wp_create_nonce('rcp_search_sales');
 					Iniciar Sesión
 				</button>
 			<?php elseif ($is_admin): ?>
-				<div class="search-container">
-					<div class="search-wrapper">
-						<input type="text" id="rc-sales-search-input" class="search-input" placeholder="Buscar usuarios, productos o correos..." value="<?php echo esc_attr($s); ?>" autocomplete="off">
-						<button type="button" class="search-btn">Buscar</button>
+				<div class="rcp-submenu">
+					<div class="rcp-tab active" data-view="ventas">Ventas</div>
+					<div class="rcp-tab" data-view="grafico">Gráfico</div>
+				</div>
+
+				<div id="view-ventas" class="view-content active">
+					<div class="search-container">
+						<div class="search-wrapper">
+							<input type="text" id="rc-sales-search-input" class="search-input" placeholder="Buscar usuarios, productos o correos..." value="<?php echo esc_attr($s); ?>" autocomplete="off">
+							<button type="button" class="search-btn">Buscar</button>
+						</div>
+					</div>
+
+					<div class="sales-table-container">
+						<table id="rc-sales-table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Cliente</th>
+									<th>Producto</th>
+									<th class="text-center">Cant.</th>
+									<th class="text-right">Precio</th>
+									<th class="text-center">Estado</th>
+									<th>Fecha</th>
+								</tr>
+							</thead>
+							<tbody id="rc-sales-tbody">
+								<?php RC_Templates_Admin::render_sales_table_rows($s, $paged); ?>
+							</tbody>
+						</table>
+
+						<div id="rc-pagination-wrapper">
+							<!-- Swapped by AJAX -->
+						</div>
 					</div>
 				</div>
 
-				<div class="sales-table-container">
-					<table id="rc-sales-table">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Cliente</th>
-								<th>Producto</th>
-								<th class="text-center">Cant.</th>
-								<th class="text-right">Precio</th>
-								<th class="text-center">Estado</th>
-								<th>Fecha</th>
-							</tr>
-						</thead>
-						<tbody id="rc-sales-tbody">
-							<?php RC_Templates_Admin::render_sales_table_rows($s, $paged); ?>
-						</tbody>
-					</table>
-
-                    <div id="rc-pagination-wrapper">
-                        <!-- Swapped by AJAX -->
-                    </div>
+				<div id="view-grafico" class="view-content chart-view-container">
+					<div id="rc-sales-chart-wrapper">
+						<canvas id="rc-sales-chart"></canvas>
+					</div>
+					<p class="mt-4 text-[12px] opacity-40 uppercase tracking-widest font-bold">Ventas por Día - <?php echo date_i18n('F Y'); ?></p>
 				</div>
+
 
 				<script>
 				document.addEventListener('DOMContentLoaded', function() {
 					const input = document.getElementById('rc-sales-search-input');
 					const table = document.getElementById('rc-sales-table');
 					const paginationWrap = document.getElementById('rc-pagination-wrapper');
+					const tabs = document.querySelectorAll('.rcp-tab');
+					const views = document.querySelectorAll('.view-content');
 					let searchTimer;
+					let salesChart = null;
 
+					// --- View Switching ---
+					tabs.forEach(tab => {
+						tab.onclick = () => {
+							const target = tab.dataset.view;
+							tabs.forEach(t => t.classList.remove('active'));
+							views.forEach(v => v.classList.remove('active'));
+							
+							tab.classList.add('active');
+							document.getElementById('view-' + target).classList.add('active');
+
+							if (target === 'grafico' && !salesChart) {
+								fetchChartData();
+							}
+						};
+					});
+
+					function fetchChartData() {
+						const formData = new URLSearchParams();
+						formData.append('action', 'rcp_get_sales_chart_data');
+						formData.append('nonce', '<?php echo esc_js($nonce); ?>');
+
+						fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+							body: formData
+						})
+						.then(r => r.json())
+						.then(res => {
+							if (res.success) {
+								renderChart(res.data);
+							}
+						});
+					}
+
+					function renderChart(data) {
+						const ctx = document.getElementById('rc-sales-chart').getContext('2d');
+						salesChart = new Chart(ctx, {
+							type: 'bar',
+							data: {
+								labels: data.labels,
+								datasets: [
+									{
+										label: 'Libros',
+										data: data.libros,
+										backgroundColor: 'rgba(197, 163, 103, 0.8)',
+										borderColor: '#c5a367',
+										borderWidth: 1,
+										borderRadius: 4
+									},
+									{
+										label: 'Cursos',
+										data: data.cursos,
+										backgroundColor: 'rgba(59, 130, 246, 0.8)',
+										borderColor: '#3b82f6',
+										borderWidth: 1,
+										borderRadius: 4
+									}
+								]
+							},
+							options: {
+								responsive: true,
+								maintainAspectRatio: false,
+								plugins: {
+									legend: {
+										labels: { color: '#fff', font: { size: 10, weight: 'bold' } }
+									}
+								},
+								scales: {
+									y: {
+										beginAtZero: true,
+										grid: { color: 'rgba(255, 255, 255, 0.05)' },
+										ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 9 } }
+									},
+									x: {
+										grid: { display: false },
+										ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 9 } }
+									}
+								}
+							}
+						});
+					}
+
+					// --- Table & Search Logic ---
 					function updateTable(searchValue, pageNum = 1) {
+						if (!table) return;
 						table.classList.add('rc-loading');
                         paginationWrap.classList.add('rc-loading');
 						
@@ -362,13 +529,11 @@ $nonce = wp_create_nonce('rcp_search_sales');
 							table.classList.remove('rc-loading');
                             paginationWrap.classList.remove('rc-loading');
 							if (res.success) {
-								// Directly update the tbody content
 								const tbody = document.getElementById('rc-sales-tbody');
 								if (tbody) {
 									tbody.innerHTML = res.data.html;
 								}
 
-								// Handle pagination if hidden pagination container is present in response
 								const parser = new DOMParser();
 								const doc = parser.parseFromString(res.data.html, 'text/html');
 								const newPagination = doc.querySelector('#rc-sales-pagination-new');
@@ -380,7 +545,6 @@ $nonce = wp_create_nonce('rcp_search_sales');
                                     paginationWrap.innerHTML = '';
                                 }
 
-								// Update URL without reload
 								const url = new URL(window.location);
 								if (searchValue) url.searchParams.set('rc_search', searchValue);
                                 else url.searchParams.delete('rc_search');
@@ -409,12 +573,17 @@ $nonce = wp_create_nonce('rcp_search_sales');
 						});
 					}
 
-					input.oninput = () => {
-						clearTimeout(searchTimer);
-						searchTimer = setTimeout(() => updateTable(input.value, 1), 500);
-					};
+					if (input) {
+						input.oninput = () => {
+							clearTimeout(searchTimer);
+							searchTimer = setTimeout(() => updateTable(input.value, 1), 500);
+						};
+					}
 
-                    document.querySelector('.search-btn').onclick = () => updateTable(input.value, 1);
+                    const searchBtn = document.querySelector('.search-btn');
+					if (searchBtn) {
+						searchBtn.onclick = () => updateTable(input.value, 1);
+					}
 
 					// Move initial pagination into wrapper
 					const existingPagination = document.getElementById('rc-sales-pagination-new');

@@ -16,6 +16,7 @@ final class RC_Templates_Admin {
 		add_action('admin_post_rcp_save_contact_forms_settings', array(__CLASS__, 'handle_save_contact_forms_settings'));
 		add_action('admin_post_rcp_save_antispam_settings', array(__CLASS__, 'handle_save_antispam_settings'));
 		add_action('wp_ajax_rcp_search_sales', array(__CLASS__, 'ajax_search_sales'));
+		add_action('wp_ajax_rcp_get_sales_chart_data', array(__CLASS__, 'ajax_get_sales_chart_data'));
 	}
 
 	public static function register_admin_pages(): void {
@@ -462,6 +463,71 @@ final class RC_Templates_Admin {
 			));
 			echo '</div>';
 		}
-		echo '</div>';
+	public static function ajax_get_sales_chart_data(): void {
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error('Unauthorized');
+		}
+
+		$nonce = isset($_POST['nonce']) ? sanitize_text_field((string) $_POST['nonce']) : '';
+		if ($nonce === '' || !wp_verify_nonce($nonce, 'rcp_search_sales')) {
+			wp_send_json_error('Invalid nonce');
+		}
+
+		$start_date = date('Y-m-01 00:00:00');
+		$end_date   = date('Y-m-t 23:59:59');
+
+		$args = array(
+			'limit'        => -1,
+			'status'       => array('processing', 'completed'),
+			'date_created' => $start_date . '...' . $end_date,
+			'return'       => 'ids',
+		);
+
+		$order_ids = wc_get_orders($args);
+		$days_in_month = (int) date('t');
+		$current_day = (int) date('d');
+		
+		$labels = array();
+		for ($i = 1; $i <= $days_in_month; $i++) {
+			$labels[] = (string) $i;
+		}
+
+		$libros_data = array_fill(0, $days_in_month, 0);
+		$cursos_data = array_fill(0, $days_in_month, 0);
+
+		foreach ($order_ids as $order_id) {
+			$order = wc_get_order($order_id);
+			if (!$order) continue;
+
+			$day = (int) $order->get_date_created()->date('d');
+			$items = $order->get_items();
+
+			foreach ($items as $item) {
+				if (!$item instanceof WC_Order_Item_Product) continue;
+				$product_id = $item->get_product_id();
+				$subtotal = (float) $item->get_total();
+
+				$terms = get_the_terms($product_id, 'product_cat');
+				if ($terms && !is_wp_error($terms)) {
+					foreach ($terms as $term) {
+						if ($term->slug === 'libros') {
+							$libros_data[$day - 1] += $subtotal;
+							break;
+						} elseif ($term->slug === 'cursos') {
+							$cursos_data[$day - 1] += $subtotal;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		wp_send_json_success(array(
+			'labels' => $labels,
+			'libros' => $libros_data,
+			'cursos' => $cursos_data,
+			'month'  => date_i18n('F'),
+		));
 	}
 }
+
