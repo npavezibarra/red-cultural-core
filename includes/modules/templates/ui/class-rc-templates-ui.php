@@ -250,53 +250,20 @@ final class RC_Templates_UI {
 		}
 
 		$force = (bool) apply_filters('rcp_force_main_menu_links', true);
+		$updated = $block_content;
 
-		if (class_exists('DOMDocument')) {
-			$prev = libxml_use_internal_errors(true);
-			$dom = new \DOMDocument('1.0', 'UTF-8');
-			$wrapped = '<div id="rcp-wrap">' . $block_content . '</div>';
-			$loaded = $dom->loadHTML(
-				'<!doctype html><html><head><meta charset="utf-8"></head><body>' . $wrapped . '</body></html>',
-				LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
-			);
-			libxml_clear_errors();
-			libxml_use_internal_errors($prev);
-
-			if ($loaded) {
-				$xpath = new \DOMXPath($dom);
-				$ul = $xpath->query('//ul[contains(concat(" ", normalize-space(@class), " "), " wp-block-navigation__container ")]')->item(0);
-				if ($ul instanceof \DOMElement) {
-					$frag = $dom->createDocumentFragment();
-					if (@$frag->appendXML($inserts)) {
-						if ($force) {
-							while ($ul->firstChild) {
-								$ul->removeChild($ul->firstChild);
-							}
-						}
-
-						$ul->appendChild($frag);
-						$wrap_node = $xpath->query('//*[@id="rcp-wrap"]')->item(0);
-						if ($wrap_node instanceof \DOMElement) {
-							$html = '';
-							foreach ($wrap_node->childNodes as $child) {
-								$html .= $dom->saveHTML($child);
-							}
-							if ($html !== '') {
-								return $html;
-							}
-						}
-					}
-				}
-			}
-		}
-
+		// 1. Replace the inner content of the main UL with our links
 		$replacement = $force ? '$1' . $inserts . '$3' : '$1$2' . $inserts . '$3';
 		$updated = preg_replace(
-			'/(<ul[^>]*class="[^"]*wp-block-navigation__container[^"]*"[^>]*>)(.*?)(<\/ul>)/s',
+			'/(<ul[^>]*class="[^"]*wp-block-navigation__container[^"]*"[^>]*>)(.*?)(<\/ul>)/is',
 			$replacement,
-			$block_content,
+			$updated,
 			1
 		);
+
+		// 2. Remove the default WP open/close buttons so the side-slide menu never triggers
+		$updated = preg_replace('/<button[^>]*class="[^"]*wp-block-navigation__responsive-container-open[^"]*"[^>]*>.*?<\/button>/is', '', $updated);
+		$updated = preg_replace('/<button[^>]*class="[^"]*wp-block-navigation__responsive-container-close[^"]*"[^>]*>.*?<\/button>/is', '', $updated);
 
 		return is_string($updated) && $updated !== '' ? $updated : $block_content;
 	}

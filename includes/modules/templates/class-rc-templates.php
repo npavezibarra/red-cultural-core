@@ -32,6 +32,7 @@ final class Red_Cultural_Templates {
 		RC_Templates_Router::init();
 		RC_Templates_UI::init();
 		RC_Templates_Assets::init();
+		RC_Templates_Mobile_Menu::init();
 		RC_Templates_Auth_Modal::init();
 		RC_Templates_Emails::init();
 		RC_Templates_Handlers::init();
@@ -53,6 +54,7 @@ final class Red_Cultural_Templates {
 			'ui/class-rc-templates-ui.php',
 			'ui/class-rc-templates-assets.php',
 			'ui/class-rc-templates-auth-modal.php',
+			'ui/class-rc-templates-mobile-menu.php',
 			'emails/class-rc-templates-emails.php',
 			'handlers/class-rc-templates-handlers.php',
 			'shortcodes/class-rc-templates-shortcodes.php',
