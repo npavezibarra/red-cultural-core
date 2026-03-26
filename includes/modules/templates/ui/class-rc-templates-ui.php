@@ -132,6 +132,15 @@ final class RC_Templates_UI {
 		return $force ? $built : ($items . $built);
 	}
 
+	public static function get_mobile_trigger_html(): string {
+		$icon_html = '<i data-lucide="menu" class="w-7 h-7"></i>';
+		return sprintf(
+			'<button id="rcp-mobile-trigger" class="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="%s">%s</button>',
+			esc_attr(__('Abrir menú', 'redcultural')),
+			$icon_html
+		);
+	}
+
 	public static function inject_block_navigation_items(string $block_content, array $block): string {
 		if (is_admin() || $block_content === '' || empty($block['blockName'])) {
 			return $block_content;
@@ -264,6 +273,10 @@ final class RC_Templates_UI {
 		// 2. Remove the default WP open/close buttons so the side-slide menu never triggers
 		$updated = preg_replace('/<button[^>]*class="[^"]*wp-block-navigation__responsive-container-open[^"]*"[^>]*>.*?<\/button>/is', '', $updated);
 		$updated = preg_replace('/<button[^>]*class="[^"]*wp-block-navigation__responsive-container-close[^"]*"[^>]*>.*?<\/button>/is', '', $updated);
+
+		// 3. Inject our custom trigger immediately after the opening <nav> tag
+		$trigger_html = self::get_mobile_trigger_html();
+		$updated = preg_replace('/(<nav[^>]*>)/is', '$1' . $trigger_html, $updated, 1);
 
 		return is_string($updated) && $updated !== '' ? $updated : $block_content;
 	}

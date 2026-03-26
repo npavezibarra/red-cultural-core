@@ -101,11 +101,6 @@ final class RC_Templates_Mobile_Menu {
 				<div class="w-12"></div> <!-- Spacer to keep handle centered -->
 			</div>
 		</nav>
-
-		<!-- Bottom Floating Trigger Button (Now Top Right) -->
-		<button id="rcp-mobile-trigger" class="fixed top-0 right-6 bg-white text-black w-14 h-14 rounded-full z-[9990] flex items-center justify-center transition-transform active:scale-95">
-			<i data-lucide="menu" class="w-6 h-6"></i>
-		</button>
 		<?php
 	}
 }

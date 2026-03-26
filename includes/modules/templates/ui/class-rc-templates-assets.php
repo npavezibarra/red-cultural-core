@@ -120,11 +120,14 @@ final class RC_Templates_Assets {
 				left: 0 !important;
 				right: 0 !important;
 				transform: translateY(-100%) !important;
-				transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1) !important;
+				visibility: hidden !important;
+				transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s 0.4s !important;
 				z-index: 10000 !important;
 			}
 			#rcp-mobile-menu.active {
 				transform: translateY(0) !important;
+				visibility: visible !important;
+				transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s 0s !important;
 			}
 			#rcp-mobile-backdrop.active {
 				opacity: 1;
@@ -154,10 +157,24 @@ final class RC_Templates_Assets {
 			@media (min-width: 1081px) {
 				#rcp-mobile-menu, #rcp-mobile-backdrop, #rcp-mobile-trigger { display: none !important; }
 			}
+			#rcp-mobile-trigger {
+				display: none;
+			}
 			@media (max-width: 1080px) {
 				/* Hide the desktop navigation menu entirely on mobile */
 				.wp-block-navigation__container {
 					display: none !important;
+				}
+
+				#rcp-mobile-trigger {
+					display: inline-flex !important;
+					align-items: center;
+					justify-content: center;
+					cursor: pointer;
+					background: transparent;
+					border: 0;
+					padding: 8px;
+					color: #000;
 				}
 
 				/* Hide the default WP mobile menu components */
