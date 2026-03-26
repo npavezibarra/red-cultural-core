@@ -32,6 +32,49 @@ final class RC_Templates_Handlers {
 		add_action('wp_ajax_rcp_forgot_password', array(__CLASS__, 'handle_forgot_password_ajax'));
 		add_action('wp_ajax_nopriv_rcp_reset_password', array(__CLASS__, 'handle_reset_password_ajax'));
 		add_action('wp_ajax_rcp_reset_password', array(__CLASS__, 'handle_reset_password_ajax'));
+
+		// Global Checkout Fields Filter
+		add_filter('woocommerce_checkout_fields', array(__CLASS__, 'filter_checkout_fields_for_digital_products'), 20);
+	}
+
+	public static function filter_checkout_fields_for_digital_products(array $fields): array {
+		if (!function_exists('WC') || !WC()->cart || WC()->cart->is_empty()) {
+			return $fields;
+		}
+
+		$has_physical = false;
+		foreach (WC()->cart->get_cart() as $cart_item) {
+			$product = $cart_item['data'] ?? null;
+			if ($product && is_object($product) && method_exists($product, 'needs_shipping') && $product->needs_shipping()) {
+				$has_physical = true;
+				break;
+			}
+		}
+
+		if ($has_physical) {
+			return $fields;
+		}
+
+		$allowed = array(
+			'billing_first_name',
+			'billing_last_name',
+			'billing_email',
+			'billing_phone',
+		);
+
+		foreach (array('billing', 'shipping', 'account', 'order') as $section) {
+			if (empty($fields[$section]) || !is_array($fields[$section])) {
+				continue;
+			}
+			foreach (array_keys($fields[$section]) as $key) {
+				if ($section === 'billing' && in_array($key, $allowed, true)) {
+					continue;
+				}
+				unset($fields[$section][$key]);
+			}
+		}
+
+		return $fields;
 	}
 
 	private static function get_form_recipients(string $form_id, string $default_email = ''): array {

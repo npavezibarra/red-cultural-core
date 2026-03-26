@@ -56,33 +56,7 @@ if ($shop_url === '') {
 	$shop_url = (string) home_url('/shop/');
 }
 
-// Only apply field rules for this request/template (digital-only hides shipping/address requirements).
-add_filter('woocommerce_checkout_fields', static function (array $fields) use ($is_digital_only): array {
-	if (!$is_digital_only) {
-		return $fields;
-	}
 
-	$allowed = array(
-		'billing_first_name',
-		'billing_last_name',
-		'billing_email',
-		'billing_phone',
-	);
-
-	foreach (array('billing', 'shipping', 'account', 'order') as $section) {
-		if (empty($fields[$section]) || !is_array($fields[$section])) {
-			continue;
-		}
-		foreach (array_keys($fields[$section]) as $key) {
-			if ($section === 'billing' && in_array($key, $allowed, true)) {
-				continue;
-			}
-			unset($fields[$section][$key]);
-		}
-	}
-
-	return $fields;
-}, 20);
 
 // Pre-render block theme template parts BEFORE wp_head so their assets are enqueued in the correct place.
 $rcp_theme_header_html = '';

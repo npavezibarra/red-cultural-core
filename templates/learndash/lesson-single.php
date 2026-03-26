@@ -393,12 +393,18 @@ if (function_exists('do_blocks')) {
 							</a>
 						</div>
 					<?php endif; ?>
-				</header>
-
-				<div id="red-cultural-lesson-video" class="relative aspect-video bg-black md:rounded-lg overflow-hidden md:shadow-xl group mb-6 md:mb-12 -mx-6 md:mx-0">
+				<?php 
+				$video_wrapper_classes = 'relative bg-black md:rounded-lg overflow-hidden md:shadow-xl group mb-6 md:mb-12 -mx-6 md:mx-0';
+				if ($video_embed_html !== '') {
+					$video_wrapper_classes .= ' aspect-video';
+				} else {
+					$video_wrapper_classes .= ' min-h-[400px] flex items-center justify-center py-10';
+				}
+				?>
+				<div id="red-cultural-lesson-video" class="<?php echo esc_attr($video_wrapper_classes); ?>">
 					<?php if ($rcp_is_locked) : ?>
 						<div
-							class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center space-y-4"
+							class="w-full flex flex-col items-center justify-center px-6 text-center space-y-4"
 							<?php if ($lesson_is_scheduled) : ?>
 								data-rcp-available-after="<?php echo esc_attr((string) $lesson_access_from); ?>"
 							<?php endif; ?>
@@ -450,7 +456,7 @@ if (function_exists('do_blocks')) {
 								</div>
 						</div>
 					<?php elseif ($lesson_is_scheduled) : ?>
-						<div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center space-y-4" data-rcp-available-after="<?php echo esc_attr((string) $lesson_access_from); ?>">
+						<div class="w-full flex flex-col items-center justify-center px-6 text-center space-y-4" data-rcp-available-after="<?php echo esc_attr((string) $lesson_access_from); ?>">
 								<div id="red-cultural-lesson-available-message" class="text-white/90 font-semibold">
 									<?php
 									echo wp_kses_post(
@@ -477,15 +483,12 @@ if (function_exists('do_blocks')) {
 								</div>
 							</div>
 							<div id="red-cultural-lesson-countdown" class="text-white">
-								00:00:00
-							</div>
-						</div>
 					<?php elseif ($video_embed_html !== '') : ?>
-						<div class="absolute inset-0">
+						<div class="absolute inset-0 w-full h-full">
 							<?php echo $video_embed_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
 					<?php else : ?>
-						<div class="absolute inset-0 flex items-center justify-center">
+						<div class="w-full flex flex-col items-center justify-center">
 							<span class="text-white/80 text-xs font-bold uppercase tracking-widest">
 								<?php echo esc_html__('NO HAY VIDEO', 'red-cultural-pages'); ?>
 							</span>

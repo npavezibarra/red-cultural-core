@@ -158,7 +158,7 @@ if (count($other_posts) < 4) {
 	?>
 
 	<div id="red-cultural-blog-post-root" class="text-gray-900">
-		<main class="max-container px-4">
+		<main class="max-container px-[30px]">
 			<!-- Hero Section -->
 			<div class="flex flex-col md:flex-row gap-8 mb-12">
 				<!-- Featured Image -->
