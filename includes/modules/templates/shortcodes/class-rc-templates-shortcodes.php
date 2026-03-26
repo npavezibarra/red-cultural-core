@@ -10,10 +10,42 @@ if (!defined('ABSPATH')) {
 }
 
 final class RC_Templates_Shortcodes {
+	/**
+	 * Initialize the shortcodes.
+	 */
 	public static function init(): void {
+		self::load_dependencies();
+
+		// Core shortcodes
 		add_shortcode('rc_user_first_name', array(__CLASS__, 'render_user_first_name_shortcode'));
 		add_shortcode('rc_auth_modal_open', array(__CLASS__, 'render_auth_modal_open_shortcode'));
 		add_shortcode('red_cultural_sales_admin', array(__CLASS__, 'render_sales_admin_shortcode'));
+
+		// Rendering shortcodes (functions defined in included files)
+		add_shortcode('red-cultural-cursos', 'rcp_red_cultural_cursos_shortcode');
+		add_shortcode('red-cultural-cursos-carousel', 'rcp_red_cultural_cursos_carousel_shortcode');
+		add_shortcode('red-cultural-viajes', 'rcp_red_cultural_viajes_shortcode');
+		add_shortcode('red-cultural-us', 'rcp_red_cultural_us_shortcode');
+	}
+
+	/**
+	 * Load individual shortcode rendering files.
+	 */
+	private static function load_dependencies(): void {
+		$base_path = plugin_dir_path(__FILE__);
+		$files = array(
+			'red-cultural-cursos.php',
+			'red-cultural-cursos-carousel.php',
+			'red-cultural-viajes.php',
+			'red-cultural-us.php',
+		);
+
+		foreach ($files as $file) {
+			$path = $base_path . $file;
+			if (file_exists($path)) {
+				require_once $path;
+			}
+		}
 	}
 
 	public static function render_user_first_name_shortcode(): string {

@@ -171,7 +171,7 @@ if (function_exists('do_blocks')) {
                         </div>
                         <div class="bg-white p-4 rounded-lg shadow-sm">
                             <p class="text-xs text-gray-400 uppercase font-bold mb-1">Pagos</p>
-                            <a href="mailto:pagosredcultural@gmail.com" class="text-black font-medium hover:underline">pagosredcultural@gmail.com</a>
+                            <a href="mailto:magdalena@redcultural.cl" class="text-black font-medium hover:underline">magdalena@redcultural.cl</a>
                         </div>
                     </div>
                 </section>

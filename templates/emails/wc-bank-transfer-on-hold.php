@@ -199,7 +199,7 @@ $date = wc_format_datetime($order->get_date_created());
                         Banco: Banco BICE<br>
                         Tipo de Cuenta: Cuenta Corriente<br>
                         Número de Cuenta: 02746948<br>
-                        Email: pagos@redcultural.cl
+                        Email: magdalena@redcultural.cl
                     </p>
                 </div>
             </div>
@@ -254,7 +254,7 @@ $date = wc_format_datetime($order->get_date_created());
         <!-- Support Footer -->
         <div class="support-footer">
             <p class="support-text">
-                Por favor envía el comprobante de transferencia a <strong>pagos@redcultural.cl</strong> para agilizar la activación de tu pedido.
+                Por favor envía el comprobante de transferencia a <strong>magdalena@redcultural.cl</strong> para agilizar la activación de tu pedido.
             </p>
             <div class="copyright">&copy; <?php echo date('Y'); ?> Red Cultural.</div>
             <div style="display:none; font-size:1px; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden;">

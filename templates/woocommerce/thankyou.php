@@ -350,7 +350,7 @@ if (function_exists('do_blocks')) {
                         </div>
                         
                         <p class="text-[10px] text-zinc-400 italic">
-                            <?php echo esc_html__('Envía el comprobante a pagos@redcultural.cl una vez realizada la operación.', 'red-cultural-pages'); ?>
+                            <?php echo esc_html__('Envía el comprobante a magdalena@redcultural.cl una vez realizada la operación.', 'red-cultural-pages'); ?>
                         </p>
                     </div>
                 </div>
