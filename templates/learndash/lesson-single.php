@@ -171,6 +171,33 @@ if (function_exists('do_blocks')) {
 		#red-cultural-lesson-header{margin-bottom:10px !important}
 		#red-cultural-lesson-title{margin-bottom:10px !important}
 		#red-cultural-lesson-top-nav{margin-bottom:10px !important}
+
+		/* Mobile sliding panel styles */
+		@media (max-width: 767px) {
+			#red-cultural-lesson-sidebar {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				width: 100%;
+				height: auto;
+				max-height: 85vh;
+				z-index: 10000;
+				transform: translateY(100%);
+				visibility: hidden;
+				transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s 0.4s;
+				background: #fff;
+				border-radius: 20px 20px 0 0;
+				box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+				display: flex;
+				flex-direction: column;
+			}
+			#red-cultural-lesson-sidebar.panel-open {
+				transform: translateY(0);
+				visibility: visible;
+				transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s 0s;
+			}
+		}
 	</style>
 	<?php wp_head(); ?>
 </head>
@@ -183,10 +210,13 @@ if (function_exists('do_blocks')) {
 	}
 	?>
 
-	<div id="red-cultural-lesson-layout" class="flex flex-col md:flex-row h-[calc(100vh-64px)] overflow-hidden">
+	<!-- Mobile Backdrop for sliding menu -->
+	<div id="rcp-lesson-backdrop" class="fixed inset-0 bg-black/60 z-[9999] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
+
+	<div id="red-cultural-lesson-layout" class="flex flex-col md:flex-row md:h-[calc(100vh-64px)] md:overflow-hidden relative">
 
 		<aside id="red-cultural-lesson-sidebar" class="w-full md:w-80 border-r border-gray-200 flex-shrink-0 bg-gray-50/50 overflow-y-auto custom-scrollbar">
-			<div class="p-6">
+			<div class="p-6 hidden md:block">
 				<a id="red-cultural-lesson-back" class="flex items-center text-gray-400 text-xs font-bold uppercase tracking-wider mb-8 hover:text-gray-600 transition-colors" href="<?php echo esc_url($course_url); ?>">
 					<i data-lucide="chevron-left" class="w-4 h-4"></i>
 					<span class="ml-1"><?php echo esc_html__('Volver a Curso', 'red-cultural-pages'); ?></span>
@@ -204,6 +234,14 @@ if (function_exists('do_blocks')) {
 						<div id="red-cultural-lesson-progress-bar" class="bg-gray-500 h-full transition-all duration-500" style="<?php echo esc_attr('width:' . $progress_percent . '%'); ?>"></div>
 					</div>
 				</div>
+			</div>
+
+			<!-- Close button for mobile inside the panel -->
+			<div class="p-6 md:hidden flex justify-between items-center border-b border-gray-100">
+				<h3 class="font-bold text-gray-900"><?php echo esc_html__('Lecciones', 'red-cultural-pages'); ?></h3>
+				<button id="rcp-lesson-sidebar-close" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200 active:scale-95 transition-all">
+					<i data-lucide="x" class="w-4 h-4 text-gray-600"></i>
+				</button>
 			</div>
 
 			<nav id="red-cultural-lesson-list" class="border-t border-gray-100">
@@ -246,10 +284,40 @@ if (function_exists('do_blocks')) {
 			</nav>
 		</aside>
 
-		<main id="red-cultural-lesson-main" class="flex-grow overflow-y-auto bg-white custom-scrollbar">
-			<div id="red-cultural-lesson-main-inner" class="max-w-4xl mx-auto px-6 py-8">
+		<main id="red-cultural-lesson-main" class="flex-grow overflow-y-auto bg-white custom-scrollbar pb-24 md:pb-0">
+			<!-- MOBILE ONLY: Lesson Header replacing sidebar info -->
+			<div class="block md:hidden px-6 pt-6 pb-2">
+				<a class="flex items-center text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-4 hover:text-gray-900 transition-colors" href="<?php echo esc_url($course_url); ?>">
+					<i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i>
+					<span><?php echo esc_html__('Volver a Curso', 'red-cultural-pages'); ?></span>
+				</a>
+				<h1 class="text-2xl font-black text-gray-900 leading-tight mb-4 tracking-tight">
+					<?php echo esc_html($lesson_title); ?>
+				</h1>
+				<div class="w-full mb-6 relative">
+					<div class="flex justify-between text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">
+						<span><?php echo esc_html($progress_percent . '% completo'); ?></span>
+					</div>
+					<div class="w-full bg-gray-200 h-1 rounded-full overflow-hidden">
+						<div class="bg-gray-500 h-full" style="<?php echo esc_attr('width:' . $progress_percent . '%'); ?>"></div>
+					</div>
+				</div>
+				<?php 
+				$zoom_url = get_post_meta($lesson_id, '_rc_zoom_url', true);
+				if ($zoom_url && !$rcp_is_locked) : ?>
+					<div class="mb-6">
+						<a href="<?php echo esc_url($zoom_url); ?>" target="_blank" class="w-full flex justify-center items-center space-x-2 bg-[#2D8CFF] text-white px-6 py-3 rounded-md font-bold text-[11px] uppercase tracking-[0.15em] hover:bg-[#1f71cf] transition-colors shadow-sm">
+							<i data-lucide="video" class="w-4 h-4"></i>
+							<span><?php _e('Ir a Sesión Zoom', 'red-cultural-pages'); ?></span>
+						</a>
+					</div>
+				<?php endif; ?>
+			</div>
 
-				<div id="red-cultural-lesson-top-nav" class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+			<div id="red-cultural-lesson-main-inner" class="max-w-4xl mx-auto px-6 py-4 md:py-8">
+
+				<!-- Hide top nav on mobile to match wireframe -->
+				<div id="red-cultural-lesson-top-nav" class="hidden md:flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
 					<div id="red-cultural-lesson-nav-left" class="flex items-center">
 						<span id="red-cultural-lesson-counter" class="text-[10px] uppercase tracking-[0.15em] text-gray-400 font-extrabold">
 							<?php
@@ -310,12 +378,13 @@ if (function_exists('do_blocks')) {
 					</div>
 				</div>
 
-				<header id="red-cultural-lesson-header" class="mb-10">
+				<!-- Desktop Lesson Header (hidden on mobile) -->
+				<header id="red-cultural-lesson-header" class="hidden md:block mb-10">
 					<h1 id="red-cultural-lesson-title" class="text-3xl md:text-4xl font-black text-gray-900 leading-tight mb-8 tracking-tight">
 						<?php echo esc_html($lesson_title); ?>
 					</h1>
 					<?php 
-					$zoom_url = get_post_meta($lesson_id, '_rc_zoom_url', true);
+					// Desktop Zoom Button
 					if ($zoom_url && !$rcp_is_locked) : ?>
 						<div class="mt-4">
 							<a href="<?php echo esc_url($zoom_url); ?>" target="_blank" class="inline-flex items-center space-x-2 bg-[#2D8CFF] text-white px-6 py-2.5 rounded-md font-bold text-[11px] uppercase tracking-[0.15em] hover:bg-[#1f71cf] transition-colors shadow-sm">
@@ -326,7 +395,7 @@ if (function_exists('do_blocks')) {
 					<?php endif; ?>
 				</header>
 
-				<div id="red-cultural-lesson-video" class="relative aspect-video bg-black rounded-lg overflow-hidden shadow-xl group mb-12">
+				<div id="red-cultural-lesson-video" class="relative aspect-video bg-black md:rounded-lg overflow-hidden md:shadow-xl group mb-6 md:mb-12 -mx-6 md:mx-0">
 					<?php if ($rcp_is_locked) : ?>
 						<div
 							class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center space-y-4"
@@ -424,6 +493,11 @@ if (function_exists('do_blocks')) {
 					<?php endif; ?>
 				</div>
 
+				<!-- Mobile Only: Lesson Menu Trigger Button -->
+				<button id="rcp-lesson-menu-trigger" class="flex md:hidden mb-12 items-center justify-center w-14 h-14 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors active:scale-95 shadow-sm">
+					<i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
+				</button>
+
 				<?php if (!$lesson_is_scheduled && !$rcp_is_locked) : ?>
 					<div id="red-cultural-lesson-content" class="prose max-w-none">
 						<?php
@@ -438,6 +512,38 @@ if (function_exists('do_blocks')) {
 
 	<script>
 		(function () {
+			// Mobile Panel Logic
+			var menuTrigger = document.getElementById('rcp-lesson-menu-trigger');
+			var menuClose = document.getElementById('rcp-lesson-sidebar-close');
+			var sidebar = document.getElementById('red-cultural-lesson-sidebar');
+			var backdrop = document.getElementById('rcp-lesson-backdrop');
+
+			function toggleLessonMenu(show) {
+				if (show) {
+					sidebar.classList.add('panel-open');
+					backdrop.classList.add('active');
+					backdrop.style.opacity = '1';
+					backdrop.style.pointerEvents = 'auto';
+					document.body.style.overflow = 'hidden';
+				} else {
+					sidebar.classList.remove('panel-open');
+					backdrop.classList.remove('active');
+					backdrop.style.opacity = '0';
+					backdrop.style.pointerEvents = 'none';
+					document.body.style.overflow = '';
+				}
+			}
+
+			if (menuTrigger) {
+				menuTrigger.addEventListener('click', function() { toggleLessonMenu(true); });
+			}
+			if (menuClose) {
+				menuClose.addEventListener('click', function() { toggleLessonMenu(false); });
+			}
+			if (backdrop) {
+				backdrop.addEventListener('click', function() { toggleLessonMenu(false); });
+			}
+
 			// Keep the layout height aligned with the real header height.
 			var header = document.getElementById('red-cultural-header');
 			var layout = document.getElementById('red-cultural-lesson-layout');
