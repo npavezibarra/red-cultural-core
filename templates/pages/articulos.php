@@ -133,6 +133,7 @@ $dispatch_posts = array_slice($posts, 6, 4);
 			}
 		}
 		@media (max-width: 767px){
+			#red-cultural-articulos-root .vertical-rule{border-left:none !important; padding-left:0 !important;}
 			#red-cultural-articulos-search-wrap{margin-bottom:12px}
 		}
 	</style>
@@ -209,25 +210,27 @@ $dispatch_posts = array_slice($posts, 6, 4);
 					$feature_read_minutes = rcp_articulos_estimated_read_minutes((int) $feature_post->ID);
 					?>
 					<article id="feature-article">
-						<div id="feature-img-wrapper" class="bg-stone-200 aspect-[16/9] mb-8 overflow-hidden relative rounded-sm">
-							<?php if (is_string($feature_img) && $feature_img !== '') : ?>
-								<img
-									src="<?php echo esc_url($feature_img); ?>"
-									alt="<?php echo esc_attr((string) get_the_title($feature_post)); ?>"
-									class="absolute inset-0 w-full h-full object-cover"
-									decoding="async"
-									loading="eager"
-								/>
-							<?php else : ?>
-								<div id="feature-img-placeholder" class="absolute inset-0 flex items-center justify-center text-[10px] uppercase tracking-widest text-stone-400 font-semibold">
-									<?php echo esc_html__('Sin imagen destacada', 'red-cultural-pages'); ?>
-								</div>
-							<?php endif; ?>
-						</div>
+						<a href="<?php echo esc_url((string) get_permalink($feature_post)); ?>" class="block no-underline group">
+							<div id="feature-img-wrapper" class="bg-stone-200 aspect-[16/9] mb-8 overflow-hidden relative rounded-sm group-hover:opacity-90 transition">
+								<?php if (is_string($feature_img) && $feature_img !== '') : ?>
+									<img
+										src="<?php echo esc_url($feature_img); ?>"
+										alt="<?php echo esc_attr((string) get_the_title($feature_post)); ?>"
+										class="absolute inset-0 w-full h-full object-cover"
+										decoding="async"
+										loading="eager"
+									/>
+								<?php else : ?>
+									<div id="feature-img-placeholder" class="absolute inset-0 flex items-center justify-center text-[10px] uppercase tracking-widest text-stone-400 font-semibold">
+										<?php echo esc_html__('Sin imagen destacada', 'red-cultural-pages'); ?>
+									</div>
+								<?php endif; ?>
+							</div>
 
-						<h2 id="feature-title" class="text-6xl font-semibold leading-[0.95] mb-8 tracking-tighter">
-							<?php echo esc_html((string) get_the_title($feature_post)); ?>
-						</h2>
+							<h2 id="feature-title" class="text-6xl font-semibold leading-[0.95] mb-8 tracking-tighter group-hover:text-stone-600 transition">
+								<?php echo esc_html((string) get_the_title($feature_post)); ?>
+							</h2>
+						</a>
 
 						<div id="feature-meta-author" class="text-[10px] uppercase tracking-[0.2em] font-semibold mb-6 flex items-center justify-between border-y border-stone-200 py-3">
 							<span><?php echo esc_html(sprintf('Por %s', $feature_author !== '' ? $feature_author : 'Red Cultural')); ?></span>
