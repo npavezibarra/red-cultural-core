@@ -127,6 +127,11 @@ $dispatch_posts = array_slice($posts, 6, 4);
 		}
 		#red-cultural-articulos-search-wrap{z-index:20}
 		#red-cultural-articulos-search-results{box-shadow:0 10px 30px rgba(0,0,0,.10)}
+		@media (max-width: 1240px) {
+			#red-cultural-articulos-root {
+				padding: 30px;
+			}
+		}
 		@media (max-width: 767px){
 			#red-cultural-articulos-search-wrap{margin-bottom:12px}
 		}
