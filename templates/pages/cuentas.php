@@ -112,12 +112,10 @@ $nonce = wp_create_nonce('rcp_search_sales');
 
 		.sales-table-container {
 			background: #ffffff;
-			border: 1px solid #e5e7eb;
 			border-radius: 12px;
 			padding: 32px;
 			margin-top: 48px;
 			overflow-x: auto;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 			min-height: 400px;
 		}
 
