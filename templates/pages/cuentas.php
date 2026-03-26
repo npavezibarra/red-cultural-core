@@ -72,7 +72,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		#red-cultural-cuentas-content {
 			position: relative;
 			z-index: 10;
-			max-width: 1200px;
+			max-width: 1180px;
 			width: 100%;
 		}
 
