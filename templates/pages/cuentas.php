@@ -25,6 +25,7 @@ $is_admin = current_user_can('manage_options');
 // Initial states
 $s = isset($_GET['rc_search']) ? sanitize_text_field($_GET['rc_search']) : '';
 $paged = max(1, isset($_GET['paged']) ? intval($_GET['paged']) : 1);
+$nonce = wp_create_nonce('rcp_search_sales');
 
 ?><!DOCTYPE html>
 <html lang="es">
@@ -324,7 +325,9 @@ $paged = max(1, isset($_GET['paged']) ? intval($_GET['paged']) : 1);
 								<th>Fecha</th>
 							</tr>
 						</thead>
-						<?php RC_Templates_Admin::render_sales_table_rows($s, $paged); ?>
+						<tbody id="rc-sales-tbody">
+							<?php RC_Templates_Admin::render_sales_table_rows($s, $paged); ?>
+						</tbody>
 					</table>
 
                     <div id="rc-pagination-wrapper">
@@ -345,6 +348,7 @@ $paged = max(1, isset($_GET['paged']) ? intval($_GET['paged']) : 1);
 						
 						const formData = new URLSearchParams();
 						formData.append('action', 'rcp_search_sales');
+						formData.append('nonce', '<?php echo esc_js($nonce); ?>');
 						formData.append('search', searchValue);
 						formData.append('paged', pageNum);
 
@@ -355,22 +359,20 @@ $paged = max(1, isset($_GET['paged']) ? intval($_GET['paged']) : 1);
 						})
 						.then(r => r.json())
 						.then(res => {
-							console.log('AJAX Response:', res);
 							table.classList.remove('rc-loading');
                             paginationWrap.classList.remove('rc-loading');
 							if (res.success) {
-								const parser = new DOMParser();
-								const doc = parser.parseFromString(res.data.html, 'text/html');
-								
-								// Replace tbody
-								const currentTbody = table.querySelector('tbody');
-								const newTbody = doc.querySelector('#rc-sales-tbody');
-								if (currentTbody && newTbody) {
-									currentTbody.replaceWith(newTbody);
+								// Directly update the tbody content
+								const tbody = document.getElementById('rc-sales-tbody');
+								if (tbody) {
+									tbody.innerHTML = res.data.html;
 								}
 
-								// Replace pagination
+								// Handle pagination if hidden pagination container is present in response
+								const parser = new DOMParser();
+								const doc = parser.parseFromString(res.data.html, 'text/html');
 								const newPagination = doc.querySelector('#rc-sales-pagination-new');
+								
 								if (newPagination) {
 									paginationWrap.innerHTML = newPagination.innerHTML;
 									initPaginationLinks();
@@ -384,9 +386,7 @@ $paged = max(1, isset($_GET['paged']) ? intval($_GET['paged']) : 1);
                                 else url.searchParams.delete('rc_search');
 								url.searchParams.set('paged', pageNum);
 								window.history.pushState({}, '', url);
-							} else {
-                                console.error('AJAX Success false:', res);
-                            }
+							}
 						})
                         .catch(err => {
                             console.error('AJAX Error:', err);

@@ -345,6 +345,11 @@ final class RC_Templates_Admin {
 			wp_send_json_error('Unauthorized');
 		}
 
+		$nonce = isset($_POST['nonce']) ? sanitize_text_field((string) $_POST['nonce']) : '';
+		if ($nonce === '' || !wp_verify_nonce($nonce, 'rcp_search_sales')) {
+			wp_send_json_error('Invalid nonce');
+		}
+
 		$s = isset($_POST['search']) ? sanitize_text_field((string) $_POST['search']) : '';
 		$paged = isset($_POST['paged']) ? max(1, (int) $_POST['paged']) : 1;
 
