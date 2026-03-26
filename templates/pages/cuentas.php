@@ -349,7 +349,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 						const formData = new URLSearchParams();
 						formData.append('action', 'rcp_search_sales');
 						formData.append('nonce', '<?php echo esc_js($nonce); ?>');
-						formData.append('search', searchValue);
+						formData.append('rc_search_term', searchValue);
 						formData.append('paged', pageNum);
 
 						fetch('<?php echo admin_url('admin-ajax.php'); ?>', {

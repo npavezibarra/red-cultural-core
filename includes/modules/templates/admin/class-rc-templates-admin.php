@@ -350,7 +350,7 @@ final class RC_Templates_Admin {
 			wp_send_json_error('Invalid nonce');
 		}
 
-		$s = isset($_POST['search']) ? sanitize_text_field((string) $_POST['search']) : '';
+		$s = isset($_POST['rc_search_term']) ? sanitize_text_field((string) $_POST['rc_search_term']) : '';
 		$paged = isset($_POST['paged']) ? max(1, (int) $_POST['paged']) : 1;
 
 		ob_start();
@@ -389,9 +389,11 @@ final class RC_Templates_Admin {
 			));
 
 			$all_found_ids = array_unique(array_merge($order_ids_by_product, $order_ids_by_meta));
+			$all_found_ids = array_map('intval', $all_found_ids);
 
 			if (!empty($all_found_ids)) {
-				$args['include'] = $all_found_ids;
+				$args['post__in'] = $all_found_ids;
+				unset($args['search']);
 			} else {
 				$args['search'] = $s;
 			}
