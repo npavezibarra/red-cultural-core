@@ -253,7 +253,7 @@ final class RC_Templates_Assets {
 					if (menuClose) menuClose.addEventListener('click', () => toggleMobileMenu(false));
 					if (backdrop) backdrop.addEventListener('click', () => toggleMobileMenu(false));
 
-					// Submenu toggles
+					// Submenu toggles and internal links
 					document.addEventListener('click', function(e) {
 						const dropdownToggle = e.target.closest('.rcp-mobile-dropdown-toggle');
 						if (dropdownToggle) {
@@ -263,6 +263,13 @@ final class RC_Templates_Assets {
 							const chevron = dropdownToggle.querySelector('.chevron-icon');
 							if (submenu) submenu.classList.toggle('open');
 							if (chevron) chevron.classList.toggle('rotated');
+							return;
+						}
+
+						// Close mobile menu if an auth link is clicked inside it
+						const authLink = e.target.closest('#rcp-mobile-menu [data-rcp-auth-open]');
+						if (authLink) {
+							toggleMobileMenu(false);
 						}
 					});
 
