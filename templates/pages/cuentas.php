@@ -114,7 +114,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			background: #ffffff;
 			border-radius: 12px;
 			padding: 32px;
-			margin-top: 48px;
+			margin-top: 0px;
 			overflow-x: auto;
 			min-height: 400px;
 		}
@@ -202,7 +202,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		}
 
 		.search-container {
-			margin-bottom: 32px;
+			margin-bottom: 0px;
 			width: 100%;
 			max-width: 500px;
 			margin-left: auto;
