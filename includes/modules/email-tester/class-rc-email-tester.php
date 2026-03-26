@@ -61,6 +61,7 @@ final class Red_Cultural_Email_Tester
 
         $emails = [
             'register' => 'Registro: Bienvenida (Email de confirmación)',
+            'lost_password' => 'Cuenta: Restablecer Contraseña (Personalizado)',
             'contacto' => 'Formulario de Contacto (General)',
             'viaje_italia' => 'Interés: Viaje Italia',
             'viaje_japon' => 'Interés: Viaje Japón',
@@ -241,6 +242,9 @@ final class Red_Cultural_Email_Tester
                 case 'register':
                     $sent = $this->send_test_register($to, $data_source);
                     break;
+                case 'lost_password':
+                    $sent = $this->send_test_lost_password($to, $data_source);
+                    break;
                 case 'contacto':
                     $sent = $this->send_test_contacto($to);
                     break;
@@ -360,6 +364,51 @@ final class Red_Cultural_Email_Tester
         if (class_exists('Red_Cultural_Templates')) {
             Red_Cultural_Templates::send_welcome_email($user_id, $first_name, $to);
             return true;
+        }
+
+        return false;
+    }
+
+    private function send_test_lost_password($to, $data_source)
+    {
+        $display_name = 'Usuario de Prueba';
+        $user_login = 'tester';
+        $user_data = null;
+
+        if ($data_source === 'real') {
+            $users = get_users(['number' => 1, 'orderby' => 'ID', 'order' => 'DESC']);
+            if (!empty($users)) {
+                $user_data = $users[0];
+                $display_name = $user_data->display_name ?: $user_data->user_login;
+                $user_login = $user_data->user_login;
+            }
+        }
+
+        // Mock a key
+        $key = 'mock_key_' . time();
+        $reset_url = add_query_arg(
+            array(
+                'key'   => $key,
+                'login' => $user_login,
+            ),
+            home_url('/restablecer-contrasena/')
+        );
+
+        if (class_exists('Red_Cultural_Templates')) {
+            $subject = Red_Cultural_Templates::custom_retrieve_password_title('Password Reset');
+            
+            // Generate the HTML using the private method via Reflection or just copy logic
+            // Since it's private in Templates, calling it via custom_retrieve_password_message mock
+            $dummy_user = $user_data ?: new WP_User();
+            if (!$user_data) {
+                $dummy_user->display_name = $display_name;
+                $dummy_user->user_login = $user_login;
+            }
+
+            $message = Red_Cultural_Templates::custom_retrieve_password_message('', $key, $user_login, $dummy_user);
+
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+            return wp_mail($to, $subject, $message, $headers);
         }
 
         return false;

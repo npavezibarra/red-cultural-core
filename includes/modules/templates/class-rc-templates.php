@@ -36,7 +36,12 @@ final class Red_Cultural_Templates {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_terminos_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_author_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_cuentas_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_reset_password_template'), 20);
 		add_filter('template_include', array(__CLASS__, 'maybe_render_404_template'), 100);
+
+		// Password Reset Customization
+		add_filter('retrieve_password_message', array(__CLASS__, 'custom_retrieve_password_message'), 10, 4);
+		add_filter('retrieve_password_title', array(__CLASS__, 'custom_retrieve_password_title'), 10, 1);
 
 
 		add_action('init', array(__CLASS__, 'register_shortcodes'));
@@ -646,6 +651,191 @@ final class Red_Cultural_Templates {
 		$updated = preg_replace('/<p>\\s*(?:&nbsp;)?\\s*<\\/p>/i', '', (string) $updated);
 
 		return is_string($updated) ? $updated : $content;
+	}
+
+	public static function maybe_render_reset_password_template(): void {
+		if (is_admin() || is_feed()) {
+			return;
+		}
+
+		$path = '';
+		if (isset($_SERVER['REQUEST_URI'])) {
+			$path = (string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		}
+		$path = trim($path, '/');
+
+		if ($path !== 'restablecer-contrasena') {
+			return;
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/pages/restablecer-contrasena.php';
+		if (!file_exists($template_file)) {
+			return;
+		}
+
+		require $template_file;
+		exit;
+	}
+
+	/**
+	 * Customize the Password Reset Email Message
+	 */
+	public static function custom_retrieve_password_message(string $message, string $key, string $user_login, WP_User $user_data): string {
+		$reset_url = add_query_arg(
+			array(
+				'key'   => $key,
+				'login' => $user_login,
+			),
+			home_url('/restablecer-contrasena/')
+		);
+
+		$display_name = $user_data->display_name ?: $user_login;
+
+		return self::get_branded_reset_password_email_html($display_name, $reset_url);
+	}
+
+	/**
+	 * Customize the Password Reset Email Title
+	 */
+	public static function custom_retrieve_password_title(string $title): string {
+		return 'Restablece tu contraseña — Red Cultural';
+	}
+
+	/**
+	 * Branded HTML for Password Reset Email
+	 */
+	private static function get_branded_reset_password_email_html(string $display_name, string $reset_url): string {
+		$ip_address = $_SERVER['REMOTE_ADDR'] ?? 'Desconocida';
+		$year = date('Y');
+
+		return <<<HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecer Contraseña - Red Cultural</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            -webkit-font-smoothing: antialiased;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .content {
+            padding: 48px 40px;
+            text-align: center;
+        }
+        .logo-container {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #111827;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #4b5563;
+            margin-bottom: 24px;
+        }
+        .button-container {
+            margin: 32px 0;
+        }
+        .btn {
+            background-color: #000000;
+            color: #ffffff !important;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-block;
+        }
+        .footer {
+            padding: 32px 40px;
+            background-color: #f9fafb;
+            text-align: center;
+            border-top: 1px solid #f3f4f6;
+        }
+        .footer-text {
+            font-size: 13px;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 20px auto;
+            width: 40px;
+        }
+        @media (max-width: 600px) {
+            .container { margin: 0; border-radius: 0; }
+            .content { padding: 32px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td align="center">
+                <div class="container">
+                    <div class="content">
+                        <div class="logo-container">
+                            <img src="https://red-cultural.cl/wp-content/uploads/2021/01/logoRedCulturalNegro.svg" alt="Red Cultural" style="width: 140px; height: auto; display: inline-block;">
+                        </div>
+                        
+                        <h1>Restablecer contraseña</h1>
+                        
+                        <p>
+                            Hola <strong>{$display_name}</strong>,<br>
+                            Recibimos una solicitud para restablecer la contraseña de tu cuenta en Red Cultural.
+                        </p>
+
+                        <div class="button-container">
+                            <a href="{$reset_url}" class="btn">
+                                Restablecer contraseña
+                            </a>
+                        </div>
+
+                        <p style="font-size: 14px;">
+                            Si no realizaste esta solicitud, puedes ignorar este correo de forma segura. Tu contraseña no cambiará hasta que accedas al enlace anterior.
+                        </p>
+                    </div>
+
+                    <div class="footer">
+                        <div class="footer-text">
+                            Esta solicitud se originó desde la dirección IP: <strong>{$ip_address}</strong>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="footer-text">
+                            © {$year} Red Cultural. Todos los derechos reservados.
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+HTML;
 	}
 
 	public static function maybe_render_cuentas_template(): void {
@@ -2695,6 +2885,8 @@ final class Red_Cultural_Templates {
 			add_action('wp_ajax_rcp_user_exists', array(__CLASS__, 'handle_user_exists_ajax'));
 			add_action('wp_ajax_nopriv_rcp_forgot_password', array(__CLASS__, 'handle_forgot_password_ajax'));
 			add_action('wp_ajax_rcp_forgot_password', array(__CLASS__, 'handle_forgot_password_ajax'));
+			add_action('wp_ajax_nopriv_rcp_reset_password', array(__CLASS__, 'handle_reset_password_ajax'));
+			add_action('wp_ajax_rcp_reset_password', array(__CLASS__, 'handle_reset_password_ajax'));
 		}
 
 		public static function handle_user_exists_ajax(): void {
@@ -2741,7 +2933,11 @@ final class Red_Cultural_Templates {
 
 			// retrieve_password() reads from $_POST['user_login'].
 			$_POST['user_login'] = $email;
+			
+			// We need to set the content type to html for our custom message
+			add_filter('wp_mail_content_type', static fn() => 'text/html');
 			$result = retrieve_password();
+			remove_filter('wp_mail_content_type', static fn() => 'text/html');
 
 			if (is_wp_error($result)) {
 				wp_send_json_error(array('message' => 'No pudimos enviar el correo. Inténtalo de nuevo.'), 500);
@@ -2752,6 +2948,30 @@ final class Red_Cultural_Templates {
 					'message' => 'Te enviamos un correo para restablecer tu contraseña. Revisa tu bandeja de entrada.',
 				)
 			);
+		}
+
+		public static function handle_reset_password_ajax(): void {
+			$key      = isset($_POST['key']) ? sanitize_text_field((string) $_POST['key']) : '';
+			$login    = isset($_POST['login']) ? sanitize_text_field((string) $_POST['login']) : '';
+			$password = isset($_POST['password']) ? (string) $_POST['password'] : '';
+
+			if (!$key || !$login || !$password) {
+				wp_send_json_error(array('message' => 'Información incompleta.'), 400);
+			}
+
+			$user = check_password_reset_key($key, $login);
+
+			if (is_wp_error($user)) {
+				wp_send_json_error(array('message' => 'El enlace ha expirado o es inválido.'), 400);
+			}
+
+			if (strlen($password) < 8) {
+				wp_send_json_error(array('message' => 'La contraseña debe tener al menos 8 caracteres.'), 400);
+			}
+
+			reset_password($user, $password);
+
+			wp_send_json_success(array('message' => 'Contraseña actualizada con éxito.'));
 		}
 
 	public static function handle_checkout_auth(): void {
