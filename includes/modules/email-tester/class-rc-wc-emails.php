@@ -32,6 +32,48 @@ final class Red_Cultural_WC_Emails
         // Hook into successful payments/completions to send access links
         add_action('woocommerce_order_status_processing', [$this, 'maybe_trigger_access_email'], 10, 2);
         add_action('woocommerce_order_status_completed', [$this, 'maybe_trigger_access_email'], 10, 2);
+
+        // New hook for confirming transfers via email button
+        add_action('init', [$this, 'handle_confirm_transfer']);
+    }
+
+    /**
+     * Handle the "Confirm Transfer" button from accountant email.
+     */
+    public function handle_confirm_transfer()
+    {
+        if (!isset($_GET['rc_confirm_transfer']) || !isset($_GET['rc_token'])) {
+            return;
+        }
+
+        $order_id = absint($_GET['rc_confirm_transfer']);
+        $token = sanitize_text_field($_GET['rc_token']);
+
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            wp_die('Pedido no encontrado.');
+        }
+
+        // Verify token
+        $expected_token = wp_hash($order_id . '|' . $order->get_order_key() . '|rc_confirm_transfer');
+        if (!hash_equals($expected_token, $token)) {
+            wp_die('Token de seguridad inválido o expirado.');
+        }
+
+        // Check if order is already processed
+        if ($order->has_status(['processing', 'completed'])) {
+            wp_die('Este pedido ya ha sido confirmado anteriormente.', 'Pedido Ya Confirmado', ['response' => 200, 'back_link' => true]);
+        }
+
+        // Update status
+        $order->update_status('processing', __('Transferencia confirmada por contabilidad vía email.', 'red-cultural-core'));
+
+        // Redirect with a success message
+        wp_die(
+            sprintf('Transferencia confirmada correctamente para el pedido #%s. El usuario ya tiene acceso a sus contenidos.', $order->get_order_number()),
+            'Transferencia Confirmada',
+            ['response' => 200, 'back_link' => true]
+        );
     }
 
     /**
@@ -90,7 +132,18 @@ final class Red_Cultural_WC_Emails
         // Send to accountant if configured
         if ($accountant_email) {
             $accountant_subject = 'Nueva orden por Transferencia - #' . $order->get_order_number();
-            wp_mail($accountant_email, $accountant_subject, $content, $headers);
+            
+            // Generate confirmation URL
+            $token = wp_hash($order_id . '|' . $order->get_order_key() . '|rc_confirm_transfer');
+            $confirm_url = add_query_arg([
+                'rc_confirm_transfer' => $order_id,
+                'rc_token' => $token
+            ], home_url('/'));
+
+            $acc_template_args = array_merge(['order' => $order, 'confirm_url' => $confirm_url], $extra_args);
+            $accountant_content = $this->get_template_content('emails/wc-bank-transfer-accountant.php', $acc_template_args);
+            
+            wp_mail($accountant_email, $accountant_subject, $accountant_content, $headers);
         }
 
         return $sent_customer;
