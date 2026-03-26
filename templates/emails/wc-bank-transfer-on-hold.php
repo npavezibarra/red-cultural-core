@@ -194,9 +194,11 @@ $date = wc_format_datetime($order->get_date_created());
                 <div style="font-size: 12px; color: #4b5563; line-height: 1.6; background-color: #f9fafb; padding: 16px; border-radius: 6px;">
                     <p style="margin: 0 0 8px 0;"><strong>Datos para la transferencia:</strong></p>
                     <p style="margin: 0;">
-                        Nombre: Red Cultural<br>
-                        Banco: Banco de Chile<br>
-                        Cuenta Corriente: 123456789<br>
+                        Nombre: Ediciones Alicia Limitada<br>
+                        RUT: 76.360.721-6<br>
+                        Banco: Banco BICE<br>
+                        Tipo de Cuenta: Cuenta Corriente<br>
+                        Número de Cuenta: 02746948<br>
                         Email: pagos@redcultural.cl
                     </p>
                 </div>

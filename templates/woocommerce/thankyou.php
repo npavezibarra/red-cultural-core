@@ -322,7 +322,7 @@ if (function_exists('do_blocks')) {
             </div>
 
             <!-- Instrucciones de Pago (BACS) -->
-            <?php if ($is_pending && !empty($bank_details)) : ?>
+            <?php if ($is_pending && $method_id === 'bacs') : ?>
             <div id="red-cultural-ty-instructions" class="p-8 border-b border-zinc-100 bg-zinc-50/50">
                 <div class="max-w-md mx-auto">
                     <p class="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-center text-zinc-400"><?php echo esc_html__('Próximo Paso: Pago por Transferencia', 'red-cultural-pages'); ?></p>
@@ -330,21 +330,27 @@ if (function_exists('do_blocks')) {
                         <p><?php echo sprintf(__('Por favor realiza la transferencia por el total de %s. Tendrás acceso en cuanto confirmemos el depósito.', 'red-cultural-pages'), '<span class="font-bold text-black text-base">' . $order_total . '</span>'); ?></p>
                         
                         <div class="py-5 border border-zinc-200 bg-white inline-block w-full rounded-md shadow-sm">
-                            <?php if (!empty($bank_details['bank_name'])) : ?>
-                                <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html($bank_details['bank_name']); ?></p>
-                            <?php endif; ?>
+                            <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html__('Nombre/Razón Social', 'red-cultural-pages'); ?></p>
+                            <p class="font-bold font-mono text-black text-sm mb-3">Ediciones Alicia Limitada</p>
+
+                            <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html__('RUT', 'red-cultural-pages'); ?></p>
+                            <p class="font-bold font-mono text-black text-sm mb-3">76.360.721-6</p>
+
+                            <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html__('Banco', 'red-cultural-pages'); ?></p>
+                            <p class="font-bold font-mono text-black text-sm mb-3">Banco BICE</p>
+
+                            <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html__('Tipo de Cuenta', 'red-cultural-pages'); ?></p>
+                            <p class="font-bold font-mono text-black text-sm mb-3">Cuenta Corriente</p>
                             
-                            <?php if (!empty($bank_details['account_number'])) : ?>
-                                <p class="text-[11px] text-zinc-400 font-mono mt-3 mb-1"><?php echo esc_html__('Nº DE CUENTA', 'red-cultural-pages'); ?></p>
-                                <p class="font-bold font-mono text-black text-lg"><?php echo esc_html($bank_details['account_number']); ?></p>
-                            <?php endif; ?>
+                            <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html__('Número de Cuenta', 'red-cultural-pages'); ?></p>
+                            <p class="font-bold font-mono text-black text-lg"><?php echo esc_html('02746948'); ?></p>
 
                             <p class="text-[11px] text-zinc-400 font-mono mt-4 mb-1"><?php echo esc_html__('REFERENCIA / MOTIVO', 'red-cultural-pages'); ?></p>
                             <p class="font-bold font-mono text-black"><?php echo esc_html__('PEDIDO #', 'red-cultural-pages') . $order_number; ?></p>
                         </div>
                         
                         <p class="text-[10px] text-zinc-400 italic">
-                            <?php echo esc_html__('Envía el comprobante a nuestro email una vez realizada la operación.', 'red-cultural-pages'); ?>
+                            <?php echo esc_html__('Envía el comprobante a pagos@redcultural.cl una vez realizada la operación.', 'red-cultural-pages'); ?>
                         </p>
                     </div>
                 </div>
