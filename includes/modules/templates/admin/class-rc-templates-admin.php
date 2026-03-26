@@ -463,6 +463,8 @@ final class RC_Templates_Admin {
 			));
 			echo '</div>';
 		}
+	}
+
 	public static function ajax_get_sales_chart_data(): void {
 		if (!current_user_can('manage_options')) {
 			wp_send_json_error('Unauthorized');
