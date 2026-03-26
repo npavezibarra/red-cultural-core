@@ -17,6 +17,7 @@ final class RC_Templates_Admin {
 		add_action('admin_post_rcp_save_antispam_settings', array(__CLASS__, 'handle_save_antispam_settings'));
 		add_action('wp_ajax_rcp_search_sales', array(__CLASS__, 'ajax_search_sales'));
 		add_action('wp_ajax_rcp_get_sales_chart_data', array(__CLASS__, 'ajax_get_sales_chart_data'));
+		add_action('wp_ajax_rcp_update_order_status', array(__CLASS__, 'ajax_update_order_status'));
 	}
 
 	public static function register_admin_pages(): void {
@@ -434,8 +435,19 @@ final class RC_Templates_Admin {
 						<td class="text-right font-mono font-bold text-[#c5a367]">
 							<?php echo esc_html(number_format((float) $subtotal, 0, ',', '.') . ' ' . $order->get_currency()); ?>
 						</td>
-						<td class="text-center">
-							<span class="status-badge status-<?php echo esc_attr($status); ?>"><?php echo esc_html($status_label); ?></span>
+						<td class="text-center relative">
+							<div class="rcp-status-dropdown" data-order-id="<?php echo esc_attr((string) $order->get_id()); ?>">
+								<span class="status-badge status-<?php echo esc_attr($status); ?> cursor-pointer flex items-center justify-center gap-1 mx-auto w-fit">
+									<?php echo esc_html($status_label); ?>
+									<svg class="w-2.5 h-2.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+								</span>
+								<div class="rcp-status-menu hidden absolute left-1/2 -translate-x-1/2 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50 min-w-[120px] overflow-hidden">
+									<button type="button" class="w-full text-left px-4 py-2 text-[12px] hover:bg-gray-50 font-bold text-blue-600 transition-colors" data-status="processing">Procesando</button>
+									<button type="button" class="w-full text-left px-4 py-2 text-[12px] hover:bg-gray-50 font-bold text-emerald-600 transition-colors border-t border-gray-100" data-status="completed">Completado</button>
+									<button type="button" class="w-full text-left px-4 py-2 text-[12px] hover:bg-gray-50 font-bold text-amber-600 transition-colors border-t border-gray-100" data-status="on-hold">En espera</button>
+									<button type="button" class="w-full text-left px-4 py-2 text-[12px] hover:bg-gray-50 font-bold text-gray-500 transition-colors border-t border-gray-100" data-status="cancelled">Cancelado</button>
+								</div>
+							</div>
 						</td>
 						<td class="whitespace-nowrap">
 							<div class="text-[13px]"><?php echo esc_html($order_date->date('d/m/Y')); ?></div>
@@ -529,6 +541,42 @@ final class RC_Templates_Admin {
 			'libros' => $libros_data,
 			'cursos' => $cursos_data,
 			'month'  => date_i18n('F'),
+		));
+	}
+
+	public static function ajax_update_order_status(): void {
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error('Unauthorized');
+		}
+
+		$nonce = isset($_POST['nonce']) ? sanitize_text_field((string) $_POST['nonce']) : '';
+		if ($nonce === '' || !wp_verify_nonce($nonce, 'rcp_search_sales')) {
+			wp_send_json_error('Invalid nonce');
+		}
+
+		$order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
+		$status   = isset($_POST['status']) ? sanitize_text_field((string) $_POST['status']) : '';
+
+		if (!$order_id || !$status) {
+			wp_send_json_error('Missing data');
+		}
+
+		$order = wc_get_order($order_id);
+		if (!$order) {
+			wp_send_json_error('Order not found');
+		}
+
+		// Valid WC statuses
+		$valid_statuses = array('processing', 'completed', 'on-hold', 'cancelled');
+		if (!in_array($status, $valid_statuses, true)) {
+			wp_send_json_error('Invalid status');
+		}
+
+		$order->update_status($status);
+
+		wp_send_json_success(array(
+			'status' => $status,
+			'label'  => wc_get_order_status_name($status),
 		));
 	}
 }

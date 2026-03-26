@@ -598,6 +598,68 @@ $nonce = wp_create_nonce('rcp_search_sales');
 						searchBtn.onclick = () => updateTable(input.value, 1);
 					}
 
+					// --- Status Dropdown Logic (Event Delegation) ---
+					document.addEventListener('click', function(e) {
+						// 1. Toggle Dropdown
+						const badge = e.target.closest('.status-badge');
+						if (badge && badge.closest('.rcp-status-dropdown')) {
+							const menu = badge.nextElementSibling;
+							const isOpen = !menu.classList.contains('hidden');
+							
+							// Close all first
+							document.querySelectorAll('.rcp-status-menu').forEach(m => m.classList.add('hidden'));
+							
+							if (!isOpen) menu.classList.remove('hidden');
+							return;
+						}
+
+						// 2. Handle Status Change Click
+						const statusBtn = e.target.closest('.rcp-status-menu button');
+						if (statusBtn) {
+							const dropdown = statusBtn.closest('.rcp-status-dropdown');
+							const orderId = dropdown.dataset.orderId;
+							const newStatus = statusBtn.dataset.status;
+							const badge = dropdown.querySelector('.status-badge');
+							const menu = dropdown.querySelector('.rcp-status-menu');
+
+							dropdown.classList.add('rc-loading');
+							
+							const formData = new URLSearchParams();
+							formData.append('action', 'rcp_update_order_status');
+							formData.append('nonce', '<?php echo esc_js($nonce); ?>');
+							formData.append('order_id', orderId);
+							formData.append('status', newStatus);
+
+							fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+								method: 'POST',
+								headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+								body: formData
+							})
+							.then(r => r.json())
+							.then(res => {
+								dropdown.classList.remove('rc-loading');
+								if (res.success) {
+									// Update badge class
+									badge.className = `status-badge status-${res.data.status} cursor-pointer flex items-center justify-center gap-1 mx-auto w-fit`;
+									badge.innerHTML = `${res.data.label} <svg class="w-2.5 h-2.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>`;
+									menu.classList.add('hidden');
+								} else {
+									alert('Error: ' + res.data);
+								}
+							})
+							.catch(err => {
+								dropdown.classList.remove('rc-loading');
+								console.error('Status Update Error:', err);
+							});
+							return;
+						}
+
+						// 3. Click outside -> close
+						if (!e.target.closest('.rcp-status-dropdown')) {
+							document.querySelectorAll('.rcp-status-menu').forEach(m => m.classList.add('hidden'));
+						}
+					});
+
 					// Move initial pagination into wrapper
 					const existingPagination = document.getElementById('rc-sales-pagination-new');
 					if (existingPagination) {
