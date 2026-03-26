@@ -55,9 +55,9 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			justify-content: center;
+			justify-content: flex-start; /* Changed from center to align to top */
 			position: relative;
-			padding: 80px 20px;
+			padding: 30px 20px; /* 30px from top as requested */
 			color: #ffffff;
 			text-align: center;
 		}
@@ -79,8 +79,8 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		.rcp-cuentas-title {
 			font-size: 30px;
 			font-weight: 500;
-			line-height: 1.1;
-			margin-bottom: 24px;
+			line-height: 1;
+			margin-bottom: 0;
 			letter-spacing: -0.02em;
 			color: #ffffff;
 		}
@@ -278,13 +278,19 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			position: relative;
 			z-index: 100;
 		}
+		.rcp-header-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			margin-bottom: 40px;
+			padding-bottom: 0;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
 		.rcp-submenu {
 			display: flex;
-			justify-content: center;
 			gap: 32px;
-			margin-bottom: 40px;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			padding-bottom: 0;
 		}
 
 		.rcp-tab {
@@ -369,19 +375,25 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		<div id="red-cultural-cuentas-overlay" aria-hidden="true"></div>
 
 		<main id="red-cultural-cuentas-content">
-			<h1 class="rcp-cuentas-title">Ventas</h1>
+			<div class="rcp-header-row">
+				<h1 class="rcp-cuentas-title">Ventas</h1>
+
+				<?php if ($is_admin): ?>
+					<div class="rcp-submenu">
+						<div class="rcp-tab active" data-view="ventas">Ventas</div>
+						<div class="rcp-tab" data-view="grafico">Gráfico</div>
+					</div>
+				<?php endif; ?>
+			</div>
 
 			<?php if (!is_user_logged_in()): ?>
-				<p class="rcp-cuentas-subtext">Acceso restringido a administradores.</p>
+				<p class="rcp-cuentas-subtext mt-12">Acceso restringido a administradores.</p>
 				<p class="rcp-cuentas-subtext">Por favor, inicia sesión para continuar.</p>
 				<button type="button" class="rcp-cuentas-btn" data-rcp-auth-open="1">
 					Iniciar Sesión
 				</button>
 			<?php elseif ($is_admin): ?>
-				<div class="rcp-submenu">
-					<div class="rcp-tab active" data-view="ventas">Ventas</div>
-					<div class="rcp-tab" data-view="grafico">Gráfico</div>
-				</div>
+
 
 				<div id="view-ventas" class="view-content active">
 					<div class="search-container">
