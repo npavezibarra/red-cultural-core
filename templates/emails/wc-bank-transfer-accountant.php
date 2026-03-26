@@ -15,6 +15,20 @@ $billing_first_name = $order->get_billing_first_name();
 $billing_last_name = $order->get_billing_last_name();
 $total = $order->get_formatted_order_total();
 
+// Support for Email Tester user override
+if (isset($test_user_id) && $test_user_id > 0) {
+    $user = get_userdata($test_user_id);
+    if ($user) {
+        $billing_first_name = $user->first_name ?: $user->display_name;
+        $billing_last_name = $user->last_name;
+    }
+}
+
+$full_name = trim($billing_first_name . ' ' . $billing_last_name);
+if ($full_name === '') {
+    $full_name = 'Un cliente';
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,6 +61,7 @@ $total = $order->get_formatted_order_total();
             line-height: 1.6;
             margin-bottom: 32px;
             color: #374151;
+            text-align: center;
         }
         .btn-container {
             text-align: center;
@@ -78,7 +93,7 @@ $total = $order->get_formatted_order_total();
         </div>
         
         <div class="message">
-            <strong><?php echo esc_html($billing_first_name . ' ' . $billing_last_name); ?></strong> hizo un pedido por <strong><?php echo wp_kses_post($total); ?></strong>. 
+            <strong><?php echo esc_html($full_name); ?></strong> hizo el pedido <strong>#<?php echo esc_html($order_number); ?></strong> por <strong><?php echo wp_kses_post($total); ?></strong>. 
             Verifica en tu banco si tienes tal transferencia para confirmar con el botón de abajo.
         </div>
 

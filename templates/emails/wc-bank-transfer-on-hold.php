@@ -13,6 +13,14 @@ $order_id = $order->get_id();
 $order_number = $order->get_order_number();
 $billing_first_name = $order->get_billing_first_name();
 
+// Support for Email Tester user override
+if (isset($test_user_id) && $test_user_id > 0) {
+    $user = get_userdata($test_user_id);
+    if ($user) {
+        $billing_first_name = $user->first_name ?: $user->display_name;
+    }
+}
+
 // Shared data
 $subtotal = $order->get_subtotal_to_display();
 $total = $order->get_formatted_order_total();

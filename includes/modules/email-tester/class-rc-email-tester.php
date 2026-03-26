@@ -28,6 +28,35 @@ final class Red_Cultural_Email_Tester
     {
         add_action('admin_menu', [$this, 'register_admin_pages'], 99); // Higher priority to ensure main menu is already registered
         add_action('admin_post_rc_trigger_email_test', [$this, 'handle_trigger_email_test']);
+        
+        // AJAX Search for User Selector
+        add_action('wp_ajax_rc_search_users', [$this, 'ajax_search_users']);
+    }
+
+    /**
+     * AJAX Search for Users
+     */
+    public function ajax_search_users()
+    {
+        check_ajax_referer('rc_email_tester_nonce', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Unauthorized');
+        }
+
+        $search = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
+        if (strlen($search) < 2) {
+            wp_send_json_success([]);
+        }
+
+        $users = get_users([
+            'search'         => '*' . $search . '*',
+            'search_columns' => ['user_login', 'user_email', 'display_name'],
+            'number'         => 15,
+            'fields'         => ['ID', 'display_name', 'user_email']
+        ]);
+
+        wp_send_json_success($users);
     }
 
     /**
@@ -156,6 +185,94 @@ final class Red_Cultural_Email_Tester
                             </td>
                         </tr>
                         <tr>
+                            <th scope="row"><label for="user_search"><?php echo esc_html__('Actuar como Usuario', 'red-cultural-core'); ?></label></th>
+                            <td>
+                                <div style="position: relative; max-width: 400px;">
+                                    <input type="text" id="user_search" class="regular-text" style="width: 100%;" placeholder="Buscar por nombre o email..." autocomplete="off">
+                                    <input type="hidden" name="test_user_id" id="test_user_id" value="0">
+                                    
+                                    <div id="user_search_results" style="display: none; position: absolute; left: 0; top: 100%; width: 100%; background: #fff; border: 1px solid #ccc; border-top: none; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-height: 250px; overflow-y: auto; border-radius: 0 0 4px 4px;"></div>
+                                </div>
+                                <p class="description"><?php echo esc_html__('Escribe al menos 2 caracteres para buscar. Se usará este usuario para los datos del correo.', 'red-cultural-core'); ?></p>
+                                
+                                <style>
+                                    .user-result-item { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
+                                    .user-result-item:hover { background: #f9f9f9; }
+                                    .user-result-item:last-child { border-bottom: none; }
+                                    .user-result-item .user-name { font-weight: 600; display: block; font-size: 13px; }
+                                    .user-result-item .user-email { font-size: 11px; color: #666; }
+                                    #user_search.selected { background-color: #f0fdf4; border-color: #22c55e; }
+                                </style>
+                                
+                                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const searchInput = document.getElementById('user_search');
+                                    const resultsDiv = document.getElementById('user_search_results');
+                                    const hiddenInput = document.getElementById('test_user_id');
+                                    let searchTimeout;
+
+                                    searchInput.addEventListener('input', function(e) {
+                                        clearTimeout(searchTimeout);
+                                        const query = e.target.value.trim();
+                                        
+                                        // Reset selection if typing
+                                        if (hiddenInput.value !== '0') {
+                                            hiddenInput.value = '0';
+                                            searchInput.classList.remove('selected');
+                                        }
+
+                                        if (query.length < 2) {
+                                            resultsDiv.innerHTML = '';
+                                            resultsDiv.style.display = 'none';
+                                            return;
+                                        }
+
+                                        searchTimeout = setTimeout(() => {
+                                            fetch('<?php echo admin_url('admin-ajax.php'); ?>?action=rc_search_users&nonce=<?php echo wp_create_nonce('rc_email_tester_nonce'); ?>&search=' + encodeURIComponent(query))
+                                                .then(r => r.json())
+                                                .then(res => {
+                                                    if (res.success) renderResults(res.data);
+                                                });
+                                        }, 300);
+                                    });
+
+                                    function renderResults(users) {
+                                        if (users.length === 0) {
+                                            resultsDiv.innerHTML = '<div style="padding: 10px; font-style: italic; color: #999;">No se encontraron usuarios</div>';
+                                        } else {
+                                            resultsDiv.innerHTML = users.map(u => `
+                                                <div class="user-result-item" data-id="${u.ID}" data-name="${u.display_name}">
+                                                    <span class="user-name">${u.display_name}</span>
+                                                    <span class="user-email">${u.user_email}</span>
+                                                </div>
+                                            `).join('');
+                                        }
+                                        resultsDiv.style.display = 'block';
+
+                                        document.querySelectorAll('.user-result-item').forEach(item => {
+                                            item.onclick = function() {
+                                                const id = this.getAttribute('data-id');
+                                                const name = this.getAttribute('data-name');
+                                                
+                                                searchInput.value = name;
+                                                searchInput.classList.add('selected');
+                                                hiddenInput.value = id;
+                                                resultsDiv.style.display = 'none';
+                                            };
+                                        });
+                                    }
+
+                                    // Close results when clicking outside
+                                    document.addEventListener('click', function(e) {
+                                        if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+                                            resultsDiv.style.display = 'none';
+                                        }
+                                    });
+                                });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
                             <th scope="row"><label><?php echo esc_html__('Origen de los datos', 'red-cultural-core'); ?></label></th>
                             <td>
                                 <label><input type="radio" name="data_source" value="fake" checked> <?php echo esc_html__('Datos de Prueba (Fake)', 'red-cultural-core'); ?></label><br>
@@ -217,6 +334,7 @@ final class Red_Cultural_Email_Tester
         $to = isset($_POST['test_recipient']) ? sanitize_email($_POST['test_recipient']) : '';
         $data_source = isset($_POST['data_source']) ? sanitize_text_field($_POST['data_source']) : 'fake';
         $resource_id = isset($_POST['resource_id']) ? absint($_POST['resource_id']) : 0;
+        $test_user_id = isset($_POST['test_user_id']) ? absint($_POST['test_user_id']) : 0;
         $accountant_email_post = isset($_POST['accountant_email']) ? sanitize_email($_POST['accountant_email']) : '';
 
         // Update accountant email option
@@ -240,10 +358,10 @@ final class Red_Cultural_Email_Tester
         try {
             switch ($email_type) {
                 case 'register':
-                    $sent = $this->send_test_register($to, $data_source);
+                    $sent = $this->send_test_register($to, $data_source, $test_user_id);
                     break;
                 case 'lost_password':
-                    $sent = $this->send_test_lost_password($to, $data_source);
+                    $sent = $this->send_test_lost_password($to, $data_source, $test_user_id);
                     break;
                 case 'contacto':
                     $sent = $this->send_test_contacto($to);
@@ -264,19 +382,19 @@ final class Red_Cultural_Email_Tester
                     $sent = $this->send_test_lesson_notif_specific($to);
                     break;
                 case 'wc_new_order':
-                    $sent = $this->send_test_wc_new_order($to, $data_source);
+                    $sent = $this->send_test_wc_new_order($to, $data_source, '', $resource_id, $test_user_id);
                     break;
                 case 'wc_new_order_course':
-                    $sent = $this->send_test_wc_new_order($to, $data_source, 'course', $resource_id);
+                    $sent = $this->send_test_wc_new_order($to, $data_source, 'course', $resource_id, $test_user_id);
                     break;
                 case 'wc_new_order_lessons':
-                    $sent = $this->send_test_wc_new_order($to, $data_source, 'lessons', $resource_id);
+                    $sent = $this->send_test_wc_new_order($to, $data_source, 'lessons', $resource_id, $test_user_id);
                     break;
                 case 'wc_new_order_book':
-                    $sent = $this->send_test_wc_new_order($to, $data_source, 'book');
+                    $sent = $this->send_test_wc_new_order($to, $data_source, 'book', 0, $test_user_id);
                     break;
                 case 'wc_bank_transfer':
-                    $sent = $this->send_test_wc_bank_transfer($to, $data_source, $resource_id);
+                    $sent = $this->send_test_wc_bank_transfer($to, $data_source, $resource_id, $test_user_id);
                     break;
                 default:
                     $error_msg = 'Tipo de email desconocido';
@@ -346,12 +464,18 @@ final class Red_Cultural_Email_Tester
         return wp_mail($to, 'TEST: ' . sprintf(__('Lista de alumnos: %s', 'red-cultural-individual-lesson'), $lesson_title), $email_content, $headers);
     }
 
-    private function send_test_register($to, $data_source)
+    private function send_test_register($to, $data_source, $test_user_id = 0)
     {
         $user_id = 0;
         $first_name = 'Usuario';
         
-        if ($data_source === 'real') {
+        if ($test_user_id > 0) {
+            $user_id = $test_user_id;
+            $user = get_userdata($user_id);
+            if ($user) {
+                $first_name = $user->first_name ?: $user->display_name;
+            }
+        } elseif ($data_source === 'real') {
             $users = get_users(['number' => 1, 'orderby' => 'ID', 'order' => 'DESC']);
             if (!empty($users)) {
                 $user_id = $users[0]->ID;
@@ -369,13 +493,19 @@ final class Red_Cultural_Email_Tester
         return false;
     }
 
-    private function send_test_lost_password($to, $data_source)
+    private function send_test_lost_password($to, $data_source, $test_user_id = 0)
     {
         $display_name = 'Usuario de Prueba';
         $user_login = 'tester';
         $user_data = null;
 
-        if ($data_source === 'real') {
+        if ($test_user_id > 0) {
+            $user_data = get_userdata($test_user_id);
+            if ($user_data) {
+                $display_name = $user_data->display_name ?: $user_data->user_login;
+                $user_login = $user_data->user_login;
+            }
+        } elseif ($data_source === 'real') {
             $users = get_users(['number' => 1, 'orderby' => 'ID', 'order' => 'DESC']);
             if (!empty($users)) {
                 $user_data = $users[0];
@@ -414,7 +544,7 @@ final class Red_Cultural_Email_Tester
         return false;
     }
 
-    private function send_test_wc_new_order($to, $data_source, $subtype = '', $resource_id = 0)
+    private function send_test_wc_new_order($to, $data_source, $subtype = '', $resource_id = 0, $test_user_id = 0)
     {
         if (!class_exists('WooCommerce')) {
             throw new Exception('WooCommerce no está activo.');
@@ -443,17 +573,18 @@ final class Red_Cultural_Email_Tester
             });
         }
 
-        // Mock Resource Data if resource_id is provided
-        // [OLD FILTER REMOVED - NOW PASSING VIA ARGS]
-
         // Override recipient for just this call
         add_filter('woocommerce_email_recipient_new_order', function($recipient, $order_id) use ($to) {
             return $to;
         }, 999, 2);
 
-        // We will use our custom email class once it's implemented
+        // We will use our custom email class
         if (class_exists('Red_Cultural_WC_Emails')) {
-            $sent = Red_Cultural_WC_Emails::get_instance()->send_custom_new_order($order->get_id(), $to, ['resource_id' => $resource_id]);
+            $extra_args = [
+                'resource_id' => $resource_id,
+                'test_user_id' => $test_user_id
+            ];
+            $sent = Red_Cultural_WC_Emails::get_instance()->send_custom_new_order($order->get_id(), $to, $extra_args);
         } else {
             $mailer = WC()->mailer();
             $email = isset($mailer->emails['WC_Email_New_Order']) ? $mailer->emails['WC_Email_New_Order'] : null;
@@ -465,7 +596,7 @@ final class Red_Cultural_Email_Tester
         return $sent;
     }
 
-    private function send_test_wc_bank_transfer($to, $data_source, $resource_id = 0)
+    private function send_test_wc_bank_transfer($to, $data_source, $resource_id = 0, $test_user_id = 0)
     {
         if (!class_exists('WooCommerce')) {
             throw new Exception('WooCommerce no está activo.');
@@ -485,7 +616,11 @@ final class Red_Cultural_Email_Tester
         }
 
         if (class_exists('Red_Cultural_WC_Emails')) {
-            return Red_Cultural_WC_Emails::get_instance()->send_bank_transfer_notification($order->get_id(), $to, ['resource_id' => $resource_id]);
+            $extra_args = [
+                'resource_id' => $resource_id,
+                'test_user_id' => $test_user_id
+            ];
+            return Red_Cultural_WC_Emails::get_instance()->send_bank_transfer_notification($order->get_id(), $to, $extra_args);
         }
 
         throw new Exception('La clase Red_Cultural_WC_Emails aún no está implementada.');

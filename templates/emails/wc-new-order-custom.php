@@ -14,6 +14,16 @@ $order_number = $order->get_order_number();
 $view = Red_Cultural_WC_Emails::identify_order_type($order);
 $access_links = Red_Cultural_WC_Emails::get_access_links($order);
 
+$billing_first_name = $order->get_billing_first_name();
+
+// Support for Email Tester user override
+if (isset($test_user_id) && $test_user_id > 0) {
+    $user = get_userdata($test_user_id);
+    if ($user) {
+        $billing_first_name = $user->first_name ?: $user->display_name;
+    }
+}
+
 // Shared data
 $subtotal = $order->get_subtotal_to_display();
 $shipping = $order->get_shipping_to_display();
