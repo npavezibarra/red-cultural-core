@@ -239,7 +239,7 @@ if (function_exists('do_blocks')) {
 
 	<div id="red-cultural-checkout-container" class="max-w-[1400px] mx-auto pt-16" style="padding-top:20px;">
 			<header id="red-cultural-checkout-header" class="border-b border-black flex justify-between items-end" style="margin-bottom:30px;padding-bottom:10px;">
-				<h1 id="red-cultural-checkout-title" class="text-4xl font-bold tracking-tighter"><?php echo esc_html__('FINALIZAR COMPRA', 'red-cultural-pages'); ?></h1>
+				<h1 id="red-cultural-checkout-title" class="text-3xl font-bold text-gray-900 mb-2"><?php echo esc_html__('Finalizar compra', 'red-cultural-pages'); ?></h1>
 				<div id="red-cultural-checkout-secure" class="text-[10px] uppercase tracking-widest text-gray-500">
 					<span class="material-symbols-outlined align-middle mr-1 text-[22px] leading-none">private_connectivity</span>
 					<?php echo esc_html__('Transacción segura', 'red-cultural-pages'); ?>

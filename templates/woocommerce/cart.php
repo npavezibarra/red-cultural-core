@@ -132,7 +132,7 @@ if (function_exists('do_blocks')) {
 		class="mx-auto"
 		style="max-width: var(--wp--style--global--wide-size); width: 100%; padding: 20px 0px !important;"
 	>
-		<h1 id="red-cultural-cart-title" class="font-bold mb-12" style="font-size:28px;letter-spacing:1px;text-transform:uppercase;"><?php echo esc_html__('Bolso de compra', 'red-cultural-pages'); ?></h1>
+		<h1 id="red-cultural-cart-title" class="text-3xl font-bold text-gray-900 mb-2"><?php echo esc_html__('Bolsa de compras', 'red-cultural-pages'); ?></h1>
 
 		<?php if ($cart->is_empty()) : ?>
 			<div class="bg-white p-8 rounded-sm shadow-sm border border-gray-100">
