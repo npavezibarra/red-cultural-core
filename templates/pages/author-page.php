@@ -97,6 +97,7 @@ if (function_exists('do_blocks')) {
         #author-page-wrapper { 
             min-height: 60vh; 
             max-width: var(--wp--style--global--wide-size);
+            padding: 30px 0px !important;
         }
     </style>
     <?php wp_head(); ?>
@@ -110,7 +111,7 @@ if (function_exists('do_blocks')) {
 	}
 	?>
 
-    <div id="author-page-wrapper" class="mx-auto px-6 py-8 md:py-16">
+    <div id="author-page-wrapper" class="mx-auto px-6">
         
         <div class="flex flex-col md:flex-row gap-12 md:gap-16">
             <!-- Sidebar / Header Column (25%) -->
@@ -185,15 +186,47 @@ if (function_exists('do_blocks')) {
                     <!-- Courses Section -->
                     <section id="section-courses" class="hidden">
                         <?php if ($courses_q->have_posts()) : ?>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <?php while ($courses_q->have_posts()) : $courses_q->the_post(); ?>
-                                    <?php $c_id = get_the_ID(); ?>
-                                    <div class="card-hover border border-zinc-100 p-5 rounded flex flex-col justify-between">
-                                        <div>
-                                            <h3 class="text-base font-medium mb-1 text-black"><?php the_title(); ?></h3>
-                                            <p class="text-zinc-500 text-xs leading-normal mb-4"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 15)); ?></p>
+                                    <?php 
+                                    $c_id = get_the_ID(); 
+                                    $thumb_url = get_the_post_thumbnail_url($c_id, 'medium');
+                                    $course_price = '';
+                                    if (class_exists('WooCommerce')) {
+                                        $product_ids = get_post_meta($c_id, 'learndash_woocommerce_product_ids', true);
+                                        if (is_array($product_ids) && !empty($product_ids)) {
+                                            $wc_product = wc_get_product($product_ids[0]);
+                                            if ($wc_product) {
+                                                $course_price = $wc_product->get_price_html();
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                    <div class="card-hover border border-zinc-100 rounded overflow-hidden flex flex-col h-full">
+                                        <?php if ($thumb_url) : ?>
+                                            <a href="<?php the_permalink(); ?>" class="block aspect-video overflow-hidden border-b border-zinc-50">
+                                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                                            </a>
+                                        <?php endif; ?>
+                                        
+                                        <div class="p-6 flex flex-col flex-grow">
+                                            <div class="flex justify-between items-start gap-4 mb-3">
+                                                <h3 class="text-base font-semibold leading-tight text-black">
+                                                    <a href="<?php the_permalink(); ?>" class="no-underline hover:text-zinc-600 transition-colors"><?php the_title(); ?></a>
+                                                </h3>
+                                                <?php if ($course_price) : ?>
+                                                    <span class="text-sm font-light text-zinc-900 whitespace-nowrap"><?php echo wp_kses_post($course_price); ?></span>
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                            <p class="text-zinc-500 text-xs leading-relaxed mb-6">
+                                                <?php echo esc_html(wp_trim_words(get_the_excerpt(), 18)); ?>
+                                            </p>
+                                            
+                                            <div class="mt-auto">
+                                                <a href="<?php the_permalink(); ?>" class="text-[10px] font-bold uppercase tracking-[0.2em] text-black hover:text-zinc-500 transition-colors no-underline border-b border-black hover:border-zinc-500 pb-1">Ver curso</a>
+                                            </div>
                                         </div>
-                                        <a href="<?php the_permalink(); ?>" class="text-[10px] font-bold uppercase tracking-wider text-black hover:text-zinc-500 transition-colors no-underline">Ver curso &rarr;</a>
                                     </div>
                                 <?php endwhile; wp_reset_postdata(); ?>
                             </div>
