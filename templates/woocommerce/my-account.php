@@ -471,7 +471,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 								$image = isset($course['image']) ? (string) $course['image'] : '';
 								?>
 								<div id="<?php echo esc_attr('red-cultural-ma-cursos-course-' . (string) $course_id); ?>" class="flex flex-col md:flex-row items-start md:items-center gap-8 group">
-									<div id="<?php echo esc_attr('red-cultural-ma-cursos-course-' . (string) $course_id . '-media'); ?>" class="w-full md:w-48 aspect-video bg-neutral-100 flex-shrink-0 relative overflow-hidden">
+									<div id="<?php echo esc_attr('red-cultural-ma-cursos-course-' . (string) $course_id . '-media'); ?>" class="w-full md:w-48 aspect-video bg-neutral-100 flex-shrink-0 relative overflow-hidden rounded-6px">
 										<?php if ($image !== '') : ?>
 											<img
 												id="<?php echo esc_attr('red-cultural-ma-cursos-course-' . (string) $course_id . '-img'); ?>"
