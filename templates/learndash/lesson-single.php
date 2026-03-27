@@ -393,6 +393,7 @@ if (function_exists('do_blocks')) {
 							</a>
 						</div>
 					<?php endif; ?>
+				</header>
 				<?php 
 				$video_wrapper_classes = 'relative bg-black md:rounded-lg overflow-hidden md:shadow-xl group mb-6 md:mb-12 -mx-6 md:mx-0';
 				if ($video_embed_html !== '') {
