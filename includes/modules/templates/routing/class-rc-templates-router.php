@@ -19,7 +19,7 @@ final class RC_Templates_Router {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_cart_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_checkout_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_thankyou_template'), 20);
-		// add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_single_product_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_single_product_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_nosotros_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_articulos_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_italia_template'), 20);
