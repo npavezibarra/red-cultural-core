@@ -58,15 +58,30 @@ final class RC_Templates_Handlers {
 		}
 
 		// Query if this product ID is used as the linked WooCommerce product for ANY LearnDash course
+		// Need to account for serialized arrays since learndash_woocommerce_product_ids is an array.
 		global $wpdb;
+		$like_int_str = '%i:' . $product_id . ';%';
+		$like_str_str = '%"' . $product_id . '"%';
+
 		$course_id = $wpdb->get_var($wpdb->prepare("
 			SELECT post_id FROM $wpdb->postmeta 
 			WHERE meta_key IN ('_pcg_woo_product_id', 'learndash_woocommerce_product_ids', '_learndash_woocommerce_product_ids') 
-			AND meta_value = %s LIMIT 1", 
-			$product_id
+			AND (
+				meta_value = %s 
+				OR meta_value LIKE %s 
+				OR meta_value LIKE %s
+			) LIMIT 1", 
+			$product_id,
+			$like_int_str,
+			$like_str_str
 		));
 
 		if ($course_id) {
+			return false;
+		}
+
+		// Fallback: Check if product is in 'cursos' category
+		if (has_term(array('curso', 'cursos', 'course', 'courses'), 'product_cat', $product_id)) {
 			return false;
 		}
 
