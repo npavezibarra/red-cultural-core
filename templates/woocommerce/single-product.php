@@ -150,9 +150,56 @@ if ( $linked_course_id > 0 ) {
                 </nav>
 
                 <h1 class="text-2xl md:text-3xl font-medium mb-2 leading-tight"><?php echo esc_html( $title ); ?></h1>
+                
+                <?php if ( $author_name ) : ?>
+                    <div class="flex items-center gap-2 mb-6 text-sm text-gray-500">
+                        <span>Por</span>
+                        <a id="rc-author-display-name-header" href="<?php echo esc_url( get_author_posts_url( $author_id ) ); ?>" class="font-medium text-black hover:underline decoration-gray-300 underline-offset-4 transition-all">
+                            <?php echo esc_html( $author_name ); ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
+
                 <div class="flex items-center gap-4 mb-6">
                     <span class="text-xl font-light text-gray-900"><?php echo $price_html; ?></span>
                 </div>
+
+                <?php if ( current_user_can( 'manage_options' ) ) : ?>
+                    <!-- Panel Admin de Autor y Estado -->
+                    <div id="rc-author-admin-ui" class="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-2 text-gray-700">
+                                    <i data-lucide="settings" class="w-4 h-4"></i>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider"><?php esc_html_e( 'Panel Admin', 'red-cultural-core' ); ?></span>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 bg-white border border-gray-100 px-3 py-1.5 rounded-lg shrink-0 scale-90 md:scale-100 origin-left">
+                                    <span class="text-[9px] font-bold uppercase text-gray-400">Estado:</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="rc-course-status-toggle" class="sr-only peer" <?php echo ( get_post_status() === 'publish' ) ? 'checked' : ''; ?>>
+                                        <div class="w-8 h-4 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                                        <span id="rc-status-label" class="ml-2 text-[9px] font-bold uppercase text-gray-600"><?php echo ( get_post_status() === 'publish' ) ? 'Publicado' : 'Borrador'; ?></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button id="rc-author-edit-trigger" class="text-[10px] bg-black text-white px-3 py-1 rounded-full font-bold uppercase hover:bg-gray-800 transition-colors shadow-sm" type="button">Cambiar Autor</button>
+                        </div>
+
+                        <div id="rc-author-admin-box" class="hidden mt-4 pt-4 border-t border-gray-200">
+                            <div class="relative w-full">
+                                <input type="text" id="rc-author-search-input" class="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm focus:border-black outline-none shadow-sm" placeholder="<?php esc_attr_e( 'Cambiar autor...', 'red-cultural-core' ); ?>" autocomplete="off">
+                                <div id="rc-author-search-results" class="hidden absolute left-0 top-full mt-1 w-full bg-white text-gray-800 rounded-lg shadow-2xl max-h-48 overflow-y-auto z-[9999] border border-gray-100 p-1"></div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mt-3">
+                                <div id="rc-author-edit-status" class="text-[10px] font-bold"></div>
+                                <button id="rc-author-edit-cancel" class="text-[10px] text-gray-400 font-bold hover:text-gray-600 uppercase" type="button">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
                 <!-- Texto a 22px -->
                 <p class="text-gray-500 leading-snug mb-8 text-[22px]">
