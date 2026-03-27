@@ -508,7 +508,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 									<a
 										id="<?php echo esc_attr('red-cultural-ma-cursos-course-' . (string) $course_id . '-continue'); ?>"
 										href="<?php echo esc_url($url); ?>"
-										class="border-2 border-black px-7 py-2 text-xs font-bold uppercase tracking-widest rounded-6px hover:bg-black hover:text-white transition-all duration-300 mt-4 md:mt-0 no-underline"
+										class="border border-black px-7 py-2 text-xs font-bold uppercase tracking-widest rounded-6px hover:bg-black hover:text-white transition-all duration-300 mt-4 md:mt-0 no-underline"
 									>
 										Continuar
 									</a>
@@ -576,7 +576,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 										<span id="<?php echo esc_attr('red-cultural-ma-order-' . (string) $oid . '-label-total'); ?>" class="label-caps block mb-1">Total</span>
 										<span id="<?php echo esc_attr('red-cultural-ma-order-' . (string) $oid . '-value-total'); ?>" class="text-body-lg font-bold"><?php echo wp_kses_post($total_label); ?></span>
 									</div>
-									<a id="<?php echo esc_attr('red-cultural-ma-order-' . (string) $oid . '-btn-view'); ?>" href="<?php echo esc_url($view_url); ?>" class="border-2 border-black px-10 py-3 text-xs font-bold uppercase tracking-widest rounded-6pc hover:bg-black hover:text-white transition-all duration-300 no-underline">
+									<a id="<?php echo esc_attr('red-cultural-ma-order-' . (string) $oid . '-btn-view'); ?>" href="<?php echo esc_url($view_url); ?>" class="border border-black px-10 py-3 text-xs font-bold uppercase tracking-widest rounded-6pc hover:bg-black hover:text-white transition-all duration-300 no-underline">
 										Ver
 									</a>
 								</div>
