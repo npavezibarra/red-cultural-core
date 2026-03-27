@@ -40,8 +40,12 @@ final class RC_Templates_Handlers {
 		add_filter('woocommerce_product_is_virtual', array(__CLASS__, 'force_course_products_virtual'), 10, 2);
 	}
 
-	public static function force_course_products_virtual(bool $is_virtual, $product): bool {
+	public static function force_course_products_virtual($is_virtual, $product) {
 		if ($is_virtual) {
+			return $is_virtual;
+		}
+
+		if (!is_object($product) || !is_callable([$product, 'get_id'])) {
 			return $is_virtual;
 		}
 
