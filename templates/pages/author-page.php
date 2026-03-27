@@ -100,7 +100,12 @@ if (function_exists('do_blocks')) {
             padding: 30px 0px !important;
         }
     </style>
-    <?php wp_head(); ?>
+    <?php 
+    if (current_user_can('manage_options')) {
+        wp_enqueue_media();
+    }
+    wp_head(); 
+    ?>
 </head>
 <body <?php body_class('selection:bg-black selection:text-white'); ?>>
     <?php if (function_exists('wp_body_open')) { wp_body_open(); } ?>
@@ -117,12 +122,18 @@ if (function_exists('do_blocks')) {
             <!-- Sidebar / Header Column (25%) -->
             <aside class="w-full md:w-1/4">
                 <header class="flex flex-col items-start gap-6">
-                    <div class="w-24 h-24 md:w-32 md:h-32 flex-shrink-0">
+                    <div id="rc-profile-photo-container" class="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 relative group/avatar <?php echo current_user_can('manage_options') ? 'cursor-pointer' : ''; ?>">
                         <img 
+                            id="rc-profile-photo-img"
                             src="<?php echo esc_url($author_avatar); ?>" 
                             alt="<?php echo esc_attr($author_name); ?>" 
-                            class="profile-image w-full h-full object-cover rounded-full border border-zinc-100"
+                            class="profile-image w-full h-full object-cover rounded-full border border-zinc-100 transition-all group-hover/avatar:opacity-80"
                         >
+                        <?php if (current_user_can('manage_options')) : ?>
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity bg-black/20 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera w-8 h-8 text-white"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="w-full">
                         <h1 class="text-2xl md:text-3xl font-semibold tracking-tight"><?php echo esc_html($author_name); ?></h1>
@@ -276,6 +287,59 @@ if (function_exists('do_blocks')) {
                 writingsTab.classList.remove('tab-active');
             }
         }
+
+        // Profile Photo Edit for Admins
+        document.addEventListener('DOMContentLoaded', function() {
+            const avatarContainer = document.getElementById('rc-profile-photo-container');
+            const avatarImg = document.getElementById('rc-profile-photo-img');
+            
+            if (!avatarContainer || !avatarImg) return;
+            if (!window.wp || !window.wp.media) return;
+
+            avatarContainer.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const frame = wp.media({
+                    title: 'Seleccionar Foto de Perfil',
+                    button: { text: 'Usar esta foto' },
+                    multiple: false
+                });
+
+                frame.on('select', function() {
+                    const attachment = frame.state().get('selection').first().toJSON();
+                    const imageUrl = attachment.url;
+                    
+                    // Show loading state
+                    avatarContainer.style.opacity = '0.5';
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'rc_update_author_profile_photo');
+                    formData.append('nonce', '<?php echo wp_create_nonce("rc_author_edit_nonce"); ?>');
+                    formData.append('user_id', '<?php echo $author_id; ?>');
+                    formData.append('image_url', imageUrl);
+
+                    fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(r => r.json())
+                    .then(res => {
+                        avatarContainer.style.opacity = '1';
+                        if (res.success) {
+                            avatarImg.src = imageUrl;
+                        } else {
+                            alert('Error al actualizar la foto: ' + (res.data || 'Error desconocido'));
+                        }
+                    })
+                    .catch(err => {
+                        avatarContainer.style.opacity = '1';
+                        console.error('Error:', err);
+                    });
+                });
+
+                frame.open();
+            });
+        });
     </script>
 
     <?php wp_footer(); ?>

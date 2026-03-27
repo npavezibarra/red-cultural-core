@@ -13,6 +13,7 @@ class RC_Author_Edit {
         add_action('wp_ajax_rc_search_authors', [__CLASS__, 'ajax_search_authors']);
         add_action('wp_ajax_rc_update_course_author', [__CLASS__, 'ajax_update_author']);
         add_action('wp_ajax_rc_update_course_status', [__CLASS__, 'ajax_update_status']);
+        add_action('wp_ajax_rc_update_author_profile_photo', [__CLASS__, 'ajax_update_author_profile_photo']);
         add_action('wp_footer', [__CLASS__, 'render_js']);
         
         // Back-end Metabox
@@ -244,6 +245,25 @@ class RC_Author_Edit {
         }
 
         wp_send_json_success(['status' => $status]);
+    }
+
+    public static function ajax_update_author_profile_photo() {
+        check_ajax_referer('rc_author_edit_nonce', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Unauthorized');
+        }
+
+        $user_id = isset($_POST['user_id']) ? absint($_POST['user_id']) : 0;
+        $image_url = isset($_POST['image_url']) ? esc_url_raw($_POST['image_url']) : '';
+
+        if (!$user_id || !$image_url) {
+            wp_send_json_error('Invalid data');
+        }
+
+        update_user_meta($user_id, 'rc_profile_photo', $image_url);
+        
+        wp_send_json_success(['image_url' => $image_url]);
     }
 
     public static function render_js() {
