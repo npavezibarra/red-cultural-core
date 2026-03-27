@@ -105,10 +105,20 @@ class RCIL_Frontend
             true
         );
 
+        // Determine course ID and author access for frontend capabilities
+        $course_id_for_caps = 0;
+        if (is_singular('sfwd-courses')) {
+            $course_id_for_caps = (int) get_the_ID();
+        } elseif (function_exists('learndash_get_course_id')) {
+            $course_id_for_caps = (int) learndash_get_course_id();
+        }
+        $user_id = get_current_user_id();
+        $is_course_admin = current_user_can('manage_options') || ($course_id_for_caps > 0 && (int) get_post_field('post_author', $course_id_for_caps) === $user_id);
+
         $params = [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('rcil_ajax_nonce'),
-            'course_id' => is_singular('sfwd-courses') ? get_the_ID() : learndash_get_course_id(),
+            'course_id' => is_singular('sfwd-courses') ? get_the_ID() : (function_exists('learndash_get_course_id') ? learndash_get_course_id() : 0),
             'buying_label' => __('Redirigiendo...', 'red-cultural-individual-lesson'),
             'buy_course_label' => __('COMPRAR CURSO COMPLETO', 'red-cultural-individual-lesson'),
             'buy_lessons_label' => __('COMPRAR LECCIONES', 'red-cultural-individual-lesson'),
@@ -121,7 +131,7 @@ class RCIL_Frontend
             'server_error_label' => __('Ocurrió un error en el servidor.', 'red-cultural-individual-lesson'),
 
             // Admin-only: inline lesson video URL editor
-            'is_admin' => current_user_can('manage_options'),
+            'is_admin' => $is_course_admin,
             'saving_label' => __('Guardando...', 'red-cultural-individual-lesson'),
             'saved_label' => __('Guardado', 'red-cultural-individual-lesson'),
             'video_url_placeholder' => __('URL de YouTube...', 'red-cultural-individual-lesson'),
@@ -132,15 +142,8 @@ class RCIL_Frontend
         ];
 
         // Template integration flags for Red Cultural Pages templates.
-        $course_id_for_caps = 0;
-        if (is_singular('sfwd-courses')) {
-            $course_id_for_caps = (int) get_the_ID();
-        } else {
-            $course_id_for_caps = (int) learndash_get_course_id();
-        }
-        $user_id = get_current_user_id();
         $params['is_rcp_template'] = (bool) did_action('template_redirect'); // coarse signal; JS will also detect DOM IDs.
-        $params['can_view_alumni'] = (bool) (current_user_can('manage_options') || ($course_id_for_caps > 0 && (int) get_post_field('post_author', $course_id_for_caps) === (int) $user_id));
+        $params['can_view_alumni'] = $is_course_admin;
 
         if (!empty($params['is_admin']) && is_singular('sfwd-courses')) {
             wp_enqueue_style('dashicons');
