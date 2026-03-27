@@ -250,7 +250,7 @@ if (function_exists('do_blocks')) {
 
         #red-cultural-ty-header {
             padding-top: 28px;
-            padding-bottom: 0px;
+            padding-bottom: 20px;
             border-bottom: 1px solid #e1e1e1;
         }
 
