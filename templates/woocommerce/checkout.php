@@ -206,6 +206,25 @@ if (function_exists('do_blocks')) {
 		#red-cultural-checkout-address-panel-billing,
 		#red-cultural-checkout-address-panel-shipping{width:50%}
 		#red-cultural-checkout-address-switcher.is-alt #red-cultural-checkout-address-track{transform:translateX(-50%)}
+
+		/* Client-side validation styles */
+		@keyframes rc-shake {
+			0%, 100% { transform: translateX(0); }
+			20%, 60% { transform: translateX(-4px); }
+			40%, 80% { transform: translateX(4px); }
+		}
+		.rc-shake-anim {
+			animation: rc-shake 0.4s ease-in-out;
+			border-color: #ef4444 !important;
+		}
+		.rc-field-error {
+			color: #ef4444;
+			font-size: 0.75rem;
+			font-weight: 600;
+			margin-top: 6px;
+			display: block;
+			animation: fadeIn 0.3s ease;
+		}
 	</style>
 	<?php wp_head(); ?>
 </head>
@@ -895,41 +914,78 @@ if (function_exists('do_blocks')) {
 			var shipToggle = document.getElementById('red-cultural-checkout-ship-toggle-input');
 			var authReq = document.getElementById('red-cultural-checkout-form');
 
-			function checkPhone() {
-				if (!placeOrderBtn) return;
+			if (!placeOrderBtn) return;
+
+			function clearErrors() {
+				document.querySelectorAll('.rc-field-error').forEach(function(el) { el.remove(); });
+				document.querySelectorAll('.rc-shake-anim').forEach(function(el) { el.classList.remove('rc-shake-anim'); });
+			}
+
+			function showError(inputEl, message) {
+				if (!inputEl) return;
+				var wrapper = inputEl.parentElement;
+				inputEl.classList.add('rc-shake-anim');
+				
+				var err = document.createElement('span');
+				err.className = 'rc-field-error';
+				err.textContent = message;
+				wrapper.appendChild(err);
+				
+				// Remove shake class after animation completes so it can be re-triggered later
+				setTimeout(function() {
+					inputEl.classList.remove('rc-shake-anim');
+				}, 400);
+			}
+
+			// Intercept the click on the "Confirmar Compra" button before WooCommerce handles it
+			placeOrderBtn.addEventListener('click', function(e) {
 				if (authReq && authReq.getAttribute('data-auth-required') === '1') {
-					return;
+					return; // Auth requirement logic handles its own UI
 				}
 
-				var phoneVal = '';
-				if (shipToggle && shipToggle.checked && sPhone) {
-					phoneVal = sPhone.value || '';
-				} else if (bPhone) {
-					phoneVal = bPhone.value || '';
+				clearErrors();
+				var hasError = false;
+				var firstErrorEl = null;
+
+				var activePhone = (shipToggle && shipToggle.checked && sPhone) ? sPhone : bPhone;
+				if (activePhone) {
+					if (activePhone.value.trim().length < 6) {
+						showError(activePhone, 'Por favor, ingresa un número de teléfono válido.');
+						hasError = true;
+						if (!firstErrorEl) firstErrorEl = activePhone;
+					}
 				}
 
-				if (phoneVal.trim().length < 6) {
-					placeOrderBtn.style.opacity = '0.5';
-					placeOrderBtn.style.pointerEvents = 'none';
+				var reqIds = ['billing_first_name', 'billing_last_name', 'billing_email'];
+				if (shipToggle && shipToggle.checked) {
+					reqIds = reqIds.concat(['shipping_first_name', 'shipping_last_name', 'shipping_address_1', 'shipping_city']);
 				} else {
-					placeOrderBtn.style.opacity = '1';
-					placeOrderBtn.style.pointerEvents = 'auto';
+					var hasPhysical = document.getElementById('billing_address_1');
+					if (hasPhysical) {
+						reqIds = reqIds.concat(['billing_address_1', 'billing_city']);
+					}
 				}
-			}
 
-			if (bPhone) {
-				bPhone.addEventListener('input', checkPhone);
-				bPhone.addEventListener('change', checkPhone);
-			}
-			if (sPhone) {
-				sPhone.addEventListener('input', checkPhone);
-				sPhone.addEventListener('change', checkPhone);
-			}
-			if (shipToggle) {
-				shipToggle.addEventListener('change', checkPhone);
-			}
-			
-			setTimeout(checkPhone, 100);
+				reqIds.forEach(function(id) {
+					var el = document.getElementById(id);
+					if (el && el.value.trim() === '') {
+						showError(el, 'Este campo es requerido.');
+						hasError = true;
+						if (!firstErrorEl) firstErrorEl = el;
+					}
+				});
+
+				if (hasError) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					
+					// Scroll to the first error smoothly
+					if (firstErrorEl) {
+						firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}
+				}
+			}, true); // Use capture phase to intercept before WooCommerce's default submit handlers
+
 		})();
 	</script>
 
