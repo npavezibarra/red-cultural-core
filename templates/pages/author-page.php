@@ -78,7 +78,7 @@ if (function_exists('do_blocks')) {
             -webkit-font-smoothing: antialiased;
         }
         .profile-image {
-            filter: grayscale(100%);
+            /* filter: grayscale(100%); */
         }
         .card-hover {
             transition: all 0.2s ease;
@@ -221,7 +221,7 @@ if (function_exists('do_blocks')) {
                                     <div class="card-hover border border-zinc-100 rounded overflow-hidden flex flex-col h-full">
                                         <?php if ($thumb_url) : ?>
                                             <a href="<?php the_permalink(); ?>" class="block aspect-video overflow-hidden border-b border-zinc-50">
-                                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover transition-all duration-500">
                                             </a>
                                         <?php endif; ?>
                                         
