@@ -294,7 +294,7 @@ if (function_exists('do_blocks')) {
 				<h1 class="text-2xl font-black text-gray-900 leading-tight mb-4 tracking-tight">
 					<?php echo esc_html($lesson_title); ?>
 				</h1>
-				<div class="w-full mb-6 relative">
+				<div class="w-full mb-[10px] relative">
 					<div class="flex justify-between text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">
 						<span><?php echo esc_html($progress_percent . '% completo'); ?></span>
 					</div>
