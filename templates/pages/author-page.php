@@ -19,7 +19,8 @@ if (!($author instanceof \WP_User)) {
 $author_id = $author->ID;
 $author_name = (string) $author->display_name;
 $author_bio = (string) $author->description;
-$author_avatar = (string) get_avatar_url($author_id, ['size' => 400]);
+$custom_avatar = get_user_meta($author_id, 'rc_profile_photo', true);
+$author_avatar = $custom_avatar ? $custom_avatar : (string) get_avatar_url($author_id, ['size' => 400]);
 
 // Try to get occupation/job title from meta, fallback to placeholder
 $author_job = (string) get_user_meta($author_id, 'occupation', true);

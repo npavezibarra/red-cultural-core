@@ -14,12 +14,12 @@ final class RC_Templates_Router {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_learndash_course_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_learndash_lesson_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_blog_post_template'), 20);
-		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_shop_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_shop_template'), 5);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_my_account_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_cart_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_checkout_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_thankyou_template'), 20);
-		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_single_product_template'), 20);
+		// add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_single_product_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_nosotros_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_articulos_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_italia_template'), 20);
@@ -452,18 +452,13 @@ final class RC_Templates_Router {
 			return;
 		}
 
-		$is_shop = function_exists('is_shop') && is_shop();
-
-		if (!$is_shop && function_exists('is_404') && is_404()) {
-			$path = '';
-			if (isset($_SERVER['REQUEST_URI'])) {
-				$path = (string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
-			}
-			$path = trim($path, '/');
-			if ($path === 'tienda') {
-				$is_shop = true;
-			}
+		$path = '';
+		if (isset($_SERVER['REQUEST_URI'])) {
+			$path = (string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
 		}
+		$path = trim($path, '/');
+
+		$is_shop = (function_exists('is_shop') && is_shop()) || ($path === 'tienda');
 
 		if (!$is_shop) {
 			return;
