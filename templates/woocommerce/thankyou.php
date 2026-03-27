@@ -267,8 +267,8 @@ if (function_exists('do_blocks')) {
         }
 
         #red-cultural-ty-courses {
-            padding-top: 10px;
-            padding-bottom: 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
             border-bottom: 1px solid #e1e1e1;
         }
 
