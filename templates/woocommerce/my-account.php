@@ -188,6 +188,9 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 			padding:20px 0px;
 			max-width:var(--wp--style--global--wide-size);
 		}
+		h1#red-cultural-ma-page-title {
+			font-weight: 600;
+		}
 		body {
 			font-family: 'Inter', sans-serif;
 			background-color: #fff;
@@ -390,7 +393,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 
 	<div id="red-cultural-ma-container" class="max-w-7xl mx-auto px-8 py-16 md:py-32">
 		<div id="red-cultural-ma-page-title-wrap" class="mb-10">
-			<h1 id="red-cultural-ma-page-title" class="text-3xl font-bold text-gray-900 mb-2">Mi cuenta</h1>
+			<h1 id="red-cultural-ma-page-title" class="text-3xl font-semibold text-gray-900 mb-2">Mi cuenta</h1>
 		</div>
 		<div id="red-cultural-ma-grid" class="grid grid-cols-1 md:grid-cols-12 gap-16">
 
