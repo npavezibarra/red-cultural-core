@@ -436,7 +436,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 
 				<!-- Tab: Mis Cursos -->
 				<section id="cursos" class="tab-content">
-					<div id="red-cultural-ma-cursos-header" class="border-b-2 border-black pb-6 mb-10">
+					<div id="red-cultural-ma-cursos-header" class="border-b border-black pb-6 mb-10">
 						<div id="red-cultural-ma-cursos-header-inner" class="flex items-end justify-between gap-6">
 							<h2 id="red-cultural-ma-cursos-title" class="text-4xl font-bold tracking-tight">Mis Cursos</h2>
 							<div id="red-cultural-ma-cursos-pagination" class="flex items-center gap-3">
@@ -520,7 +520,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 
 				<!-- Tab: Pedidos -->
 				<section id="pedidos" class="tab-content <?php echo $initial_tab === 'pedidos' ? 'active' : ''; ?>">
-					<div id="red-cultural-ma-pedidos-header" class="flex justify-between items-end border-b-2 border-black pb-6 mb-10">
+					<div id="red-cultural-ma-pedidos-header" class="flex justify-between items-end border-b border-black pb-6 mb-10">
 						<h2 id="red-cultural-ma-pedidos-title" class="text-4xl font-bold tracking-tight">Pedidos</h2>
 						<div id="red-cultural-ma-pedidos-header-right" class="flex items-center gap-6">
 							<span id="red-cultural-ma-pedidos-subtitle" class="text-sm text-neutral-400 font-bold uppercase tracking-widest">Historial</span>
@@ -660,7 +660,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 				?>
 
 				<section id="direcciones" class="tab-content <?php echo $initial_tab === 'direcciones' ? 'active' : ''; ?>">
-					<div id="red-cultural-ma-direcciones-header" class="border-b-2 border-black pb-6 mb-12 flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
+					<div id="red-cultural-ma-direcciones-header" class="border-b border-black pb-6 mb-12 flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
 						<h2 id="red-cultural-ma-direcciones-title" class="text-4xl font-bold tracking-tight shrink-0">Direcciones</h2>
 						<div id="red-cultural-ma-direcciones-notices" class="text-right flex flex-col items-end gap-1">
 							<?php if ($notices !== array()) : ?>
@@ -770,7 +770,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 
 				<!-- Tab: Detalles -->
 				<section id="detalles" class="tab-content <?php echo $initial_tab === 'detalles' ? 'active' : ''; ?>">
-					<div id="red-cultural-ma-detalles-header" class="border-b-2 border-black pb-6 mb-12">
+					<div id="red-cultural-ma-detalles-header" class="border-b border-black pb-6 mb-12">
 						<h2 id="red-cultural-ma-detalles-title" class="text-4xl font-bold tracking-tight">Detalles de la cuenta</h2>
 					</div>
 
