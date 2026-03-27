@@ -35,6 +35,42 @@ final class RC_Templates_Handlers {
 
 		// Global Checkout Fields Filter
 		add_filter('woocommerce_checkout_fields', array(__CLASS__, 'filter_checkout_fields_for_digital_products'), 20);
+
+		// Force course products to be treated as virtual (no shipping cost)
+		add_filter('woocommerce_product_needs_shipping', array(__CLASS__, 'force_course_products_virtual'), 10, 2);
+	}
+
+	public static function force_course_products_virtual(bool $needs_shipping, $product): bool {
+		if (!$needs_shipping) {
+			return $needs_shipping;
+		}
+
+		$product_id = $product->get_id();
+
+		// Check if it's an RCIL dynamic product
+		if (get_post_meta($product_id, '_rcil_is_dynamic_product', true)) {
+			return false;
+		}
+
+		// Check if it is explicitly linked to a LearnDash course
+		if (get_post_meta($product_id, '_related_course_id', true) || get_post_meta($product_id, '_related_course', true)) {
+			return false;
+		}
+
+		// Query if this product ID is used as the linked WooCommerce product for ANY LearnDash course
+		global $wpdb;
+		$course_id = $wpdb->get_var($wpdb->prepare("
+			SELECT post_id FROM $wpdb->postmeta 
+			WHERE meta_key IN ('_pcg_woo_product_id', 'learndash_woocommerce_product_ids', '_learndash_woocommerce_product_ids') 
+			AND meta_value = %s LIMIT 1", 
+			$product_id
+		));
+
+		if ($course_id) {
+			return false;
+		}
+
+		return $needs_shipping;
 	}
 
 	public static function filter_checkout_fields_for_digital_products(array $fields): array {
