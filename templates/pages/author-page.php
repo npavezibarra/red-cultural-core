@@ -81,11 +81,14 @@ if (function_exists('do_blocks')) {
             /* filter: grayscale(100%); */
         }
         .card-hover {
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            border-radius: 9px;
         }
         .card-hover:hover {
             background-color: #fafafa;
             border-color: #000;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
         }
         .tab-active {
             color: #000;
@@ -218,7 +221,7 @@ if (function_exists('do_blocks')) {
                                         }
                                     }
                                     ?>
-                                    <div class="card-hover border border-zinc-100 rounded overflow-hidden flex flex-col h-full">
+                                    <div class="card-hover border border-zinc-100 overflow-hidden flex flex-col h-full">
                                         <?php if ($thumb_url) : ?>
                                             <a href="<?php the_permalink(); ?>" class="block aspect-video overflow-hidden border-b border-zinc-50">
                                                 <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover transition-all duration-500">
