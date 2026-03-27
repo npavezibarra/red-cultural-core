@@ -50,6 +50,25 @@ if ( function_exists( 'do_blocks' ) ) {
 	$rcp_theme_footer_html = (string) do_blocks( '<!-- wp:template-part {"slug":"footer","area":"footer"} /-->' );
 }
 
+// Author Logic
+$author_id = (int) get_post_field( 'post_author', $product_id );
+$author_name = $author_id ? (string) get_the_author_meta( 'display_name', $author_id ) : '';
+
+// Fallback to linked course author if product author is not set or belongs to admin (ID 1)
+// and a course author is available.
+$linked_course_id = (int) get_post_meta( $product_id, '_related_course_id', true );
+if ( ! $linked_course_id ) {
+	$linked_course_id = (int) get_post_meta( $product_id, '_related_course', true );
+}
+
+if ( $linked_course_id > 0 ) {
+	$course_author_id = (int) get_post_field( 'post_author', $linked_course_id );
+	if ( $course_author_id > 0 && ( $author_id === 0 || $author_id === 1 ) ) {
+		$author_id = $course_author_id;
+		$author_name = (string) get_the_author_meta( 'display_name', $author_id );
+	}
+}
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -58,6 +77,7 @@ if ( function_exists( 'do_blocks' ) ) {
     <title><?php wp_title(); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
         

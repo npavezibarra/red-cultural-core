@@ -39,16 +39,42 @@ class RC_Author_Edit {
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Unauthorized');
         }
-        $course_id = isset($_POST['course_id']) ? absint($_POST['course_id']) : 0;
+        $post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
         $author_id = isset($_POST['author_id']) ? absint($_POST['author_id']) : 0;
 
-        if (!$course_id || !$author_id) {
+        if (!$post_id || !$author_id) {
             wp_send_json_error('Invalid data');
         }
 
-        $updated = wp_update_post(['ID' => $course_id, 'post_author' => $author_id]);
+        // Update the primary post
+        $updated = wp_update_post(['ID' => $post_id, 'post_author' => $author_id]);
         if (is_wp_error($updated)) {
             wp_send_json_error($updated->get_error_message());
+        }
+
+        // Handle Bidirectional Sync
+        $post_type = get_post_type($post_id);
+        $linked_post_id = 0;
+
+        if ($post_type === 'sfwd-courses') {
+            // Find linked product
+            $linked_post_id = get_post_meta($post_id, 'learndash_woocommerce_product_ids', true);
+            if (is_array($linked_post_id)) {
+                $linked_post_id = !empty($linked_post_id) ? (int) $linked_post_id[0] : 0;
+            } else {
+                $linked_post_id = absint($linked_post_id);
+            }
+        } elseif ($post_type === 'product') {
+            // Find linked course
+            $linked_post_id = get_post_meta($post_id, '_related_course_id', true);
+            if (!$linked_post_id) {
+                $linked_post_id = get_post_meta($post_id, '_related_course', true);
+            }
+            $linked_post_id = absint($linked_post_id);
+        }
+
+        if ($linked_post_id > 0) {
+            wp_update_post(['ID' => $linked_post_id, 'post_author' => $author_id]);
         }
 
         $user = get_userdata($author_id);
@@ -60,14 +86,14 @@ class RC_Author_Edit {
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Unauthorized');
         }
-        $course_id = isset($_POST['course_id']) ? absint($_POST['course_id']) : 0;
+        $post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
         $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : '';
 
-        if (!$course_id || !in_array($status, ['publish', 'draft'])) {
+        if (!$post_id || !in_array($status, ['publish', 'draft'])) {
             wp_send_json_error('Invalid data');
         }
 
-        $updated = wp_update_post(['ID' => $course_id, 'post_status' => $status]);
+        $updated = wp_update_post(['ID' => $post_id, 'post_status' => $status]);
         if (is_wp_error($updated)) {
             wp_send_json_error($updated->get_error_message());
         }
@@ -177,7 +203,7 @@ class RC_Author_Edit {
                 const formData = new FormData();
                 formData.append('action', 'rc_update_course_author');
                 formData.append('nonce', '<?php echo $nonce; ?>');
-                formData.append('course_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
+                formData.append('post_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
                 formData.append('author_id', authorId);
 
                 fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
@@ -209,7 +235,7 @@ class RC_Author_Edit {
                 const formData = new FormData();
                 formData.append('action', 'rc_update_course_status');
                 formData.append('nonce', '<?php echo $nonce; ?>');
-                formData.append('course_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
+                formData.append('post_id', '<?php echo is_singular() ? get_the_ID() : 0; ?>');
                 formData.append('status', status);
 
                 fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
