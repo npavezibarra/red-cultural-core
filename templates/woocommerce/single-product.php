@@ -161,9 +161,7 @@ if ( function_exists( 'do_blocks' ) ) {
                             </button>
                         </form>
 
-                        <button class="border border-gray-200 p-3 rounded-custom hover:bg-gray-50 transition-colors bg-transparent cursor-pointer h-12 w-12 flex items-center justify-center">
-                            <i class="fa-regular fa-heart text-sm"></i>
-                        </button>
+
                     </div>
                 </div>
 
