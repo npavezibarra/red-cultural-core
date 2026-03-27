@@ -229,21 +229,21 @@ if (function_exists('do_blocks')) {
                                         <?php endif; ?>
                                         
                                         <div class="p-6 flex flex-col flex-grow">
-                                            <div class="flex justify-between items-start gap-4 mb-3">
+                                            <div class="mb-3">
                                                 <h3 class="text-base font-semibold leading-tight text-black">
                                                     <a href="<?php the_permalink(); ?>" class="no-underline hover:text-zinc-600 transition-colors"><?php the_title(); ?></a>
                                                 </h3>
-                                                <?php if ($course_price) : ?>
-                                                    <span class="text-sm font-light text-zinc-900 whitespace-nowrap"><?php echo wp_kses_post($course_price); ?></span>
-                                                <?php endif; ?>
                                             </div>
                                             
                                             <p class="text-zinc-500 text-xs leading-relaxed mb-6">
                                                 <?php echo esc_html(wp_trim_words(get_the_excerpt(), 18)); ?>
                                             </p>
                                             
-                                            <div class="mt-auto">
-                                                <a href="<?php the_permalink(); ?>" class="text-[10px] font-bold uppercase tracking-[0.2em] text-black hover:text-zinc-500 transition-colors no-underline border-b border-black hover:border-zinc-500 pb-1">Ver curso</a>
+                                            <div class="mt-auto flex items-end justify-between">
+                                                <a href="<?php the_permalink(); ?>" class="text-[10px] font-bold uppercase tracking-[0.2em] text-black hover:text-zinc-500 transition-colors no-underline border-b border-black hover:border-zinc-500 pb-1 shrink-0">Ver curso</a>
+                                                <?php if ($course_price) : ?>
+                                                    <span class="text-sm font-bold text-gray-900 leading-none"><?php echo wp_kses_post($course_price); ?></span>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
