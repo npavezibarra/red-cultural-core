@@ -99,6 +99,11 @@ if (function_exists('do_blocks')) {
             max-width: var(--wp--style--global--wide-size);
             padding: 30px 0px !important;
         }
+        @media (max-width: 1240px) {
+            #author-page-wrapper {
+                padding: 30px !important;
+            }
+        }
     </style>
     <?php 
     if (current_user_can('manage_options')) {
