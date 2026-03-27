@@ -191,6 +191,9 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 		h1#red-cultural-ma-page-title {
 			font-weight: 600;
 		}
+		#red-cultural-ma-nav .nav-item {
+			border-bottom: 1px solid #a6a6a6;
+		}
 		body {
 			font-family: 'Inter', sans-serif;
 			background-color: #fff;
@@ -415,7 +418,7 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 					<button id="red-cultural-ma-nav-detalles" onclick="showTab('detalles')" class="nav-item <?php echo $initial_tab === 'detalles' ? 'active' : 'text-neutral-400 hover:text-black hover:bg-neutral-50'; ?> w-full text-left py-4 px-6 transition-all duration-300 flex items-center justify-between group">
 						<span id="red-cultural-ma-nav-detalles-label" class="text-xs uppercase tracking-[0.2em] font-bold">Detalles</span>
 					</button>
-					<button id="red-cultural-ma-nav-logout" onclick="window.location.href='<?php echo esc_js(esc_url($logout_url)); ?>'" class="w-full text-left py-4 px-6 text-neutral-400 hover:text-black hover:bg-neutral-50 transition-all duration-300 flex items-center justify-between group mt-8">
+					<button id="red-cultural-ma-nav-logout" onclick="window.location.href='<?php echo esc_js(esc_url($logout_url)); ?>'" class="nav-item w-full text-left py-4 px-6 text-neutral-400 hover:text-black hover:bg-neutral-50 transition-all duration-300 flex items-center justify-between group mt-8">
 						<span id="red-cultural-ma-nav-logout-label" class="text-xs uppercase tracking-[0.2em] font-bold">Cerrar Sesión</span>
 					</button>
 				</div>
