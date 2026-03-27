@@ -318,7 +318,9 @@ if (function_exists('do_blocks')) {
 											<h3 class="font-medium text-gray-800">
 												<span class="rcil-rcp-lesson-title"><?php echo esc_html($lesson_title); ?></span>
 											</h3>
-											<?php if (current_user_can('manage_options')) : ?>
+											<?php 
+											$can_edit = current_user_can('manage_options') || ($author_id > 0 && $author_id === $user_id);
+											if ($can_edit) : ?>
 												<button
 													type="button"
 													class="rcil-lesson-edit-trigger text-[10px] text-blue-500 font-semibold uppercase hover:underline"

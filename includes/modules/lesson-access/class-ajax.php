@@ -45,6 +45,27 @@ class RCIL_Ajax
     }
 
     /**
+     * Check if current user can edit this lesson.
+     */
+    private function can_edit_lesson($lesson_id): bool {
+        if (current_user_can('manage_options') || current_user_can('edit_post', $lesson_id)) {
+            return true;
+        }
+        $user_id = get_current_user_id();
+        if (!$user_id) {
+            return false;
+        }
+        $course_id = function_exists('learndash_get_course_id') ? (int) learndash_get_course_id($lesson_id) : 0;
+        if ($course_id > 0) {
+            $author_id = (int) get_post_field('post_author', $course_id);
+            if ($author_id === $user_id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Sanitize LearnDash "Video URL" input (URL, iFrame, or shortcode).
      */
     private function sanitize_video_url_input($value)
@@ -79,16 +100,12 @@ class RCIL_Ajax
     {
         check_ajax_referer('rcil_ajax_nonce', 'nonce');
 
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Unauthorized.', 'red-cultural-individual-lesson'));
-        }
-
         $lesson_id = isset($_POST['lesson_id']) ? absint($_POST['lesson_id']) : 0;
         if (!$lesson_id || get_post_type($lesson_id) !== 'sfwd-lessons') {
             wp_send_json_error(__('Invalid lesson.', 'red-cultural-individual-lesson'));
         }
 
-        if (!current_user_can('edit_post', $lesson_id)) {
+        if (!$this->can_edit_lesson($lesson_id)) {
             wp_send_json_error(__('Unauthorized.', 'red-cultural-individual-lesson'));
         }
 
@@ -134,16 +151,12 @@ class RCIL_Ajax
     {
         check_ajax_referer('rcil_ajax_nonce', 'nonce');
 
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Unauthorized.', 'red-cultural-individual-lesson'));
-        }
-
         $lesson_id = isset($_POST['lesson_id']) ? absint($_POST['lesson_id']) : 0;
         if (!$lesson_id || get_post_type($lesson_id) !== 'sfwd-lessons') {
             wp_send_json_error(__('Invalid lesson.', 'red-cultural-individual-lesson'));
         }
 
-        if (!current_user_can('edit_post', $lesson_id)) {
+        if (!$this->can_edit_lesson($lesson_id)) {
             wp_send_json_error(__('Unauthorized.', 'red-cultural-individual-lesson'));
         }
 
@@ -174,16 +187,12 @@ class RCIL_Ajax
     {
         check_ajax_referer('rcil_ajax_nonce', 'nonce');
 
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('No autorizado.', 'red-cultural-individual-lesson'));
-        }
-
         $lesson_id = isset($_POST['lesson_id']) ? absint($_POST['lesson_id']) : 0;
         if (!$lesson_id || get_post_type($lesson_id) !== 'sfwd-lessons') {
             wp_send_json_error(__('Lección no válida.', 'red-cultural-individual-lesson'));
         }
 
-        if (!current_user_can('edit_post', $lesson_id)) {
+        if (!$this->can_edit_lesson($lesson_id)) {
             wp_send_json_error(__('No autorizado.', 'red-cultural-individual-lesson'));
         }
 
@@ -289,16 +298,12 @@ class RCIL_Ajax
     {
         check_ajax_referer('rcil_ajax_nonce', 'nonce');
 
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Unauthorized.', 'red-cultural-individual-lesson'));
-        }
-
         $lesson_id = isset($_POST['lesson_id']) ? absint($_POST['lesson_id']) : 0;
         if (!$lesson_id || get_post_type($lesson_id) !== 'sfwd-lessons') {
             wp_send_json_error(__('Invalid lesson.', 'red-cultural-individual-lesson'));
         }
 
-        if (!current_user_can('delete_post', $lesson_id)) {
+        if (!$this->can_edit_lesson($lesson_id)) {
             wp_send_json_error(__('Unauthorized.', 'red-cultural-individual-lesson'));
         }
 
