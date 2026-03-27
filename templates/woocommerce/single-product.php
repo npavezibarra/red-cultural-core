@@ -109,7 +109,7 @@ if ( function_exists( 'do_blocks' ) ) {
         </div>
     <?php endif; ?>
 
-    <main id="red-cultural-product-page" class="max-w-5xl mx-auto px-4 md:px-8 py-12 md:py-20">
+    <main id="red-cultural-product-page" class="mx-auto" style="max-width: var(--wp--style--global--wide-size); width: 100%; padding: 20px 0px;">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
             
             <!-- Imagen única del producto (Cuadrada) -->
