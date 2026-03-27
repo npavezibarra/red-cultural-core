@@ -260,6 +260,19 @@ if (function_exists('do_blocks')) {
 				data-auth-required="<?php echo is_user_logged_in() ? '0' : '1'; ?>"
 			>
 				<div id="red-cultural-checkout-billing-col" class="billing-col">
+					<?php
+					$current_user = wp_get_current_user();
+					$b_first_name = (string) $checkout->get_value('billing_first_name');
+					$b_last_name  = (string) $checkout->get_value('billing_last_name');
+					$b_email      = (string) $checkout->get_value('billing_email');
+					$b_phone      = (string) $checkout->get_value('billing_phone');
+
+					if (is_user_logged_in()) {
+						if (!trim($b_first_name)) $b_first_name = $current_user->first_name;
+						if (!trim($b_last_name))  $b_last_name  = $current_user->last_name;
+						if (!trim($b_email))      $b_email      = $current_user->user_email;
+					}
+					?>
 					<div id="red-cultural-checkout-identity" class="mb-12">
 						<?php if ($has_physical) : ?>
 							<?php $ship_to_diff = (bool) $checkout->get_value('ship_to_different_address'); ?>
@@ -413,22 +426,22 @@ if (function_exists('do_blocks')) {
 											<div id="red-cultural-checkout-billing-name-row" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 												<div id="red-cultural-checkout-billing-first-name">
 													<label class="label-text" for="billing_first_name"><?php echo esc_html__('Nombre *', 'red-cultural-pages'); ?></label>
-													<input id="billing_first_name" name="billing_first_name" type="text" class="form-input" autocomplete="given-name" required value="<?php echo esc_attr((string) $checkout->get_value('billing_first_name')); ?>" placeholder="JUAN">
+													<input id="billing_first_name" name="billing_first_name" type="text" class="form-input" autocomplete="given-name" required value="<?php echo esc_attr($b_first_name); ?>" placeholder="JUAN">
 												</div>
 												<div id="red-cultural-checkout-billing-last-name">
 													<label class="label-text" for="billing_last_name"><?php echo esc_html__('Apellidos *', 'red-cultural-pages'); ?></label>
-													<input id="billing_last_name" name="billing_last_name" type="text" class="form-input" autocomplete="family-name" required value="<?php echo esc_attr((string) $checkout->get_value('billing_last_name')); ?>" placeholder="PÉREZ">
+													<input id="billing_last_name" name="billing_last_name" type="text" class="form-input" autocomplete="family-name" required value="<?php echo esc_attr($b_last_name); ?>" placeholder="PÉREZ">
 												</div>
 											</div>
 
 											<div id="red-cultural-checkout-billing-contact-row" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 												<div id="red-cultural-checkout-billing-email">
 													<label class="label-text" for="billing_email"><?php echo esc_html__('Email *', 'red-cultural-pages'); ?></label>
-													<input id="billing_email" name="billing_email" type="email" class="form-input" autocomplete="email" required value="<?php echo esc_attr((string) $checkout->get_value('billing_email')); ?>" placeholder="EMAIL@EJEMPLO.COM">
+													<input id="billing_email" name="billing_email" type="email" class="form-input" autocomplete="email" required value="<?php echo esc_attr($b_email); ?>" placeholder="EMAIL@EJEMPLO.COM">
 												</div>
 												<div id="red-cultural-checkout-billing-phone">
 													<label class="label-text" for="billing_phone"><?php echo esc_html__('Teléfono *', 'red-cultural-pages'); ?></label>
-													<input id="billing_phone" name="billing_phone" type="tel" class="form-input" autocomplete="tel" required value="<?php echo esc_attr((string) $checkout->get_value('billing_phone')); ?>" placeholder="+56 9 ...">
+													<input id="billing_phone" name="billing_phone" type="tel" class="form-input" autocomplete="tel" required value="<?php echo esc_attr($b_phone); ?>" placeholder="+56 9 ...">
 												</div>
 											</div>
 
@@ -500,22 +513,22 @@ if (function_exists('do_blocks')) {
 							<div id="red-cultural-checkout-name-row" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 								<div id="red-cultural-checkout-billing-first-name">
 									<label class="label-text" for="billing_first_name"><?php echo esc_html__('Nombre *', 'red-cultural-pages'); ?></label>
-									<input id="billing_first_name" name="billing_first_name" type="text" class="form-input" autocomplete="given-name" required value="<?php echo esc_attr((string) $checkout->get_value('billing_first_name')); ?>" placeholder="JUAN">
+									<input id="billing_first_name" name="billing_first_name" type="text" class="form-input" autocomplete="given-name" required value="<?php echo esc_attr($b_first_name); ?>" placeholder="JUAN">
 								</div>
 								<div id="red-cultural-checkout-billing-last-name">
 									<label class="label-text" for="billing_last_name"><?php echo esc_html__('Apellidos *', 'red-cultural-pages'); ?></label>
-									<input id="billing_last_name" name="billing_last_name" type="text" class="form-input" autocomplete="family-name" required value="<?php echo esc_attr((string) $checkout->get_value('billing_last_name')); ?>" placeholder="PÉREZ">
+									<input id="billing_last_name" name="billing_last_name" type="text" class="form-input" autocomplete="family-name" required value="<?php echo esc_attr($b_last_name); ?>" placeholder="PÉREZ">
 								</div>
 							</div>
 
 							<div id="red-cultural-checkout-contact-row" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 								<div id="red-cultural-checkout-billing-email">
 									<label class="label-text" for="billing_email"><?php echo esc_html__('Email *', 'red-cultural-pages'); ?></label>
-									<input id="billing_email" name="billing_email" type="email" class="form-input" autocomplete="email" required value="<?php echo esc_attr((string) $checkout->get_value('billing_email')); ?>" placeholder="EMAIL@EJEMPLO.COM">
+									<input id="billing_email" name="billing_email" type="email" class="form-input" autocomplete="email" required value="<?php echo esc_attr($b_email); ?>" placeholder="EMAIL@EJEMPLO.COM">
 								</div>
 								<div id="red-cultural-checkout-billing-phone">
 									<label class="label-text" for="billing_phone"><?php echo esc_html__('Teléfono *', 'red-cultural-pages'); ?></label>
-									<input id="billing_phone" name="billing_phone" type="tel" class="form-input" autocomplete="tel" required value="<?php echo esc_attr((string) $checkout->get_value('billing_phone')); ?>" placeholder="+56 9 ...">
+									<input id="billing_phone" name="billing_phone" type="tel" class="form-input" autocomplete="tel" required value="<?php echo esc_attr($b_phone); ?>" placeholder="+56 9 ...">
 								</div>
 							</div>
 						<?php endif; ?>
@@ -871,6 +884,52 @@ if (function_exists('do_blocks')) {
 
 			toggle.addEventListener('change', sync);
 			sync();
+		})();
+	</script>
+
+	<script>
+		(function() {
+			var placeOrderBtn = document.getElementById('red-cultural-checkout-place-order');
+			var bPhone = document.getElementById('billing_phone');
+			var sPhone = document.getElementById('shipping_phone');
+			var shipToggle = document.getElementById('red-cultural-checkout-ship-toggle-input');
+			var authReq = document.getElementById('red-cultural-checkout-form');
+
+			function checkPhone() {
+				if (!placeOrderBtn) return;
+				if (authReq && authReq.getAttribute('data-auth-required') === '1') {
+					return;
+				}
+
+				var phoneVal = '';
+				if (shipToggle && shipToggle.checked && sPhone) {
+					phoneVal = sPhone.value || '';
+				} else if (bPhone) {
+					phoneVal = bPhone.value || '';
+				}
+
+				if (phoneVal.trim().length < 6) {
+					placeOrderBtn.style.opacity = '0.5';
+					placeOrderBtn.style.pointerEvents = 'none';
+				} else {
+					placeOrderBtn.style.opacity = '1';
+					placeOrderBtn.style.pointerEvents = 'auto';
+				}
+			}
+
+			if (bPhone) {
+				bPhone.addEventListener('input', checkPhone);
+				bPhone.addEventListener('change', checkPhone);
+			}
+			if (sPhone) {
+				sPhone.addEventListener('input', checkPhone);
+				sPhone.addEventListener('change', checkPhone);
+			}
+			if (shipToggle) {
+				shipToggle.addEventListener('change', checkPhone);
+			}
+			
+			setTimeout(checkPhone, 100);
 		})();
 	</script>
 
