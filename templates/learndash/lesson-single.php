@@ -497,8 +497,9 @@ if (function_exists('do_blocks')) {
 				</div>
 
 				<!-- Mobile Only: Lesson Menu Trigger Button -->
-				<button id="rcp-lesson-menu-trigger" class="flex md:hidden mb-12 items-center justify-center w-14 h-14 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors active:scale-95 shadow-sm">
-					<i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
+				<button id="rcp-lesson-menu-trigger" class="flex md:hidden mb-12 items-center justify-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors active:scale-95 shadow-sm">
+					<i data-lucide="menu" class="w-5 h-5 text-gray-700 mr-2"></i>
+					<span class="text-xs font-bold text-gray-700 uppercase tracking-widest"><?php echo esc_html__('Lecciones', 'red-cultural-pages'); ?></span>
 				</button>
 
 				<?php if (!$lesson_is_scheduled && !$rcp_is_locked) : ?>
