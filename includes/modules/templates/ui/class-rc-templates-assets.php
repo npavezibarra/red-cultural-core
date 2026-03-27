@@ -16,6 +16,7 @@ final class RC_Templates_Assets {
 		add_action('wp_footer', array(__CLASS__, 'render_main_nav_script'), 999);
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_404_assets'), 20);
 		add_action('wp_head', array(__CLASS__, 'maybe_hide_nosotros_post_title'), 30);
+		add_action('wp_head', array(__CLASS__, 'maybe_adjust_cursos_background'), 30);
 	}
 
 	public static function enqueue_main_nav_assets(): void {
@@ -304,6 +305,21 @@ final class RC_Templates_Assets {
 		if (!function_exists('is_page') || !is_page(array('nosotros', 'quienes-somos'))) return;
 		?>
 		<style>h1.wp-block-post-title{display:none !important}</style>
+		<?php
+	}
+	
+	public static function maybe_adjust_cursos_background(): void {
+		if (is_admin()) return;
+		
+		$is_cursos = is_post_type_archive('sfwd-courses') || (function_exists('is_page') && is_page(array('cursos', 'nuestros-cursos')));
+		
+		if (!$is_cursos) return;
+		?>
+		<style>
+			main#wp--skip-link--target {
+				background: #f9f9f9 !important;
+			}
+		</style>
 		<?php
 	}
 
