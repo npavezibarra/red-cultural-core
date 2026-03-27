@@ -184,8 +184,8 @@ $guest_bg_live = 'https://red-cultural.cl/wp-content/uploads' . $guest_bg_rel;
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 	<?php wp_head(); ?>
 	<style>
-		#red-cultural-ma-container{
-			padding:30px 0px;
+		div#red-cultural-ma-container{
+			padding:20px 0px;
 			max-width:var(--wp--style--global--wide-size);
 		}
 		body {

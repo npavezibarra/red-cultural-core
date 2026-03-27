@@ -296,6 +296,7 @@ if (!function_exists('rcp_red_cultural_cursos_shortcode')) {
 			.aspect-video-custom{aspect-ratio:16/9}
 			.rcp-course-thumb{background-size:cover;background-position:center}
 			input#<?php echo esc_attr($search_input_id); ?>{font-weight:600;font-size:16px}
+			.rcp-red-cultural-cursos.min-h-screen.py-8 { padding-top: 0px; }
 		</style>
 		<div class="rcp-red-cultural-cursos min-h-screen py-8" data-rcp-cursos data-ajax-url="<?php echo esc_attr((string) $ajax_url); ?>" data-nonce="<?php echo esc_attr((string) $nonce); ?>" data-limit="<?php echo esc_attr((string) $limit); ?>">
 			<div class="max-w-7xl mx-auto">
