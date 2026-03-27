@@ -210,11 +210,20 @@ if (function_exists('do_blocks')) {
                                     <?php 
                                     $c_id = get_the_ID(); 
                                     $thumb_url = get_the_post_thumbnail_url($c_id, 'medium');
-                                    $course_price = '';
-                                    if (class_exists('WooCommerce')) {
-                                        $product_ids = get_post_meta($c_id, 'learndash_woocommerce_product_ids', true);
-                                        if (is_array($product_ids) && !empty($product_ids)) {
-                                            $wc_product = wc_get_product($product_ids[0]);
+                                    
+                                    // 1. Try LearnDash Native settings via existing shortcode helper
+                                    $course_price = function_exists('rcp_format_ld_course_price') ? rcp_format_ld_course_price($c_id) : '';
+
+                                    // 2. Try WooCommerce Product Relation if LearnDash price is empty
+                                    if (!$course_price && class_exists('WooCommerce')) {
+                                        $product_id = function_exists('rcil_get_course_woo_product_id') ? rcil_get_course_woo_product_id($c_id) : false;
+                                        if (!$product_id) {
+                                            $p_ids = get_post_meta($c_id, 'learndash_woocommerce_product_ids', true);
+                                            $product_id = is_array($p_ids) ? reset($p_ids) : $p_ids;
+                                        }
+
+                                        if ($product_id) {
+                                            $wc_product = wc_get_product($product_id);
                                             if ($wc_product) {
                                                 $course_price = $wc_product->get_price_html();
                                             }
