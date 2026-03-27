@@ -19,6 +19,7 @@ final class RC_Templates_Router {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_cart_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_checkout_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_thankyou_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_woocommerce_single_product_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_nosotros_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_articulos_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_italia_template'), 20);
@@ -539,5 +540,28 @@ final class RC_Templates_Router {
 		}
 
 		return $template;
+	}
+
+	public static function maybe_render_woocommerce_single_product_template(): void {
+		if (is_admin() || is_feed()) {
+			return;
+		}
+
+		if (!is_singular('product')) {
+			return;
+		}
+
+		$enabled = (bool) apply_filters('rcp_enable_woocommerce_single_product_template', true);
+		if (!$enabled) {
+			return;
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/woocommerce/single-product.php';
+		if (!file_exists($template_file)) {
+			return;
+		}
+
+		require $template_file;
+		exit;
 	}
 }
