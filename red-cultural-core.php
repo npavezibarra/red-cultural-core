@@ -84,7 +84,6 @@ final class Red_Cultural_Core
     {
         add_post_type_support('sfwd-courses', 'excerpt');
         add_post_type_support('sfwd-lessons', 'excerpt');
-        add_post_type_support('product', 'author');
     }
 }
 

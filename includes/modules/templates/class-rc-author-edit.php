@@ -14,6 +14,151 @@ class RC_Author_Edit {
         add_action('wp_ajax_rc_update_course_author', [__CLASS__, 'ajax_update_author']);
         add_action('wp_ajax_rc_update_course_status', [__CLASS__, 'ajax_update_status']);
         add_action('wp_footer', [__CLASS__, 'render_js']);
+        
+        // Back-end Metabox
+        add_action('add_meta_boxes', [__CLASS__, 'add_author_metabox']);
+        add_action('save_post_product', [__CLASS__, 'save_author_metabox'], 10, 2);
+        add_action('admin_enqueue_scripts', [__CLASS__, 'enqueue_admin_assets']);
+    }
+
+    public static function enqueue_admin_assets($hook) {
+        if (!in_array($hook, ['post.php', 'post-new.php'])) return;
+        if (get_post_type() !== 'product') return;
+        
+        wp_enqueue_script('lucide', 'https://unpkg.com/lucide@latest', [], null, true);
+    }
+
+    public static function add_author_metabox() {
+        add_meta_box(
+            'rc_author_metabox',
+            'Autor del Producto (Autosuggest)',
+            [__CLASS__, 'render_metabox'],
+            'product',
+            'side',
+            'default'
+        );
+    }
+
+    public static function render_metabox($post) {
+        $author_id = (int) $post->post_author;
+        $author_name = $author_id ? get_the_author_meta('display_name', $author_id) : 'Seleccionar autor...';
+        $nonce = wp_create_nonce('rc_author_edit_nonce');
+        ?>
+        <div id="rc-backend-author-ui" class="rc-author-admin-ui">
+            <div class="current-author-display mb-2" style="font-weight: 600; font-size: 13px;">
+                Actual: <span id="rc-author-display-name-header" style="color: #2271b1;"><?php echo esc_html($author_name); ?></span>
+            </div>
+            
+            <div class="relative w-full">
+                <input type="text" id="rc-author-search-input" class="components-text-control__input" style="width: 100%;" placeholder="Buscar profesor..." autocomplete="off">
+                <input type="hidden" name="rc_post_author_id" id="rc-post-author-id-hidden" value="<?php echo $author_id; ?>">
+                <div id="rc-author-search-results" class="hidden absolute left-0 top-full mt-1 w-full bg-white text-gray-800 rounded shadow-xl max-h-48 overflow-y-auto z-[9999] border border-gray-100 p-1"></div>
+            </div>
+
+            <div id="rc-author-edit-status" class="text-[10px] mt-2 font-bold" style="font-size: 10px; min-height: 15px;"></div>
+        </div>
+        
+        <style>
+            .rc-author-admin-ui .hidden { display: none !important; }
+            .author-result-item { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #f0f0f1; border-radius: 4px; }
+            .author-result-item:hover { background-color: #f0f0f1; }
+            .author-result-item:last-child { border-bottom: none; }
+        </style>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('rc-author-search-input');
+            const resultsDiv = document.getElementById('rc-author-search-results');
+            const hiddenInput = document.getElementById('rc-post-author-id-hidden');
+            const nameDisplay = document.getElementById('rc-author-display-name-header');
+            const statusDiv = document.getElementById('rc-author-edit-status');
+
+            if (!searchInput) return;
+
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                const query = e.target.value.trim();
+                if (query.length < 2) {
+                    resultsDiv.innerHTML = '';
+                    resultsDiv.classList.add('hidden');
+                    return;
+                }
+                searchTimeout = setTimeout(() => {
+                    fetch('<?php echo admin_url('admin-ajax.php'); ?>?action=rc_search_authors&nonce=<?php echo $nonce; ?>&search=' + encodeURIComponent(query))
+                        .then(r => r.json())
+                        .then(res => {
+                            if (res.success) renderResults(res.data);
+                        });
+                }, 300);
+            });
+
+            function renderResults(users) {
+                if (users.length === 0) {
+                    resultsDiv.innerHTML = '<div class="px-3 py-2 text-xs text-gray-400 italic">No se encontraron profesores</div>';
+                } else {
+                    resultsDiv.innerHTML = users.map(u => `
+                        <div class="author-result-item" data-id="${u.ID}" data-name="${u.display_name}">
+                            <div style="font-weight: 600;">${u.display_name}</div>
+                            <div style="font-size: 10px; color: #646970;">${u.user_email}</div>
+                        </div>
+                    `).join('');
+                }
+                resultsDiv.classList.remove('hidden');
+
+                resultsDiv.querySelectorAll('.author-result-item').forEach(item => {
+                    item.onclick = (e) => {
+                        e.stopPropagation();
+                        hiddenInput.value = item.dataset.id;
+                        nameDisplay.textContent = item.dataset.name;
+                        searchInput.value = '';
+                        resultsDiv.classList.add('hidden');
+                        statusDiv.textContent = 'Seleccionado. Recuerda Guardar el producto.';
+                        statusDiv.style.color = '#d63638';
+                    };
+                });
+            }
+
+            // Close results on click outside
+            document.addEventListener('click', (e) => {
+                if (!resultsDiv.contains(e.target) && e.target !== searchInput) {
+                    resultsDiv.classList.add('hidden');
+                }
+            });
+        });
+        </script>
+        <?php
+    }
+
+    public static function save_author_metabox($post_id, $post) {
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+        if (!current_user_can('edit_post', $post_id)) return;
+        if (!isset($_POST['rc_post_author_id'])) return;
+
+        $new_author_id = absint($_POST['rc_post_author_id']);
+        if ($new_author_id > 0 && $new_author_id !== (int) $post->post_author) {
+            // Remove this action to avoid infinite loop when wp_update_post is called
+            remove_action('save_post_product', [__CLASS__, 'save_author_metabox']);
+            
+            wp_update_post([
+                'ID' => $post_id,
+                'post_author' => $new_author_id
+            ]);
+
+            // Sync with LearnDash course if linked
+            $linked_course_id = get_post_meta($post_id, '_related_course_id', true);
+            if (!$linked_course_id) {
+                $linked_course_id = get_post_meta($post_id, '_related_course', true);
+            }
+            if ($linked_course_id) {
+                wp_update_post([
+                    'ID' => absint($linked_course_id),
+                    'post_author' => $new_author_id
+                ]);
+            }
+
+            add_action('save_post_product', [__CLASS__, 'save_author_metabox'], 10, 2);
+        }
     }
 
     public static function ajax_search_authors() {
