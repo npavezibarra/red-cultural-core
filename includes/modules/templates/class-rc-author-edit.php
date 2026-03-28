@@ -14,6 +14,7 @@ class RC_Author_Edit {
         add_action('wp_ajax_rc_update_course_author', [__CLASS__, 'ajax_update_author']);
         add_action('wp_ajax_rc_update_course_status', [__CLASS__, 'ajax_update_status']);
         add_action('wp_ajax_rc_update_author_profile_photo', [__CLASS__, 'ajax_update_author_profile_photo']);
+        add_action('wp_ajax_rc_update_author_meta', [__CLASS__, 'ajax_update_author_meta']);
         add_action('wp_footer', [__CLASS__, 'render_js']);
         
         // Back-end Metabox
@@ -249,8 +250,9 @@ class RC_Author_Edit {
 
     public static function ajax_update_author_profile_photo() {
         check_ajax_referer('rc_author_edit_nonce', 'nonce');
+        $user_id = isset($_POST['user_id']) ? absint($_POST['user_id']) : 0;
         
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('manage_options') && get_current_user_id() !== $user_id) {
             wp_send_json_error('Unauthorized');
         }
 
@@ -264,6 +266,57 @@ class RC_Author_Edit {
         update_user_meta($user_id, 'rc_profile_photo', $image_url);
         
         wp_send_json_success(['image_url' => $image_url]);
+    }
+
+    public static function ajax_update_author_meta() {
+        check_ajax_referer('rc_author_edit_nonce', 'nonce');
+        
+        $user_id = isset($_POST['user_id']) ? absint($_POST['user_id']) : 0;
+        $meta_key = isset($_POST['meta_key']) ? sanitize_key($_POST['meta_key']) : '';
+        $meta_value = isset($_POST['meta_value']) ? $_POST['meta_value'] : '';
+
+        if (!$user_id || !$meta_key) {
+            wp_send_json_error('Invalid data');
+        }
+
+        if (!current_user_can('edit_user', $user_id)) {
+            wp_send_json_error('Unauthorized');
+        }
+
+        // Validate meta key
+        $allowed_keys = [
+            'rc_author_title',
+            'rc_academic_specialty',
+            'rc_social_facebook',
+            'rc_social_instagram',
+            'rc_social_youtube',
+            'rc_social_x',
+            'description' // Native WP Bio
+        ];
+
+        if (!in_array($meta_key, $allowed_keys)) {
+            wp_send_json_error('Meta key not allowed');
+        }
+
+        if ($meta_key === 'description' || $meta_key === 'rc_academic_specialty') {
+            // Update user meta or description
+            if ($meta_key === 'description') {
+                wp_update_user([
+                    'ID' => $user_id,
+                    'description' => wp_kses_post($meta_value)
+                ]);
+            } else {
+                update_user_meta($user_id, $meta_key, wp_kses_post($meta_value));
+            }
+        } else {
+            $value_to_save = is_numeric($meta_value) ? $meta_value : sanitize_text_field($meta_value);
+            if (strpos($meta_key, 'social') !== false || $meta_key === 'rc_social_x') {
+                $value_to_save = esc_url_raw($meta_value);
+            }
+            update_user_meta($user_id, $meta_key, $value_to_save);
+        }
+
+        wp_send_json_success(['meta_key' => $meta_key, 'meta_value' => $meta_value]);
     }
 
     public static function render_js() {
