@@ -175,24 +175,22 @@ if (function_exists('do_blocks')) {
 				<h1 id="red-cultural-course-title" class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
 					<?php echo esc_html($title); ?>
 				</h1>
-				<p id="red-cultural-course-summary" class="text-sm leading-relaxed mb-8 opacity-90 max-w-xl">
-					<?php echo esc_html($desc); ?>
-				</p>
-
-
-
 				<?php 
 				if ($author_name !== '') : 
 					$custom_avatar = get_user_meta($author_id, 'rc_profile_photo', true);
 					$author_avatar = $custom_avatar ? $custom_avatar : (string) get_avatar_url($author_id, ['size' => 100]);
 				?>
-					<a id="red-cultural-course-author" href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="flex items-center space-x-3 no-underline hover:opacity-80 transition-opacity">
+					<a id="red-cultural-course-author" href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="flex items-center space-x-3 no-underline hover:opacity-80 transition-opacity mb-6">
 						<div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center overflow-hidden border-2 border-white/20">
 							<img src="<?php echo esc_url($author_avatar); ?>" alt="<?php echo esc_attr($author_name); ?>" class="w-full h-full object-cover">
 						</div>
 						<span id="rc-author-display-name-header" class="text-sm font-medium text-white"><?php echo esc_html($author_name); ?></span>
 					</a>
 				<?php endif; ?>
+
+				<p id="red-cultural-course-summary" class="text-sm leading-relaxed mb-8 opacity-90 max-w-xl">
+					<?php echo esc_html($desc); ?>
+				</p>
 			</div>
 		</div>
 	</header>
