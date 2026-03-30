@@ -84,7 +84,7 @@ final class RC_Templates_Assets {
 			.rcp-cart-link{display:inline-flex;align-items:center;justify-content:center;color:#000 !important;text-decoration:none;position:relative}
 			.rcp-cart-link:hover{opacity:.75}
 			.rcp-cart-text{display:none;align-items:center;gap:10px}
-			.rcp-cart-badge{position:absolute;top:-6px;right:-14px;background:#fc5252;color:#fff;border-radius:982px;min-width:20px;height:23px;padding:0px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;line-height:1}
+			.rcp-cart-badge{position:absolute;top:-10px;right:-18px;background:#fc5252;color:#fff;border-radius:982px;min-width:20px;height:20px;padding:0px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;line-height:1}
 			.rcp-account-wrap{position:relative}
 			.rcp-account-toggle{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;outline:0;box-shadow:none;padding:0;cursor:pointer}
 			.rcp-account-toggle:focus,

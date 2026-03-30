@@ -98,7 +98,7 @@ if (function_exists('do_blocks')) {
 	<style>
 		body {
 			font-family: 'Inter', sans-serif;
-			background-color: #fafafa;
+			background-color: #f9f9f9 !important;
 			color: #1a1a1a;
 		}
 		.cart-item:last-child {
@@ -114,6 +114,14 @@ if (function_exists('do_blocks')) {
 		}
 		.tracking-tightest {
 			letter-spacing: -0.05em;
+		}
+		div#red-cultural-cart-order-summary {
+			border: none !important;
+			border-radius: 6px !important;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+		}
+		header#red-cultural-header {
+			background: white !important;
 		}
 	</style>
 	<?php wp_head(); ?>
@@ -233,7 +241,7 @@ if (function_exists('do_blocks')) {
 
 				<!-- Summary Section -->
 				<div class="lg:w-1/3">
-					<div id="red-cultural-cart-order-summary" class="bg-white p-8 rounded-sm shadow-sm border border-gray-100" style="border: black solid 1px;">
+					<div id="red-cultural-cart-order-summary" class="bg-white p-8">
 						<h2 id="red-cultural-cart-order-summary-title" class="text-lg font-bold uppercase tracking-widest mb-8"><?php echo esc_html__('Resumen del pedido', 'red-cultural-pages'); ?></h2>
 
 						<div class="space-y-4 text-sm">

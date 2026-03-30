@@ -76,11 +76,20 @@ if (function_exists('do_blocks')) {
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=private_connectivity" />
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-		body{font-family:'Inter',sans-serif;padding:0 !important}
-		#red-cultural-header{border-bottom:1px solid #e5e7eb}
+		body{font-family:'Inter',sans-serif;padding:0 !important;background-color:#f9f9f9 !important}
+		#red-cultural-header{border-bottom:1px solid #e5e7eb;background:white !important}
 		#red-cultural-checkout-container{max-width:var(--wp--style--global--wide-size, 1200px);padding-bottom:40px}
 		#red-cultural-checkout-title{font-size:28px;letter-spacing:1px}
 		#red-cultural-checkout-place-order{padding:10px;border-radius:6px}
+		div#red-cultural-checkout-order-col {
+			border: none !important;
+			border-radius: 6px !important;
+			background: white !important;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+		}
+		header#red-cultural-checkout-header {
+			border-bottom: 1px solid #e7e7e7 !important;
+		}
 		@media (min-width: 992px){
 			.checkout-container{display:flex;gap:60px;align-items:flex-start}
 			.billing-col{flex:1 1 50%}
@@ -95,7 +104,7 @@ if (function_exists('do_blocks')) {
 			margin-top:6px;
 			outline:none;
 			transition:all .2s;
-			background-color:#f9fafb !important;
+			background-color:#ffffff !important;
 		}
 		/* Safety net: also style any Woo-generated fields inside wrappers. */
 		#red-cultural-checkout-form .woocommerce-input-wrapper input[type="text"],
@@ -110,7 +119,7 @@ if (function_exists('do_blocks')) {
 			border-radius:3px;
 			outline:none;
 			transition:all .2s;
-			background-color:#f9fafb !important;
+			background-color:#ffffff !important;
 		}
 		.form-input:focus{
 			background-color:#fff !important;
@@ -238,7 +247,7 @@ if (function_exists('do_blocks')) {
 	?>
 
 	<div id="red-cultural-checkout-container" class="max-w-[1400px] mx-auto pt-16" style="padding-top:20px;">
-			<header id="red-cultural-checkout-header" class="border-b border-black flex justify-between items-end" style="margin-bottom:30px;padding-bottom:10px;">
+			<header id="red-cultural-checkout-header" class="border-b flex justify-between items-end" style="margin-bottom:30px;padding-bottom:10px;">
 				<h1 id="red-cultural-checkout-title" class="text-3xl font-bold text-gray-900 mb-2"><?php echo esc_html__('Finalizar compra', 'red-cultural-pages'); ?></h1>
 				<div id="red-cultural-checkout-secure" class="text-[10px] uppercase tracking-widest text-gray-500">
 					<span class="material-symbols-outlined align-middle mr-1 text-[22px] leading-none">private_connectivity</span>
@@ -558,7 +567,7 @@ if (function_exists('do_blocks')) {
 					</div>
 				</div>
 
-				<div id="red-cultural-checkout-order-col" class="order-col border border-black p-8">
+				<div id="red-cultural-checkout-order-col" class="order-col p-8">
 					<div id="red-cultural-checkout-order-title-row" class="flex items-center justify-between mb-8">
 						<h2 id="red-cultural-checkout-order-title" class="text-lg font-bold uppercase tracking-widest"><?php echo esc_html__('Resumen de Pedido', 'red-cultural-pages'); ?></h2>
 						<a id="red-cultural-checkout-add-products" href="<?php echo esc_url($shop_url); ?>">+ <?php echo esc_html__('PRODUCTOS', 'red-cultural-pages'); ?></a>
