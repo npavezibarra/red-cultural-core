@@ -146,6 +146,17 @@ final class Red_Cultural_WC_Emails
             wp_mail($accountant_email, $accountant_subject, $accountant_content, $headers);
         }
 
+        // Send copy to extra sale-notification recipients (only for real orders)
+        if (empty($forced_to) && class_exists('RC_Sale_Notifications')) {
+            $extra_recipients = RC_Sale_Notifications::get_notification_emails();
+            if (!empty($extra_recipients)) {
+                $notif_subject = 'Nueva orden por Transferencia - #' . $order->get_order_number() . ' — ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+                foreach ($extra_recipients as $notif_email) {
+                    wp_mail($notif_email, $notif_subject, $content, $headers);
+                }
+            }
+        }
+
         return $sent_customer;
     }
 
@@ -164,7 +175,20 @@ final class Red_Cultural_WC_Emails
         $content = $this->get_template_content('emails/wc-new-order-custom.php', $template_args);
 
         $headers = ['Content-Type: text/html; charset=UTF-8'];
-        return wp_mail($to, $subject, $content, $headers);
+        $sent = wp_mail($to, $subject, $content, $headers);
+
+        // Send copy to extra sale-notification recipients (only for real orders, not test sends)
+        if (empty($forced_to) && class_exists('RC_Sale_Notifications')) {
+            $extra_recipients = RC_Sale_Notifications::get_notification_emails();
+            if (!empty($extra_recipients)) {
+                $notif_subject = 'Nueva Venta - #' . $order->get_order_number() . ' — ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+                foreach ($extra_recipients as $notif_email) {
+                    wp_mail($notif_email, $notif_subject, $content, $headers);
+                }
+            }
+        }
+
+        return $sent;
     }
 
     /**

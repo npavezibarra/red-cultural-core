@@ -77,6 +77,10 @@ final class Red_Cultural_Core
 
         require_once RC_CORE_PATH . 'includes/modules/antispam/class-rc-antispam.php';
         RC_Anti_Spam::init();
+
+        // 6. Sale Notifications (extra recipients for new-order emails)
+        require_once RC_CORE_PATH . 'includes/modules/sale-notifications/class-rc-sale-notifications.php';
+        RC_Sale_Notifications::init();
     }
 
     /**

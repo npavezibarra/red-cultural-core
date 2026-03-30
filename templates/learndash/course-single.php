@@ -53,6 +53,23 @@ $price = function_exists('rcp_ld_course_price_display') ? (string) rcp_ld_course
 $lessons = function_exists('rcp_ld_course_lessons') ? (array) rcp_ld_course_lessons($course_id, $user_id) : array();
 $lesson_count = is_array($lessons) ? count($lessons) : 0;
 
+// Compute first and last scheduled lesson dates for the date range display.
+$rcp_first_lesson_date = 0;
+$rcp_last_lesson_date = 0;
+foreach ($lessons as $l_item) {
+	$l_access = (int) ($l_item['lesson_access_from'] ?? 0);
+	if ($l_access <= 0) {
+		continue;
+	}
+	if ($rcp_first_lesson_date === 0 || $l_access < $rcp_first_lesson_date) {
+		$rcp_first_lesson_date = $l_access;
+	}
+	if ($l_access > $rcp_last_lesson_date) {
+		$rcp_last_lesson_date = $l_access;
+	}
+}
+$rcp_show_date_range = ($rcp_first_lesson_date > 0 && $rcp_last_lesson_date > 0 && $rcp_first_lesson_date !== $rcp_last_lesson_date);
+
 // CTA access rules:
 // - If RCIL is active, we only show "Ir al curso" after the user has purchased the full course OR at least 1 lesson.
 // - Otherwise, we fall back to LearnDash access.
@@ -212,9 +229,28 @@ if (function_exists('do_blocks')) {
 					</a>
 				<?php endif; ?>
 
-				<p id="red-cultural-course-summary" class="text-sm leading-relaxed mb-8 opacity-90 max-w-xl">
+				<p id="red-cultural-course-summary" class="text-sm leading-relaxed mb-4 opacity-90 max-w-xl">
 					<?php echo esc_html($desc); ?>
 				</p>
+
+				<?php if ($rcp_show_date_range) : ?>
+					<p id="red-cultural-course-dates" class="text-sm opacity-75 mb-8 max-w-xl flex items-center gap-2">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+						<span>
+						<?php
+						echo wp_kses(
+							sprintf(
+								/* translators: %1$s = start date, %2$s = end date */
+								'Este curso inicia el %1$s y finaliza el %2$s',
+								'<strong>' . esc_html(date_i18n('j \d\e F, Y', $rcp_first_lesson_date)) . '</strong>',
+								'<strong>' . esc_html(date_i18n('j \d\e F, Y', $rcp_last_lesson_date)) . '</strong>'
+							),
+							array('strong' => array())
+						);
+						?>
+					</span>
+					</p>
+				<?php endif; ?>
 			</div>
 		</div>
 	</header>
