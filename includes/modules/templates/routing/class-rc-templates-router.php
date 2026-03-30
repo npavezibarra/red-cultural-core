@@ -31,6 +31,7 @@ final class RC_Templates_Router {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_author_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_cuentas_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_reset_password_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_confirm_purchase_template'), 20);
 		add_filter('template_include', array(__CLASS__, 'maybe_render_404_template'), 100);
 	}
 
@@ -552,6 +553,42 @@ final class RC_Templates_Router {
 		}
 
 		$template_file = RC_CORE_PATH . 'templates/woocommerce/single-product.php';
+		if (!file_exists($template_file)) {
+			return;
+		}
+
+		require $template_file;
+		exit;
+	}
+	public static function maybe_render_confirm_purchase_template(): void {
+		if (is_admin() || is_feed()) {
+			return;
+		}
+
+		$is_confirm_page = function_exists('is_page') && is_page('confirm-purchase');
+
+		if (!$is_confirm_page) {
+			$path = '';
+			if (isset($_SERVER['REQUEST_URI'])) {
+				$path = (string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			}
+			$path = trim($path, '/');
+			if ($path === 'confirm-purchase') {
+				$is_confirm_page = true;
+			}
+		}
+
+		if (!$is_confirm_page) {
+			return;
+		}
+
+		// Must be logged in.
+		if (!is_user_logged_in()) {
+			wp_safe_redirect(home_url('/'));
+			exit;
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/pages/confirm-purchase.php';
 		if (!file_exists($template_file)) {
 			return;
 		}

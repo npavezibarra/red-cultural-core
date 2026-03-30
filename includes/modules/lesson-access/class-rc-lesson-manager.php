@@ -26,6 +26,9 @@ final class Red_Cultural_Lesson_Manager
             define('RCIL_VERSION', RC_CORE_VERSION);
         }
 
+        // Load Shared Helpers
+        require_once RC_CORE_PATH . 'includes/shared/class-rc-purchase-intent.php';
+
         // Load Lesson Classes
         require_once RC_CORE_PATH . 'includes/modules/lesson-access/functions-helpers.php';
         require_once RC_CORE_PATH . 'includes/modules/lesson-access/class-admin.php';

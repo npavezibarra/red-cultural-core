@@ -33,6 +33,10 @@ class RCIL_Ajax
     {
         add_action('wp_ajax_rcil_create_individual_lesson_product', [$this, 'handle_purchase_request']);
         add_action('wp_ajax_nopriv_rcil_create_individual_lesson_product', [$this, 'handle_purchase_request']);
+
+        // Guest full-course intent
+        add_action('wp_ajax_rcp_save_full_course_intent', [$this, 'handle_save_full_course_intent']);
+        add_action('wp_ajax_nopriv_rcp_save_full_course_intent', [$this, 'handle_save_full_course_intent']);
         
         // Alumni List endpoints
         add_action('wp_ajax_rcil_get_alumni_list', [$this, 'handle_get_alumni_list']);
@@ -368,6 +372,24 @@ class RCIL_Ajax
         }
 
         $is_full_course = (isset($_POST['is_full_course']) && $_POST['is_full_course'] == '1');
+
+        // ----- GUEST: Save intent and return login modal trigger -----
+        if (!is_user_logged_in()) {
+            if (class_exists('RC_Purchase_Intent')) {
+                RC_Purchase_Intent::set([
+                    'type'           => 'partial_lessons',
+                    'course_id'      => $course_id,
+                    'lesson_ids'     => $selected_lesson_ids_all,
+                    'is_full_course' => $is_full_course,
+                ]);
+            }
+            wp_send_json_success([
+                'needs_login'  => true,
+                'redirect_url' => '',
+            ]);
+            return;
+        }
+        // ----- END GUEST LOGIC -----
         
         // Comprehensive Price Detection (Same as Frontend)
         $full_course_price = rcil_get_full_course_price($course_id);
@@ -433,6 +455,76 @@ class RCIL_Ajax
                 wp_send_json_error(__('WooCommerce cart is not available.', 'red-cultural-individual-lesson'));
             }
         }
+    }
+
+    /**
+     * AJAX: Save full-course purchase intent for guest users and return login modal trigger.
+     */
+    public function handle_save_full_course_intent()
+    {
+        check_ajax_referer('rcil_ajax_nonce', 'nonce');
+
+        $debug = [];
+        $debug['user_id'] = get_current_user_id();
+        $debug['is_logged_in'] = is_user_logged_in();
+        $debug['is_admin'] = current_user_can('manage_options');
+
+        $course_id = isset($_POST['course_id']) ? absint($_POST['course_id']) : 0;
+        $debug['course_id'] = $course_id;
+
+        if (!$course_id) {
+            wp_send_json_error(['message' => 'Invalid course.', 'debug' => $debug]);
+        }
+
+        $product_id = function_exists('rcil_get_course_woo_product_id') ? rcil_get_course_woo_product_id($course_id) : 0;
+        $debug['product_id'] = $product_id;
+        $debug['wc_available'] = class_exists('WooCommerce');
+        $debug['cart_available'] = !is_null(WC()->cart);
+        $debug['intent_class_exists'] = class_exists('RC_Purchase_Intent');
+
+        // Check enrollment status
+        $debug['sfwd_has_access'] = function_exists('sfwd_lms_has_access') ? sfwd_lms_has_access($course_id, get_current_user_id()) : 'N/A';
+        $debug['rcil_full_access'] = function_exists('rcil_user_has_full_course_access') ? rcil_user_has_full_course_access(get_current_user_id(), $course_id) : 'N/A';
+
+        // Check auto-enroll setting
+        if (class_exists('LearnDash_Settings_Section')) {
+            $debug['admin_auto_enroll'] = LearnDash_Settings_Section::get_section_setting(
+                'LearnDash_Settings_Section_General_Admin_User',
+                'courses_autoenroll_admin_users'
+            );
+        }
+
+        if (class_exists('RC_Purchase_Intent')) {
+            RC_Purchase_Intent::set([
+                'type'       => 'full_course',
+                'course_id'  => $course_id,
+                'product_id' => $product_id ? (int) $product_id : 0,
+            ]);
+            $debug['intent_set'] = true;
+            $debug['intent_data'] = RC_Purchase_Intent::get();
+        }
+
+        // If logged in, prepare cart and redirect to confirm.
+        if (is_user_logged_in()) {
+            $result = RC_Purchase_Intent::prepare_cart();
+            $debug['prepare_cart_result'] = is_wp_error($result) ? $result->get_error_message() : $result;
+
+            if (is_wp_error($result)) {
+                wp_send_json_error(['message' => $result->get_error_message(), 'debug' => $debug]);
+            }
+            wp_send_json_success([
+                'redirect_url' => wc_get_checkout_url(),
+                'debug' => $debug,
+            ]);
+            return;
+        }
+
+        // Guest: signal the frontend to open the login modal.
+        wp_send_json_success([
+            'needs_login'  => true,
+            'redirect_url' => '',
+            'debug' => $debug,
+        ]);
     }
 
     /**

@@ -359,6 +359,20 @@ final class RC_Templates_Handlers {
 			wp_safe_redirect(add_query_arg('rcp_auth_error', '1', $redirect_to));
 			exit;
 		}
+
+		// ----- Purchase Intent: prepare cart and redirect to confirmation -----
+		if (class_exists('RC_Purchase_Intent')) {
+			$intent = RC_Purchase_Intent::get();
+			if ($intent && !empty($intent['type'])) {
+				$result = RC_Purchase_Intent::prepare_cart();
+				if (!is_wp_error($result)) {
+					wp_safe_redirect(wc_get_checkout_url());
+					exit;
+				}
+				// If prepare fails, fall through to normal redirect.
+			}
+		}
+
 		wp_safe_redirect($redirect_to);
 		exit;
 	}

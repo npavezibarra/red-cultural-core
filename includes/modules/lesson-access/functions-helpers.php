@@ -152,9 +152,21 @@ function rcil_user_has_lesson_access($user_id, $lesson_id)
  */
 function rcil_user_has_full_course_access($user_id, $course_id)
 {
-    // Admins have full access by default. Removed "partial student" testing override as it was confusing.
+    // Admins: respect the LearnDash "Course Auto-enrollment" setting.
+    // When ON (default 'yes'), admins have full access to every course.
+    // When OFF, admins are treated like regular users and must be enrolled/purchase.
     if (user_can($user_id, 'manage_options')) {
-        return true;
+        $admin_auto_enroll = 'yes'; // safe default
+        if (class_exists('LearnDash_Settings_Section')) {
+            $admin_auto_enroll = LearnDash_Settings_Section::get_section_setting(
+                'LearnDash_Settings_Section_General_Admin_User',
+                'courses_autoenroll_admin_users'
+            );
+        }
+        if ($admin_auto_enroll === 'yes') {
+            return true;
+        }
+        // Auto-enrollment OFF → fall through and check actual enrollment below.
     }
 
     // Check direct meta access (standard enrollment) to avoid filter recursion

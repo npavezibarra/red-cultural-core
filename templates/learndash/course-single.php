@@ -379,11 +379,20 @@ if (function_exists('do_blocks')) {
 							<?php 
 							// 2. Buy via WooCommerce (if product exists)
 							elseif ($rcp_woo_product_id && class_exists('WooCommerce')) : 
-								$rcp_buy_url = esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url()));
 							?>
-								<a id="rc-cta-main-buy" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all font-bold" href="<?php echo $rcp_buy_url; ?>" data-no-modal="1">
-									COMPRAR CURSO
-								</a>
+								<?php if (is_user_logged_in()) : ?>
+									<!-- Logged-in: AJAX intent → /confirm-purchase/ -->
+									<button id="rc-cta-main-buy" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 shadow-sm hover:opacity-90 transition-all font-bold cursor-pointer border-0" type="button" data-course-id="<?php echo esc_attr((string) $course_id); ?>">
+										COMPRAR CURSO
+									</button>
+								<?php else :
+									// Guest: direct link → add product to cart → checkout (has auth form)
+									$rcp_buy_url = esc_url(add_query_arg('add-to-cart', $rcp_woo_product_id, wc_get_checkout_url()));
+								?>
+									<a id="rc-cta-main-buy-guest" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all font-bold" href="<?php echo $rcp_buy_url; ?>" data-no-modal="1">
+										COMPRAR CURSO
+									</a>
+								<?php endif; ?>
 
 							<?php 
 							// 3. Fallback: Learndash Payment Button
@@ -392,14 +401,6 @@ if (function_exists('do_blocks')) {
 								<div id="rc-cta-main-payment" class="rcp-btn-cta w-full mb-6 relative z-10">
 									<?php echo $payment_button_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
-
-							<?php 
-							// 4. Final Fallback: Login
-							else : 
-							?>
-								<a id="rc-cta-main-login" class="rcp-btn-cta w-full bg-black text-white px-6 py-3 no-underline shadow-sm hover:opacity-90 transition-all font-bold" href="<?php echo esc_url(wp_login_url($course_url)); ?>">
-									COMPRAR CURSO
-								</a>
 							<?php endif; ?>
 
 							<div id="red-cultural-course-includes" class="w-full space-y-4 border-t border-gray-100 pt-6 text-left">
@@ -443,9 +444,10 @@ if (function_exists('do_blocks')) {
 
 	<script>
 		(function () {
-			function showAlert() {
+			function showAlert(msg) {
 				var alertBox = document.getElementById('red-cultural-course-alert');
 				if (!alertBox) return;
+				if (msg) alertBox.textContent = msg;
 				alertBox.classList.remove('opacity-0', 'translate-y-4');
 				alertBox.classList.add('opacity-100', 'translate-y-0');
 				setTimeout(function () {
@@ -464,7 +466,67 @@ if (function_exists('do_blocks')) {
 
 			var joinBtn = document.querySelector('.btn-join');
 			if (joinBtn) {
-				joinBtn.addEventListener('click', showAlert);
+				joinBtn.addEventListener('click', function () { showAlert(); });
+			}
+
+			/* ---- Intent-based "Comprar Curso" button (logged-in) ---- */
+			var buyBtn = document.getElementById('rc-cta-main-buy');
+			if (buyBtn) {
+				buyBtn.addEventListener('click', function (e) {
+					e.preventDefault();
+					var cid = buyBtn.getAttribute('data-course-id');
+					console.log('[RCP DEBUG] Buy button clicked, course_id:', cid);
+					console.log('[RCP DEBUG] rcil_params available:', typeof rcil_params !== 'undefined');
+					if (typeof rcil_params !== 'undefined') {
+						console.log('[RCP DEBUG] nonce:', rcil_params.nonce, 'ajax_url:', rcil_params.ajax_url);
+					}
+					if (!cid) return;
+					buyBtn.disabled = true;
+					buyBtn.textContent = 'Procesando...';
+					var data = new URLSearchParams();
+					data.append('action', 'rcp_save_full_course_intent');
+					data.append('nonce', (typeof rcil_params !== 'undefined' && rcil_params.nonce) ? rcil_params.nonce : '');
+					data.append('course_id', cid);
+					fetch((typeof rcil_params !== 'undefined' && rcil_params.ajax_url) ? rcil_params.ajax_url : '<?php echo esc_url(admin_url('admin-ajax.php')); ?>', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: data.toString()
+					})
+					.then(function (r) {
+						console.log('[RCP DEBUG] Response status:', r.status, r.statusText);
+						return r.text(); // Get raw text first to debug non-JSON responses
+					})
+					.then(function (text) {
+						console.log('[RCP DEBUG] Raw response:', text);
+						var json;
+						try { json = JSON.parse(text); } catch (e) {
+							console.error('[RCP DEBUG] JSON parse error:', e, 'Raw:', text);
+							buyBtn.disabled = false;
+							buyBtn.textContent = 'COMPRAR CURSO';
+							showAlert('Error: respuesta no válida del servidor');
+							return;
+						}
+						console.log('[RCP DEBUG] Parsed response:', json);
+						if (json.data && json.data.debug) {
+							console.log('[RCP DEBUG] Server debug:', json.data.debug);
+						}
+						if (json && json.success && json.data && json.data.redirect_url) {
+							console.log('[RCP DEBUG] Redirecting to:', json.data.redirect_url);
+							window.location.href = json.data.redirect_url;
+						} else {
+							console.error('[RCP DEBUG] FAILED - success:', json.success, 'data:', json.data);
+							buyBtn.disabled = false;
+							buyBtn.textContent = 'COMPRAR CURSO';
+							showAlert('Ocurrió un error. Inténtalo de nuevo.');
+						}
+					})
+					.catch(function (err) {
+						console.error('[RCP DEBUG] Fetch error:', err);
+						buyBtn.disabled = false;
+						buyBtn.textContent = 'COMPRAR CURSO';
+						showAlert('Ocurrió un error. Inténtalo de nuevo.');
+					});
+				});
 			}
 
 			function navigateLessonCard(card) {

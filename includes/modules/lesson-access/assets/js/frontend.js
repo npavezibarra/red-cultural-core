@@ -77,9 +77,23 @@
                     is_full_course: 1
                 },
                 success: function (response) {
-                    if (response && response.success && response.data && response.data.redirect_url) {
-                        window.location.href = response.data.redirect_url;
-                        return;
+                    if (response && response.success && response.data) {
+                        if (response.data.needs_login) {
+                            // Close RCIL modal and open auth modal
+                            $('#rcil-modal').fadeOut();
+                            var overlay = document.getElementById('red-cultural-login-overlay');
+                            if (overlay) {
+                                overlay.classList.remove('opacity-0', 'invisible');
+                                overlay.classList.add('opacity-100', 'visible');
+                                var card = overlay.querySelector('.auth-card');
+                                if (card) card.classList.replace('scale-95', 'scale-100');
+                            }
+                            return;
+                        }
+                        if (response.data.redirect_url) {
+                            window.location.href = response.data.redirect_url;
+                            return;
+                        }
                     }
                     alert((response && response.data) ? response.data : 'Error creating selection.');
                 },
@@ -170,12 +184,26 @@
                         is_full_course: rcilForm.data('is-full-course') ? 1 : 0
                     },
                     success: function (response) {
-                        if (response.success && response.data.redirect_url) {
-                            window.location.href = response.data.redirect_url;
-                        } else {
-                            alert(response.data || 'Error creating selection.');
-                            location.reload(); // Refresh to update any state if needed
+                        if (response && response.success && response.data) {
+                            if (response.data.needs_login) {
+                                // Close RCIL modal and open auth modal
+                                $('#rcil-modal').fadeOut();
+                                var overlay = document.getElementById('red-cultural-login-overlay');
+                                if (overlay) {
+                                    overlay.classList.remove('opacity-0', 'invisible');
+                                    overlay.classList.add('opacity-100', 'visible');
+                                    var card = overlay.querySelector('.auth-card');
+                                    if (card) card.classList.replace('scale-95', 'scale-100');
+                                }
+                                return;
+                            }
+                            if (response.data.redirect_url) {
+                                window.location.href = response.data.redirect_url;
+                                return;
+                            }
                         }
+                        alert((response && response.data) ? response.data : 'Error creating selection.');
+                        location.reload();
                     },
                     error: function () {
                         alert(rcil_params.server_error_label);
