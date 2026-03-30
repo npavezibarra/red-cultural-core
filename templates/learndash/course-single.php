@@ -60,6 +60,9 @@ $rcp_has_any_purchase_access = false;
 $rcp_first_accessible_lesson_url = $course_url;
 
 if ($user_id > 0) {
+    $rcp_first_accessible_url  = ''; // First lesson with access (fallback if all completed)
+    $rcp_first_incomplete_url  = ''; // First lesson with access that is NOT completed (preferred)
+
     foreach ($lessons as $lesson_item) {
         $lesson_post = $lesson_item['post'] ?? null;
         if (!$lesson_post instanceof \WP_Post) {
@@ -67,20 +70,41 @@ if ($user_id > 0) {
         }
         $l_id = (int) $lesson_post->ID;
         
-        // If RCIL is active, check specific individual access.
-        // If not, check general LD enrollment.
-        $has_access = $rcil_is_active ? rcil_user_has_lesson_access($user_id, $l_id) : $enrolled;
+        // Determine access: RCIL individual purchase OR full enrollment
+        $has_access = false;
+        if ($rcil_is_active) {
+            // Check individual lesson purchase OR full course access
+            $has_access = rcil_user_has_lesson_access($user_id, $l_id) || $rcil_has_full_access;
+        } else {
+            $has_access = $enrolled;
+        }
         
         if ($has_access) {
             $rcp_has_any_purchase_access = true;
-            if ($rcp_first_accessible_lesson_url === $course_url) {
-                $rcp_first_accessible_lesson_url = (string) get_permalink($l_id);
+            $lesson_url = (string) get_permalink($l_id);
+
+            // Track the first accessible lesson (fallback)
+            if ($rcp_first_accessible_url === '') {
+                $rcp_first_accessible_url = $lesson_url;
             }
-            if ($rcil_is_active) {
-                // For RCIL, we found the first specifically purchased lesson, so stop.
-                break;
+
+            // Track the first accessible but INCOMPLETE lesson (resume point)
+            if ($rcp_first_incomplete_url === '') {
+                $is_complete = function_exists('learndash_is_lesson_complete')
+                    ? learndash_is_lesson_complete($user_id, $l_id, $course_id)
+                    : false;
+                if (!$is_complete) {
+                    $rcp_first_incomplete_url = $lesson_url;
+                }
             }
         }
+    }
+
+    // Prefer incomplete lesson (resume), fall back to first accessible, then course URL.
+    if ($rcp_first_incomplete_url !== '') {
+        $rcp_first_accessible_lesson_url = $rcp_first_incomplete_url;
+    } elseif ($rcp_first_accessible_url !== '') {
+        $rcp_first_accessible_lesson_url = $rcp_first_accessible_url;
     }
 }
 
