@@ -360,6 +360,19 @@ final class RC_Templates_Router {
 			return;
 		}
 
+		// Restriction for non-admins: prevent access to courses without an active teacher (whitelist)
+		if (!current_user_can('manage_options')) {
+			$author_id = (int) get_post_field('post_author', get_the_ID());
+			$teacher_ids = \Red_Cultural_Templates::get_active_teacher_ids();
+			
+			if (empty($teacher_ids) || !in_array($author_id, $teacher_ids, true)) {
+				wp_safe_redirect(home_url('/cursos/'));
+				exit;
+			}
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/learndash/course-single.php';
+
 		$template_file = RC_CORE_PATH . 'templates/learndash/course-single.php';
 		if (!file_exists($template_file)) {
 			return;

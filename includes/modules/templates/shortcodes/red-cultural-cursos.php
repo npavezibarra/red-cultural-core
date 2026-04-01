@@ -171,6 +171,12 @@ if (!function_exists('rcp_red_cultural_cursos_shortcode')) {
 				'ignore_sticky_posts' => true,
 			);
 
+			// Restriction for non-admins: only show courses assigned to active teachers (whitelist)
+			if (!current_user_can('manage_options')) {
+				$teacher_ids = \Red_Cultural_Templates::get_active_teacher_ids();
+				$query_args['author__in'] = !empty($teacher_ids) ? $teacher_ids : array(-1);
+			}
+
 			if ($search !== '') {
 				$query_args['s'] = $search;
 			} else {
@@ -278,6 +284,12 @@ if (!function_exists('rcp_red_cultural_cursos_shortcode')) {
 			'no_found_rows' => true,
 			'ignore_sticky_posts' => true,
 		);
+
+		// Restriction for non-admins: only show courses assigned to active teachers (whitelist)
+		if (!current_user_can('manage_options')) {
+			$teacher_ids = \Red_Cultural_Templates::get_active_teacher_ids();
+			$query_args['author__in'] = !empty($teacher_ids) ? $teacher_ids : array(-1);
+		}
 
 		$q = new \WP_Query($query_args);
 		if (!$q->have_posts()) {

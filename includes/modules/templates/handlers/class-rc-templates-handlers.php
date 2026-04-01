@@ -38,6 +38,9 @@ final class RC_Templates_Handlers {
 
 		// Force course products to be treated as virtual (no shipping cost)
 		add_filter('woocommerce_product_is_virtual', array(__CLASS__, 'force_course_products_virtual'), 10, 2);
+
+		// Global course filtering for non-admins
+		add_action('pre_get_posts', array(__CLASS__, 'filter_unassigned_courses_globally'));
 	}
 
 	public static function force_course_products_virtual($is_virtual, $product) {
@@ -375,5 +378,41 @@ final class RC_Templates_Handlers {
 
 		wp_safe_redirect($redirect_to);
 		exit;
+	}
+
+	/**
+	 * Filter unassigned courses globally for non-admins.
+	 *
+	 * @param WP_Query $query The query object.
+	 */
+	public static function filter_unassigned_courses_globally($query): void {
+		if (is_admin() || !$query->is_main_query()) {
+			return;
+		}
+
+		if (current_user_can('manage_options')) {
+			return;
+		}
+
+		$post_type = $query->get('post_type');
+
+		// Handle both string and array post types
+		$is_course_query = false;
+		if ($post_type === 'sfwd-courses') {
+			$is_course_query = true;
+		} elseif (is_array($post_type) && in_array('sfwd-courses', $post_type, true)) {
+			$is_course_query = true;
+		} elseif ($query->is_search() || $query->is_archive()) {
+			// In search or generic archives, we might be querying multiple types.
+			// We can't easily exclude author 1 for ONLY sfwd-courses without a complex tax query or meta query,
+			// but usually author 1 is the admin who owns all unassigned content.
+			// If we exclude author 1 here, we might hide articles too if they are unassigned.
+			// Let's be specific to courses if possible.
+		}
+
+		if ($is_course_query) {
+			$teacher_ids = \Red_Cultural_Templates::get_active_teacher_ids();
+			$query->set('author__in', !empty($teacher_ids) ? $teacher_ids : array(-1));
+		}
 	}
 }

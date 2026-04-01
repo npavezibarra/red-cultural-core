@@ -69,6 +69,39 @@ final class Red_Cultural_Templates {
 	}
 
 	/**
+	 * Get IDs of all active teachers (authors or admins with profiles).
+	 *
+	 * @return int[] List of user IDs.
+	 */
+	public static function get_active_teacher_ids(): array {
+		$cache_key = 'rc_active_teacher_ids';
+		$cached = get_transient($cache_key);
+		if (is_array($cached)) {
+			return $cached;
+		}
+
+		$ids = array();
+
+		// 1. Get all users with 'author' role
+		$authors = get_users(array('role__in' => array('author'), 'fields' => 'ID'));
+		if (is_array($authors)) {
+			$ids = array_merge($ids, array_map('intval', $authors));
+		}
+
+		// 2. Get all users with a profile photo (any role)
+		$with_photo = get_users(array('meta_key' => 'rc_profile_photo', 'fields' => 'ID'));
+		if (is_array($with_photo)) {
+			$ids = array_merge($ids, array_map('intval', $with_photo));
+		}
+
+		$ids = array_values(array_unique(array_filter($ids)));
+		
+		set_transient($cache_key, $ids, HOUR_IN_SECONDS);
+
+		return $ids;
+	}
+
+	/**
 	 * Strip welcome copy from content if needed.
 	 *
 	 * @param string $content The post content.
