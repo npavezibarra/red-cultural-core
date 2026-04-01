@@ -35,6 +35,75 @@ final class Red_Cultural_WC_Emails
 
         // New hook for confirming transfers via email button
         add_action('init', [$this, 'handle_confirm_transfer']);
+
+        // Disable ALL default WooCommerce emails that we are replacing (highest priority)
+        $wc_emails = [
+            'new_order',
+            'customer_on_hold_order',
+            'customer_processing_order',
+            'customer_completed_order',
+            'customer_refunded_order',
+            'customer_invoice',
+            'customer_note',
+            'customer_reset_password',
+            'customer_new_account'
+        ];
+
+        foreach ($wc_emails as $id) {
+            add_filter("woocommerce_email_recipient_{$id}", '__return_empty_string', 9999);
+            add_filter("woocommerce_email_enabled_{$id}", '__return_false', 9999);
+        }
+
+        // Hook for NEW Admin Notification
+        add_action('woocommerce_new_order', [$this, 'send_admin_new_order_notification'], 20, 1);
+        add_action('woocommerce_checkout_order_processed', [$this, 'send_admin_new_order_notification'], 20, 1);
+    }
+
+    /**
+     * Remove default WC emails from the registration list to prevent them from firing.
+     */
+    public function remove_default_wc_emails($email_classes)
+    {
+        // IDs we want to remove completely because we handle them manually
+        $to_remove = [
+            'WC_Email_New_Order',
+            'WC_Email_Customer_On_Hold_Order',
+            'WC_Email_Customer_Processing_Order'
+        ];
+
+        foreach ($to_remove as $class_name) {
+            if (isset($email_classes[$class_name])) {
+                unset($email_classes[$class_name]);
+            }
+        }
+
+        return $email_classes;
+    }
+
+    /**
+     * Helper to disable default enabled flag only for digital products (Courses/Lessons)
+     */
+    public function disable_default_enabled_for_digital($enabled, $order)
+    {
+        if (!$order) return $enabled;
+        $type = self::identify_order_type($order);
+        if ($type !== 'physical') {
+            return false; // Disable default for Courses/Lessons
+        }
+        return $enabled;
+    }
+
+    /**
+     * Helper to disable default recipient only for digital products (Courses/Lessons)
+     */
+    public function disable_default_recipient_for_digital($recipient, $order)
+    {
+        if (!$order) return $recipient;
+        $type = self::identify_order_type($order);
+        if ($type !== 'physical') {
+            return ''; // Stop default email
+        }
+        return $recipient;
     }
 
     /**
@@ -81,12 +150,6 @@ final class Red_Cultural_WC_Emails
      */
     public function maybe_trigger_access_email($order_id, $order)
     {
-        // Prevent sending for pure physical products (unless required)
-        $type = self::identify_order_type($order);
-        if ($type === 'physical' || $type === 'book') {
-            return;
-        }
-
         // Prevent double sending if status changes from processing to completed quickly
         if ($order->get_meta('_rc_access_email_sent') === '1') {
             return;
@@ -96,16 +159,6 @@ final class Red_Cultural_WC_Emails
         if ($sent) {
             $order->update_meta_data('_rc_access_email_sent', '1');
             $order->save();
-        }
-    }
-
-    /**
-     * Trigger bank transfer notification if payment method is BACS.
-     */
-    public function maybe_trigger_bank_transfer_notif($order_id, $order)
-    {
-        if ($order->get_payment_method() === 'bacs') {
-            $this->send_bank_transfer_notification($order_id);
         }
     }
 
@@ -146,22 +199,52 @@ final class Red_Cultural_WC_Emails
             wp_mail($accountant_email, $accountant_subject, $accountant_content, $headers);
         }
 
-        // Send copy to extra sale-notification recipients (only for real orders)
-        if (empty($forced_to) && class_exists('RC_Sale_Notifications')) {
-            $extra_recipients = RC_Sale_Notifications::get_notification_emails();
-            if (!empty($extra_recipients)) {
-                $notif_subject = 'Nueva orden por Transferencia - #' . $order->get_order_number() . ' — ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
-                foreach ($extra_recipients as $notif_email) {
-                    wp_mail($notif_email, $notif_subject, $content, $headers);
-                }
-            }
-        }
-
         return $sent_customer;
     }
 
     /**
-     * Send the custom New Order email.
+     * Trigger bank transfer notification if payment method is BACS.
+     */
+    public function maybe_trigger_bank_transfer_notif($order_id, $order)
+    {
+        if ($order->get_payment_method() === 'bacs') {
+            $this->send_bank_transfer_notification($order_id);
+        }
+    }
+
+    /**
+     * Send Custom Admin New Order notification.
+     */
+    public function send_admin_new_order_notification($order_id)
+    {
+        if (!$order_id) return;
+        $order = wc_get_order($order_id);
+        if (!$order) return;
+
+        // Prevent double sending
+        if ($order->get_meta('_rc_admin_notif_sent') === '1') return;
+
+        $recipients = get_option('admin_email');
+        if (class_exists('RC_Sale_Notifications')) {
+            $extra = RC_Sale_Notifications::get_notification_emails();
+            if (!empty($extra)) {
+                $recipients .= ',' . implode(',', $extra);
+            }
+        }
+
+        $subject = 'Nueva Venta - #' . $order->get_order_number() . ' — ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+        $content = $this->get_template_content('emails/wc-admin-new-order.php', ['order' => $order]);
+        $headers = ['Content-Type: text/html; charset=UTF-8'];
+
+        $sent = wp_mail($recipients, $subject, $content, $headers);
+        if ($sent) {
+            $order->update_meta_data('_rc_admin_notif_sent', '1');
+            $order->save();
+        }
+    }
+
+    /**
+     * Send the custom Customer Processing (Confirmation) email.
      */
     public function send_custom_new_order($order_id, $forced_to = '', $extra_args = [])
     {
@@ -169,24 +252,13 @@ final class Red_Cultural_WC_Emails
         if (!$order) return false;
 
         $to = $forced_to ?: $order->get_billing_email();
-        $subject = 'Confirmación de tu pedido en Red Cultural';
+        $subject = '¡Confirmado! Ya puedes acceder a tus contenidos';
         
         $template_args = array_merge(['order' => $order], $extra_args);
-        $content = $this->get_template_content('emails/wc-new-order-custom.php', $template_args);
+        $content = $this->get_template_content('emails/wc-customer-processing.php', $template_args);
 
         $headers = ['Content-Type: text/html; charset=UTF-8'];
         $sent = wp_mail($to, $subject, $content, $headers);
-
-        // Send copy to extra sale-notification recipients (only for real orders, not test sends)
-        if (empty($forced_to) && class_exists('RC_Sale_Notifications')) {
-            $extra_recipients = RC_Sale_Notifications::get_notification_emails();
-            if (!empty($extra_recipients)) {
-                $notif_subject = 'Nueva Venta - #' . $order->get_order_number() . ' — ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
-                foreach ($extra_recipients as $notif_email) {
-                    wp_mail($notif_email, $notif_subject, $content, $headers);
-                }
-            }
-        }
 
         return $sent;
     }
@@ -194,11 +266,17 @@ final class Red_Cultural_WC_Emails
     /**
      * Helper to get template content with data.
      */
-    private function get_template_content($template_name, $args = [])
+    public function get_template_content($template_name, $args = [])
     {
         extract($args);
         ob_start();
         $template_path = RC_CORE_PATH . 'templates/' . $template_name;
+        
+        // Notify Email Log Manager of the template being used
+        if (class_exists('RC_Email_Log_Manager')) {
+            RC_Email_Log_Manager::set_last_template_file($template_path);
+        }
+
         if (file_exists($template_path)) {
             include $template_path;
         } else {
@@ -246,31 +324,65 @@ final class Red_Cultural_WC_Emails
     {
         $links = [];
         foreach ($order->get_items() as $item) {
-            if ($item->get_meta('_is_rcil_purchase')) {
-                $course_id = (int) $item->get_meta('_rcil_course_id');
+            $product_id = (int) $item->get_product_id();
+            $course_id = 0;
+            $is_rcil = ($item->get_meta('_is_rcil_purchase') === '1');
+            
+            // 1. Check RCIL (Individual Lessons)
+            $rcil_id = $item->get_meta('_rcil_course_id');
+            if ($rcil_id) {
+                $course_id = (int) $rcil_id;
+            } else {
+                // 2. Standard LearnDash Metadata
+                $meta_id = get_post_meta($product_id, '_course_id', true);
+                if (!$meta_id) $meta_id = get_post_meta($product_id, '_related_course', true);
+                if ($meta_id) {
+                    $course_id = (int) $meta_id;
+                }
+            }
+
+            // 3. Fallback: Check category "Cursos" if no ID but is a course product
+            if (!$course_id && has_term(['Cursos', 'Curso'], 'product_cat', $product_id)) {
+                // Try to find course by slug
+                $product = $item->get_product();
+                if ($product) {
+                    $course_post = get_page_by_path($product->get_slug(), OBJECT, 'sfwd-courses');
+                    if ($course_post) $course_id = $course_post->ID;
+                }
+            }
+
+            if ($course_id > 0) {
+                $course_url = get_permalink($course_id);
+                $course_title = get_the_title($course_id);
                 $lesson_ids = maybe_unserialize($item->get_meta('_rcil_lesson_ids'));
                 
-                if ($course_id) {
-                    $course_url = get_permalink($course_id);
-                    $course_title = get_the_title($course_id);
-                    
-                    if (count($lesson_ids) === 1) {
-                        $lesson_id = $lesson_ids[0];
-                        $links[] = [
-                            'url' => get_permalink($lesson_id),
-                            'label' => 'Ir a la Lección: ' . get_the_title($lesson_id),
-                            'context' => $course_title
-                        ];
-                    } else {
-                        $links[] = [
-                            'url' => $course_url,
-                            'label' => 'Ir al Curso: ' . $course_title,
-                            'context' => $course_title
-                        ];
-                    }
+                if ($is_rcil && !empty($lesson_ids) && is_array($lesson_ids)) {
+                    $first_lesson_id = reset($lesson_ids);
+                    $links[] = [
+                        'url' => get_permalink($first_lesson_id),
+                        'label' => 'Ir a la Lección',
+                        'context' => $course_title
+                    ];
+                } else {
+                    $links[] = [
+                        'url' => $course_url,
+                        'label' => 'Ir al Curso',
+                        'context' => $course_title
+                    ];
                 }
             }
         }
-        return $links;
+
+        // Deduplicate links by URL
+        $unique_links = [];
+        $seen_urls = [];
+        foreach ($links as $link) {
+            if (!in_array($link['url'], $seen_urls)) {
+                $seen_urls[] = $link['url'];
+                $unique_links[] = $link;
+            }
+        }
+
+        return $unique_links;
     }
 }

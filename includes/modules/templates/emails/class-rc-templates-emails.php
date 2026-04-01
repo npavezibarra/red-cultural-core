@@ -134,6 +134,11 @@ HTML;
 HTML;
 
 		$headers = array('Content-Type: text/html; charset=UTF-8');
+		
+		if (class_exists('RC_Email_Log_Manager')) {
+			RC_Email_Log_Manager::set_last_template_file(__FILE__);
+		}
+
 		wp_mail($to, $subject, $body, $headers);
 	}
 }

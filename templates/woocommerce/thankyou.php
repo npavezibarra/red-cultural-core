@@ -308,12 +308,7 @@ if (function_exists('do_blocks')) {
                         <?php echo esc_html__('¡Muchas gracias por tu compra! Tu acceso ya está activo y puedes comenzar ahora mismo.', 'red-cultural-pages'); ?>
                     </p>
                 <?php else : ?>
-                    <div class="inline-flex items-center justify-center w-16 h-16 border border-zinc-300 rounded-full mb-6">
-                        <svg class="w-8 h-8 text-zinc-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h1 id="red-cultural-ty-title" class="font-bold tracking-tight mb-2 uppercase text-balance text-zinc-400"><?php echo esc_html__('Pedido Pendiente', 'red-cultural-pages'); ?></h1>
+                    <h1 id="red-cultural-ty-title" class="font-bold tracking-tight mb-2 uppercase text-balance text-black"><?php echo esc_html__('Pedido Pendiente', 'red-cultural-pages'); ?></h1>
                     <p class="text-zinc-500 text-base max-w-md mx-auto leading-relaxed">
 
                         <?php echo esc_html__('¡Gracias por tu compra! Recibimos la orden, pero falta confirmar la transferencia bancaria. Se hará durante el día.', 'red-cultural-pages'); ?>
@@ -343,7 +338,10 @@ if (function_exists('do_blocks')) {
                             <p class="font-bold font-mono text-black text-sm mb-3">Cuenta Corriente</p>
                             
                             <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html__('Número de Cuenta', 'red-cultural-pages'); ?></p>
-                            <p class="font-bold font-mono text-black text-lg"><?php echo esc_html('02746948'); ?></p>
+                            <p class="font-bold font-mono text-black text-sm mb-3"><?php echo esc_html('02746948'); ?></p>
+
+                            <p class="text-[11px] text-zinc-400 font-mono mb-1"><?php echo esc_html__('Email de Notificación', 'red-cultural-pages'); ?></p>
+                            <p class="font-bold font-mono text-black text-sm mb-3"><?php echo esc_html('magdalena@redcultural.cl'); ?></p>
 
                             <p class="text-[11px] text-zinc-400 font-mono mt-4 mb-1"><?php echo esc_html__('REFERENCIA / MOTIVO', 'red-cultural-pages'); ?></p>
                             <p class="font-bold font-mono text-black"><?php echo esc_html__('PEDIDO #', 'red-cultural-pages') . $order_number; ?></p>

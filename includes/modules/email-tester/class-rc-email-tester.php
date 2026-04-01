@@ -97,7 +97,8 @@ final class Red_Cultural_Email_Tester
             'viaje_escandinavia' => 'Interés: Viaje Escandinavia',
             'lesson_notif_global' => 'Notificación: Listado de Alumnos (Global 24h)',
             'lesson_notif_specific' => 'Notificación: Listado de Alumnos (Última lección)',
-            'wc_new_order' => 'WooCommerce: Nuevo Pedido (Auto-detectar)',
+            'wc_new_order_admin' => 'WooCommerce: Nuevo Pedido (Admin - Notificación)',
+            'wc_new_order' => 'WooCommerce: Nuevo Pedido (Cliente - Confirmación)',
             'wc_new_order_course' => 'WooCommerce: Nuevo Pedido Curso (Botón Negro)',
             'wc_new_order_lessons' => 'WooCommerce: Nuevo Pedido Lecciones (Individuales)',
             'wc_new_order_book' => 'WooCommerce: Nuevo Pedido Libro (Físico)',
@@ -381,6 +382,9 @@ final class Red_Cultural_Email_Tester
                 case 'lesson_notif_specific':
                     $sent = $this->send_test_lesson_notif_specific($to);
                     break;
+                case 'wc_new_order_admin':
+                    $sent = $this->send_test_wc_admin_new_order($to, $data_source, '', $resource_id, $test_user_id);
+                    break;
                 case 'wc_new_order':
                     $sent = $this->send_test_wc_new_order($to, $data_source, '', $resource_id, $test_user_id);
                     break;
@@ -485,8 +489,8 @@ final class Red_Cultural_Email_Tester
             $first_name = 'Tester (Fake)';
         }
 
-        if (class_exists('Red_Cultural_Templates')) {
-            Red_Cultural_Templates::send_welcome_email($user_id, $first_name, $to);
+        if (class_exists('RC_Templates_Emails')) {
+            RC_Templates_Emails::send_welcome_email($user_id, $first_name, $to);
             return true;
         }
 
@@ -524,8 +528,8 @@ final class Red_Cultural_Email_Tester
             home_url('/restablecer-contrasena/')
         );
 
-        if (class_exists('Red_Cultural_Templates')) {
-            $subject = Red_Cultural_Templates::custom_retrieve_password_title('Password Reset');
+        if (class_exists('RC_Templates_Emails')) {
+            $subject = RC_Templates_Emails::custom_retrieve_password_title('Password Reset');
             
             // Generate the HTML using the private method via Reflection or just copy logic
             // Since it's private in Templates, calling it via custom_retrieve_password_message mock
@@ -535,10 +539,49 @@ final class Red_Cultural_Email_Tester
                 $dummy_user->user_login = $user_login;
             }
 
-            $message = Red_Cultural_Templates::custom_retrieve_password_message('', $key, $user_login, $dummy_user);
+            $message = RC_Templates_Emails::custom_retrieve_password_message('', $key, $user_login, $dummy_user);
 
             $headers = array('Content-Type: text/html; charset=UTF-8');
             return wp_mail($to, $subject, $message, $headers);
+        }
+
+        return false;
+    }
+
+    /**
+     * Send test Admin New Order email.
+     */
+    private function send_test_wc_admin_new_order($to, $data_source, $subtype = '', $resource_id = 0, $test_user_id = 0)
+    {
+        if (!class_exists('WooCommerce')) {
+            throw new Exception('WooCommerce no está activo.');
+        }
+
+        $order = null;
+        if ($data_source === 'real') {
+            $orders = wc_get_orders(['limit' => 1, 'orderby' => 'date', 'order' => 'DESC']);
+            if (!empty($orders)) {
+                $order = $orders[0];
+            }
+        }
+        if (!$order) {
+            $order = $this->get_mock_order($subtype);
+        }
+
+        if (class_exists('Red_Cultural_WC_Emails')) {
+            // We use the admin notification logic but swap recipient for the test
+            add_filter('pre_wp_mail', function($pre, $args) use ($to) {
+                $args['to'] = $to;
+                // Since wp_mail is called inside send_admin_new_order_notification,
+                // we'll actually just call the method and intercept it or replicate logic.
+                return $pre;
+            });
+            
+            // Replicate logic to ensure we send to the test recipient
+            $subject = 'TEST ADMIN: Nueva Venta - #' . $order->get_order_number();
+            $content = Red_Cultural_WC_Emails::get_instance()->get_template_content('emails/wc-admin-new-order.php', ['order' => $order]);
+            $headers = ['Content-Type: text/html; charset=UTF-8'];
+            return wp_mail($to, $subject, $content, $headers);
         }
 
         return false;

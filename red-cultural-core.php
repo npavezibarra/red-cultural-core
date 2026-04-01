@@ -81,6 +81,11 @@ final class Red_Cultural_Core
         // 6. Sale Notifications (extra recipients for new-order emails)
         require_once RC_CORE_PATH . 'includes/modules/sale-notifications/class-rc-sale-notifications.php';
         RC_Sale_Notifications::init();
+
+        // 7. Email Log Component
+        require_once RC_CORE_PATH . 'includes/modules/email-log/class-rc-email-log-db.php';
+        require_once RC_CORE_PATH . 'includes/modules/email-log/class-rc-email-log-manager.php';
+        RC_Email_Log_Manager::init();
     }
 
     /**
@@ -101,4 +106,4 @@ function rc_core_init()
     return Red_Cultural_Core::get_instance();
 }
 
-add_action('plugins_loaded', 'rc_core_init', 10);
+add_action('plugins_loaded', 'rc_core_init', 1);
