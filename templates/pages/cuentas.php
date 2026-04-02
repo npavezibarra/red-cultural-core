@@ -263,7 +263,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			opacity: 0.4;
 			pointer-events: none;
 		}
-
+ 
 		#red-cultural-cuentas-site-header, 
 		#red-cultural-cuentas-site-footer {
 			background-color: #fff;
@@ -279,12 +279,12 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			padding-bottom: 0;
 			border-bottom: 1px solid #e5e7eb;
 		}
-
+ 
 		.rcp-submenu {
 			display: flex;
 			gap: 32px;
 		}
-
+ 
 		.rcp-tab {
 			font-size: 16px;
 			font-weight: 500;
@@ -294,15 +294,15 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			position: relative;
 			transition: all 0.3s ease;
 		}
-
+ 
 		.rcp-tab:hover {
 			color: #000000;
 		}
-
+ 
 		.rcp-tab.active {
 			color: #c5a367;
 		}
-
+ 
 		.rcp-tab.active::after {
 			content: '';
 			position: absolute;
@@ -313,7 +313,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			background: #c5a367;
 			box-shadow: 0 -2px 10px rgba(197, 163, 103, 0.5);
 		}
-
+ 
 		.chart-view-container {
 			background: #ffffff;
 			border-radius: 12px;
@@ -325,23 +325,46 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			align-items: center;
 			justify-content: center;
 		}
-
+ 
 		.view-content {
 			display: none;
 		}
-
+ 
 		.view-content.active {
 			display: block;
 		}
-
+ 
 		.chart-view-container.active {
 			display: flex;
 		}
-
+ 
 		#rc-sales-chart-wrapper {
 			width: 100%;
 			max-height: 250px;
 			position: relative;
+		}
+ 
+		/* Profesores Styles */
+		.month-selector-container {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 20px;
+		}
+		.month-select {
+			background: #ffffff;
+			border: 1px solid #e5e7eb;
+			border-radius: 8px;
+			padding: 8px 16px;
+			font-size: 14px;
+			font-weight: 600;
+			color: #111827;
+			outline: none;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+		.month-select:focus {
+			border-color: #c5a367;
+			box-shadow: 0 0 0 3px rgba(197, 163, 103, 0.1);
 		}
 
 		.hidden { display: none !important; }
@@ -371,6 +394,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 					<div class="rcp-submenu">
 						<div class="rcp-tab active" data-view="ventas">Ventas</div>
 						<div class="rcp-tab" data-view="grafico">Gráfico</div>
+						<div class="rcp-tab" data-view="profesores">Profesores</div>
 					</div>
 				<?php endif; ?>
 			</div>
@@ -423,6 +447,39 @@ $nonce = wp_create_nonce('rcp_search_sales');
 					<p class="mt-4 text-[12px] opacity-40 uppercase tracking-widest font-bold">Ventas por Día - <?php echo date_i18n('F Y'); ?></p>
 				</div>
 
+				<div id="view-profesores" class="view-content">
+					<div class="month-selector-container">
+						<select id="rc-profesores-month-select" class="month-select">
+							<?php
+							$current_month = (int) date('m');
+							$months = array(
+								1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+								5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+								9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+							);
+							foreach ($months as $m => $name) {
+								echo '<option value="' . esc_attr((string)$m) . '" ' . selected($m, $current_month, false) . '>' . esc_html($name) . '</option>';
+							}
+							?>
+						</select>
+					</div>
+
+					<div class="sales-table-container">
+						<table id="rc-profesores-table">
+							<thead>
+								<tr>
+									<th>Profesor</th>
+									<th class="text-center">Cursos Vendidos</th>
+									<th class="text-right">Total ($)</th>
+								</tr>
+							</thead>
+							<tbody id="rc-profesores-tbody">
+								<!-- Loaded via AJAX -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+
 
 				<script>
 				document.addEventListener('DOMContentLoaded', function() {
@@ -447,8 +504,44 @@ $nonce = wp_create_nonce('rcp_search_sales');
 							if (target === 'grafico' && !salesChart) {
 								fetchChartData();
 							}
+
+							if (target === 'profesores') {
+								fetchProfesoresData();
+							}
 						};
 					});
+
+					function fetchProfesoresData() {
+						const monthSelect = document.getElementById('rc-profesores-month-select');
+						const tbody = document.getElementById('rc-profesores-tbody');
+						const container = tbody.closest('.sales-table-container');
+						
+						container.classList.add('rc-loading');
+
+						const formData = new URLSearchParams();
+						formData.append('action', 'rcp_get_profesores_sales');
+						formData.append('nonce', '<?php echo esc_js($nonce); ?>');
+						formData.append('month', monthSelect.value);
+
+						fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+							body: formData
+						})
+						.then(r => r.json())
+						.then(res => {
+							container.classList.remove('rc-loading');
+							if (res.success) {
+								tbody.innerHTML = res.data.html;
+							}
+						})
+						.catch(err => {
+							container.classList.remove('rc-loading');
+							console.error('Profesores AJAX Error:', err);
+						});
+					}
+
+					document.getElementById('rc-profesores-month-select').onchange = fetchProfesoresData;
 
 					function fetchChartData() {
 						const formData = new URLSearchParams();

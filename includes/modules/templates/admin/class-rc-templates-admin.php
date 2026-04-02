@@ -17,6 +17,7 @@ final class RC_Templates_Admin {
 		add_action('admin_post_rcp_save_antispam_settings', array(__CLASS__, 'handle_save_antispam_settings'));
 		add_action('wp_ajax_rcp_search_sales', array(__CLASS__, 'ajax_search_sales'));
 		add_action('wp_ajax_rcp_get_sales_chart_data', array(__CLASS__, 'ajax_get_sales_chart_data'));
+		add_action('wp_ajax_rcp_get_profesores_sales', array(__CLASS__, 'ajax_get_profesores_sales'));
 		add_action('wp_ajax_rcp_update_order_status', array(__CLASS__, 'ajax_update_order_status'));
 	}
 
@@ -578,6 +579,111 @@ final class RC_Templates_Admin {
 			'status' => $status,
 			'label'  => wc_get_order_status_name($status),
 		));
+	}
+
+	public static function ajax_get_profesores_sales(): void {
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error('Unauthorized');
+		}
+
+		$nonce = isset($_POST['nonce']) ? sanitize_text_field((string) $_POST['nonce']) : '';
+		if ($nonce === '' || !wp_verify_nonce($nonce, 'rcp_search_sales')) {
+			wp_send_json_error('Invalid nonce');
+		}
+
+		$month = isset($_POST['month']) ? (int) $_POST['month'] : (int) date('m');
+		$year = (int) date('Y');
+
+		ob_start();
+		self::render_profesores_table_rows($month, $year);
+		$html = (string) ob_get_clean();
+
+		wp_send_json_success(array('html' => $html));
+	}
+
+	public static function render_profesores_table_rows(int $month, int $year): void {
+		if (!class_exists('WooCommerce')) {
+			echo '<tr><td colspan="3" class="text-center py-10 text-red-400">WooCommerce no está activo.</td></tr>';
+			return;
+		}
+
+		// 1. Get all instructors on whitelist
+		$teacher_ids = \Red_Cultural_Templates::get_active_teacher_ids();
+		if (empty($teacher_ids)) {
+			echo '<tr><td colspan="3" class="text-center py-10 opacity-50 italic">No se encontraron profesores activos.</td></tr>';
+			return;
+		}
+
+		// 2. Query all orders in the range
+		$start_date = "{$year}-" . str_pad((string)$month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+		$end_date   = "{$year}-" . str_pad((string)$month, 2, '0', STR_PAD_LEFT) . "-" . date('t', strtotime($start_date)) . " 23:59:59";
+
+		$args = array(
+			'limit'        => -1,
+			'status'       => array('processing', 'completed'),
+			'date_created' => $start_date . '...' . $end_date,
+		);
+
+		$orders = wc_get_orders($args);
+		$report = array();
+
+		foreach ($teacher_ids as $tid) {
+			$user = get_userdata($tid);
+			if (!$user) continue;
+			$report[$tid] = array(
+				'name' => $user->display_name,
+				'count' => 0,
+				'total' => 0.0
+			);
+		}
+
+		foreach ($orders as $order) {
+			if (!$order instanceof WC_Order) continue;
+			$items = $order->get_items();
+			foreach ($items as $item) {
+				if (!$item instanceof WC_Order_Item_Product) continue;
+				$product_id = $item->get_product_id();
+				
+				// Identify author: check LearnDash course link first
+				$author_id = 0;
+				$course_ids = get_post_meta($product_id, '_related_course', true);
+				if (!empty($course_ids) && is_array($course_ids)) {
+					$author_id = (int) get_post_field('post_author', $course_ids[0]);
+				} elseif (!empty($course_ids) && is_scalar($course_ids)) {
+					// Handle legacy cases if any
+					$author_id = (int) get_post_field('post_author', $course_ids);
+				} else {
+					$author_id = (int) get_post_field('post_author', $product_id);
+				}
+
+				if (isset($report[$author_id])) {
+					$report[$author_id]['count'] += (int) $item->get_quantity();
+					$report[$author_id]['total'] += (float) $item->get_total();
+				}
+			}
+		}
+
+		// Sort by total desc
+		uasort($report, static fn($a, $b) => $b['total'] <=> $a['total']);
+
+		$has_data = false;
+		foreach ($report as $data) {
+			if ($data['count'] <= 0) continue;
+			$has_data = true;
+			?>
+			<tr>
+				<td class="font-bold text-gray-900"><?php echo esc_html($data['name']); ?></td>
+				<td class="text-center"><?php echo esc_html((string) $data['count']); ?></td>
+				<td class="text-right font-mono font-bold text-[#c5a367]">
+					<?php echo esc_html('$' . number_format($data['total'], 0, ',', '.')); ?>
+				</td>
+			</tr>
+			<?php
+		}
+
+		if (!$has_data) {
+			echo '<tr><td colspan="3" class="text-center py-10 opacity-50 italic">No hay ventas registradas para este mes.</td></tr>';
+		}
 	}
 }
 

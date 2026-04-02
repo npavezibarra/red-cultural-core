@@ -130,16 +130,16 @@ final class Red_Cultural_WC_Emails
         }
 
         // Check if order is already processed
-        if ($order->has_status(['processing', 'completed'])) {
+        if ($order->has_status(['completed'])) {
             wp_die('Este pedido ya ha sido confirmado anteriormente.', 'Pedido Ya Confirmado', ['response' => 200, 'back_link' => true]);
         }
 
-        // Update status
-        $order->update_status('processing', __('Transferencia confirmada por contabilidad vía email.', 'red-cultural-core'));
+        // Update status to COMPLETED
+        $order->update_status('completed', __('Transferencia confirmada por contabilidad vía email.', 'red-cultural-core'));
 
         // Redirect with a success message
         wp_die(
-            sprintf('Transferencia confirmada correctamente para el pedido #%s. El usuario ya tiene acceso a sus contenidos.', $order->get_order_number()),
+            sprintf('Transferencia confirmada correctamente para el pedido #%s. El pedido ahora está COMPLETADO y el usuario ya tiene acceso a sus contenidos.', $order->get_order_number()),
             'Transferencia Confirmada',
             ['response' => 200, 'back_link' => true]
         );
