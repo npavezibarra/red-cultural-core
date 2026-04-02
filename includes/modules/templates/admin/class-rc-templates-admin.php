@@ -488,8 +488,11 @@ final class RC_Templates_Admin {
 			wp_send_json_error('Invalid nonce');
 		}
 
-		$start_date = date('Y-m-01 00:00:00');
-		$end_date   = date('Y-m-t 23:59:59');
+		$month = isset($_POST['month']) ? (int) $_POST['month'] : (int) date('m');
+		$year = (int) date('Y');
+
+		$start_date = "{$year}-" . str_pad((string)$month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+		$end_date   = "{$year}-" . str_pad((string)$month, 2, '0', STR_PAD_LEFT) . "-" . date('t', strtotime($start_date)) . " 23:59:59";
 
 		$args = array(
 			'limit'        => -1,
@@ -541,7 +544,7 @@ final class RC_Templates_Admin {
 			'labels' => $labels,
 			'libros' => $libros_data,
 			'cursos' => $cursos_data,
-			'month'  => date_i18n('F'),
+			'month'  => date_i18n('F', strtotime($start_date)),
 		));
 	}
 

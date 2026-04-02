@@ -441,10 +441,25 @@ $nonce = wp_create_nonce('rcp_search_sales');
 				</div>
 
 				<div id="view-grafico" class="view-content chart-view-container">
+					<div class="month-selector-container w-full !mb-8">
+						<select id="rc-chart-month-select" class="month-select">
+							<?php
+							$current_month = (int) date('m');
+							$months = array(
+								1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+								5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+								9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+							);
+							foreach ($months as $m => $name) {
+								echo '<option value="' . esc_attr((string)$m) . '" ' . selected($m, $current_month, false) . '>' . esc_html($name) . '</option>';
+							}
+							?>
+						</select>
+					</div>
 					<div id="rc-sales-chart-wrapper">
 						<canvas id="rc-sales-chart"></canvas>
 					</div>
-					<p class="mt-4 text-[12px] opacity-40 uppercase tracking-widest font-bold">Ventas por Día - <?php echo date_i18n('F Y'); ?></p>
+					<p id="rc-chart-title" class="mt-4 text-[12px] opacity-40 uppercase tracking-widest font-bold">Ventas por Día - <?php echo date_i18n('F Y'); ?></p>
 				</div>
 
 				<div id="view-profesores" class="view-content">
@@ -544,9 +559,11 @@ $nonce = wp_create_nonce('rcp_search_sales');
 					document.getElementById('rc-profesores-month-select').onchange = fetchProfesoresData;
 
 					function fetchChartData() {
+						const monthSelect = document.getElementById('rc-chart-month-select');
 						const formData = new URLSearchParams();
 						formData.append('action', 'rcp_get_sales_chart_data');
 						formData.append('nonce', '<?php echo esc_js($nonce); ?>');
+						formData.append('month', monthSelect.value);
 
 						fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
 							method: 'POST',
@@ -557,9 +574,21 @@ $nonce = wp_create_nonce('rcp_search_sales');
 						.then(res => {
 							if (res.success) {
 								renderChart(res.data);
+								const title = document.getElementById('rc-chart-title');
+								if (title) {
+									title.innerText = 'Ventas por Día - ' + res.data.month + ' <?php echo date('Y'); ?>';
+								}
 							}
 						});
 					}
+
+					document.getElementById('rc-chart-month-select').onchange = () => {
+						if (salesChart) {
+							salesChart.destroy();
+							salesChart = null;
+						}
+						fetchChartData();
+					};
 
 					function renderChart(data) {
 						const ctx = document.getElementById('rc-sales-chart').getContext('2d');
