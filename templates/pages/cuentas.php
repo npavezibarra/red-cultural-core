@@ -49,15 +49,25 @@ $nonce = wp_create_nonce('rcp_search_sales');
 
 		#red-cultural-cuentas-hero {
 			background-color: #ffffff;
-			min-height: 100vh;
+			min-height: 60vh;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			justify-content: flex-start;
+			justify-content: center;
 			position: relative;
-			padding: 30px 20px;
+			padding: 0;
 			color: #000000;
 			text-align: center;
+		}
+
+		#red-cultural-cuentas-hero.restricted {
+			background: url('<?php echo esc_url($bg_url); ?>') no-repeat center center;
+			background-size: cover;
+		}
+
+		#red-cultural-cuentas-hero.is-admin {
+			justify-content: flex-start;
+			padding: 30px 20px;
 		}
 
 		#red-cultural-cuentas-overlay {
@@ -104,9 +114,17 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			border: none;
 		}
 
+		.rcp-cuentas-btn.btn-white {
+			background-color: #ffffff;
+			color: #000000;
+			text-transform: uppercase;
+			font-size: 13px;
+			letter-spacing: 0.1em;
+			padding: 10px 30px;
+		}
+
 		.rcp-cuentas-btn:hover {
 			transform: scale(1.05);
-			background-color: #f8f8f8;
 			box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 		}
 
@@ -313,6 +331,27 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			background: #c5a367;
 			box-shadow: 0 -2px 10px rgba(197, 163, 103, 0.5);
 		}
+
+		.restriction-box {
+			padding: 60px 40px;
+			color: #ffffff;
+			max-width: 600px;
+			width: 90%;
+		}
+
+		.restriction-title {
+			font-size: 48px;
+			font-weight: 600;
+			margin-bottom: 20px;
+			letter-spacing: -0.02em;
+		}
+
+		.restriction-text {
+			font-size: 20px;
+			font-weight: 400;
+			opacity: 0.9;
+			margin-bottom: 30px;
+		}
  
 		.chart-view-container {
 			background: #ffffff;
@@ -383,29 +422,31 @@ $nonce = wp_create_nonce('rcp_search_sales');
 	}
 	?>
 
-	<div id="red-cultural-cuentas-hero">
+	<div id="red-cultural-cuentas-hero" class="<?php echo $is_admin ? 'is-admin' : 'restricted'; ?>">
 		<div id="red-cultural-cuentas-overlay" aria-hidden="true"></div>
 
-		<main id="red-cultural-cuentas-content">
-			<div class="rcp-header-row">
-				<h1 class="rcp-cuentas-title">Ventas</h1>
+		<main id="red-cultural-cuentas-content" class="<?php echo $is_admin ? '' : 'flex flex-col items-center'; ?>">
+			<?php if ($is_admin): ?>
+				<div class="rcp-header-row">
+					<h1 class="rcp-cuentas-title">Ventas</h1>
 
-				<?php if ($is_admin): ?>
 					<div class="rcp-submenu">
 						<div class="rcp-tab active" data-view="ventas">Ventas</div>
 						<div class="rcp-tab" data-view="grafico">Gráfico</div>
 						<div class="rcp-tab" data-view="profesores">Profesores</div>
 					</div>
-				<?php endif; ?>
-			</div>
+				</div>
+			<?php endif; ?>
 
-			<?php if (!is_user_logged_in()): ?>
-				<p class="rcp-cuentas-subtext mt-12">Acceso restringido a administradores.</p>
-				<p class="rcp-cuentas-subtext">Por favor, inicia sesión para continuar.</p>
-				<button type="button" class="rcp-cuentas-btn" data-rcp-auth-open="1">
-					Iniciar Sesión
-				</button>
-			<?php elseif ($is_admin): ?>
+			<?php if (!$is_admin): ?>
+				<div class="restriction-box">
+					<h1 class="restriction-title">Ventas</h1>
+					<p class="restriction-text">Debes iniciar sesión como administrador para acceder a esta página.</p>
+					<button type="button" class="rcp-cuentas-btn btn-white" data-rcp-auth-open="1">
+						LOGIN
+					</button>
+				</div>
+			<?php else: ?>
 
 
 				<div id="view-ventas" class="view-content active">
@@ -795,10 +836,6 @@ $nonce = wp_create_nonce('rcp_search_sales');
 					}
 				});
 				</script>
-			<?php else: ?>
-				<p class="rcp-cuentas-subtext">Acceso Denegado</p>
-				<p class="rcp-cuentas-subtext">Esta página es exclusiva para administradores.</p>
-				<a href="<?php echo esc_url(home_url('/')); ?>" class="rcp-cuentas-btn">Volver al Inicio</a>
 			<?php endif; ?>
 		</main>
 	</div>
