@@ -171,6 +171,90 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			background: #f9fafb;
 		}
 
+		/* Smartphone Padding Optimization */
+		@media screen and (max-width: 768px) {
+			.rcp-dashboard-container {
+				padding: 32px 0px !important;
+			}
+		}
+
+		/* Responsive Table Implementation Guidelines */
+		/* Desktop: Default Table Styling */
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-radius: 6px;
+			overflow: hidden;
+		}
+
+		@media screen and (max-width: 1240px) {
+			#red-cultural-cuentas-hero.is-admin {
+				justify-content: flex-start;
+				padding: 0px 30px;
+			}
+		}
+
+		/* Mobile: Threshold (Default 1040px) */
+		@media screen and (max-width: 1040px) {
+			table, thead, tbody, th, td, tr {
+				display: block;
+			}
+
+			/* Hide header row but keep for accessibility */
+			thead tr {
+				position: absolute;
+				top: -9999px;
+				left: -9999px;
+			}
+
+			tr {
+				border: 1px solid #ccc;
+				margin-bottom: 10px;
+				border-radius: 12px;
+				padding: 10px;
+				background: #fff;
+			}
+
+			td {
+				border: none;
+				position: relative;
+				padding: 12px 10px 12px 50% !important; /* Space for the label */
+				text-align: left !important;
+				font-weight: 400;
+				min-height: 44px;
+				display: flex;
+				flex-direction: column; /* Stack children vertically (Name / Email) */
+				align-items: flex-start;
+				justify-content: center;
+				border-bottom: 1px solid #f3f4f6;
+			}
+
+			td:last-child {
+				border-bottom: none;
+			}
+
+			/* Insert the Label from data-label attribute */
+			td:before {
+				content: attr(data-label);
+				position: absolute;
+				left: 10px;
+				width: 45%;
+				white-space: nowrap;
+				font-weight: 600;
+				color: #111827;
+			}
+			
+			/* Specific fixes for dashboard elements in mobile */
+			td .rcp-status-dropdown {
+				margin-left: 0;
+				width: 100%;
+			}
+			
+			td .status-badge {
+				margin-left: 0 !important;
+			}
+		}
+
 		.status-badge {
 			padding: 4px 10px;
 			border-radius: 100px;
@@ -220,7 +304,7 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		}
 
 		.search-container {
-			margin-bottom: 0px;
+			margin-bottom: 15px;
 			width: 100%;
 			max-width: 500px;
 			margin-left: auto;
@@ -288,13 +372,21 @@ $nonce = wp_create_nonce('rcp_search_sales');
 			position: relative;
 			z-index: 100;
 		}
+		#view-grafico {
+			padding: 0px;
+		}
+
+		.sales-table-container {
+			padding: 0px;
+		}
+
 		.rcp-header-row {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			width: 100%;
-			margin-bottom: 40px;
-			padding-bottom: 0;
+			margin-bottom: 15px !important;
+			padding-bottom: 0px;
 			border-bottom: 1px solid #e5e7eb;
 		}
  
@@ -428,7 +520,6 @@ $nonce = wp_create_nonce('rcp_search_sales');
 		<main id="red-cultural-cuentas-content" class="<?php echo $is_admin ? '' : 'flex flex-col items-center'; ?>">
 			<?php if ($is_admin): ?>
 				<div class="rcp-header-row">
-					<h1 class="rcp-cuentas-title">Ventas</h1>
 
 					<div class="rcp-submenu">
 						<div class="rcp-tab active" data-view="ventas">Ventas</div>

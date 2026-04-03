@@ -114,6 +114,67 @@ final class RC_Templates_Shortcodes {
 			#rc-sales-admin-wrap .rcp-pagination a, #rc-sales-admin-wrap .rcp-pagination span{padding:8px 16px;background:#18181b;border:1px solid #27272a;color:#a1a1aa;border-radius:6px;text-decoration:none;transition:all .2s}
 			#rc-sales-admin-wrap .rcp-pagination .current{background:#c5a367;color:#000;border-color:#c5a367}
 			#rc-sales-admin-wrap .rcp-pagination a:hover{border-color:#c5a367;color:#fff}
+
+			/* Smartphone Padding Optimization */
+			@media screen and (max-width: 768px) {
+				#rc-sales-admin-wrap {
+					padding: 32px 0px !important;
+				}
+			}
+
+			/* Responsive Table Guidelines Overlay */
+			@media screen and (max-width: 1040px) {
+				#rc-sales-admin-wrap table, 
+				#rc-sales-admin-wrap thead, 
+				#rc-sales-admin-wrap tbody, 
+				#rc-sales-admin-wrap th, 
+				#rc-sales-admin-wrap td, 
+				#rc-sales-admin-wrap tr {
+					display: block !important;
+				}
+
+				#rc-sales-admin-wrap thead tr {
+					position: absolute !important;
+					top: -9999px !important;
+					left: -9999px !important;
+				}
+
+				#rc-sales-admin-wrap tr {
+					border: 1px solid #27272a !important;
+					margin-bottom: 10px !important;
+					border-radius: 12px !important;
+					padding: 10px !important;
+					background: #09090b !important;
+				}
+
+				#rc-sales-admin-wrap td {
+					border: none !important;
+					position: relative !important;
+					padding: 12px 10px 12px 50% !important;
+					text-align: left !important;
+					font-weight: 400 !important;
+					display: flex !important;
+					flex-direction: column !important;
+					align-items: flex-start !important;
+					justify-content: center !important;
+					min-height: 44px !important;
+					border-bottom: 1px solid #27272a !important;
+				}
+
+				#rc-sales-admin-wrap td:last-child {
+					border-bottom: none !important;
+				}
+
+				#rc-sales-admin-wrap td:before {
+					content: attr(data-label);
+					position: absolute !important;
+					left: 10px !important;
+					width: 45% !important;
+					white-space: nowrap !important;
+					font-weight: 600 !important;
+					color: #71717a !important;
+				}
+			}
 		</style>
 		<script>
 			jQuery(function($) {

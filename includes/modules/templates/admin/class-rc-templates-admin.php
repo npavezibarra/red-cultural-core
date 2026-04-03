@@ -422,21 +422,21 @@ final class RC_Templates_Admin {
 					$subtotal = $item->get_total();
 					?>
 					<tr>
-						<td><span class="opacity-50">#</span><?php echo esc_html((string) $order->get_id()); ?></td>
-						<td>
+						<td data-label="ID"><span class="opacity-50">#</span><?php echo esc_html((string) $order->get_id()); ?></td>
+						<td data-label="Cliente">
 							<div class="font-bold"><?php echo esc_html($billing_name); ?></div>
 							<div class="text-[10px] opacity-40 uppercase tracking-wider"><?php echo esc_html($billing_email); ?></div>
 						</td>
-						<td class="max-w-[300px]">
-							<div class="truncate font-medium text-gray-900" title="<?php echo esc_attr((string) $item->get_name()); ?>">
+						<td data-label="Producto">
+							<div class="font-medium text-gray-900">
 								<?php echo esc_html((string) $item->get_name()); ?>
 							</div>
 						</td>
-						<td class="text-center"><?php echo esc_html((string) $quantity); ?></td>
-						<td class="text-right font-mono font-bold text-[#c5a367]">
+						<td data-label="Cant." class="text-center"><?php echo esc_html((string) $quantity); ?></td>
+						<td data-label="Precio" class="text-right font-mono font-bold text-[#c5a367]">
 							<?php echo esc_html(number_format((float) $subtotal, 0, ',', '.') . ' ' . $order->get_currency()); ?>
 						</td>
-						<td class="text-center relative">
+						<td data-label="Estado" class="text-center relative">
 							<div class="rcp-status-dropdown" data-order-id="<?php echo esc_attr((string) $order->get_id()); ?>">
 								<span class="status-badge status-<?php echo esc_attr($status); ?> cursor-pointer flex items-center justify-center gap-1 mx-auto w-fit">
 									<?php echo esc_html($status_label); ?>
@@ -450,7 +450,7 @@ final class RC_Templates_Admin {
 								</div>
 							</div>
 						</td>
-						<td class="whitespace-nowrap">
+						<td data-label="Fecha" class="whitespace-nowrap">
 							<div class="text-[13px]"><?php echo esc_html($order_date->date('d/m/Y')); ?></div>
 							<div class="text-[11px] opacity-40"><?php echo esc_html($order_date->date('H:i')); ?></div>
 						</td>
@@ -675,9 +675,9 @@ final class RC_Templates_Admin {
 			$has_data = true;
 			?>
 			<tr>
-				<td class="font-bold text-gray-900"><?php echo esc_html($data['name']); ?></td>
-				<td class="text-center"><?php echo esc_html((string) $data['count']); ?></td>
-				<td class="text-right font-mono font-bold text-[#c5a367]">
+				<td data-label="Profesor" class="font-bold text-gray-900"><?php echo esc_html($data['name']); ?></td>
+				<td data-label="Cursos Vendidos" class="text-center"><?php echo esc_html((string) $data['count']); ?></td>
+				<td data-label="Total ($)" class="text-right font-mono font-bold text-[#c5a367]">
 					<?php echo esc_html('$' . number_format($data['total'], 0, ',', '.')); ?>
 				</td>
 			</tr>
