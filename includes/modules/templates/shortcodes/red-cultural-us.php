@@ -206,7 +206,8 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 		ob_start();
 		?>
 		<style>
-			#<?php echo esc_attr($root_id); ?>{max-width:1180px !important;margin:0 auto;padding:26px 16px 72px;color:#111827}
+			#<?php echo esc_attr($root_id); ?>{max-width:1180px !important;margin:0 auto;padding:60px 16px 72px;color:#111827}
+			.rcp-us-full-width{background-color:#f9f9f9 !important;width:100%}
 			#<?php echo esc_attr($root_id); ?> h2{font-size:40px;line-height:1.05;font-weight:900;letter-spacing:-.02em;margin:0;text-align:center}
 			#<?php echo esc_attr($root_id); ?> p{margin:0}
 			#<?php echo esc_attr($root_id); ?> .rcp-us-sub{margin-top:14px;max-width:680px;color:#6b7280;font-size:18px;line-height:1.45}
@@ -233,92 +234,94 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 				#<?php echo esc_attr($root_id); ?> .rcp-us-grid{grid-template-columns:1fr}
 			}
 		</style>
-		<section id="<?php echo esc_attr($root_id); ?>">
-			<h2 id="<?php echo esc_attr($root_id . '-title'); ?>">Equipo Administrativo</h2>
-			<div id="<?php echo esc_attr($root_id . '-admin-accent'); ?>" class="rcp-us-accent"></div>
+		<div class="rcp-us-full-width">
+			<section id="<?php echo esc_attr($root_id); ?>">
+				<h2 id="<?php echo esc_attr($root_id . '-title'); ?>">Equipo Administrativo</h2>
+				<div id="<?php echo esc_attr($root_id . '-admin-accent'); ?>" class="rcp-us-accent"></div>
 
-			<ul id="<?php echo esc_attr($root_id . '-grid'); ?>" class="rcp-us-grid">
-				<?php foreach ($members as $member) : ?>
-					<?php
-					$name = isset($member['name']) ? (string) $member['name'] : '';
-					$role = isset($member['role']) ? (string) $member['role'] : '';
-					$img = isset($member['img']) ? (string) $member['img'] : '';
-					$fallback = isset($member['fallback']) ? (string) $member['fallback'] : '';
-					$login = isset($member['login']) ? (string) $member['login'] : '';
-					$href = $login !== '' ? (string) home_url('/author/' . $login . '/') : '';
-					$member_id = $root_id . '-member-' . sanitize_title($name !== '' ? $name : uniqid('member-'));
-					?>
-					<li>
-						<?php if ($href !== '') : ?>
-							<a id="<?php echo esc_attr($member_id); ?>" class="rcp-us-card" href="<?php echo esc_url($href); ?>" target="_blank" rel="noopener noreferrer">
-								<span id="<?php echo esc_attr($member_id . '-photo'); ?>" class="rcp-us-photo">
-									<img
-										id="<?php echo esc_attr($member_id . '-img'); ?>"
-										src="<?php echo esc_url($img !== '' ? $img : $fallback); ?>"
-										alt="<?php echo esc_attr($name); ?>"
-										loading="lazy"
-										referrerpolicy="no-referrer"
-										data-fallback="<?php echo esc_url($fallback); ?>"
-										onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}"
-									/>
-								</span>
-								<span id="<?php echo esc_attr($member_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
-								<span id="<?php echo esc_attr($member_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
-							</a>
-						<?php else : ?>
-							<div id="<?php echo esc_attr($member_id); ?>" class="rcp-us-card-static">
-								<span id="<?php echo esc_attr($member_id . '-photo'); ?>" class="rcp-us-photo" aria-hidden="true"></span>
-								<span id="<?php echo esc_attr($member_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
-								<span id="<?php echo esc_attr($member_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
-							</div>
-						<?php endif; ?>
-					</li>
-				<?php endforeach; ?>
-			</ul>
+				<ul id="<?php echo esc_attr($root_id . '-grid'); ?>" class="rcp-us-grid">
+					<?php foreach ($members as $member) : ?>
+						<?php
+						$name = isset($member['name']) ? (string) $member['name'] : '';
+						$role = isset($member['role']) ? (string) $member['role'] : '';
+						$img = isset($member['img']) ? (string) $member['img'] : '';
+						$fallback = isset($member['fallback']) ? (string) $member['fallback'] : '';
+						$login = isset($member['login']) ? (string) $member['login'] : '';
+						$href = $login !== '' ? (string) home_url('/author/' . $login . '/') : '';
+						$member_id = $root_id . '-member-' . sanitize_title($name !== '' ? $name : uniqid('member-'));
+						?>
+						<li>
+							<?php if ($href !== '') : ?>
+								<a id="<?php echo esc_attr($member_id); ?>" class="rcp-us-card" href="<?php echo esc_url($href); ?>" target="_blank" rel="noopener noreferrer">
+									<span id="<?php echo esc_attr($member_id . '-photo'); ?>" class="rcp-us-photo">
+										<img
+											id="<?php echo esc_attr($member_id . '-img'); ?>"
+											src="<?php echo esc_url($img !== '' ? $img : $fallback); ?>"
+											alt="<?php echo esc_attr($name); ?>"
+											loading="lazy"
+											referrerpolicy="no-referrer"
+											data-fallback="<?php echo esc_url($fallback); ?>"
+											onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}"
+										/>
+									</span>
+									<span id="<?php echo esc_attr($member_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
+									<span id="<?php echo esc_attr($member_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
+								</a>
+							<?php else : ?>
+								<div id="<?php echo esc_attr($member_id); ?>" class="rcp-us-card-static">
+									<span id="<?php echo esc_attr($member_id . '-photo'); ?>" class="rcp-us-photo" aria-hidden="true"></span>
+									<span id="<?php echo esc_attr($member_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
+									<span id="<?php echo esc_attr($member_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
+								</div>
+							<?php endif; ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 
-			<hr id="<?php echo esc_attr($root_id . '-divider'); ?>" class="rcp-us-divider" />
+				<hr id="<?php echo esc_attr($root_id . '-divider'); ?>" class="rcp-us-divider" />
 
-			<h3 id="<?php echo esc_attr($root_id . '-docente-title'); ?>" class="rcp-us-h3">Equipo Docente</h3>
-			<div id="<?php echo esc_attr($root_id . '-docente-accent'); ?>" class="rcp-us-accent"></div>
-			<ul id="<?php echo esc_attr($root_id . '-docente-grid'); ?>" class="rcp-us-grid rcp-us-grid--docente">
-				<?php foreach ($teachers as $teacher) : ?>
-					<?php
-					$name = isset($teacher['name']) ? (string) $teacher['name'] : '';
-					$role = isset($teacher['role']) ? (string) $teacher['role'] : '';
-					$img = isset($teacher['img']) ? (string) $teacher['img'] : '';
-					$fallback = isset($teacher['fallback']) ? (string) $teacher['fallback'] : '';
-					$login = isset($teacher['login']) ? (string) $teacher['login'] : '';
-					$href = $login !== '' ? (string) home_url('/author/' . $login . '/') : '';
-					$teacher_id = $root_id . '-docente-' . sanitize_title($name !== '' ? $name : uniqid('docente-'));
-					?>
-					<li>
-						<?php if ($href !== '') : ?>
-							<a id="<?php echo esc_attr($teacher_id); ?>" class="rcp-us-card" href="<?php echo esc_url($href); ?>" target="_blank" rel="noopener noreferrer">
-								<span id="<?php echo esc_attr($teacher_id . '-photo'); ?>" class="rcp-us-photo">
-									<img
-										id="<?php echo esc_attr($teacher_id . '-img'); ?>"
-										src="<?php echo esc_url($img !== '' ? $img : $fallback); ?>"
-										alt="<?php echo esc_attr($name); ?>"
-										loading="lazy"
-										referrerpolicy="no-referrer"
-										data-fallback="<?php echo esc_url($fallback); ?>"
-										onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}"
-									/>
-								</span>
-								<span id="<?php echo esc_attr($teacher_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
-								<span id="<?php echo esc_attr($teacher_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
-							</a>
-						<?php else : ?>
-							<div id="<?php echo esc_attr($teacher_id); ?>" class="rcp-us-card-static">
-								<span id="<?php echo esc_attr($teacher_id . '-photo'); ?>" class="rcp-us-photo" aria-hidden="true"></span>
-								<span id="<?php echo esc_attr($teacher_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
-								<span id="<?php echo esc_attr($teacher_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
-							</div>
-						<?php endif; ?>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</section>
+				<h3 id="<?php echo esc_attr($root_id . '-docente-title'); ?>" class="rcp-us-h3">Equipo Docente</h3>
+				<div id="<?php echo esc_attr($root_id . '-docente-accent'); ?>" class="rcp-us-accent"></div>
+				<ul id="<?php echo esc_attr($root_id . '-docente-grid'); ?>" class="rcp-us-grid rcp-us-grid--docente">
+					<?php foreach ($teachers as $teacher) : ?>
+						<?php
+						$name = isset($teacher['name']) ? (string) $teacher['name'] : '';
+						$role = isset($teacher['role']) ? (string) $teacher['role'] : '';
+						$img = isset($teacher['img']) ? (string) $teacher['img'] : '';
+						$fallback = isset($teacher['fallback']) ? (string) $teacher['fallback'] : '';
+						$login = isset($teacher['login']) ? (string) $teacher['login'] : '';
+						$href = $login !== '' ? (string) home_url('/author/' . $login . '/') : '';
+						$teacher_id = $root_id . '-docente-' . sanitize_title($name !== '' ? $name : uniqid('docente-'));
+						?>
+						<li>
+							<?php if ($href !== '') : ?>
+								<a id="<?php echo esc_attr($teacher_id); ?>" class="rcp-us-card" href="<?php echo esc_url($href); ?>" target="_blank" rel="noopener noreferrer">
+									<span id="<?php echo esc_attr($teacher_id . '-photo'); ?>" class="rcp-us-photo">
+										<img
+											id="<?php echo esc_attr($teacher_id . '-img'); ?>"
+											src="<?php echo esc_url($img !== '' ? $img : $fallback); ?>"
+											alt="<?php echo esc_attr($name); ?>"
+											loading="lazy"
+											referrerpolicy="no-referrer"
+											data-fallback="<?php echo esc_url($fallback); ?>"
+											onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}"
+										/>
+									</span>
+									<span id="<?php echo esc_attr($teacher_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
+									<span id="<?php echo esc_attr($teacher_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
+								</a>
+							<?php else : ?>
+								<div id="<?php echo esc_attr($teacher_id); ?>" class="rcp-us-card-static">
+									<span id="<?php echo esc_attr($teacher_id . '-photo'); ?>" class="rcp-us-photo" aria-hidden="true"></span>
+									<span id="<?php echo esc_attr($teacher_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
+									<span id="<?php echo esc_attr($teacher_id . '-role'); ?>" class="rcp-us-role"><?php echo esc_html($role); ?></span>
+								</div>
+							<?php endif; ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</section>
+		</div>
 		<?php
 
 		return (string) ob_get_clean();
