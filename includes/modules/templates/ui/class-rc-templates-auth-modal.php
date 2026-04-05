@@ -37,6 +37,7 @@ final class RC_Templates_Auth_Modal {
 			#red-cultural-login-overlay button#red-cultural-login-submit{font-size:14px;border-radius:6px;letter-spacing:3px;font-size:13px;font-weight:600;border-radius:6px !important}
 			#red-cultural-login-overlay p#red-cultural-login-subtitle{font-size:14px}
 			#red-cultural-login-overlay p#red-cultural-login-toggle-text{font-size:14px}
+			.rc-hp-wrap{position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;height:0;width:0;overflow:hidden}
 		</style>
 		<div id="red-cultural-login-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300 p-4" data-admin-post="<?php echo esc_attr((string) $admin_post); ?>" data-ajax-url="<?php echo esc_attr((string) admin_url('admin-ajax.php')); ?>" data-nonce="<?php echo esc_attr((string) $auth_nonce); ?>" data-exists-nonce="<?php echo esc_attr((string) $exists_nonce); ?>" data-redirect="<?php echo esc_attr((string) $redirect_to); ?>" data-as-provider="<?php echo esc_attr($as_provider); ?>" data-as-sitekey="<?php echo esc_attr($as_site_key); ?>" role="dialog" aria-modal="true" aria-label="Red Cultural - Acceso">
 			<div id="red-cultural-login-card" class="bg-white w-full max-w-sm shadow-2xl overflow-hidden relative auth-card scale-95 transform">
@@ -49,6 +50,11 @@ final class RC_Templates_Auth_Modal {
 						<p id="red-cultural-login-subtitle" class="text-gray-500 text-xs">Bienvenido de nuevo. Por favor, inicia sesión.</p>
 					</div>
 					<form id="red-cultural-login-form" class="space-y-4">
+						<div class="rc-hp-wrap" aria-hidden="true">
+							<label for="red-cultural-login-hp">Nombre Completo</label>
+							<input id="red-cultural-login-hp" type="text" name="_rc_user_full_name" tabindex="-1" autocomplete="off">
+							<input type="hidden" name="_rc_form_ts" id="red-cultural-login-ts" value="<?php echo time(); ?>">
+						</div>
 						<div id="red-cultural-login-register-fields" class="hidden space-y-4">
 							<div id="red-cultural-login-register-grid" class="grid grid-cols-2 gap-3">
 								<div>
@@ -178,9 +184,9 @@ final class RC_Templates_Auth_Modal {
 				if (form) {
 					form.addEventListener('submit', function (e) {
 						e.preventDefault();
-						var em = document.getElementById('red-cultural-login-email'), ps = document.getElementById('red-cultural-login-password'), rm = document.getElementById('red-cultural-login-remember'), fn = document.getElementById('red-cultural-login-first-name'), ln = document.getElementById('red-cultural-login-last-name');
+						var em = document.getElementById('red-cultural-login-email'), ps = document.getElementById('red-cultural-login-password'), rm = document.getElementById('red-cultural-login-remember'), fn = document.getElementById('red-cultural-login-first-name'), ln = document.getElementById('red-cultural-login-last-name'), hp = document.getElementById('red-cultural-login-hp'), ts = document.getElementById('red-cultural-login-ts');
 						if (currentView === 'forgot') { checkForgotEmailExistsDebounced(); forgotPassword(em ? em.value : ''); return; }
-						var pay = { user_login: em?.value || '', password: ps?.value || '', remember: rm?.checked ? '1' : '' };
+						var pay = { user_login: em?.value || '', password: ps?.value || '', remember: rm?.checked ? '1' : '', _rc_user_full_name: hp?.value || '', _rc_form_ts: ts?.value || '' };
 						if (currentView === 'register') { if (!emailsMatch()) { setStatusError('Correos no coinciden'); return; } pay.first_name = fn?.value || ''; pay.last_name = ln?.value || ''; pay.email = em?.value || ''; }
 						var pr = overlay.getAttribute('data-as-provider'), sk = overlay.getAttribute('data-as-sitekey');
 						if (submitBtn) submitBtn.disabled = true;

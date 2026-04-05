@@ -14,6 +14,13 @@ final class RC_Anti_Spam {
 	
 	public static function init(): void {
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_assets'));
+		
+		// Anti-spam hooks for default registration
+		add_filter('registration_errors', array(__CLASS__, 'protect_standard_registration'), 10, 3);
+		add_filter('woocommerce_registration_errors', array(__CLASS__, 'protect_standard_registration'), 10, 3);
+		
+		// Redirect standard registration to home or custom modal
+		add_action('init', array(__CLASS__, 'disable_standard_registration'));
 	}
 
 	/**
@@ -83,7 +90,9 @@ final class RC_Anti_Spam {
 			return true;
 		}
 
+		// ReCAPTCHA is enabled but token is missing: Fail closed.
 		if (empty($token)) {
+			error_log('RC Anti-Spam: Token is empty.');
 			return false;
 		}
 
@@ -109,11 +118,8 @@ final class RC_Anti_Spam {
 		));
 
 		if (is_wp_error($response)) {
-			// On API error, we might want to fail-open to avoid lockout, 
-			// but usually, it's better to fail-closed for security.
-			// Given the user's past experience, we'll log it and let it pass if it's a server-side timeout.
 			error_log('RC Anti-Spam: API connection failed. ' . $response->get_error_message());
-			return true; 
+			return true; // Fail open on connection errors to avoid lockout.
 		}
 
 		$body = json_decode(wp_remote_retrieve_body($response), true);
@@ -129,6 +135,62 @@ final class RC_Anti_Spam {
 		}
 
 		return (bool)$body['success'];
+	}
+
+	/**
+	 * Verify Honeypot field.
+	 * 
+	 * @return bool True if passed (human), false if caught (bot).
+	 */
+	public static function verify_honeypot(): bool {
+		$field_name = '_rc_user_full_name'; // Generic name to trick bots.
+		if (!isset($_POST[$field_name])) {
+			return true; // Not present? Likely not our form.
+		}
+		return empty($_POST[$field_name]);
+	}
+
+	/**
+	 * Verify Timing field.
+	 * 
+	 * @return bool True if passed (human), false if too fast (bot).
+	 */
+	public static function verify_timing(): bool {
+		$ts_name = '_rc_form_ts';
+		if (!isset($_POST[$ts_name])) {
+			return true; // Not present? Allow for now.
+		}
+		$ts = (int) $_POST[$ts_name];
+		$now = time();
+		$diff = $now - $ts;
+		
+		// Bots submit in < 2 seconds. Humans take at least 5.
+		// We use 3 seconds as a threshold.
+		return $diff >= 3;
+	}
+
+	/**
+	 * Protect standard registration forms.
+	 */
+	public static function protect_standard_registration($errors, $login = '', $email = '') {
+		// If it's a registration attempt on a standard form, block it unless we can verify it.
+		// Since we want to DISABLE standard registration, we just throw an error.
+		if (!is_wp_error($errors)) {
+			$errors = new WP_Error();
+		}
+		$errors->add('registration_disabled', 'El registro está deshabilitado. Por favor usa nuestro formulario oficial.');
+		return $errors;
+	}
+
+	/**
+	 * Disable wp-login.php?action=register
+	 */
+	public static function disable_standard_registration(): void {
+		global $pagenow;
+		if ($pagenow === 'wp-login.php' && isset($_GET['action']) && $_GET['action'] === 'register') {
+			wp_safe_redirect(home_url('/'));
+			exit;
+		}
 	}
 
 	/**
@@ -153,6 +215,12 @@ final class RC_Anti_Spam {
 		if (!self::is_enabled()) {
 			return;
 		}
+		echo '<style>.rc-hp-wrap{position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;height:0;width:0;overflow:hidden}</style>';
+		echo '<div class="rc-hp-wrap" aria-hidden="true">';
+		echo '<label for="rc-hp-field">Nombre Completo</label>';
+		echo '<input id="rc-hp-field" type="text" name="_rc_user_full_name" tabindex="-1" autocomplete="off">';
+		echo '<input type="hidden" name="_rc_form_ts" id="rc-ts-field" value="' . time() . '">';
+		echo '</div>';
 		echo '<input type="hidden" name="captcha_token" class="rc-captcha-token">';
 		self::render_widget();
 	}

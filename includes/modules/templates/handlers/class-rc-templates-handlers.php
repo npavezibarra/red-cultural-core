@@ -158,7 +158,7 @@ final class RC_Templates_Handlers {
 			exit;
 		}
 		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
-		if (!RC_Anti_Spam::verify($token)) {
+		if (!RC_Anti_Spam::verify($token) || !RC_Anti_Spam::verify_honeypot() || !RC_Anti_Spam::verify_timing()) {
 			wp_safe_redirect(add_query_arg('rcp_contact', 'error', (string) home_url('/contacto/')));
 			exit;
 		}
@@ -183,7 +183,7 @@ final class RC_Templates_Handlers {
 			exit;
 		}
 		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
-		if (!RC_Anti_Spam::verify($token)) {
+		if (!RC_Anti_Spam::verify($token) || !RC_Anti_Spam::verify_honeypot() || !RC_Anti_Spam::verify_timing()) {
 			wp_safe_redirect(add_query_arg('rcp_vi_interest', 'error', (string) home_url('/viaje-italia/')));
 			exit;
 		}
@@ -207,7 +207,7 @@ final class RC_Templates_Handlers {
 			exit;
 		}
 		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
-		if (!RC_Anti_Spam::verify($token)) {
+		if (!RC_Anti_Spam::verify($token) || !RC_Anti_Spam::verify_honeypot() || !RC_Anti_Spam::verify_timing()) {
 			wp_safe_redirect(add_query_arg('rcp_ve_interest', 'error', (string) home_url('/viaje-escandinavia/')));
 			exit;
 		}
@@ -231,7 +231,7 @@ final class RC_Templates_Handlers {
 			exit;
 		}
 		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
-		if (!RC_Anti_Spam::verify($token)) {
+		if (!RC_Anti_Spam::verify($token) || !RC_Anti_Spam::verify_honeypot() || !RC_Anti_Spam::verify_timing()) {
 			wp_safe_redirect(add_query_arg('rcp_vj_interest', 'error', (string) home_url('/viaje-japon/')));
 			exit;
 		}
@@ -294,7 +294,16 @@ final class RC_Templates_Handlers {
 		if ($redirect_to === '') $redirect_to = (string) home_url('/');
 		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
 		if (!RC_Anti_Spam::verify($token)) {
-			wp_safe_redirect(add_query_arg('rcp_auth_error', '1', $redirect_to));
+			error_log('RC Anti-Spam: Captcha verification failed.');
+			wp_safe_redirect(add_query_arg('rcp_auth_error', 'captcha_failed', $redirect_to));
+			exit;
+		}
+
+		// Honeypot & Timing checks
+		if (!RC_Anti_Spam::verify_honeypot() || !RC_Anti_Spam::verify_timing()) {
+			error_log('RC Anti-Spam: Honeypot or Timing verification failed.');
+			// We don't want to give bots too much info, but for debugging we use a generic error.
+			wp_safe_redirect(add_query_arg('rcp_auth_error', 'spam_detected', $redirect_to));
 			exit;
 		}
 		$mode = isset($_POST['mode']) ? (string) wp_unslash($_POST['mode']) : 'login';

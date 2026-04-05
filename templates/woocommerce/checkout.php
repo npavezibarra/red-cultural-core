@@ -856,9 +856,13 @@ if (function_exists('do_blocks')) {
 			if (loginSubmit) loginSubmit.addEventListener('click', function () {
 				var login = document.getElementById('red-cultural-checkout-auth-login');
 				var pass = document.getElementById('red-cultural-checkout-auth-password');
+				var hp = document.getElementById('rc-hp-field');
+				var ts = document.getElementById('rc-ts-field');
 				submitAuth('login', {
 					user_login: login ? login.value : '',
-					password: pass ? pass.value : ''
+					password: pass ? pass.value : '',
+					_rc_user_full_name: hp ? hp.value : '',
+					_rc_form_ts: ts ? ts.value : ''
 				});
 			});
 
@@ -867,11 +871,15 @@ if (function_exists('do_blocks')) {
 				var lastName = document.getElementById('red-cultural-checkout-auth-last-name');
 				var email = document.getElementById('red-cultural-checkout-auth-email');
 				var pass = document.getElementById('red-cultural-checkout-auth-register-password');
+				var hp = document.getElementById('rc-hp-field');
+				var ts = document.getElementById('rc-ts-field');
 				submitAuth('register', {
 					first_name: firstName ? firstName.value : '',
 					last_name: lastName ? lastName.value : '',
 					email: email ? email.value : '',
-					password: pass ? pass.value : ''
+					password: pass ? pass.value : '',
+					_rc_user_full_name: hp ? hp.value : '',
+					_rc_form_ts: ts ? ts.value : ''
 				});
 			});
 
