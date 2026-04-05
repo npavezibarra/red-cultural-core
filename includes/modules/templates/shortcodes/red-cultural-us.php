@@ -36,18 +36,21 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 			array(
 				'name' => 'Magdalena Merbihláa',
 				'role' => 'Directora Ejecutiva',
+				'login' => 'magdalena.merbilhaa',
 				'rel' => '2021/01/magdalena.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/magdalena.jpg',
 			),
 			array(
 				'name' => 'Bárbara Bustamante',
 				'role' => 'Directora Académica',
+				'login' => 'BarbaraBustamante',
 				'rel' => '2021/01/barbara.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/barbara.jpg',
 			),
 			array(
 				'name' => 'Guillermo González',
 				'role' => 'Director Contenidos',
+				'login' => 'guillermo.gonzalez',
 				'rel' => '2022/05/23b99eb8-4770-486c-b0cf-2751da339dc2-1-e1652661760158.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2022/05/23b99eb8-4770-486c-b0cf-2751da339dc2-1-e1652661760158.jpg',
 			),
@@ -69,108 +72,126 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 			array(
 				'name' => 'Isabel Eluchans',
 				'role' => 'Historiadora - Historia de Chile',
+				'login' => 'isabeleluchans',
 				'rel' => '2021/01/isabeleluchans.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/isabeleluchans.jpg',
 			),
 			array(
 				'name' => 'Rosita Larraín',
 				'role' => 'Historiadora - Historia Internacional',
+				'login' => 'rosita.larrain',
 				'rel' => '2021/01/rositalarrain.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/rositalarrain.jpg',
 			),
 			array(
 				'name' => 'Pilar Ducci',
 				'role' => 'Historiadora - Historia de la Ciencia',
+				'login' => 'pilar.ducci',
 				'rel' => '2021/01/pilarducci.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/pilarducci.jpg',
 			),
 			array(
 				'name' => 'Gonzalo Larios',
 				'role' => 'Historiador - Historia de la Cultura',
+				'login' => 'gonzalo.larios',
 				'rel' => '2021/01/gonzalolarios-1.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/gonzalolarios-1.jpg',
 			),
 			array(
 				'name' => 'Cristián Leon',
 				'role' => 'Arquitecto y Doctor en Historia del Arte',
+				'login' => 'cristian.leon',
 				'rel' => '2021/01/cristianleon.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/cristianleon.jpg',
 			),
 			array(
 				'name' => 'Klaus Droste',
 				'role' => 'Psicólogo y Doctor en Filosofía',
+				'login' => 'klausdroste',
 				'rel' => '2021/01/klausdroste-200x200-1.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/klausdroste-200x200-1.jpg',
 			),
 			array(
 				'name' => 'Ángel Soto',
 				'role' => 'Historiador - Historia Económica',
+				'login' => 'angelsoto',
 				'rel' => '2021/01/angelsoto-1.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/angelsoto-1.jpg',
 			),
 			array(
 				'name' => 'Patricio Carvajal',
 				'role' => 'Doctor en Derecho - Derecho Romano',
+				'login' => 'patricio.carvajal',
 				'rel' => '2021/03/patriciocarvajal.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/03/patriciocarvajal.jpg',
 			),
 			array(
 				'name' => 'Sebastián Salinas',
 				'role' => 'Historiador - Estudios Árabes',
+				'login' => 'sebastiansalinas',
 				'rel' => '2021/01/sebastiansalinas.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/sebastiansalinas.jpg',
 			),
 			array(
 				'name' => 'Armando Roa',
 				'role' => 'Abogado, Poeta y Experto en Literatura',
+				'login' => 'armando.roa',
 				'rel' => '2021/01/armandoroa-1.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/armandoroa-1.jpg',
 			),
 			array(
 				'name' => 'Magdalena Dittborn',
 				'role' => 'Historiadora - Historia de las Mujeres',
+				'login' => 'magdalena.dittborn',
 				'rel' => '2021/03/magdalenadittborn.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/03/magdalenadittborn.jpg',
 			),
 			array(
 				'name' => 'Rafael Mellafe',
 				'role' => 'Historiador - Historia de la Guerra',
+				'login' => 'rafael.mellafe',
 				'rel' => '2022/04/mellafe.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2022/04/mellafe.jpg',
 			),
 			array(
 				'name' => 'Sergio Vergara',
 				'role' => 'Historiador - Historia Antigua',
+				'login' => 'sergio.vergara',
 				'rel' => '2021/11/sergiovergara.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/11/sergiovergara.jpg',
 			),
 			array(
 				'name' => 'María Paz Díaz',
 				'role' => 'Doctora en Teología',
+				'login' => 'mariapaz.diaz',
 				'rel' => '2022/04/mariapazdiaz.jpeg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2022/04/mariapazdiaz.jpeg',
 			),
 			array(
 				'name' => 'José Blanco',
 				'role' => 'Historiador - Lengua y Cultura Italiana',
+				'login' => 'jose.blanco',
 				'rel' => '2022/04/joseblancofoto.jpeg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2022/04/joseblancofoto.jpeg',
 			),
 			array(
 				'name' => 'Felipe Munizaga',
 				'role' => 'Politólogo - Pensamiento Político',
+				'login' => 'felipe.munizaga',
 				'rel' => '2022/04/felipemunizaga.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2022/04/felipemunizaga.jpg',
 			),
 			array(
 				'name' => 'Joseph Pearce',
 				'role' => 'Experto en Literatura Inglesa',
+				'login' => 'joseph.pearce',
 				'rel' => '2022/04/josephpearce.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2022/04/josephpearce.jpg',
 			),
 			array(
 				'name' => 'Francisca Willson',
 				'role' => 'Historiadora - Medio Oriente',
+				'login' => 'FranciscaWillson',
 				'rel' => '2021/01/franciscawillson.jpg',
 				'fallback' => 'https://red-cultural.cl/wp-content/uploads/2021/01/franciscawillson.jpg',
 			),
@@ -223,7 +244,8 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 					$role = isset($member['role']) ? (string) $member['role'] : '';
 					$img = isset($member['img']) ? (string) $member['img'] : '';
 					$fallback = isset($member['fallback']) ? (string) $member['fallback'] : '';
-					$href = $img !== '' ? $img : $fallback;
+					$login = isset($member['login']) ? (string) $member['login'] : '';
+					$href = $login !== '' ? (string) home_url('/author/' . $login . '/') : '';
 					$member_id = $root_id . '-member-' . sanitize_title($name !== '' ? $name : uniqid('member-'));
 					?>
 					<li>
@@ -232,12 +254,12 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 								<span id="<?php echo esc_attr($member_id . '-photo'); ?>" class="rcp-us-photo">
 									<img
 										id="<?php echo esc_attr($member_id . '-img'); ?>"
-										src="<?php echo esc_url($href); ?>"
+										src="<?php echo esc_url($img !== '' ? $img : $fallback); ?>"
 										alt="<?php echo esc_attr($name); ?>"
 										loading="lazy"
 										referrerpolicy="no-referrer"
 										data-fallback="<?php echo esc_url($fallback); ?>"
-										onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.closest('a').href=this.dataset.fallback;this.src=this.dataset.fallback;}"
+										onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}"
 									/>
 								</span>
 								<span id="<?php echo esc_attr($member_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
@@ -265,7 +287,8 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 					$role = isset($teacher['role']) ? (string) $teacher['role'] : '';
 					$img = isset($teacher['img']) ? (string) $teacher['img'] : '';
 					$fallback = isset($teacher['fallback']) ? (string) $teacher['fallback'] : '';
-					$href = $img !== '' ? $img : $fallback;
+					$login = isset($teacher['login']) ? (string) $teacher['login'] : '';
+					$href = $login !== '' ? (string) home_url('/author/' . $login . '/') : '';
 					$teacher_id = $root_id . '-docente-' . sanitize_title($name !== '' ? $name : uniqid('docente-'));
 					?>
 					<li>
@@ -274,12 +297,12 @@ if (!function_exists('rcp_red_cultural_us_shortcode')) {
 								<span id="<?php echo esc_attr($teacher_id . '-photo'); ?>" class="rcp-us-photo">
 									<img
 										id="<?php echo esc_attr($teacher_id . '-img'); ?>"
-										src="<?php echo esc_url($href); ?>"
+										src="<?php echo esc_url($img !== '' ? $img : $fallback); ?>"
 										alt="<?php echo esc_attr($name); ?>"
 										loading="lazy"
 										referrerpolicy="no-referrer"
 										data-fallback="<?php echo esc_url($fallback); ?>"
-										onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.closest('a').href=this.dataset.fallback;this.src=this.dataset.fallback;}"
+										onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}"
 									/>
 								</span>
 								<span id="<?php echo esc_attr($teacher_id . '-name'); ?>" class="rcp-us-name"><?php echo esc_html($name); ?></span>
