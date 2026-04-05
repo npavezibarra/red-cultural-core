@@ -86,6 +86,10 @@ final class Red_Cultural_Core
         require_once RC_CORE_PATH . 'includes/modules/email-log/class-rc-email-log-db.php';
         require_once RC_CORE_PATH . 'includes/modules/email-log/class-rc-email-log-manager.php';
         RC_Email_Log_Manager::init();
+
+        // 8. Spam Users Management
+        require_once RC_CORE_PATH . 'includes/modules/spamusers/class-rc-spam-users-admin.php';
+        RC_Spam_Users_Admin::init();
     }
 
     /**
