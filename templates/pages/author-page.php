@@ -126,7 +126,7 @@ if (function_exists('do_blocks')) {
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
+            background-color: #f9f9f9 !important;
             color: #000000;
             -webkit-font-smoothing: antialiased;
         }
