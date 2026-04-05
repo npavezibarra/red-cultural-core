@@ -143,9 +143,9 @@ final class RC_Anti_Spam {
 	 * @return bool True if passed (human), false if caught (bot).
 	 */
 	public static function verify_honeypot(): bool {
-		$field_name = '_rc_user_full_name'; // Generic name to trick bots.
+		$field_name = '_rc_hp_check'; // More obscure name.
 		if (!isset($_POST[$field_name])) {
-			return true; // Not present? Likely not our form.
+			return true; 
 		}
 		return empty($_POST[$field_name]);
 	}
@@ -158,15 +158,14 @@ final class RC_Anti_Spam {
 	public static function verify_timing(): bool {
 		$ts_name = '_rc_form_ts';
 		if (!isset($_POST[$ts_name])) {
-			return true; // Not present? Allow for now.
+			return true; 
 		}
 		$ts = (int) $_POST[$ts_name];
 		$now = time();
 		$diff = $now - $ts;
 		
-		// Bots submit in < 2 seconds. Humans take at least 5.
-		// We use 3 seconds as a threshold.
-		return $diff >= 3;
+		// Some users are very fast. Bots are instant. 2s is safer.
+		return $diff >= 2;
 	}
 
 	/**
@@ -217,8 +216,8 @@ final class RC_Anti_Spam {
 		}
 		echo '<style>.rc-hp-wrap{position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;height:0;width:0;overflow:hidden}</style>';
 		echo '<div class="rc-hp-wrap" aria-hidden="true">';
-		echo '<label for="rc-hp-field">Nombre Completo</label>';
-		echo '<input id="rc-hp-field" type="text" name="_rc_user_full_name" tabindex="-1" autocomplete="off">';
+		echo '<label for="rc-hp-field">Ignore this field</label>';
+		echo '<input id="rc-hp-field" type="text" name="_rc_hp_check" tabindex="-1" autocomplete="new-password">';
 		echo '<input type="hidden" name="_rc_form_ts" id="rc-ts-field" value="' . time() . '">';
 		echo '</div>';
 		echo '<input type="hidden" name="captcha_token" class="rc-captcha-token">';
