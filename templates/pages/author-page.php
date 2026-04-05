@@ -130,15 +130,19 @@ if (function_exists('do_blocks')) {
             color: #000000;
             -webkit-font-smoothing: antialiased;
         }
+        #red-cultural-header {
+            background-color: #ffffff !important;
+        }
         .profile-image {
             /* filter: grayscale(100%); */
         }
         .card-hover {
             transition: all 0.3s cubic-bezier(.4,0,.2,1);
             border-radius: 9px;
+            background-color: #ffffff;
         }
         .card-hover:hover {
-            background-color: #fafafa;
+            background-color: #ffffff;
             border-color: #000;
             transform: translateY(-4px);
             box-shadow: 0 10px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
