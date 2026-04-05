@@ -143,7 +143,7 @@ final class RC_Anti_Spam {
 	 * @return bool True if passed (human), false if caught (bot).
 	 */
 	public static function verify_honeypot(): bool {
-		$field_name = '_rc_hp_check'; // More obscure name.
+		$field_name = '_rc_security_id'; // Previously _rc_hp_check. Renamed to avoid autofill.
 		if (!isset($_POST[$field_name])) {
 			return true; 
 		}
@@ -168,8 +168,8 @@ final class RC_Anti_Spam {
 		$now = time();
 		$diff = $now - $ts;
 		
-		// Some users are very fast. Bots are instant. 2s is safer.
-		if ($diff < 2) {
+		// Some users are very fast. Bots are instant. 1s is safer than 2s for humans with autofill.
+		if ($diff < 1) {
 			error_log(sprintf('RC Anti-Spam: Timing failed. Diff: %d seconds (Now: %d, TS: %d)', $diff, $now, $ts));
 			return false;
 		}
@@ -226,7 +226,7 @@ final class RC_Anti_Spam {
 		echo '<style>.rc-hp-wrap{position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;height:0;width:0;overflow:hidden}</style>';
 		echo '<div class="rc-hp-wrap" aria-hidden="true">';
 		echo '<label for="rc-hp-field">Ignore this field</label>';
-		echo '<input id="rc-hp-field" type="text" name="_rc_hp_check" tabindex="-1" autocomplete="new-password">';
+		echo '<input id="rc-hp-field" type="text" name="_rc_security_id" tabindex="-1" autocomplete="new-password">';
 		echo '<input type="hidden" name="_rc_form_ts" id="rc-ts-field" value="' . time() . '">';
 		echo '</div>';
 		echo '<input type="hidden" name="captcha_token" class="rc-captcha-token">';

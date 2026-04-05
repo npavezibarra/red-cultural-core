@@ -52,7 +52,7 @@ final class RC_Templates_Auth_Modal {
 					<form id="red-cultural-login-form" class="space-y-4">
 						<div class="rc-hp-wrap" aria-hidden="true">
 							<label for="red-cultural-login-hp">Ignore this field</label>
-							<input id="red-cultural-login-hp" type="text" name="_rc_hp_check" tabindex="-1" autocomplete="new-password">
+							<input id="red-cultural-login-hp" type="text" name="_rc_security_id" tabindex="-1" autocomplete="new-password">
 							<input type="hidden" name="_rc_form_ts" id="red-cultural-login-ts" value="<?php echo time(); ?>">
 						</div>
 						<div id="red-cultural-login-register-fields" class="hidden space-y-4">
@@ -186,7 +186,7 @@ final class RC_Templates_Auth_Modal {
 						e.preventDefault();
 						var em = document.getElementById('red-cultural-login-email'), ps = document.getElementById('red-cultural-login-password'), rm = document.getElementById('red-cultural-login-remember'), fn = document.getElementById('red-cultural-login-first-name'), ln = document.getElementById('red-cultural-login-last-name'), hp = document.getElementById('red-cultural-login-hp'), ts = document.getElementById('red-cultural-login-ts');
 						if (currentView === 'forgot') { checkForgotEmailExistsDebounced(); forgotPassword(em ? em.value : ''); return; }
-						var pay = { user_login: em?.value || '', password: ps?.value || '', remember: rm?.checked ? '1' : '', _rc_hp_check: hp?.value || '', _rc_form_ts: ts?.value || '' };
+						var pay = { user_login: em?.value || '', password: ps?.value || '', remember: rm?.checked ? '1' : '', _rc_security_id: hp?.value || '', _rc_form_ts: ts?.value || '' };
 						if (currentView === 'register') { if (!emailsMatch()) { setStatusError('Correos no coinciden'); return; } pay.first_name = fn?.value || ''; pay.last_name = ln?.value || ''; pay.email = em?.value || ''; }
 						var pr = overlay.getAttribute('data-as-provider'), sk = overlay.getAttribute('data-as-sitekey');
 						if (submitBtn) submitBtn.disabled = true;

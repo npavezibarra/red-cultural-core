@@ -339,7 +339,16 @@ if (function_exists('do_blocks')) {
 								data-captcha-provider="<?php echo esc_attr(RC_Anti_Spam::get_settings()['provider']); ?>"
 								data-captcha-sitekey="<?php echo esc_attr(RC_Anti_Spam::get_settings()['site_key']); ?>"
 							>
-								<?php RC_Anti_Spam::render_form_fields(); ?>
+								<?php
+								echo '<style>.rc-hp-wrap{position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;height:0;width:0;overflow:hidden}</style>';
+								echo '<div class="rc-hp-wrap" aria-hidden="true">';
+								echo '<label for="rc-hp-field">Ignore this field</label>';
+								echo '<input id="rc-hp-field" type="text" name="_rc_security_id" tabindex="-1" autocomplete="new-password">';
+								echo '<input type="hidden" name="_rc_form_ts" id="rc-ts-field" value="' . time() . '">';
+								echo '</div>';
+								echo '<input type="hidden" name="captcha_token" class="rc-captcha-token">';
+								self::render_widget(); 
+								?>
 								<?php
 								$error_code = isset($_GET['rcp_auth_error']) ? (string) $_GET['rcp_auth_error'] : '';
 								if ($error_code !== '') :
@@ -861,7 +870,7 @@ if (function_exists('do_blocks')) {
 				submitAuth('login', {
 					user_login: login ? login.value : '',
 					password: pass ? pass.value : '',
-					_rc_hp_check: hp ? hp.value : '',
+					_rc_security_id: hp ? hp.value : '',
 					_rc_form_ts: ts ? ts.value : ''
 				});
 			});
@@ -878,7 +887,7 @@ if (function_exists('do_blocks')) {
 					last_name: lastName ? lastName.value : '',
 					email: email ? email.value : '',
 					password: pass ? pass.value : '',
-					_rc_hp_check: hp ? hp.value : '',
+					_rc_security_id: hp ? hp.value : '',
 					_rc_form_ts: ts ? ts.value : ''
 				});
 			});
