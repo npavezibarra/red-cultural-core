@@ -185,7 +185,6 @@ final class RC_Templates_Auth_Modal {
 					form.addEventListener('submit', function (e) {
 						e.preventDefault();
 						var em = document.getElementById('red-cultural-login-email'), ps = document.getElementById('red-cultural-login-password'), rm = document.getElementById('red-cultural-login-remember'), fn = document.getElementById('red-cultural-login-first-name'), ln = document.getElementById('red-cultural-login-last-name'), hp = document.getElementById('red-cultural-login-hp'), ts = document.getElementById('red-cultural-login-ts');
-						if (ts) ts.value = Math.floor(Date.now() / 1000); // Fresh timestamp on submit
 						if (currentView === 'forgot') { checkForgotEmailExistsDebounced(); forgotPassword(em ? em.value : ''); return; }
 						var pay = { user_login: em?.value || '', password: ps?.value || '', remember: rm?.checked ? '1' : '', _rc_hp_check: hp?.value || '', _rc_form_ts: ts?.value || '' };
 						if (currentView === 'register') { if (!emailsMatch()) { setStatusError('Correos no coinciden'); return; } pay.first_name = fn?.value || ''; pay.last_name = ln?.value || ''; pay.email = em?.value || ''; }

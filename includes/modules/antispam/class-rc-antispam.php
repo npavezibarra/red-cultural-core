@@ -147,7 +147,11 @@ final class RC_Anti_Spam {
 		if (!isset($_POST[$field_name])) {
 			return true; 
 		}
-		return empty($_POST[$field_name]);
+		$passed = empty($_POST[$field_name]);
+		if (!$passed) {
+			error_log(sprintf('RC Anti-Spam: Honeypot failed. Value: "%s"', sanitize_text_field($_POST[$field_name])));
+		}
+		return $passed;
 	}
 
 	/**
@@ -165,7 +169,12 @@ final class RC_Anti_Spam {
 		$diff = $now - $ts;
 		
 		// Some users are very fast. Bots are instant. 2s is safer.
-		return $diff >= 2;
+		if ($diff < 2) {
+			error_log(sprintf('RC Anti-Spam: Timing failed. Diff: %d seconds (Now: %d, TS: %d)', $diff, $now, $ts));
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
