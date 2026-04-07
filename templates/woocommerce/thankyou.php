@@ -51,7 +51,16 @@ foreach ($items as $item) {
     $product = $item->get_product();
     if (!$product) continue;
 
-    $product_id = (int)$product->get_id();
+    // Important: for variable products, `$product->get_id()` is the variation ID.
+    // We want the parent product ID for meta/category lookups.
+    $parent_product_id = (int) $item->get_product_id();
+    $variation_product_id = (int) $item->get_variation_id();
+    $product_ids_for_meta = array_values(array_unique(array_filter([$variation_product_id, $parent_product_id])));
+
+    $display_product = function_exists('wc_get_product') ? wc_get_product($parent_product_id) : $product;
+    if (!$display_product) {
+        $display_product = $product;
+    }
     $course_id = 0;
     $is_course = false;
 
@@ -60,41 +69,50 @@ foreach ($items as $item) {
     $rcil_id = $item->get_meta('_rcil_course_id');
     if ($rcil_id) {
         $course_id = (int) $rcil_id;
-        $is_course = true;
+        if ($course_id > 0 && get_post_type($course_id) === 'sfwd-courses') {
+            $is_course = true;
+        } else {
+            $course_id = 0;
+        }
     } else {
         // 2. Standard LearnDash Metadata
-        $meta_id = get_post_meta($product_id, '_course_id', true);
-        if (!$meta_id) $meta_id = get_post_meta($product_id, '_related_course', true);
+        $meta_id = '';
+        foreach ($product_ids_for_meta as $pid_for_meta) {
+            $meta_id = get_post_meta($pid_for_meta, '_course_id', true);
+            if (!$meta_id) $meta_id = get_post_meta($pid_for_meta, '_related_course_id', true);
+            if (!$meta_id) $meta_id = get_post_meta($pid_for_meta, '_related_course', true);
+            if ($meta_id) break;
+        }
         if ($meta_id) {
             $course_id = (int) $meta_id;
-            $is_course = true;
+            if ($course_id > 0 && get_post_type($course_id) === 'sfwd-courses') {
+                $is_course = true;
+            } else {
+                $course_id = 0;
+            }
         }
     }
 
     // 3. Fallback: Check category "Cursos"
     if (!$is_course && function_exists('has_term')) {
-        if (has_term(['Cursos', 'Curso', 'cursos', 'curso'], 'product_cat', $product_id)) {
+        if (has_term(['Cursos', 'Curso', 'cursos', 'curso'], 'product_cat', $parent_product_id)) {
             $is_course = true;
         }
     }
 
     // 4. If identified as course but no ID linked, try slug/title match
     if ($is_course && $course_id === 0) {
-        $slug = $product->get_slug();
+        $slug = $display_product->get_slug();
         // Try exact slug first
         $course_post = get_page_by_path($slug, OBJECT, 'sfwd-courses');
         if ($course_post) {
             $course_id = $course_post->ID;
         } else {
             // Try searching by exact name/title
-            $course_name = $item->get_name();
-            $find_course = get_posts([
-                'post_type' => 'sfwd-courses',
-                'title'     => $course_name,
-                'numberposts' => 1
-            ]);
-            if (!empty($find_course)) {
-                $course_id = $find_course[0]->ID;
+            $course_name = $display_product->get_name();
+            $course_post = get_page_by_title($course_name, OBJECT, 'sfwd-courses');
+            if ($course_post) {
+                $course_id = $course_post->ID;
             }
         }
     }
@@ -103,19 +121,30 @@ foreach ($items as $item) {
     if (!is_array($lesson_ids)) {
         $lesson_ids = maybe_unserialize($lesson_ids);
     }
-    $is_rcil = ($item->get_meta('_is_rcil_purchase') === '1');
+    $raw_is_rcil = $item->get_meta('_is_rcil_purchase');
+    $is_rcil_purchase = function_exists('wc_string_to_bool')
+        ? wc_string_to_bool((string) $raw_is_rcil)
+        : (bool) $raw_is_rcil;
+    $raw_is_rcil_full_course = $item->get_meta('_rcil_is_full_course');
+    $is_rcil_full_course = function_exists('wc_string_to_bool')
+        ? wc_string_to_bool((string) $raw_is_rcil_full_course)
+        : (bool) $raw_is_rcil_full_course;
+    $is_rcil_lesson_bundle = $is_rcil_purchase && !$is_rcil_full_course;
 
     $course_url = '#';
     if ($is_course && $course_id > 0) {
         $course_url = get_permalink($course_id);
         
         // If it's an individual lesson purchase, link to the lesson directly.
-        if ($is_rcil && !empty($lesson_ids) && is_array($lesson_ids)) {
+        if ($is_rcil_lesson_bundle && !empty($lesson_ids) && is_array($lesson_ids)) {
             $first_lesson_id = reset($lesson_ids);
-            if ($first_lesson_id) {
+            if ($first_lesson_id && get_post_type((int) $first_lesson_id) === 'sfwd-lessons') {
                 $course_url = get_permalink($first_lesson_id);
             }
         }
+    }
+    if (!is_string($course_url) || trim($course_url) === '') {
+        $course_url = '#';
     }
 
 
@@ -129,7 +158,7 @@ foreach ($items as $item) {
         $image_id = get_post_thumbnail_id($course_id);
     }
     if (!$image_id) {
-        $image_id = get_post_thumbnail_id($product_id);
+        $image_id = get_post_thumbnail_id($parent_product_id);
     }
 
     $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'thumbnail') : '';
@@ -140,7 +169,7 @@ foreach ($items as $item) {
     $lesson_count = (int) $item->get_meta('_rcil_lesson_count');
 
     $lesson_date = '';
-    if ($is_rcil && !empty($lesson_ids) && is_array($lesson_ids)) {
+    if ($is_rcil_lesson_bundle && !empty($lesson_ids) && is_array($lesson_ids)) {
         $first_lesson_id = reset($lesson_ids);
         $access_from = 0;
         if (function_exists('ld_lesson_access_from')) {
@@ -157,7 +186,7 @@ foreach ($items as $item) {
         'price' => wc_price((float)$item->get_total()),
         'id' => $course_id,
         'is_course' => $is_course,
-        'is_rcil' => $is_rcil,
+        'is_rcil_lesson_bundle' => $is_rcil_lesson_bundle,
         'image' => $image_url,
         'lesson_count' => $lesson_count,
         'lesson_date' => $lesson_date
@@ -400,7 +429,7 @@ if (function_exists('do_blocks')) {
                             <?php if ($course['is_course'] && $is_success && $course['url'] !== '#') : ?>
                                 <div>
                                     <a href="<?php echo esc_url($course['url']); ?>" class="btn-black inline-flex items-center justify-center px-6 py-3 font-bold uppercase tracking-widest text-[10px] whitespace-nowrap">
-                                        <span><?php echo $course['is_rcil'] ? __('Ir a Lección', 'red-cultural-pages') : __('Ir al Curso', 'red-cultural-pages'); ?></span>
+                                        <span><?php echo !empty($course['is_rcil_lesson_bundle']) ? __('Ir a Lección', 'red-cultural-pages') : __('Ir al Curso', 'red-cultural-pages'); ?></span>
                                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                         </svg>
