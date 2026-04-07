@@ -258,6 +258,9 @@ final class Red_Cultural_WC_Emails
         $content = $this->get_template_content('emails/wc-customer-processing.php', $template_args);
 
         $headers = ['Content-Type: text/html; charset=UTF-8'];
+        if (class_exists('RC_Email_Log_Manager')) {
+            RC_Email_Log_Manager::set_context_order_id($order_id);
+        }
         $sent = wp_mail($to, $subject, $content, $headers);
 
         return $sent;

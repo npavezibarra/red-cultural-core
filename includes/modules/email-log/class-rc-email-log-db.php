@@ -36,6 +36,7 @@ final class RC_Email_Log_DB
 
         $sql = "CREATE TABLE $this->table_name (
             id bigint(20) NOT NULL AUTO_INCREMENT,
+            order_id bigint(20) NOT NULL DEFAULT 0,
             recipient text NOT NULL,
             subject text NOT NULL,
             content longtext NOT NULL,
@@ -45,6 +46,7 @@ final class RC_Email_Log_DB
             file_path varchar(255) DEFAULT '' NOT NULL,
             sent_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id),
+            KEY order_id (order_id),
             KEY sent_at (sent_at),
             KEY email_type (email_type)
         ) $charset_collate;";

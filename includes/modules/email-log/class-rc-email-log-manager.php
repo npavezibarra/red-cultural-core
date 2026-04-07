@@ -12,6 +12,7 @@ final class RC_Email_Log_Manager
     private static $instance = null;
     private $capture_data = null;
     private static $last_template_file = '';
+    private static $context_order_id = 0;
 
     public static function get_instance()
     {
@@ -31,6 +32,10 @@ final class RC_Email_Log_Manager
         // Capture email data
         add_filter('wp_mail', [$this, 'capture_wp_mail_args'], 9999);
         add_action('wp_mail_failed', [$this, 'log_failed_email'], 10, 1);
+
+        // Capture WooCommerce order context (so admin can open the exact Thank You page).
+        add_action('woocommerce_email_before_order_table', [$this, 'capture_wc_order_context'], 1, 4);
+        add_action('woocommerce_email_after_order_table', [$this, 'clear_wc_order_context'], 9999, 4);
         
         // We use a custom hook or just the filter success
         // Since wp_mail_succeeded is only since WP 5.9, we check existence
@@ -45,8 +50,8 @@ final class RC_Email_Log_Manager
         require_once RC_CORE_PATH . 'includes/modules/email-log/class-rc-email-log-admin.php';
         RC_Email_Log_Admin::get_instance();
 
-        // Register Activation Hook indirectly or via a check
-        add_action('admin_init', [$this, 'maybe_create_table']);
+        // Ensure DB table is up to date on all requests (orders/emails can happen on the frontend).
+        add_action('init', [$this, 'maybe_create_table']);
     }
 
     /**
@@ -54,9 +59,9 @@ final class RC_Email_Log_Manager
      */
     public function maybe_create_table()
     {
-        if (get_option('rc_email_log_db_version_v3') !== '1.0.2') {
+        if (get_option('rc_email_log_db_version_v3') !== '1.0.3') {
             RC_Email_Log_DB::get_instance()->create_table();
-            update_option('rc_email_log_db_version_v3', '1.0.2');
+            update_option('rc_email_log_db_version_v3', '1.0.3');
         }
     }
 
@@ -66,6 +71,23 @@ final class RC_Email_Log_Manager
     public static function set_last_template_file($file)
     {
         self::$last_template_file = $file;
+    }
+
+    public static function set_context_order_id($order_id)
+    {
+        self::$context_order_id = absint($order_id);
+    }
+
+    public function capture_wc_order_context($order, $sent_to_admin, $plain_text, $email)
+    {
+        if ($order instanceof \WC_Order) {
+            self::$context_order_id = (int) $order->get_id();
+        }
+    }
+
+    public function clear_wc_order_context($order, $sent_to_admin, $plain_text, $email)
+    {
+        self::$context_order_id = 0;
     }
 
     /**
@@ -102,6 +124,20 @@ final class RC_Email_Log_Manager
         }
         
         $this->capture_data['caller_file'] = self::$last_template_file ?: ($caller_file ?: 'unknown');
+
+        if (self::$context_order_id > 0) {
+            $header_line = 'X-RC-Order-ID: ' . self::$context_order_id;
+            if (empty($this->capture_data['headers'])) {
+                $this->capture_data['headers'] = [$header_line];
+            } elseif (is_array($this->capture_data['headers'])) {
+                $this->capture_data['headers'][] = $header_line;
+            } else {
+                $this->capture_data['headers'] .= "\n" . $header_line;
+            }
+
+            // Only apply this context to the next mail send.
+            self::$context_order_id = 0;
+        }
         
         // Reset after capture to not pollute the next generic email
         self::$last_template_file = '';
@@ -150,6 +186,10 @@ final class RC_Email_Log_Manager
         $subject = $args['subject'];
         $message = $args['message'];
         $headers = is_array($args['headers']) ? implode("\n", $args['headers']) : $args['headers'];
+        $order_id = 0;
+        if (is_string($headers) && preg_match('/x-rc-order-id:\\s*(\\d+)/i', $headers, $m)) {
+            $order_id = absint($m[1]);
+        }
 
         $type_info = $this->identify_email_info($subject, $headers, $message);
         $caller_file = $args['caller_file'] ?? 'unknown';
@@ -164,6 +204,7 @@ final class RC_Email_Log_Manager
         }
 
         RC_Email_Log_DB::get_instance()->insert_log([
+            'order_id'   => $order_id,
             'recipient'  => $to,
             'subject'    => $subject,
             'content'    => $message,

@@ -105,7 +105,7 @@ final class RC_Email_Log_Admin
                         <th style="width: 10%;">Tipo</th>
                         <th style="width: 35%;">Archivo</th>
                         <th style="width: 10%;">Fecha y Hora</th>
-                        <th style="width: 5%;">Acción</th>
+                        <th style="width: 10%;">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,7 +128,23 @@ final class RC_Email_Log_Admin
                                 </td>
                                 <td><?php echo esc_html(date_i18n('d/m/Y H:i', strtotime($log->sent_at))); ?></td>
                                 <td>
-                                    <button type="button" class="button rc-view-email" data-id="<?php echo esc_attr($log->id); ?>">Ver</button>
+                                    <div style="display:flex; flex-direction:column; gap:6px;">
+                                        <button type="button" class="button rc-view-email" data-id="<?php echo esc_attr($log->id); ?>">Ver Email</button>
+                                        <?php
+                                        $thankyou_url = '';
+                                        $order_id = isset($log->order_id) ? absint($log->order_id) : 0;
+                                        if ($order_id && function_exists('wc_get_order')) {
+                                            $order = wc_get_order($order_id);
+                                            if ($order instanceof \WC_Order) {
+                                                $thankyou_url = wc_get_endpoint_url('order-received', $order->get_id(), wc_get_checkout_url());
+                                                $thankyou_url = add_query_arg('key', $order->get_order_key(), $thankyou_url);
+                                            }
+                                        }
+                                        ?>
+                                        <?php if ($thankyou_url): ?>
+                                            <a class="button" href="<?php echo esc_url($thankyou_url); ?>" target="_blank" rel="noopener noreferrer">Ver Thank You Page</a>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
