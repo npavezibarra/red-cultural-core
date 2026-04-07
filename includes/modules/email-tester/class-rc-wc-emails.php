@@ -33,20 +33,41 @@ final class Red_Cultural_WC_Emails
         add_action('woocommerce_order_status_processing', [$this, 'maybe_trigger_access_email'], 10, 2);
         add_action('woocommerce_order_status_completed', [$this, 'maybe_trigger_access_email'], 10, 2);
 
+        // Admin notifications for problematic orders.
+        add_action('woocommerce_order_status_cancelled', [$this, 'send_admin_cancelled_order_notification'], 20, 2);
+        add_action('woocommerce_order_status_failed', [$this, 'send_admin_failed_order_notification'], 20, 2);
+
+        // Customer notifications.
+        add_action('woocommerce_order_partially_refunded', [$this, 'send_customer_partially_refunded_notification'], 20, 2);
+        add_action('woocommerce_payment_retry', [$this, 'send_customer_payment_retry_notification'], 20, 1);
+        add_action('woocommerce_order_payment_retry', [$this, 'send_customer_payment_retry_notification'], 20, 1);
+
+        // Stock notifications (admin).
+        add_action('woocommerce_low_stock', [$this, 'send_admin_low_stock_notification'], 20, 1);
+        add_action('woocommerce_no_stock', [$this, 'send_admin_no_stock_notification'], 20, 1);
+        add_action('woocommerce_product_on_backorder', [$this, 'send_admin_backorder_notification'], 20, 2);
+
         // New hook for confirming transfers via email button
         add_action('init', [$this, 'handle_confirm_transfer']);
 
         // Disable ALL default WooCommerce emails that we are replacing (highest priority)
         $wc_emails = [
             'new_order',
+            'cancelled_order',
+            'failed_order',
             'customer_on_hold_order',
             'customer_processing_order',
             'customer_completed_order',
             'customer_refunded_order',
+            'customer_partially_refunded_order',
             'customer_invoice',
             'customer_note',
+            'customer_payment_retry',
             'customer_reset_password',
-            'customer_new_account'
+            'customer_new_account',
+            'low_stock',
+            'no_stock',
+            'backorder',
         ];
 
         foreach ($wc_emails as $id) {
@@ -200,6 +221,149 @@ final class Red_Cultural_WC_Emails
         }
 
         return $sent_customer;
+    }
+
+    private function get_stock_email_recipient()
+    {
+        $recipient = get_option('woocommerce_stock_email_recipient', '');
+        if (!$recipient) {
+            $recipient = get_option('admin_email');
+        }
+        return $recipient;
+    }
+
+    private function send_email_with_template($to, $subject, $template_path, $template_args = [], $headers = [])
+    {
+        if (!$to) {
+            return false;
+        }
+        if (empty($headers)) {
+            $headers = ['Content-Type: text/html; charset=UTF-8'];
+        }
+        $content = $this->get_template_content($template_path, $template_args);
+        return wp_mail($to, $subject, $content, $headers);
+    }
+
+    public function send_admin_cancelled_order_notification($order_id, $order = null)
+    {
+        $order = $order instanceof \WC_Order ? $order : wc_get_order($order_id);
+        if (!$order) return false;
+
+        if ($order->get_meta('_rc_admin_cancelled_email_sent') === '1') {
+            return false;
+        }
+
+        $subject = 'Pedido cancelado - #' . $order->get_order_number();
+        $to = get_option('admin_email');
+
+        if (class_exists('RC_Email_Log_Manager')) {
+            RC_Email_Log_Manager::set_context_order_id($order->get_id());
+        }
+
+        $sent = $this->send_email_with_template($to, $subject, 'emails/wc-admin-cancelled-order.php', ['order' => $order]);
+        if ($sent) {
+            $order->update_meta_data('_rc_admin_cancelled_email_sent', '1');
+            $order->save();
+        }
+        return $sent;
+    }
+
+    public function send_admin_failed_order_notification($order_id, $order = null)
+    {
+        $order = $order instanceof \WC_Order ? $order : wc_get_order($order_id);
+        if (!$order) return false;
+
+        if ($order->get_meta('_rc_admin_failed_email_sent') === '1') {
+            return false;
+        }
+
+        $subject = 'Pedido fallido - #' . $order->get_order_number();
+        $to = get_option('admin_email');
+
+        if (class_exists('RC_Email_Log_Manager')) {
+            RC_Email_Log_Manager::set_context_order_id($order->get_id());
+        }
+
+        $sent = $this->send_email_with_template($to, $subject, 'emails/wc-admin-failed-order.php', ['order' => $order]);
+        if ($sent) {
+            $order->update_meta_data('_rc_admin_failed_email_sent', '1');
+            $order->save();
+        }
+        return $sent;
+    }
+
+    public function send_customer_partially_refunded_notification($order_id, $refund_id = 0)
+    {
+        $order = wc_get_order($order_id);
+        if (!$order) return false;
+
+        $to = $order->get_billing_email();
+        if (!$to) return false;
+
+        $refund = $refund_id ? wc_get_order($refund_id) : null;
+        $subject = 'Reembolso parcial - Pedido #' . $order->get_order_number();
+
+        if (class_exists('RC_Email_Log_Manager')) {
+            RC_Email_Log_Manager::set_context_order_id($order->get_id());
+        }
+
+        return $this->send_email_with_template($to, $subject, 'emails/wc-customer-partially-refunded-order.php', [
+            'order' => $order,
+            'refund' => $refund,
+        ]);
+    }
+
+    public function send_customer_payment_retry_notification($order_id)
+    {
+        $order = wc_get_order($order_id);
+        if (!$order) return false;
+
+        $to = $order->get_billing_email();
+        if (!$to) return false;
+
+        $subject = 'Reintenta tu pago - Pedido #' . $order->get_order_number();
+
+        if (class_exists('RC_Email_Log_Manager')) {
+            RC_Email_Log_Manager::set_context_order_id($order->get_id());
+        }
+
+        return $this->send_email_with_template($to, $subject, 'emails/wc-customer-payment-retry.php', [
+            'order' => $order,
+        ]);
+    }
+
+    public function send_admin_low_stock_notification($product)
+    {
+        if (!$product instanceof \WC_Product) {
+            return false;
+        }
+        $to = $this->get_stock_email_recipient();
+        $subject = 'Stock bajo - ' . $product->get_name();
+        return $this->send_email_with_template($to, $subject, 'emails/wc-admin-low-stock.php', ['product' => $product]);
+    }
+
+    public function send_admin_no_stock_notification($product)
+    {
+        if (!$product instanceof \WC_Product) {
+            return false;
+        }
+        $to = $this->get_stock_email_recipient();
+        $subject = 'Sin stock - ' . $product->get_name();
+        return $this->send_email_with_template($to, $subject, 'emails/wc-admin-no-stock.php', ['product' => $product]);
+    }
+
+    public function send_admin_backorder_notification($product, $order_id = 0)
+    {
+        if (!$product instanceof \WC_Product) {
+            return false;
+        }
+        $order = $order_id ? wc_get_order($order_id) : null;
+        $to = $this->get_stock_email_recipient();
+        $subject = 'Backorder - ' . $product->get_name() . ($order instanceof \WC_Order ? ' (#' . $order->get_order_number() . ')' : '');
+        return $this->send_email_with_template($to, $subject, 'emails/wc-admin-backorder.php', [
+            'product' => $product,
+            'order' => $order,
+        ]);
     }
 
     /**

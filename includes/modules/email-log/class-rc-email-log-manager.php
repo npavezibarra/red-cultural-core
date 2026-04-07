@@ -297,10 +297,14 @@ final class RC_Email_Log_Manager
             'failed_order'                     => 'Pedido Fallido',
             'customer_invoice'                 => 'Factura Cliente',
             'customer_note'                    => 'Nota del Pedido',
+            'customer_payment_retry'           => 'Reintentar Pago (Cliente)',
             'customer_reset_password'          => 'Restablecer Contraseña',
             'customer_new_account'             => 'Bienvenida Cliente',
             'customer_refunded_order'          => 'Pedido Reembolsado',
             'customer_partially_refunded_order' => 'Pedido Rerembolsado Parcial',
+            'low_stock'                        => 'Stock Bajo (Admin)',
+            'no_stock'                         => 'Sin Stock (Admin)',
+            'backorder'                        => 'Backorder (Admin)',
         ];
 
         return $map[$id] ?? ucwords(str_replace('_', ' ', $id));
