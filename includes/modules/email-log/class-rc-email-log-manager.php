@@ -35,7 +35,6 @@ final class RC_Email_Log_Manager
 
         // Capture WooCommerce order context (so admin can open the exact Thank You page).
         add_action('woocommerce_email_before_order_table', [$this, 'capture_wc_order_context'], 1, 4);
-        add_action('woocommerce_email_after_order_table', [$this, 'clear_wc_order_context'], 9999, 4);
         
         // We use a custom hook or just the filter success
         // Since wp_mail_succeeded is only since WP 5.9, we check existence
@@ -83,11 +82,6 @@ final class RC_Email_Log_Manager
         if ($order instanceof \WC_Order) {
             self::$context_order_id = (int) $order->get_id();
         }
-    }
-
-    public function clear_wc_order_context($order, $sent_to_admin, $plain_text, $email)
-    {
-        self::$context_order_id = 0;
     }
 
     /**
