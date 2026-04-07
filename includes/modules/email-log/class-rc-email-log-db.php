@@ -26,6 +26,22 @@ final class RC_Email_Log_DB
         $this->table_name = $wpdb->prefix . 'rc_email_logs';
     }
 
+    public function get_table_name()
+    {
+        return $this->table_name;
+    }
+
+    public function has_column($column_name)
+    {
+        global $wpdb;
+        $column_name = sanitize_key((string) $column_name);
+        if ($column_name === '') {
+            return false;
+        }
+        $sql = $wpdb->prepare("SHOW COLUMNS FROM {$this->table_name} LIKE %s", $column_name);
+        return (bool) $wpdb->get_var($sql);
+    }
+
     /**
      * Create the table if it doesn't exist.
      */

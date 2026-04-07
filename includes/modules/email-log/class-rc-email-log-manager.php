@@ -58,7 +58,13 @@ final class RC_Email_Log_Manager
      */
     public function maybe_create_table()
     {
-        if (get_option('rc_email_log_db_version_v3') !== '1.0.3') {
+        $db = RC_Email_Log_DB::get_instance();
+        $needs_update = (get_option('rc_email_log_db_version_v3') !== '1.0.3');
+        if (!$needs_update && method_exists($db, 'has_column')) {
+            $needs_update = !$db->has_column('order_id');
+        }
+
+        if ($needs_update) {
             RC_Email_Log_DB::get_instance()->create_table();
             update_option('rc_email_log_db_version_v3', '1.0.3');
         }
@@ -197,8 +203,7 @@ final class RC_Email_Log_Manager
             }
         }
 
-        RC_Email_Log_DB::get_instance()->insert_log([
-            'order_id'   => $order_id,
+        $insert_data = [
             'recipient'  => $to,
             'subject'    => $subject,
             'content'    => $message,
@@ -207,7 +212,14 @@ final class RC_Email_Log_Manager
             'template'   => $type_info['template'],
             'file_path'  => $display_file,
             'sent_at'    => current_time('mysql'),
-        ]);
+        ];
+
+        $db = RC_Email_Log_DB::get_instance();
+        if ($order_id > 0 && (!method_exists($db, 'has_column') || $db->has_column('order_id'))) {
+            $insert_data['order_id'] = $order_id;
+        }
+
+        $db->insert_log($insert_data);
     }
 
     /**

@@ -132,9 +132,23 @@ final class RC_Email_Log_Admin
                                         <button type="button" class="button rc-view-email" data-id="<?php echo esc_attr($log->id); ?>">Ver Email</button>
                                         <?php
                                         $thankyou_url = '';
-                                        $order_id = isset($log->order_id) ? absint($log->order_id) : 0;
-                                        if ($order_id && function_exists('wc_get_order')) {
-                                            $order = wc_get_order($order_id);
+                                        $resolved_order_id = isset($log->order_id) ? absint($log->order_id) : 0;
+
+                                        if (!$resolved_order_id && !empty($log->subject) && preg_match('/#\\s*(\\d+)/', (string) $log->subject, $m)) {
+                                            $resolved_order_id = absint($m[1]);
+                                        }
+
+                                        if (!$resolved_order_id && !empty($log->content)) {
+                                            $content = (string) $log->content;
+                                            if (preg_match('~/order-received/(\\d+)/?\\?key=wc_order_[A-Za-z0-9]+~', $content, $m)) {
+                                                $resolved_order_id = absint($m[1]);
+                                            } elseif (preg_match('/Pedido\\s*#\\s*(\\d+)/i', $content, $m)) {
+                                                $resolved_order_id = absint($m[1]);
+                                            }
+                                        }
+
+                                        if ($resolved_order_id && function_exists('wc_get_order')) {
+                                            $order = wc_get_order($resolved_order_id);
                                             if ($order instanceof \WC_Order) {
                                                 $thankyou_url = wc_get_endpoint_url('order-received', $order->get_id(), wc_get_checkout_url());
                                                 $thankyou_url = add_query_arg('key', $order->get_order_key(), $thankyou_url);
