@@ -9,12 +9,31 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+$order = isset($order) && $order instanceof WC_Order ? $order : null;
+if (!$order && isset($order_id)) {
+    $maybe_order = wc_get_order((int) $order_id);
+    if ($maybe_order instanceof WC_Order) {
+        $order = $maybe_order;
+    }
+}
+
+if (!$order) {
+    echo esc_html__('No se pudo cargar el pedido para este correo.', 'red-cultural-core');
+    return;
+}
+
 $order_id = $order->get_id();
 $order_number = $order->get_order_number();
 $billing_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+$billing_email = (string) $order->get_billing_email();
+$billing_phone = (string) $order->get_billing_phone();
+$billing_address = (string) $order->get_formatted_billing_address();
+$shipping_address = (string) $order->get_formatted_shipping_address();
+$has_shipping_address = $shipping_address !== '';
 $subtotal = $order->get_subtotal_to_display();
 $total = $order->get_formatted_order_total();
 $date = wc_format_datetime($order->get_date_created());
+$line_items = $order->get_items('line_item');
 
 ?>
 <!DOCTYPE html>
@@ -72,6 +91,33 @@ $date = wc_format_datetime($order->get_date_created());
             border-radius: 6px;
             margin-bottom: 24px;
         }
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #9ca3af;
+            margin: 0 0 12px 0;
+        }
+        .info-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 18px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 13px;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { color: #6b7280; font-weight: 500; }
+        .info-value { color: #111827; font-weight: 600; text-align: right; }
+        .info-value.multiline { text-align: left; white-space: pre-line; font-weight: 600; }
         .item-row {
             padding: 4px 0;
             display: flex;
@@ -144,13 +190,52 @@ $date = wc_format_datetime($order->get_date_created());
                             </p>
                         </div>
 
-                        <h4 style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #9ca3af; margin-bottom: 12px;">Productos</h4>
-                        <?php foreach ($order->get_items() as $item) : ?>
-                            <div class="item-row">
-                                <span style="max-width: 70%;"><?php echo esc_html($item->get_name()); ?> x<?php echo esc_html($item->get_quantity()); ?></span>
-                                <span style="font-weight: 600;"><?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?></span>
+                        <h4 class="section-title"><?php echo esc_html__('Cliente', 'red-cultural-core'); ?></h4>
+                        <div class="info-card">
+                            <div class="info-row">
+                                <div class="info-label"><?php echo esc_html__('Nombre', 'red-cultural-core'); ?></div>
+                                <div class="info-value"><?php echo esc_html(trim($billing_name)); ?></div>
                             </div>
-                        <?php endforeach; ?>
+                            <?php if ($billing_email !== '') : ?>
+                                <div class="info-row">
+                                    <div class="info-label"><?php echo esc_html__('Email', 'red-cultural-core'); ?></div>
+                                    <div class="info-value"><?php echo esc_html($billing_email); ?></div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($billing_phone !== '') : ?>
+                                <div class="info-row">
+                                    <div class="info-label"><?php echo esc_html__('Teléfono', 'red-cultural-core'); ?></div>
+                                    <div class="info-value"><?php echo esc_html($billing_phone); ?></div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($billing_address !== '') : ?>
+                                <div class="info-row">
+                                    <div class="info-label"><?php echo esc_html__('Dirección (facturación)', 'red-cultural-core'); ?></div>
+                                    <div class="info-value multiline"><?php echo esc_html($billing_address); ?></div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($has_shipping_address) : ?>
+                                <div class="info-row">
+                                    <div class="info-label"><?php echo esc_html__('Dirección (envío)', 'red-cultural-core'); ?></div>
+                                    <div class="info-value multiline"><?php echo esc_html($shipping_address); ?></div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <h4 class="section-title"><?php echo esc_html__('Productos', 'red-cultural-core'); ?></h4>
+                        <?php if (!empty($line_items)) : ?>
+                            <?php foreach ($line_items as $item) : ?>
+                                <div class="item-row">
+                                    <span style="max-width: 70%;"><?php echo esc_html($item->get_name()); ?> x<?php echo esc_html($item->get_quantity()); ?></span>
+                                    <span style="font-weight: 600;"><?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <div class="item-row">
+                                <span style="color:#6b7280;"><?php echo esc_html__('No se encontraron productos en el pedido.', 'red-cultural-core'); ?></span>
+                                <span></span>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <div style="padding: 0 32px 32px 32px;">
