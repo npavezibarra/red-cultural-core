@@ -39,8 +39,69 @@ final class RC_Templates_Handlers {
 		// Force course products to be treated as virtual (no shipping cost)
 		add_filter('woocommerce_product_is_virtual', array(__CLASS__, 'force_course_products_virtual'), 10, 2);
 
+		// Prevent duplicate course items in cart (sold individually UX improvement)
+		add_filter('woocommerce_add_to_cart_validation', array(__CLASS__, 'prevent_duplicate_course_add_to_cart'), 10, 6);
+
 		// Global course filtering for non-admins
 		add_action('pre_get_posts', array(__CLASS__, 'filter_unassigned_courses_globally'));
+	}
+
+	/**
+	 * If a "Cursos" product is already in cart, avoid adding it again.
+	 *
+	 * WooCommerce core throws an exception for sold-individually products already in cart.
+	 * Here we short-circuit before WC_Cart::add_to_cart() runs, keeping only one item.
+	 *
+	 * @param bool  $passed
+	 * @param int   $product_id
+	 * @param int   $quantity
+	 * @param int   $variation_id
+	 * @param array $variations
+	 * @param array $cart_item_data
+	 * @return bool
+	 */
+	public static function prevent_duplicate_course_add_to_cart($passed, $product_id, $quantity = 1, $variation_id = 0, $variations = array(), $cart_item_data = array()) {
+		if (!$passed) {
+			return $passed;
+		}
+
+		if (!function_exists('WC') || !WC()->cart) {
+			return $passed;
+		}
+
+		$product_id = (int) $product_id;
+		$variation_id = (int) $variation_id;
+
+		if ($product_id <= 0) {
+			return $passed;
+		}
+
+		$is_course = has_term(array('curso', 'cursos', 'course', 'courses'), 'product_cat', $product_id);
+		if (!$is_course) {
+			return $passed;
+		}
+
+		foreach ((array) WC()->cart->get_cart() as $cart_item) {
+			$cart_product_id = isset($cart_item['product_id']) ? (int) $cart_item['product_id'] : 0;
+			$cart_variation_id = isset($cart_item['variation_id']) ? (int) $cart_item['variation_id'] : 0;
+
+			if ($cart_product_id !== $product_id) {
+				continue;
+			}
+
+			if ($variation_id > 0 && $cart_variation_id !== $variation_id) {
+				continue;
+			}
+
+			// Course already in cart: keep existing one and do not add again.
+			if (function_exists('wc_add_notice')) {
+				wc_add_notice(__('Este curso ya está en tu carrito.', 'red-cultural-core'), 'notice');
+			}
+
+			return false;
+		}
+
+		return $passed;
 	}
 
 	public static function force_course_products_virtual($is_virtual, $product) {

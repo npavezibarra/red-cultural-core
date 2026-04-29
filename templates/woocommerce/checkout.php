@@ -76,16 +76,19 @@ if (function_exists('do_blocks')) {
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=private_connectivity" />
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-		body{font-family:'Inter',sans-serif;padding:0 !important;background-color:#f9f9f9 !important}
-		#red-cultural-header{border-bottom:1px solid #e5e7eb;background:white !important}
-		#red-cultural-checkout-container{max-width:var(--wp--style--global--wide-size, 1200px);padding-bottom:40px}
-		#red-cultural-checkout-title{font-size:28px;letter-spacing:1px}
-		#red-cultural-checkout-place-order{padding:10px;border-radius:6px}
-		div#red-cultural-checkout-order-col {
-			border: none !important;
-			border-radius: 6px !important;
-			background: white !important;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+			body{font-family:'Inter',sans-serif;padding:0 !important;background-color:#f9f9f9 !important}
+			#red-cultural-header{border-bottom:1px solid #e5e7eb;background:white !important}
+			#red-cultural-checkout-container{max-width:var(--wp--style--global--wide-size, 1200px);padding-bottom:40px}
+			#red-cultural-checkout-title{font-size:28px;letter-spacing:1px}
+			#red-cultural-checkout-place-order{padding:10px;border-radius:6px}
+			@media (max-width: 1240px){
+				#red-cultural-checkout-container{padding-left:30px;padding-right:30px}
+			}
+			div#red-cultural-checkout-order-col {
+				border: none !important;
+				border-radius: 6px !important;
+				background: white !important;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 		}
 		header#red-cultural-checkout-header {
 			border-bottom: 1px solid #e7e7e7 !important;
@@ -347,7 +350,7 @@ if (function_exists('do_blocks')) {
 								echo '<input type="hidden" name="_rc_form_ts" id="rc-ts-field" value="' . time() . '">';
 								echo '</div>';
 								echo '<input type="hidden" name="captcha_token" class="rc-captcha-token">';
-								self::render_widget(); 
+								RC_Anti_Spam::render_widget();
 								?>
 								<?php
 								$error_code = isset($_GET['rcp_auth_error']) ? (string) $_GET['rcp_auth_error'] : '';
