@@ -15,6 +15,40 @@ final class RC_Templates_UI {
 		add_filter('render_block', array(__CLASS__, 'inject_block_navigation_items'), 10, 2);
 		add_filter('wp_nav_menu_items', array(__CLASS__, 'inject_classic_menu_items'), 10, 2);
 		add_filter('wp_nav_menu_objects', array(__CLASS__, 'rewrite_my_account_submenu'), 10, 2);
+		// Ensure TIENDA is present in the main nav, even if another plugin owns the injection.
+		add_filter('rcp_main_nav_links', array(__CLASS__, 'ensure_tienda_in_main_nav'), 5);
+	}
+
+	public static function ensure_tienda_in_main_nav(array $links): array {
+		// Avoid duplicates.
+		foreach ($links as $link) {
+			if (is_array($link) && isset($link['key']) && (string) $link['key'] === 'tienda') {
+				return $links;
+			}
+		}
+
+		$shop_url = function_exists('wc_get_page_permalink') ? (string) wc_get_page_permalink('shop') : '';
+		if ($shop_url === '') {
+			$shop_url = (string) home_url('/tienda/');
+		}
+
+		$tienda_link = array('type' => 'link', 'label' => 'TIENDA', 'url' => $shop_url, 'key' => 'tienda');
+
+		$updated = array();
+		$inserted = false;
+		foreach ($links as $link) {
+			$updated[] = $link;
+			if (!$inserted && is_array($link) && isset($link['key']) && (string) $link['key'] === 'articulos') {
+				$updated[] = $tienda_link;
+				$inserted = true;
+			}
+		}
+
+		if (!$inserted) {
+			$updated[] = $tienda_link;
+		}
+
+		return $updated;
 	}
 
 	public static function maybe_remove_woocommerce_header_blocks(string $block_content, array $block): string {
@@ -319,17 +353,24 @@ final class RC_Templates_UI {
 	}
 
 	public static function get_main_nav_links(): array {
+		$shop_url = function_exists('wc_get_page_permalink') ? (string) wc_get_page_permalink('shop') : '';
+		if ($shop_url === '') {
+			$shop_url = (string) home_url('/tienda/');
+		}
+
 		if (is_user_logged_in()) {
 			$links = array(
-				array('type' => 'link', 'label' => 'NOSOTROS', 'url' => self::get_nosotros_url(), 'key' => 'nosotros'),
 				array('type' => 'link', 'label' => 'CURSOS', 'url' => (string) home_url('/cursos/'), 'key' => 'cursos'),
-				array('type' => 'link', 'label' => 'CONTACTO', 'url' => (string) home_url('/contacto/'), 'key' => 'contacto'),
 				array('type' => 'link', 'label' => 'ARTÍCULOS', 'url' => (string) home_url('/articulos/'), 'key' => 'articulos'),
+				array('type' => 'link', 'label' => 'TIENDA', 'url' => $shop_url, 'key' => 'tienda'),
+				array('type' => 'link', 'label' => 'CONTACTO', 'url' => (string) home_url('/contacto/'), 'key' => 'contacto'),
+				array('type' => 'link', 'label' => 'NOSOTROS', 'url' => self::get_nosotros_url(), 'key' => 'nosotros'),
 			);
 		} else {
 			$links = array(
 				array('type' => 'link', 'label' => 'CURSOS', 'url' => (string) home_url('/cursos/'), 'key' => 'cursos'),
 				array('type' => 'link', 'label' => 'ARTÍCULOS', 'url' => (string) home_url('/articulos/'), 'key' => 'articulos'),
+				array('type' => 'link', 'label' => 'TIENDA', 'url' => $shop_url, 'key' => 'tienda'),
 				array('type' => 'link', 'label' => 'CONTACTO', 'url' => (string) home_url('/contacto/'), 'key' => 'contacto'),
 				array('type' => 'link', 'label' => 'NOSOTROS', 'url' => self::get_nosotros_url(), 'key' => 'nosotros'),
 			);

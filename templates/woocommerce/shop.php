@@ -124,6 +124,11 @@ if (function_exists('wc_get_products')) {
 			padding:8px 34px;
 			border-radius:6px;
 		}
+		@media (max-width: 1240px){
+			main#red-cultural-shp-main{
+				padding: 0px 30px !important;
+			}
+		}
 		@media (max-width: 640px){
 			#red-cultural-shp-actions{flex-direction:column;align-items:stretch;gap:14px}
 			#red-cultural-shp-actions-right{flex-direction:column;align-items:stretch;gap:14px}

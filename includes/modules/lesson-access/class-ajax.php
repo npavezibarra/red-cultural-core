@@ -210,7 +210,7 @@ class RCIL_Ajax
 
         $zoom_url = isset($_POST['zoom_url']) ? esc_url_raw(wp_unslash($_POST['zoom_url'])) : '';
         $available_from = isset($_POST['available_from']) ? (string) wp_unslash($_POST['available_from']) : '';
-        $timestamp = ($available_from !== '') ? strtotime($available_from) : 0;
+        $timestamp = $this->parse_available_from_timestamp($available_from);
 
         $result = wp_update_post([
             'ID' => $lesson_id,
@@ -281,7 +281,7 @@ class RCIL_Ajax
         }
 
         $access_from = $timestamp;
-        $available_from_iso = $access_from ? date('Y-m-d\TH:i', $access_from) : '';
+        $available_from_iso = $access_from ? $this->format_datetime_local($access_from) : '';
         $available_from_display = $access_from ? date_i18n(get_option('date_format') . ' H:i', $access_from) : '';
 
         wp_send_json_success([
@@ -293,6 +293,61 @@ class RCIL_Ajax
             'available_from_display' => $available_from_display,
             'enabled' => $enabled,
         ]);
+    }
+
+    /**
+     * Parse a datetime string coming from the frontend into a Unix timestamp.
+     * The frontend sends a local date/time (no timezone offset). We must interpret it in the
+     * WordPress/site timezone, not the server timezone (often UTC in production).
+     */
+    private function parse_available_from_timestamp(string $available_from): int
+    {
+        $value = trim($available_from);
+        if ($value === '') {
+            return 0;
+        }
+
+        $tz = function_exists('wp_timezone') ? wp_timezone() : new \DateTimeZone('UTC');
+
+        // Most common: <input type="datetime-local"> => "YYYY-MM-DDTHH:MM"
+        $formats = array(
+            'Y-m-d\TH:i',
+            'Y-m-d H:i',
+            'd/m/Y, H:i',
+            'd/m/Y H:i',
+        );
+
+        foreach ($formats as $format) {
+            $dt = \DateTimeImmutable::createFromFormat($format, $value, $tz);
+            if ($dt instanceof \DateTimeImmutable) {
+                $errors = \DateTimeImmutable::getLastErrors();
+                if (is_array($errors) && empty($errors['warning_count']) && empty($errors['error_count'])) {
+                    return (int) $dt->getTimestamp();
+                }
+            }
+        }
+
+        // Fallback: let PHP parse it, but force WP timezone.
+        try {
+            $dt = new \DateTimeImmutable($value, $tz);
+            return (int) $dt->getTimestamp();
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Format a timestamp as a datetime-local value in WP/site timezone (YYYY-MM-DDTHH:MM).
+     */
+    private function format_datetime_local(int $timestamp): string
+    {
+        $tz = function_exists('wp_timezone') ? wp_timezone() : new \DateTimeZone('UTC');
+        if (function_exists('wp_date')) {
+            return (string) wp_date('Y-m-d\TH:i', $timestamp, $tz);
+        }
+
+        $dt = (new \DateTimeImmutable('@' . (string) $timestamp))->setTimezone($tz);
+        return (string) $dt->format('Y-m-d\TH:i');
     }
 
     /**
