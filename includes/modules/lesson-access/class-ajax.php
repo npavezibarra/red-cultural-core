@@ -307,6 +307,8 @@ class RCIL_Ajax
             return 0;
         }
 
+        $value = $this->normalize_datetime_input($value);
+
         $tz = function_exists('wp_timezone') ? wp_timezone() : new \DateTimeZone('UTC');
 
         // Most common: <input type="datetime-local"> => "YYYY-MM-DDTHH:MM"
@@ -315,6 +317,9 @@ class RCIL_Ajax
             'Y-m-d H:i',
             'd/m/Y, H:i',
             'd/m/Y H:i',
+            // Localized 12h variants often coming from UI display strings.
+            'd/m/Y, g:i a',
+            'd/m/Y g:i a',
         );
 
         foreach ($formats as $format) {
@@ -334,6 +339,32 @@ class RCIL_Ajax
         } catch (\Exception $e) {
             return 0;
         }
+    }
+
+    /**
+     * Normalize user-facing datetime strings into something DateTime can parse reliably.
+     * Handles variants like "12/05/2026, 07:00 p.m." by converting to "12/05/2026, 07:00 pm".
+     */
+    private function normalize_datetime_input(string $value): string
+    {
+        $v = trim($value);
+        if ($v === '') {
+            return '';
+        }
+
+        $v = strtolower($v);
+        $v = preg_replace('/\s+/', ' ', $v) ?: $v;
+
+        // Normalize Spanish AM/PM variants with dots/spaces.
+        $v = str_replace(array('a. m.', 'a.m.', 'a m', 'am.'), 'am', $v);
+        $v = str_replace(array('p. m.', 'p.m.', 'p m', 'pm.'), 'pm', $v);
+        // Also normalize "hrs"/"hs" separators some UIs use.
+        $v = str_replace(array('hrs', 'hs'), '', $v);
+
+        // Ensure a space before am/pm if missing (e.g. "07:00pm").
+        $v = preg_replace('/(\d)(am|pm)\b/', '$1 $2', $v) ?: $v;
+
+        return trim($v);
     }
 
     /**
