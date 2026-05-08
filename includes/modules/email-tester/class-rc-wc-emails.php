@@ -76,8 +76,9 @@ final class Red_Cultural_WC_Emails
         }
 
         // Hook for NEW Admin Notification
-        add_action('woocommerce_new_order', [$this, 'send_admin_new_order_notification'], 20, 1);
-        add_action('woocommerce_checkout_order_processed', [$this, 'send_admin_new_order_notification'], 20, 1);
+        add_action('woocommerce_new_order', [$this, 'maybe_send_admin_new_order_notification_on_new_order'], 20, 1);
+        add_action('woocommerce_checkout_order_processed', [$this, 'maybe_send_admin_new_order_notification_on_checkout_processed'], 20, 1);
+        add_action('rc_admin_new_order_notification_retry', [$this, 'maybe_send_admin_new_order_notification_retry'], 20, 1);
     }
 
     /**
@@ -379,11 +380,78 @@ final class Red_Cultural_WC_Emails
     /**
      * Send Custom Admin New Order notification.
      */
-    public function send_admin_new_order_notification($order_id)
+    public function maybe_send_admin_new_order_notification_on_new_order($order_id)
     {
         if (!$order_id) return;
         $order = wc_get_order($order_id);
         if (!$order) return;
+
+        // For checkout-created orders, `woocommerce_new_order` can fire before items are persisted.
+        // We only send checkout orders from `woocommerce_checkout_order_processed`.
+        if ($order->get_created_via() === 'checkout') return;
+
+        $this->send_admin_new_order_notification($order);
+    }
+
+    public function maybe_send_admin_new_order_notification_on_checkout_processed($order_id)
+    {
+        if (!$order_id) return;
+        $order = wc_get_order($order_id);
+        if (!$order) return;
+
+        $line_items = $order->get_items('line_item');
+        if (empty($line_items)) {
+            $this->schedule_admin_new_order_notification_retry($order_id);
+            return;
+        }
+
+        $this->send_admin_new_order_notification($order);
+    }
+
+    public function maybe_send_admin_new_order_notification_retry($order_id)
+    {
+        if (!$order_id) return;
+        $order = wc_get_order($order_id);
+        if (!$order) return;
+
+        $line_items = $order->get_items('line_item');
+        if (empty($line_items)) {
+            $this->schedule_admin_new_order_notification_retry($order_id);
+            return;
+        }
+
+        $this->send_admin_new_order_notification($order);
+    }
+
+    private function schedule_admin_new_order_notification_retry($order_id)
+    {
+        $order = wc_get_order($order_id);
+        if (!$order) return;
+
+        // Avoid infinite retries.
+        $attempts = (int) $order->get_meta('_rc_admin_notif_retry_count');
+        if ($attempts >= 3) return;
+
+        $attempts++;
+        $order->update_meta_data('_rc_admin_notif_retry_count', (string) $attempts);
+        $order->save();
+
+        if (!wp_next_scheduled('rc_admin_new_order_notification_retry', [$order_id])) {
+            wp_schedule_single_event(time() + 60, 'rc_admin_new_order_notification_retry', [$order_id]);
+        }
+    }
+
+    /**
+     * Send Custom Admin New Order notification.
+     *
+     * @param WC_Order|int $order Order object or order id.
+     */
+    public function send_admin_new_order_notification($order)
+    {
+        if (!$order instanceof \WC_Order) {
+            $order = wc_get_order((int) $order);
+        }
+        if (!$order instanceof \WC_Order) return;
 
         // Prevent double sending
         if ($order->get_meta('_rc_admin_notif_sent') === '1') return;
