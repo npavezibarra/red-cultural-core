@@ -194,7 +194,28 @@ if (class_exists('Red_Cultural_WC_Emails')) {
                             <h4 style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #9ca3af; margin-bottom: 12px;">Resumen de compra</h4>
                             <?php foreach ($order->get_items() as $item) : ?>
                                 <div class="item-row">
-                                    <span style="max-width: 70%;"><?php echo esc_html($item->get_name()); ?> x<?php echo esc_html($item->get_quantity()); ?></span>
+                                    <span style="max-width: 70%;">
+                                        <?php echo esc_html($item->get_name()); ?> x<?php echo esc_html($item->get_quantity()); ?>
+                                        <?php
+                                        $rcil_lesson_titles = [];
+                                        if ($item->get_meta('_is_rcil_purchase')) {
+                                            $rcil_lesson_titles = maybe_unserialize($item->get_meta('_rcil_lesson_titles'));
+                                            if (!is_array($rcil_lesson_titles)) {
+                                                $rcil_lesson_titles = [];
+                                            }
+                                        }
+                                        ?>
+                                        <?php if (!empty($rcil_lesson_titles)) : ?>
+                                            <br>
+                                            <span style="display:inline-block; margin-top: 4px; font-size: 11px; color: #6b7280;">
+                                                <?php if (count($rcil_lesson_titles) === 1) : ?>
+                                                    Lección: <?php echo esc_html($rcil_lesson_titles[0]); ?>
+                                                <?php else : ?>
+                                                    Lecciones: <?php echo esc_html(implode(', ', array_map('strval', $rcil_lesson_titles))); ?>
+                                                <?php endif; ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </span>
                                     <span style="font-weight: 600;"><?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?></span>
                                 </div>
                             <?php endforeach; ?>

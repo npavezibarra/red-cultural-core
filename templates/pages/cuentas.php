@@ -835,9 +835,9 @@ $nonce = wp_create_nonce('rcp_search_sales');
 							link.onclick = (e) => {
 								e.preventDefault();
 								const href = link.getAttribute('href');
-                                const match = href.match(/#(\d+)#/);
+								const match = href ? href.match(/(\d+)/) : null;
 								if (match) {
-									updateTable(input.value, match[1]);
+									updateTable(input ? input.value : '', parseInt(match[1], 10));
 									window.scrollTo({ top: table.offsetTop - 150, behavior: 'smooth' });
 								}
 							};

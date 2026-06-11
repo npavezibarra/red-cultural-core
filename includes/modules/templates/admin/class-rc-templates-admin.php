@@ -476,6 +476,7 @@ final class RC_Templates_Admin {
 			));
 			echo '</div>';
 		}
+		echo '</div>';
 	}
 
 	public static function ajax_get_sales_chart_data(): void {
@@ -689,4 +690,3 @@ final class RC_Templates_Admin {
 		}
 	}
 }
-

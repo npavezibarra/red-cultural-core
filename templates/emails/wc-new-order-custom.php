@@ -277,6 +277,24 @@ $date = wc_format_datetime($order->get_date_created());
                             <td style="padding-left: 12px;" valign="middle">
                                 <p style="margin: 0; font-size: 14px; font-weight: 500;"><?php echo esc_html($item->get_name()); ?></p>
                                 <p style="margin: 0; font-size: 11px; color: #6b7280;">Cantidad: <?php echo esc_html($item->get_quantity()); ?></p>
+                                <?php
+                                $rcil_lesson_titles = [];
+                                if ($item->get_meta('_is_rcil_purchase')) {
+                                    $rcil_lesson_titles = maybe_unserialize($item->get_meta('_rcil_lesson_titles'));
+                                    if (!is_array($rcil_lesson_titles)) {
+                                        $rcil_lesson_titles = [];
+                                    }
+                                }
+                                ?>
+                                <?php if (!empty($rcil_lesson_titles)) : ?>
+                                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #6b7280;">
+                                        <?php if (count($rcil_lesson_titles) === 1) : ?>
+                                            Lección: <?php echo esc_html($rcil_lesson_titles[0]); ?>
+                                        <?php else : ?>
+                                            Lecciones: <?php echo esc_html(implode(', ', array_map('strval', $rcil_lesson_titles))); ?>
+                                        <?php endif; ?>
+                                    </p>
+                                <?php endif; ?>
                             </td>
                             <td align="right" valign="middle">
                                 <p style="margin: 0; font-size: 14px; font-weight: 500;"><?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?></p>
