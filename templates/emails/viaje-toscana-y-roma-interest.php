@@ -20,6 +20,7 @@ $name = isset($name) ? (string) $name : '';
 $email = isset($email) ? (string) $email : '';
 $phone = isset($phone) ? (string) $phone : '';
 $message = isset($message) ? (string) $message : '';
+$hero_image = 'https://red-cultural.cl/wp-content/uploads/2026/08/toscanaroma.png';
 $year = date('Y');
 ?>
 <!DOCTYPE html>
@@ -49,7 +50,12 @@ $year = date('Y');
 			box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
 		}
 		.hero {
-			background: linear-gradient(180deg, rgba(10, 10, 10, 0.88), rgba(10, 10, 10, 0.78));
+			background:
+				linear-gradient(180deg, rgba(10, 10, 10, 0.78), rgba(10, 10, 10, 0.78)),
+				url('<?php echo esc_url($hero_image); ?>');
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
 			padding: 34px 32px 28px;
 			text-align: center;
 			color: #ffffff;
