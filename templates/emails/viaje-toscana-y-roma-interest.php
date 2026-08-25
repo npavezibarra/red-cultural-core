@@ -102,6 +102,7 @@ $year = date('Y');
 			border: 1px solid #e5e7eb;
 			border-radius: 14px;
 			padding: 14px 16px;
+			margin-bottom: 10px;
 		}
 		.field-label {
 			display: block;
@@ -167,7 +168,7 @@ $year = date('Y');
 	<div class="wrapper">
 		<div class="card">
 			<div class="hero">
-				<img class="logo" src="https://red-cultural.cl/wp-content/uploads/2021/01/logoRedCulturalNegro.svg" alt="Red Cultural">
+				<img class="logo" src="https://red-cultural.cl/wp-content/uploads/2021/01/logoRedCulturalBlanco.svg" alt="Red Cultural">
 				<p class="kicker">Nuevo interés</p>
 				<h1 class="title"><?php echo esc_html($trip_name); ?></h1>
 				<p class="subtitle"><?php echo esc_html($trip_dates); ?></p>
