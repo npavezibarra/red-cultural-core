@@ -135,6 +135,84 @@ if (!function_exists('rcp_toscana_build_gallery_section')) {
 	}
 }
 
+if (!function_exists('rcp_toscana_build_interest_section')) {
+	function rcp_toscana_build_interest_section(): string {
+		$show_success = isset($_GET['rcp_toscana_roma_interest']) && (string) $_GET['rcp_toscana_roma_interest'] === 'success';
+		ob_start();
+		?>
+		<section id="red-cultural-viaje-italia-interest" aria-label="Interés">
+			<style>
+				#red-cultural-viaje-italia-interest-form.rcp-interest-success .rcp-interest-field,
+				#red-cultural-viaje-italia-interest-form.rcp-interest-success .rcp-interest-submit,
+				#red-cultural-viaje-italia-interest-form.rcp-interest-success .rcp-interest-anti-spam,
+				#red-cultural-viaje-italia-interest-form.rcp-interest-success .rcp-interest-action {
+					display: none !important;
+				}
+			</style>
+			<div id="red-cultural-viaje-italia-interest-inner">
+				<div id="red-cultural-viaje-italia-interest-copy">
+					<p id="red-cultural-viaje-italia-interest-question">¿Estás interesado?</p>
+					<p id="red-cultural-viaje-italia-interest-desc">Llena el formulario para más información sobre el</p>
+					<p id="red-cultural-viaje-italia-interest-trip-title">Toscana y Roma</p>
+					<p id="red-cultural-viaje-italia-interest-trip-dates">08 al 22 de marzo de 2027</p>
+				</div>
+
+				<form
+					id="red-cultural-viaje-italia-interest-form"
+					class="<?php echo $show_success ? 'rcp-interest-success' : ''; ?>"
+					method="post"
+					action="<?php echo esc_url((string) admin_url('admin-post.php')); ?>"
+				>
+					<?php if ($show_success) : ?>
+						<p id="red-cultural-viaje-italia-interest-success" role="status" aria-live="polite">¡Gracias! Te contactaremos pronto.</p>
+					<?php endif; ?>
+
+					<input class="rcp-interest-action" type="hidden" id="red-cultural-viaje-italia-interest-action" name="action" value="rcp_viaje_toscana_roma_interest">
+					<?php wp_nonce_field('rcp_viaje_toscana_roma_interest', 'rcp_toscana_roma_nonce'); ?>
+					<div class="rcp-interest-anti-spam">
+						<?php RC_Anti_Spam::render_form_fields(); ?>
+					</div>
+
+					<div id="red-cultural-viaje-italia-interest-field-name" class="rcp-interest-field">
+						<label id="red-cultural-viaje-italia-interest-label-name" for="red-cultural-viaje-italia-interest-input-name">Nombre</label>
+						<input id="red-cultural-viaje-italia-interest-input-name" name="rcp_toscana_roma_name" type="text" autocomplete="name" placeholder="Tu nombre" required>
+					</div>
+
+					<div id="red-cultural-viaje-italia-interest-field-email" class="rcp-interest-field">
+						<label id="red-cultural-viaje-italia-interest-label-email" for="red-cultural-viaje-italia-interest-input-email">Email</label>
+						<input id="red-cultural-viaje-italia-interest-input-email" name="rcp_toscana_roma_email" type="email" autocomplete="email" placeholder="correo@ejemplo.com" required>
+					</div>
+
+					<div id="red-cultural-viaje-italia-interest-field-phone" class="rcp-interest-field">
+						<label id="red-cultural-viaje-italia-interest-label-phone" for="red-cultural-viaje-italia-interest-input-phone">Teléfono</label>
+						<input id="red-cultural-viaje-italia-interest-input-phone" name="rcp_toscana_roma_phone" type="tel" autocomplete="tel" placeholder="+56 9 1234 5678">
+					</div>
+
+					<div id="red-cultural-viaje-italia-interest-field-message" class="rcp-interest-field">
+						<label id="red-cultural-viaje-italia-interest-label-message" for="red-cultural-viaje-italia-interest-input-message">Mensaje</label>
+						<textarea id="red-cultural-viaje-italia-interest-input-message" name="rcp_toscana_roma_message" placeholder="Cuéntanos qué necesitas..."></textarea>
+					</div>
+
+					<button id="red-cultural-viaje-italia-interest-submit" class="rcp-interest-submit" type="submit">Enviar</button>
+				</form>
+				<?php RC_Anti_Spam::render_form_js('red-cultural-viaje-italia-interest-form'); ?>
+			</div>
+			<script>
+				(function () {
+					var params = new URLSearchParams(window.location.search);
+					if (params.get('rcp_toscana_roma_interest') === 'success') {
+						params.delete('rcp_toscana_roma_interest');
+						var nextUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+						window.history.replaceState({}, document.title, nextUrl);
+					}
+				})();
+			</script>
+		</section>
+		<?php
+		return (string) ob_get_clean();
+	}
+}
+
 if (!function_exists('rcp_toscana_build_conditions_section')) {
 	function rcp_toscana_build_conditions_section(): string {
 		ob_start();
@@ -281,6 +359,7 @@ $html = str_replace(
 );
 
 $html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-gallery', rcp_toscana_build_gallery_section());
+$html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-interest', rcp_toscana_build_interest_section());
 $html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-itinerary', rcp_toscana_build_itinerary_section());
 $html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-conditions', rcp_toscana_build_conditions_section());
 
