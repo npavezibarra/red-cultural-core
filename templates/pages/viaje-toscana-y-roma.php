@@ -135,6 +135,243 @@ if (!function_exists('rcp_toscana_build_gallery_section')) {
 	}
 }
 
+if (!function_exists('rcp_toscana_resolve_lectura_post_id')) {
+	function rcp_toscana_resolve_lectura_post_id(string $url): int {
+		$post_id = (int) url_to_postid($url);
+		if ($post_id > 0) {
+			return $post_id;
+		}
+
+		$path = (string) parse_url($url, PHP_URL_PATH);
+		$slug = trim($path, '/');
+		$slug = $slug !== '' ? basename($slug) : '';
+		if ($slug === '') {
+			return 0;
+		}
+
+		$candidates = get_posts(array(
+			'name' => $slug,
+			'post_type' => array('post', 'page'),
+			'post_status' => 'publish',
+			'posts_per_page' => 1,
+			'fields' => 'ids',
+		));
+		if (!empty($candidates)) {
+			return (int) $candidates[0];
+		}
+
+		$candidate = get_page_by_path($slug, OBJECT, array('post', 'page'));
+		if ($candidate instanceof WP_Post) {
+			return (int) $candidate->ID;
+		}
+
+		return 0;
+	}
+}
+
+if (!function_exists('rcp_toscana_extract_first_image_url')) {
+	function rcp_toscana_extract_first_image_url(string $content): string {
+		if (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $matches)) {
+			return esc_url_raw($matches[1]);
+		}
+
+		if (preg_match('/<img[^>]+data-src=["\']([^"\']+)["\']/i', $content, $matches)) {
+			return esc_url_raw($matches[1]);
+		}
+
+		return '';
+	}
+}
+
+if (!function_exists('rcp_toscana_build_lectura_card_data')) {
+	function rcp_toscana_build_lectura_card_data(array $item): array {
+		$url = isset($item['url']) ? (string) $item['url'] : '';
+		$title = isset($item['title']) ? (string) $item['title'] : '';
+		$slug = isset($item['slug']) ? (string) $item['slug'] : sanitize_title($title);
+		$fallback_thumb = isset($item['thumb']) ? (string) $item['thumb'] : '';
+		$manual_excerpt = isset($item['excerpt']) ? (string) $item['excerpt'] : '';
+		$category = isset($item['category']) ? (string) $item['category'] : 'Cultura';
+		$reading_time = isset($item['reading_time']) ? (string) $item['reading_time'] : '5 min de lectura';
+
+		$post_id = $url !== '' ? rcp_toscana_resolve_lectura_post_id($url) : 0;
+		$thumbnail = '';
+		$excerpt = '';
+
+		if ($post_id > 0) {
+			$thumbnail = (string) get_the_post_thumbnail_url($post_id, 'large');
+			if ($thumbnail === '') {
+				$thumbnail = (string) get_the_post_thumbnail_url($post_id, 'medium_large');
+			}
+
+			$content = (string) get_post_field('post_content', $post_id);
+			if ($thumbnail === '') {
+				$thumbnail = rcp_toscana_extract_first_image_url($content);
+			}
+
+			$excerpt = trim(wp_strip_all_tags((string) get_the_excerpt($post_id)));
+			if ($excerpt === '') {
+				$excerpt = trim(wp_strip_all_tags(wp_trim_words(strip_shortcodes($content), 18, '…')));
+			}
+		}
+
+		if ($thumbnail === '') {
+			$thumbnail = $fallback_thumb;
+		}
+
+		if ($excerpt === '') {
+			$excerpt = $manual_excerpt;
+		}
+
+		$excerpt = trim((string) wp_trim_words($excerpt, 16, '…'));
+
+		return array(
+			'slug' => $slug,
+			'url' => $url,
+			'title' => $title,
+			'thumbnail' => $thumbnail,
+			'excerpt' => $excerpt,
+			'category' => $category,
+			'reading_time' => $reading_time,
+		);
+	}
+}
+
+if (!function_exists('rcp_toscana_build_lecturas_section')) {
+	function rcp_toscana_build_lecturas_section(): string {
+		$lecturas_items = array(
+			array(
+				'slug'  => 'florencia',
+				'title' => 'Florencia: la ciudad que inventó una nueva manera de mirar',
+				'url'   => 'https://red-cultural.cl/florencia-la-ciudad-que-invento-una-nueva-manera-de-mirar/',
+				'thumb' => 'https://red-cultural.cl/wp-content/uploads/2026/08/toscana_2_menos_300kb.jpg',
+				'excerpt' => 'Una lectura sobre cómo Florencia cambió la forma de ver el arte, la ciudad y la experiencia del viaje.',
+				'category' => 'Arte & Arquitectura',
+				'reading_time' => '4 min de lectura',
+			),
+			array(
+				'slug'  => 'tarquinia',
+				'title' => 'Tarquinia: antes de que Roma fuera Roma',
+				'url'   => 'https://red-cultural.cl/tarquinia-antes-de-que-roma-fuera-roma/',
+				'thumb' => 'https://red-cultural.cl/wp-content/uploads/2026/08/roma_300kb.jpg',
+				'excerpt' => 'Una antesala etrusca para entender el paisaje cultural que existía antes de la Roma imperial.',
+				'category' => 'Historia Antigua',
+				'reading_time' => '6 min de lectura',
+			),
+			array(
+				'slug'  => 'roma',
+				'title' => 'Roma: la ciudad que nunca terminó de caer',
+				'url'   => 'http://redcultural.local/roma-la-ciudad-que-nunca-termino-de-caer/',
+				'thumb' => 'https://red-cultural.cl/wp-content/uploads/2026/08/roma_300kb.jpg',
+				'excerpt' => 'Roma como archivo vivo: ruina, memoria y continuidad en una ciudad que siempre vuelve a empezar.',
+				'category' => 'Historia & Ciudad',
+				'reading_time' => '5 min de lectura',
+			),
+			array(
+				'slug'  => 'umbria',
+				'title' => 'Umbria: las ciudades que aprendieron a vivir en las alturas',
+				'url'   => 'https://red-cultural.cl/umbria-las-ciudades-que-aprendieron-a-vivir-en-las-alturas/',
+				'thumb' => 'https://red-cultural.cl/wp-content/uploads/2026/08/toscana_2_menos_300kb.jpg',
+				'excerpt' => 'Una lectura sobre poblados en altura, paisaje y la manera en que Umbria enseña a mirar desde arriba.',
+				'category' => 'Paisaje & Cultura',
+				'reading_time' => '5 min de lectura',
+			),
+		);
+
+		$lecturas_cards = array_map('rcp_toscana_build_lectura_card_data', $lecturas_items);
+
+		ob_start();
+		?>
+		<section id="red-cultural-viaje-italia-lecturas" aria-label="Lecturas">
+			<style id="red-cultural-viaje-italia-lecturas-style">
+				#red-cultural-viaje-italia-lecturas{max-width:var(--wp--style--global--wide-size);margin:0 auto;padding:24px 16px 96px}
+				#red-cultural-viaje-italia-lecturas-header{max-width:760px;margin:0 auto 34px;text-align:center}
+				#red-cultural-viaje-italia-lecturas-kicker{display:block;margin:0 0 12px;font-size:11px;line-height:1.2;font-weight:800;letter-spacing:.34em;text-transform:uppercase;color:#9ca3af}
+				#red-cultural-viaje-italia-lecturas-title{font-size:44px;line-height:1.05;font-weight:900;letter-spacing:-.03em;margin:0;color:#111827}
+				#red-cultural-viaje-italia-lecturas-intro{margin:14px auto 0;max-width:620px;font-size:16px;line-height:1.7;color:#6b7280}
+				#red-cultural-viaje-italia-lecturas-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;list-style:none;margin:0;padding:0}
+				#red-cultural-viaje-italia-lecturas-grid>li{list-style:none;margin:0;padding:0;min-width:0}
+				#red-cultural-viaje-italia-lecturas-grid>li>a{display:block;height:100%;text-decoration:none;color:inherit;border:1px solid #eef0f3;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 12px 32px rgba(15,23,42,.09);transform:translateZ(0);transition:transform .25s ease,box-shadow .25s ease}
+				#red-cultural-viaje-italia-lecturas-grid>li>a:hover{transform:translateY(-4px);box-shadow:0 20px 42px rgba(15,23,42,.14)}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-card{display:flex;flex-direction:column;height:100%;margin:0;background:#fff}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-thumb-wrap{position:relative;aspect-ratio:16/10;overflow:hidden;background:#e5e7eb}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-thumb{display:block;width:100%;height:100%;object-fit:cover;background:#f3f4f6;transition:transform .7s ease}
+				#red-cultural-viaje-italia-lecturas-grid>li>a:hover .red-cultural-viaje-italia-lecturas-thumb{transform:scale(1.035)}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-category{position:absolute;top:18px;left:18px;margin:0;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.92);box-shadow:0 3px 12px rgba(15,23,42,.10);color:#111827;font-size:12px;line-height:1;font-weight:800}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-body{display:flex;flex:1;flex-direction:column;padding:28px 30px 24px}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-card-kicker{margin:0 0 12px;color:#94a3b8;font-size:12px;line-height:1.25;font-weight:700;letter-spacing:0}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-card-kicker span+span:before{content:'•';margin:0 9px}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-card-title{margin:0 0 14px;color:#111827;font-size:25px;line-height:1.22;font-weight:900;letter-spacing:-.025em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-card-excerpt{margin:0;color:#596273;font-size:14px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-footer{display:flex;align-items:center;margin-top:auto;padding-top:20px}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-read-more{display:flex;align-items:center;gap:9px;width:100%;padding-top:17px;border-top:1px solid #edf0f4;color:#111827;font-size:13px;line-height:1.2;font-weight:800}
+				#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-arrow{font-size:19px;line-height:1;transition:transform .2s ease}
+				#red-cultural-viaje-italia-lecturas-grid>li>a:hover .red-cultural-viaje-italia-lecturas-arrow{transform:translateX(4px)}
+				@media (max-width: 1100px){
+					#red-cultural-viaje-italia-lecturas-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+				}
+				@media (max-width: 640px){
+					#red-cultural-viaje-italia-lecturas{padding:8px 16px 68px}
+					#red-cultural-viaje-italia-lecturas-header{margin-bottom:24px}
+					#red-cultural-viaje-italia-lecturas-title{font-size:32px}
+					#red-cultural-viaje-italia-lecturas-intro{font-size:15px}
+					#red-cultural-viaje-italia-lecturas-grid{grid-template-columns:1fr}
+					#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-body{padding:22px 22px 20px}
+					#red-cultural-viaje-italia-lecturas .red-cultural-viaje-italia-lecturas-card-title{font-size:21px}
+				}
+			</style>
+			<div id="red-cultural-viaje-italia-lecturas-header">
+				<span id="red-cultural-viaje-italia-lecturas-kicker">Lecturas</span>
+				<h2 id="red-cultural-viaje-italia-lecturas-title">Lecturas para el viaje</h2>
+				<p id="red-cultural-viaje-italia-lecturas-intro">Una selección breve para entrar en contexto antes de Toscana y Roma, con piezas que conectan paisaje, historia y mirada cultural.</p>
+			</div>
+			<ul id="red-cultural-viaje-italia-lecturas-grid">
+				<?php foreach ($lecturas_cards as $card) : ?>
+					<?php
+					$slug = isset($card['slug']) ? (string) $card['slug'] : '';
+					$url = isset($card['url']) ? (string) $card['url'] : '';
+					$title = isset($card['title']) ? (string) $card['title'] : '';
+					$thumbnail = isset($card['thumbnail']) ? (string) $card['thumbnail'] : '';
+					$excerpt = isset($card['excerpt']) ? (string) $card['excerpt'] : '';
+					$category = isset($card['category']) ? (string) $card['category'] : '';
+					$reading_time = isset($card['reading_time']) ? (string) $card['reading_time'] : '';
+					?>
+					<li id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-item-' . $slug); ?>">
+						<a
+							id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-link-' . $slug); ?>"
+							href="<?php echo esc_url($url); ?>"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="<?php echo esc_attr($title); ?>"
+						>
+							<article id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-card-' . $slug); ?>" class="red-cultural-viaje-italia-lecturas-card">
+								<div id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-thumb-wrap-' . $slug); ?>" class="red-cultural-viaje-italia-lecturas-thumb-wrap">
+									<img
+										id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-thumb-' . $slug); ?>"
+										class="red-cultural-viaje-italia-lecturas-thumb"
+										src="<?php echo esc_url($thumbnail); ?>"
+										alt="<?php echo esc_attr($title); ?>"
+										loading="lazy"
+										referrerpolicy="no-referrer"
+									>
+									<span class="red-cultural-viaje-italia-lecturas-category"><?php echo esc_html($category); ?></span>
+								</div>
+								<div id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-body-' . $slug); ?>" class="red-cultural-viaje-italia-lecturas-body">
+									<p id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-card-kicker-' . $slug); ?>" class="red-cultural-viaje-italia-lecturas-card-kicker"><span>Artículo</span><span><?php echo esc_html($reading_time); ?></span></p>
+									<h3 id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-card-title-' . $slug); ?>" class="red-cultural-viaje-italia-lecturas-card-title"><?php echo esc_html($title); ?></h3>
+									<p id="<?php echo esc_attr('red-cultural-viaje-italia-lecturas-card-excerpt-' . $slug); ?>" class="red-cultural-viaje-italia-lecturas-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+									<div class="red-cultural-viaje-italia-lecturas-footer"><span class="red-cultural-viaje-italia-lecturas-read-more">Leer artículo completo <span class="red-cultural-viaje-italia-lecturas-arrow" aria-hidden="true">→</span></span></div>
+								</div>
+							</article>
+						</a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</section>
+		<?php
+		return (string) ob_get_clean();
+	}
+}
+
 if (!function_exists('rcp_toscana_build_interest_section')) {
 	function rcp_toscana_build_interest_section(): string {
 		$show_success = isset($_GET['rcp_toscana_roma_interest']) && (string) $_GET['rcp_toscana_roma_interest'] === 'success';
@@ -358,7 +595,7 @@ $html = str_replace(
 	$html
 );
 
-$html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-gallery', rcp_toscana_build_gallery_section());
+$html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-gallery', rcp_toscana_build_gallery_section() . rcp_toscana_build_lecturas_section());
 $html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-interest', rcp_toscana_build_interest_section());
 $html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-itinerary', rcp_toscana_build_itinerary_section());
 $html = rcp_toscana_replace_section($html, 'red-cultural-viaje-italia-conditions', rcp_toscana_build_conditions_section());

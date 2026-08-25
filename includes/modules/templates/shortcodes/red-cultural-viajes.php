@@ -100,6 +100,18 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 			#red-cultural-viajes-hero-inner{position:relative;z-index:2}
 			#red-cultural-viajes .rcp-viajes-card-bg{background-size:cover;background-position:center;transition:transform .5s ease}
 			#red-cultural-viajes .rcp-viajes-card:hover .rcp-viajes-card-bg{transform:scale(1.05)}
+			#red-cultural-viajes .rcp-viajes-trip-ribbon{
+				display:inline-block;
+				padding:4px 16px;
+				margin:0 0 16px;
+				background:#000;
+				color:#fff;
+				font-size:10px;
+				font-weight:700;
+				letter-spacing:0.18em;
+				text-transform:uppercase;
+				line-height:1.25;
+			}
 		</style>
 
 		<section id="red-cultural-viajes-hero" class="rcp-viajes-banner w-full relative min-h-[450px] flex items-start text-white pt-0 pb-12 overflow-hidden">
@@ -136,54 +148,6 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 			<div id="red-cultural-viajes-upcoming-inner" class="max-w-[1180px] mx-auto">
 				<div id="red-cultural-viajes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
 
-					<div id="red-cultural-viajes-trip-1" class="flex flex-col items-center text-center">
-						<span id="red-cultural-viajes-trip-1-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
-						<h2 id="red-cultural-viajes-trip-1-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Nápoles, Sicilia y Malta</h2>
-						<p id="red-cultural-viajes-trip-1-dates" class="text-lg text-gray-600 mb-4">16-marzo al 01 abril de 2026</p>
-
-						<div id="red-cultural-viajes-trip-1-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
-							<div id="red-cultural-viajes-trip-1-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('<?php echo esc_url($uploads_base . '/2025/12/Sicilia2.jpg'); ?>'),url('https://red-cultural.cl/wp-content/uploads/2025/12/Sicilia2.jpg');"></div>
-							<div id="red-cultural-viajes-trip-1-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
-							<div id="red-cultural-viajes-trip-1-cta-wrap" class="absolute inset-0 flex items-center justify-center">
-								<a id="red-cultural-viajes-trip-1-cta" href="<?php echo esc_url($viaje_italia_url); ?>" class="bg-white text-[#00b1ba] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-									VER ITINERARIO
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<div id="red-cultural-viajes-trip-2a" class="flex flex-col items-center text-center">
-						<span id="red-cultural-viajes-trip-2a-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
-						<h2 id="red-cultural-viajes-trip-2a-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Viaje Toscana y Roma</h2>
-						<p id="red-cultural-viajes-trip-2a-dates" class="text-lg text-gray-600 mb-4">08 al 22 de marzo de 2027</p>
-
-						<div id="red-cultural-viajes-trip-2a-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
-							<div id="red-cultural-viajes-trip-2a-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('https://red-cultural.cl/wp-content/uploads/2026/08/toscanaroma.png');"></div>
-							<div id="red-cultural-viajes-trip-2a-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
-							<div id="red-cultural-viajes-trip-2a-cta-wrap" class="absolute inset-0 flex items-center justify-center">
-								<a id="red-cultural-viajes-trip-2a-cta" href="<?php echo esc_url($viaje_toscana_roma_url); ?>" class="bg-white text-[#8b7355] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-									VER ITINERARIO
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<div id="red-cultural-viajes-trip-2" class="flex flex-col items-center text-center">
-						<span id="red-cultural-viajes-trip-2-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
-						<h2 id="red-cultural-viajes-trip-2-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Expedición Escocia 2026</h2>
-						<p id="red-cultural-viajes-trip-2-dates" class="text-lg text-gray-600 mb-4">10 al 20 de Junio</p>
-
-						<div id="red-cultural-viajes-trip-2-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
-							<div id="red-cultural-viajes-trip-2-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('<?php echo esc_url($uploads_base . '/2025/12/Edimburg1.jpg'); ?>'),url('https://red-cultural.cl/wp-content/uploads/2025/12/Edimburg1.jpg');"></div>
-							<div id="red-cultural-viajes-trip-2-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
-							<div id="red-cultural-viajes-trip-2-cta-wrap" class="absolute inset-0 flex items-center justify-center">
-								<a id="red-cultural-viajes-trip-2-cta" href="<?php echo esc_url($viaje_escocia_url); ?>" class="bg-white text-[#8b7355] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-									VER ITINERARIO
-								</a>
-							</div>
-						</div>
-					</div>
-
 					<div id="red-cultural-viajes-trip-3" class="flex flex-col items-center text-center">
 						<span id="red-cultural-viajes-trip-3-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
 						<h2 id="red-cultural-viajes-trip-3-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Escandinavia</h2>
@@ -210,6 +174,54 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 							<div id="red-cultural-viajes-trip-4-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
 							<div id="red-cultural-viajes-trip-4-cta-wrap" class="absolute inset-0 flex items-center justify-center">
 								<a id="red-cultural-viajes-trip-4-cta" href="<?php echo esc_url($viaje_japon_url); ?>" class="bg-white text-[#b088f9] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+									VER ITINERARIO
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div id="red-cultural-viajes-trip-2a" class="flex flex-col items-center text-center">
+						<span id="red-cultural-viajes-trip-2a-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
+						<h2 id="red-cultural-viajes-trip-2a-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Viaje Toscana y Roma</h2>
+						<p id="red-cultural-viajes-trip-2a-dates" class="text-lg text-gray-600 mb-4">08 al 22 de marzo de 2027</p>
+
+						<div id="red-cultural-viajes-trip-2a-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
+							<div id="red-cultural-viajes-trip-2a-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('https://red-cultural.cl/wp-content/uploads/2026/08/toscanaroma.png');"></div>
+							<div id="red-cultural-viajes-trip-2a-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+							<div id="red-cultural-viajes-trip-2a-cta-wrap" class="absolute inset-0 flex items-center justify-center">
+								<a id="red-cultural-viajes-trip-2a-cta" href="<?php echo esc_url($viaje_toscana_roma_url); ?>" class="bg-white text-[#8b7355] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+									VER ITINERARIO
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div id="red-cultural-viajes-trip-2" class="flex flex-col items-center text-center">
+						<span id="red-cultural-viajes-trip-2-badge" class="rcp-viajes-trip-ribbon">FINALIZADO</span>
+						<h2 id="red-cultural-viajes-trip-2-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Expedición Escocia 2026</h2>
+						<p id="red-cultural-viajes-trip-2-dates" class="text-lg text-gray-600 mb-4">10 al 20 de Junio</p>
+
+						<div id="red-cultural-viajes-trip-2-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
+							<div id="red-cultural-viajes-trip-2-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('<?php echo esc_url($uploads_base . '/2025/12/Edimburg1.jpg'); ?>'),url('https://red-cultural.cl/wp-content/uploads/2025/12/Edimburg1.jpg');"></div>
+							<div id="red-cultural-viajes-trip-2-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+							<div id="red-cultural-viajes-trip-2-cta-wrap" class="absolute inset-0 flex items-center justify-center">
+								<a id="red-cultural-viajes-trip-2-cta" href="<?php echo esc_url($viaje_escocia_url); ?>" class="bg-white text-[#8b7355] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+									VER ITINERARIO
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div id="red-cultural-viajes-trip-1" class="flex flex-col items-center text-center">
+						<span id="red-cultural-viajes-trip-1-badge" class="rcp-viajes-trip-ribbon">FINALIZADO</span>
+						<h2 id="red-cultural-viajes-trip-1-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Nápoles, Sicilia y Malta</h2>
+						<p id="red-cultural-viajes-trip-1-dates" class="text-lg text-gray-600 mb-4">16-marzo al 01 abril de 2026</p>
+
+						<div id="red-cultural-viajes-trip-1-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
+							<div id="red-cultural-viajes-trip-1-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('<?php echo esc_url($uploads_base . '/2025/12/Sicilia2.jpg'); ?>'),url('https://red-cultural.cl/wp-content/uploads/2025/12/Sicilia2.jpg');"></div>
+							<div id="red-cultural-viajes-trip-1-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+							<div id="red-cultural-viajes-trip-1-cta-wrap" class="absolute inset-0 flex items-center justify-center">
+								<a id="red-cultural-viajes-trip-1-cta" href="<?php echo esc_url($viaje_italia_url); ?>" class="bg-white text-[#00b1ba] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
 									VER ITINERARIO
 								</a>
 							</div>
