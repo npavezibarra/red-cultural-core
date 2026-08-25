@@ -60,6 +60,7 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 	$cocha_logo_live = 'https://red-cultural.cl/wp-content/uploads/2024/08/CoChaRedLogo.png';
 
 	$viaje_italia_url = (string) home_url('/viaje-italia/');
+	$viaje_toscana_roma_url = (string) home_url('/viaje-toscana-y-roma/');
 	$viaje_escocia_url = (string) home_url('/viaje-escocia/');
 	$viaje_escandinavia_url = (string) home_url('/viaje-escandinavia/');
 	$viaje_japon_url = (string) home_url('/viaje-japon/');
@@ -145,6 +146,22 @@ function rcp_red_cultural_viajes_shortcode(array $atts = array()): string {
 							<div id="red-cultural-viajes-trip-1-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
 							<div id="red-cultural-viajes-trip-1-cta-wrap" class="absolute inset-0 flex items-center justify-center">
 								<a id="red-cultural-viajes-trip-1-cta" href="<?php echo esc_url($viaje_italia_url); ?>" class="bg-white text-[#00b1ba] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+									VER ITINERARIO
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div id="red-cultural-viajes-trip-2a" class="flex flex-col items-center text-center">
+						<span id="red-cultural-viajes-trip-2a-badge" class="bg-red-600 text-white text-[10px] font-bold tracking-[0.2em] px-4 py-1 mb-4 uppercase">Próximo Viaje</span>
+						<h2 id="red-cultural-viajes-trip-2a-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Viaje Toscana y Roma</h2>
+						<p id="red-cultural-viajes-trip-2a-dates" class="text-lg text-gray-600 mb-4">Noviembre 2026</p>
+
+						<div id="red-cultural-viajes-trip-2a-card" class="rcp-viajes-card relative w-full aspect-[16/9] overflow-hidden rounded-[18px] shadow-lg group cursor-pointer">
+							<div id="red-cultural-viajes-trip-2a-bg" class="rcp-viajes-card-bg absolute inset-0" style="background-image:url('<?php echo esc_url($uploads_base . '/2021/04/Roma.jpg'); ?>'),url('https://red-cultural.cl/wp-content/uploads/2021/04/Roma.jpg');"></div>
+							<div id="red-cultural-viajes-trip-2a-overlay" class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+							<div id="red-cultural-viajes-trip-2a-cta-wrap" class="absolute inset-0 flex items-center justify-center">
+								<a id="red-cultural-viajes-trip-2a-cta" href="<?php echo esc_url($viaje_toscana_roma_url); ?>" class="bg-white text-[#8b7355] font-bold text-xs tracking-widest px-8 py-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
 									VER ITINERARIO
 								</a>
 							</div>

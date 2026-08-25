@@ -23,6 +23,7 @@ final class RC_Templates_Router {
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_nosotros_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_articulos_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_italia_template'), 20);
+		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_toscana_roma_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_japon_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_escandinavia_template'), 20);
 		add_action('template_redirect', array(__CLASS__, 'maybe_render_viaje_escocia_template'), 20);
@@ -191,6 +192,45 @@ final class RC_Templates_Router {
 		}
 
 		$template_file = RC_CORE_PATH . 'templates/pages/viaje-italia.php';
+		if (!file_exists($template_file)) {
+			return;
+		}
+
+		require $template_file;
+		exit;
+	}
+
+	public static function maybe_render_viaje_toscana_roma_template(): void {
+		if (is_admin() || is_feed()) {
+			return;
+		}
+
+		$is_toscana_roma_page = false;
+		if (function_exists('is_page')) {
+			$is_toscana_roma_page = is_page(array('viaje-toscana-y-roma', 'viaje-toscana-roma', 27778));
+		}
+
+		if (!$is_toscana_roma_page && function_exists('is_404') && is_404()) {
+			$path = '';
+			if (isset($_SERVER['REQUEST_URI'])) {
+				$path = (string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			}
+			$path = trim($path, '/');
+			if (in_array($path, array('viaje-toscana-y-roma', 'viaje-toscana-roma'), true)) {
+				$is_toscana_roma_page = true;
+			}
+		}
+
+		if (!$is_toscana_roma_page) {
+			return;
+		}
+
+		$enabled = (bool) apply_filters('rcp_enable_viaje_toscana_roma_template', true);
+		if (!$enabled) {
+			return;
+		}
+
+		$template_file = RC_CORE_PATH . 'templates/pages/viaje-toscana-y-roma.php';
 		if (!file_exists($template_file)) {
 			return;
 		}

@@ -16,6 +16,9 @@ final class RC_Templates_Handlers {
 		
 		add_action('admin_post_nopriv_rcp_viaje_italia_interest', array(__CLASS__, 'handle_viaje_italia_interest_form'));
 		add_action('admin_post_rcp_viaje_italia_interest', array(__CLASS__, 'handle_viaje_italia_interest_form'));
+
+		add_action('admin_post_nopriv_rcp_viaje_toscana_roma_interest', array(__CLASS__, 'handle_viaje_toscana_roma_interest_form'));
+		add_action('admin_post_rcp_viaje_toscana_roma_interest', array(__CLASS__, 'handle_viaje_toscana_roma_interest_form'));
 		
 		add_action('admin_post_nopriv_rcp_viaje_japon_interest', array(__CLASS__, 'handle_viaje_japon_interest_form'));
 		add_action('admin_post_rcp_viaje_japon_interest', array(__CLASS__, 'handle_viaje_japon_interest_form'));
@@ -259,6 +262,33 @@ final class RC_Templates_Handlers {
 		wp_mail($to, $subject, $body, $headers);
 		$redirect = wp_get_referer() ?: home_url('/viaje-italia/');
 		wp_safe_redirect(add_query_arg('rcp_vi_interest', 'success', (string) $redirect));
+		exit;
+	}
+
+	public static function handle_viaje_toscana_roma_interest_form(): void {
+		if (!isset($_POST['rcp_toscana_roma_nonce']) || !wp_verify_nonce((string) $_POST['rcp_toscana_roma_nonce'], 'rcp_viaje_toscana_roma_interest')) {
+			wp_safe_redirect((string) home_url('/viaje-toscana-y-roma/'));
+			exit;
+		}
+
+		$token = isset($_POST['captcha_token']) ? (string) wp_unslash($_POST['captcha_token']) : '';
+		if (!RC_Anti_Spam::verify($token) || !RC_Anti_Spam::verify_honeypot() || !RC_Anti_Spam::verify_timing()) {
+			wp_safe_redirect(add_query_arg('rcp_toscana_roma_interest', 'error', (string) home_url('/viaje-toscana-y-roma/')));
+			exit;
+		}
+
+		$name = isset($_POST['rcp_toscana_roma_name']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_toscana_roma_name'])) : '';
+		$email = isset($_POST['rcp_toscana_roma_email']) ? sanitize_email((string) wp_unslash($_POST['rcp_toscana_roma_email'])) : '';
+		$phone = isset($_POST['rcp_toscana_roma_phone']) ? sanitize_text_field((string) wp_unslash($_POST['rcp_toscana_roma_phone'])) : '';
+		$message = isset($_POST['rcp_toscana_roma_message']) ? sanitize_textarea_field((string) wp_unslash($_POST['rcp_toscana_roma_message'])) : '';
+
+		$to = self::get_form_recipients('viaje_toscana_roma');
+		$subject = 'Viaje Toscana y Roma — Nuevo interés';
+		$body = "Viaje: Toscana y Roma\n\nNombre: {$name}\nEmail: {$email}\nTeléfono: {$phone}\n\nMensaje:\n{$message}\n";
+		$headers = $email !== '' ? array('Reply-To: ' . $email) : array();
+		wp_mail($to, $subject, $body, $headers);
+		$redirect = wp_get_referer() ?: home_url('/viaje-toscana-y-roma/');
+		wp_safe_redirect(add_query_arg('rcp_toscana_roma_interest', 'success', (string) $redirect));
 		exit;
 	}
 

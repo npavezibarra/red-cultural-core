@@ -112,7 +112,7 @@ final class Red_Cultural_Templates {
 			return $content;
 		}
 
-		$is_target_page = function_exists('is_page') && is_page(array('nosotros', 'quienes-somos', 'articulos', 'artículos', 'viaje-italia', 'viaje-japon', 'viaje-escandinavia', 'viaje-escocia', 'contacto', 'terminos-y-condiciones', 'terminos', 'condiciones'));
+		$is_target_page = function_exists('is_page') && is_page(array('nosotros', 'quienes-somos', 'articulos', 'artículos', 'viaje-italia', 'viaje-toscana-y-roma', 'viaje-japon', 'viaje-escandinavia', 'viaje-escocia', 'contacto', 'terminos-y-condiciones', 'terminos', 'condiciones'));
 
 		if (!$is_target_page) {
 			return $content;
