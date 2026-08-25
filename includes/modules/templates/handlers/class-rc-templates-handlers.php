@@ -216,6 +216,34 @@ final class RC_Templates_Handlers {
 		return array_unique($recipients);
 	}
 
+	private static function render_email_template(string $template_file, array $template_args = array()): string {
+		if (!file_exists($template_file)) {
+			return '';
+		}
+
+		ob_start();
+		extract($template_args, EXTR_SKIP);
+		require $template_file;
+		$content = ob_get_clean();
+
+		return is_string($content) ? $content : '';
+	}
+
+	private static function send_templated_interest_email(array $to, string $subject, string $template_file, array $template_args, array $headers = array()): bool {
+		if (class_exists('RC_Email_Log_Manager')) {
+			RC_Email_Log_Manager::set_last_template_file($template_file);
+		}
+
+		$body = self::render_email_template($template_file, $template_args);
+		if ($body === '') {
+			return false;
+		}
+
+		$headers = array_merge(array('Content-Type: text/html; charset=UTF-8'), $headers);
+
+		return wp_mail($to, $subject, $body, $headers);
+	}
+
 	public static function handle_contacto_form(): void {
 		if (!isset($_POST['rcp_contact_nonce']) || !wp_verify_nonce((string) $_POST['rcp_contact_nonce'], 'rcp_contact_form')) {
 			wp_safe_redirect((string) home_url('/contacto/'));
@@ -284,9 +312,17 @@ final class RC_Templates_Handlers {
 
 		$to = self::get_form_recipients('viaje_toscana_roma');
 		$subject = 'Viaje Toscana y Roma — Nuevo interés';
-		$body = "Viaje: Toscana y Roma\n\nNombre: {$name}\nEmail: {$email}\nTeléfono: {$phone}\n\nMensaje:\n{$message}\n";
+		$template_file = RC_CORE_PATH . 'templates/emails/viaje-toscana-y-roma-interest.php';
+		$template_args = array(
+			'trip_name'  => 'Toscana y Roma',
+			'trip_dates' => '08 al 22 de marzo de 2027',
+			'name'       => $name,
+			'email'      => $email,
+			'phone'      => $phone,
+			'message'    => $message,
+		);
 		$headers = $email !== '' ? array('Reply-To: ' . $email) : array();
-		wp_mail($to, $subject, $body, $headers);
+		self::send_templated_interest_email($to, $subject, $template_file, $template_args, $headers);
 		$redirect = wp_get_referer() ?: home_url('/viaje-toscana-y-roma/');
 		wp_safe_redirect(add_query_arg('rcp_toscana_roma_interest', 'success', (string) $redirect));
 		exit;

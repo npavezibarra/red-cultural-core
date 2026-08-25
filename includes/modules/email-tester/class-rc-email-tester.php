@@ -93,6 +93,7 @@ final class Red_Cultural_Email_Tester
             'lost_password' => 'Cuenta: Restablecer Contraseña (Personalizado)',
             'contacto' => 'Formulario de Contacto (General)',
             'viaje_italia' => 'Interés: Viaje Italia',
+            'viaje_toscana_roma' => 'Interés: Viaje Toscana y Roma',
             'viaje_japon' => 'Interés: Viaje Japón',
             'viaje_escandinavia' => 'Interés: Viaje Escandinavia',
             'lesson_notif_global' => 'Notificación: Listado de Alumnos (Global 24h)',
@@ -369,6 +370,9 @@ final class Red_Cultural_Email_Tester
                     break;
                 case 'viaje_italia':
                     $sent = $this->send_test_interest_form('Italia', $to);
+                    break;
+                case 'viaje_toscana_roma':
+                    $sent = $this->send_test_interest_form('Toscana y Roma', $to);
                     break;
                 case 'viaje_japon':
                     $sent = $this->send_test_interest_form('Japón', $to);

@@ -175,6 +175,7 @@ final class RC_Templates_Admin {
 		$forms = array(
 			'contacto'           => array('label' => 'Contacto Principal', 'default' => get_option('admin_email')),
 			'viaje_italia'       => array('label' => 'Viaje Italia', 'default' => get_option('admin_email')),
+			'viaje_toscana_roma' => array('label' => 'Viaje Toscana y Roma', 'default' => get_option('admin_email')),
 			'viaje_escandinavia' => array('label' => 'Viaje Escandinavia', 'default' => 'magdalena@redcultural.cl'),
 			'viaje_japon'        => array('label' => 'Viaje Japón', 'default' => 'magdalena@redcultural.cl'),
 			'viaje_escocia'      => array('label' => 'Viaje Escocia', 'default' => get_option('admin_email')),
