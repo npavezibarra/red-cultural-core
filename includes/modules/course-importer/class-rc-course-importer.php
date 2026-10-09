@@ -117,7 +117,7 @@ Reglas importantes para el JSON:
 PASO 2: Generación de imágenes.
 Después de entregar el JSON, debes preguntarme obligatoriamente si quiero que generes una imagen "Featured" o "Background". NO generes ninguna imagen hasta que yo responda con uno de esos dos comandos.
 
-- Si respondo "Featured": Genera la imagen principal representativa del curso (composición estilo foto grupal o de personajes). Debe tener las siguientes características: Tipo de archivo: image/jpeg, Tamaño de archivo cercano a: 81 KB, Dimensiones: 500 por 380 píxeles.
+- Si respondo "Featured": Genera la imagen principal representativa del curso (composición estilo foto grupal o de personajes). Debe tener las siguientes características: Tipo de archivo: image/jpeg, Dimensiones: 360 por 192 píxeles.
 - Si respondo "Background": Genera una imagen sobre un paisaje representativo del tema que se habla en el curso.`;
 
 				function showSuccess() {
