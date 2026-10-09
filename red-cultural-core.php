@@ -57,6 +57,9 @@ final class Red_Cultural_Core
         RC_Author_Edit::init();
         RC_Author_Profile::init();
 
+        require_once RC_CORE_PATH . 'includes/modules/course-importer/class-rc-course-importer.php';
+        RC_Course_Importer::init();
+
         // 2. Shipping Component (formerly red-cultural-shipping)
         if (class_exists('WooCommerce')) {
             require_once RC_CORE_PATH . 'includes/modules/shipping/class-rc-shipping-manager.php';
