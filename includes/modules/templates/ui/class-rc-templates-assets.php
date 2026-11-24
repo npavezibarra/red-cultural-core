@@ -40,7 +40,10 @@ final class RC_Templates_Assets {
 		?>
 		<style>
 			.wp-block-woocommerce-customer-account,
-			.wp-block-woocommerce-mini-cart{display:none !important}
+			.wp-block-woocommerce-mini-cart,
+			.wc-block-components-drawer__screen-overlay,
+			.wc-block-mini-cart__drawer,
+			.wp-block-woocommerce-mini-cart-contents{display:none !important}
 			nav.wp-block-navigation .wp-block-navigation-item__content:focus,
 			nav.wp-block-navigation .wp-block-navigation-item__content:focus-visible,
 			nav.wp-block-navigation .wp-block-navigation-item__content:active,

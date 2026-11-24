@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
 
 final class RC_Templates_UI {
 	public static function init(): void {
+		add_filter('pre_render_block', array(__CLASS__, 'maybe_suppress_woocommerce_header_blocks'), 9, 2);
 		add_filter('render_block', array(__CLASS__, 'maybe_remove_woocommerce_header_blocks'), 9, 2);
 		add_filter('render_block', array(__CLASS__, 'inject_block_navigation_items'), 10, 2);
 		add_filter('wp_nav_menu_items', array(__CLASS__, 'inject_classic_menu_items'), 10, 2);
@@ -51,12 +52,36 @@ final class RC_Templates_UI {
 		return $updated;
 	}
 
+	public static function maybe_suppress_woocommerce_header_blocks($pre_render, array $block) {
+		if (is_admin()) {
+			return $pre_render;
+		}
+
+		if (!empty($block['blockName']) && in_array($block['blockName'], array(
+			'woocommerce/customer-account',
+			'woocommerce/mini-cart',
+			'woocommerce/mini-cart-contents',
+			'woocommerce/filled-mini-cart-contents-block',
+			'woocommerce/empty-mini-cart-contents-block',
+		), true)) {
+			return '';
+		}
+
+		return $pre_render;
+	}
+
 	public static function maybe_remove_woocommerce_header_blocks(string $block_content, array $block): string {
 		if (is_admin() || $block_content === '' || empty($block['blockName'])) {
 			return $block_content;
 		}
 
-		if ($block['blockName'] === 'woocommerce/customer-account' || $block['blockName'] === 'woocommerce/mini-cart') {
+		if (in_array($block['blockName'], array(
+			'woocommerce/customer-account',
+			'woocommerce/mini-cart',
+			'woocommerce/mini-cart-contents',
+			'woocommerce/filled-mini-cart-contents-block',
+			'woocommerce/empty-mini-cart-contents-block',
+		), true)) {
 			return '';
 		}
 
